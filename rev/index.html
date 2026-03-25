@@ -1,1 +1,799 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Отзывы app2.cash</title>
+
+<style>
+body{margin:0;background:#000;color:#fff;font-family:Arial}
+
+/* HEADER */
+.header{position:fixed;top:0;width:100%;text-align:center;background:#000;padding:10px;z-index:1000}
+.header button{margin:5px;padding:8px 12px;background:linear-gradient(45deg,gold,orange);border:none;border-radius:8px}
+
+/* HERO */
+.hero{padding:80px 20px 20px;text-align:center}
+
+/* CAROUSEL */
+.carousel{display:flex;overflow-x:auto;gap:10px;padding:10px}
+.carousel img{height:200px;border-radius:10px;border:2px solid gold;cursor:pointer}
+
+/* VIDEO CONTAINER */
+.container{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
+.video-slide{height:100vh;position:relative;scroll-snap-align:start}
+
+/* DESKTOP FIX */
+@media (min-width:768px){
+.container{display:flex;justify-content:center;align-items:center}
+.video-slide{width:380px;height:680px;border-radius:20px;overflow:hidden}
+}
+
+/* VIDEO */
+video{width:100%;height:100%;object-fit:cover}
+
+/* PROGRESS */
+.progress{position:absolute;top:0;width:100%;height:4px;background:#333}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,gold,orange)}
+
+/* OVERLAY */
+.overlay{position:absolute;bottom:0;width:100%;padding:20px;background:linear-gradient(to top,#000,transparent)}
+
+/* TEXT */
+.hidden-text{
+max-height:60px;
+overflow:hidden;
+display:-webkit-box;
+-webkit-line-clamp:3;
+-webkit-box-orient:vertical;
+transition:.3s;
+}
+
+.hidden-text.open{
+max-height:1000px;
+-webkit-line-clamp:unset;
+}
+
+/* CTA */
+.cta{display:inline-block;margin-top:10px;background:linear-gradient(45deg,gold,orange);color:#000;padding:10px;border-radius:8px;text-decoration:none;font-weight:bold}
+
+/* SPEED BADGE */
+.speed-badge{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(.8);
+background:rgba(0,0,0,.6);
+padding:10px 16px;
+border-radius:10px;
+opacity:0;
+transition:.2s;
+}
+.speed-badge.show{
+opacity:1;
+transform:translate(-50%,-50%) scale(1);
+}
+
+/* ONLINE */
+#onlineBox{
+position:fixed;bottom:80px;left:20px;background:rgba(0,0,0,0.7);padding:10px 14px;border-radius:10px;font-size:14px;
+}
+
+/* LIVE DEAL */
+#liveBox{
+position:fixed;bottom:140px;left:20px;background:#111;padding:10px 14px;border-radius:10px;font-size:13px;opacity:0;transform:translateY(20px);transition:.3s;
+}
+#liveBox.show{opacity:1;transform:translateY(0);}
+
+/* GALLERY */
+.gallery-viewer{
+position:fixed;inset:0;background:rgba(0,0,0,0.95);
+display:none;align-items:center;justify-content:center;z-index:9999;
+}
+.gallery-viewer.active{display:flex}
+
+.gallery-viewer img{max-width:100%;max-height:100%;object-fit:contain;transition:.1s;
+touch-action:none;
+}
+
+.gallery-close{position:absolute;top:20px;right:20px;font-size:30px}
+
+.gallery-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:40px;padding:10px}
+.gallery-prev{left:10px}
+.gallery-next{right:10px}
+
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<button onclick="setLang('ru')">RU</button>
+<button onclick="setLang('en')">EN</button>
+<br>
+<button onclick="location.href='https://www.app2.cash/'">Главная / Home</button>
+</div>
+
+<!-- RU -->
+<div id="ru">
+
+<div class="hero">
+<h2>Меняем валюту между континентами</h2>
+<p>115+ валют • Без банков • Без SWIFT • Быстро</p>
+<a href="https://wa.me/255756687444" class="cta">Написать в WhatsApp</a>
+</div>
+
+<div class="carousel">
+<img src="IMG_ru/1.jpg" onclick="openGallery('ru',1)">
+<img src="IMG_ru/2.jpg" onclick="openGallery('ru',2)">
+<img src="IMG_ru/3.jpg" onclick="openGallery('ru',3)">
+<img src="IMG_ru/4.jpg" onclick="openGallery('ru',4)">
+<img src="IMG_ru/5.jpg" onclick="openGallery('ru',5)">
+<img src="IMG_ru/6.jpg" onclick="openGallery('ru',6)">
+<img src="IMG_ru/7.jpg" onclick="openGallery('ru',7)">
+<img src="IMG_ru/8.jpg" onclick="openGallery('ru',8)">
+<img src="IMG_ru/9.jpg" onclick="openGallery('ru',9)">
+<img src="IMG_ru/10.jpg" onclick="openGallery('ru',10)">
+</div>
+
+<div class="container" id="ru-container">
+<!-- RU ВИДЕО 1–14 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/1.jpg">
+<source src="REW_ru/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Алик. Друзья, всем привет. Хочу оставить отзыв о работе Марата по переводу российских рублей с карт российских банков на непосредственно сразу к вам на Танзанийский счёт в шиллингах. На телефон. Это система M-Pesa, агенты по всей стране, очень удобно, условия Марата на сайте, всё было сделано чётко, как и оговорено.
+
+Вот, я только что снял свой первый трансфер самостоятельно, он объяснил мне, подсказал, как всё сделать. В общем, очень советую без танцев с бубном, без каких-то космических комиссий, кстати, которые нам предлагали. Обращайтесь к Марату. От души Марат, спасибо, всё чётко.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/2.jpg">
+<source src="REW_ru/2.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Ли. Спасибо Марату за обмен китайских юаней на российские рубли. Всё прошло очень быстро, честно и открыто. Самая низкая комиссия, потому что я предварительно изучил рынок. Мне всё понравилось. Рекомендую всем. Большое спасибо. Марат, мой брат.
+</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/3.jpg">
+<source src="REW_ru/3.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Леа. Будучи студенткой из Танзании, обучающейся в России, я испытывала проблемы с обменом денег, особенно танзанийских шиллингов на рубли. Но мне удалось связаться с господином Маратом, и он обменял мне деньги по разумному курсу. Большое спасибо, господин Марат. Я получила деньги в короткие сроки после отправки.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/4.jpg">
+<source src="REW_ru/4.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Марина. Марат, добрый день. Хотели бы выразить вам огромную благодарность за ту работу, которую вы провели. Мне даже не верится, мы не ожидали, что так легко и быстро может произойти обмен рублей на шиллинги. Порядка 40-50 минут. И вот, пожалуйста, уже операция произошла. Ведь мы же посылали немаленькую сумму.
+И курс просто волшебный. Я такого курса и вообще никогда не встречала ранее. Теперь будем рассказывать всем друзьям и нашим знакомым о том, что есть вот такой Марат, менеджер app2.cash. Большое вам спасибо. Мы очень довольны.
+
+</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/5.jpg">
+<source src="REW_ru/5.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Али. Друзья, всем привет. Я хочу оставить отзыв о сотрудничестве с Маратом. Вчера мы вернулись из путешествия, в котором попали в довольно-таки неприятную ситуацию. Закончились наличные, не хватало на длинный рейс, на пересадку. И Марат два дня он помогал нам переводить очень оперативно, очень удобно переводить российские рубли с российской карты переводить к нему. Далее он переводит вам уже танзанийские шиллинги.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/6.jpg">
+<source src="REW_ru/6.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Либуили. Привет Вы разговариваете с Либуили Амала Кинунду из Маньяры. Я хотел бы поблагодарить Марата за его честную и ответственную работу. Мне нужно было получить немного денег из России от моей семьи. Но как обменять российские рубли на танзанийские шиллинги? Это была большая проблема! К счастью Моя жена нашла Марата и этот парень смог сделать это очень быстро. Потребовалось всего 25 минут, чтобы обменять рубли на танзанийские шиллинги и перевести их на мой счёт Тиго песо. Спасибо Марат! Желаем вам процветания и благословит вас Бог!
+
+</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/7.jpg">
+<source src="REW_ru/7.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Василий. Меня зовут Василий. Я путешественник по Африке. Хочу выразить огромную благодарность своему другу Марату. Очень быстро осуществил перевод рублей на шиллинги из России в Занзибар. Потому что многие задаются вопросом, как мы русские туристы живём и как вообще мы получаем деньги. Потому что мы гт SWIFT отрезаны и, как правило, транзакции проходят через третьи лица. Потому что человек отзывчивый, приятный при общении, очень живой энергетикой.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+</div>
+  
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/7.jpg">
+<source src="REW_ru/7.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Александр. Ребята, всем привет. Хочу оставить отзыв по обмену валюты у Марата. Обмен прошёл быстро, чётко, дистанционно, без всяких скрытых комиссий. Рекомендую Марата как порядочного человека — пишите, звоните. Отвечает он в короткие сроки на любые возникшие вопросы. Всё доходчиво и понятно. Всем спасибо и хорошего дня. Обращайтесь.
+</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+</div>
+
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/7.jpg">
+<source src="REW_ru/7.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Касмир. Меня зовут Касмир Октавиус Ричард, я из Танзании. Сейчас я учусь в России. У меня были проблемы с транзакциями. Но теперь Марат их решил. Он помог мне совершить операции. И я конвертировал деньги из танзанийских шиллингов в рубли. Из рублей в шиллинги — Марат очень быстро.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+</div>
+  
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/7.jpg">
+<source src="REW_ru/7.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Александр. У меня появилась проблема. Для тех, кто собирается делать переводы по Танзании, мне катастрофически необходимо сделать оплату. Обратился к Марату, который находится в Танзании. Вот я сейчас нахожусь в аэропорту, и я улетаю в Москву. Посмотрим. Успеет он сделать оплату, пока я прилечу или нет. Надеюсь, ты всё сможешь. Я сейчас уже в самолёте сижу. Так что надеюсь на тебя.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+</div>
+  
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/7.jpg">
+<source src="REW_ru/7.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Аноним. Понадобилось перевести USDT из России в Танзанию на M-Pesa в шиллингах. Обратился к Марату. В течение 10 минут после того, как я закинул USDT по нужному адресу, я получил свои шиллинги на свою M-Pesa. Спасибо, Марат!
+
+</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+</div>
+  
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/7.jpg">
+<source src="REW_ru/7.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Оксана. Вот в такую красоту к нам на Занзибар сегодня приехали танзанийские шиллинги. Буквально 5 минут назад они ещё были в Москве. Марат, я не знаю, как тебе это удаётся, но всё быстро, чётко, понятно и согласно договорённостям. Спасибо! От души рекомендую.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+</div>
+  
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/7.jpg">
+<source src="REW_ru/7.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Александр. В очередной раз отличился Марат, спасибо ему. Потребовалась срочная помощь, реально гуманитарная помощь. Нужно было перевести деньги прямо сейчас. То есть, не ждать ни минуты. Он это сделал очень быстро и без всяких проблем. Спасибо, Марат тебе. Ну, ты понимаешь, мы к тебе не первый раз обращаемся, точно обращаться будем.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+</div>
+  
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_ru/7.jpg">
+<source src="REW_ru/7.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'ru')">Читать далее</button>
+<div class="hidden-text">Ахмед. Здравствуйте, все. Хочу оставить отзыв о работе Марата и приложения app2.cash. С его помощью мы перевели нашу национальную валюту в танзанийские шиллинги всего за час. Всё заняло немного времени, что было очень удобно и быстро. И ещё здорово, что деньги поступают на ваш национальный электронный кошелек M-Pesa.</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+</div>
+</div>
+</div><!-- RU container -->
+
+</div> <!-- закрытие div#ru -->
+
+<!-- ===== EN ===== -->
+<div id="en" class="hidden">
+
+<div class="hero">
+<h2>Exchange money between continents</h2>
+<p>115+ currencies • No banks • No SWIFT • Fast</p>
+<a href="https://wa.me/255756687444" class="cta">Message WhatsApp</a>
+</div>
+
+<div class="carousel">
+<img src="IMG_en/1.jpg" onclick="openGallery('en',1)">
+<img src="IMG_en/2.jpg" onclick="openGallery('en',2)">
+<img src="IMG_en/3.jpg" onclick="openGallery('en',3)">
+<img src="IMG_en/4.jpg" onclick="openGallery('en',4)">
+<img src="IMG_en/4.jpg" onclick="openGallery('en',5)">
+<img src="IMG_en/4.jpg" onclick="openGallery('en',6)">
+<img src="IMG_en/4.jpg" onclick="openGallery('en',7)">
+<img src="IMG_en/4.jpg" onclick="openGallery('en',8)">
+<img src="IMG_en/4.jpg" onclick="openGallery('en',9)">
+<img src="IMG_en/4.jpg" onclick="openGallery('en',10)">
+<img src="IMG_en/4.jpg" onclick="openGallery('en',11)">
+</div>
+
+<div class="container" id="en-container">
+
+<!-- EN 1 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Lee. I thank Marat for exchanging Chinese yuan for Russian rubles. Everything went very quickly, honestly, and openly. The lowest commission because I had studied the market before. I liked everything. I recommend to everyone. Thank you very much. Marat, my Brother.
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 2 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Leah. Kamu mwanafuzu wakitanzanianchi ni urusi, nimekuwa na matatizo ya kubadilisha feather, lakini nimeweza kwasiliana na Mr. Marathi na kanipatia rubles ndani ya mda mfupi kwa rechi nzuri ukeli. Asante sana Mr. Marathi. 
+
+As a Tanzanian student in Russia, I've been having problems with exchanging money, especially from Tanzanian shillings to rubles. But I managed to contact Mr. Marati and he exchanged for me my money at a reasonable rate. Thank You so much, Mister Marat. I received the money within a short time after the transaction. 
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 3 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Marina. Marat, good afternoon. We'd like to express our deepest gratitude for the work you've done. I can't believe it; we didn't expect the exchange of rubles for shillings to be so quick and easy. About 40-50 minutes. And here we are, the transaction has already taken place. After all, we sent a considerable amount.
+And the exchange rate is simply magical. I've never encountered such a rate before. Now we'll be telling all our friends and acquaintances about Marat, the app2.cash manager. Thank you so much. We're very happy.
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 4 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Ali. Hello, everyone. I'd like to leave a review about working with Marat. Yesterday we returned from a trip where we ran into a rather unpleasant situation. We ran out of cash, not enough for a long flight and a layover. Marat helped us with transfers very quickly for two days. It's very convenient to transfer Russian rubles from a Russian card to him. Then he transfers Tanzanian shillings to you.</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+
+<!-- EN 5 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Libuili. Hello, you are speaking with Libuili Amala Kinundu from Manyara. I would like to thank Marat for his honest and responsible work. I needed to receive some money from my family in Russia. But how to exchange Russian rubles for Tanzanian shillings? This was a big problem! Luckily, my wife found Marat, and he was able to do it very quickly. It took only 25 minutes to exchange rubles for Tanzanian shillings and transfer them to my Tigo Peso account. Thank you, Marat! We wish you prosperity and God bless you!</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 6 -->  
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text"> Libuili. Halo. Unaongea na Libuili Amala Kinundu kutoka mkua Manyara. Nilikuwa nataka kushukuru kwako kuamba una tusaidia sana. Maana ilikuwa ni ngumu kwa sisi kuchange yela ya kutoka Russia to Tanzania.
+Nilikuwa nataka nishukuru kwa Marat kwenpa unatusaidia sana. Tunashukuru sana. Mwana unatusaidia. Nilikuwa nyingumu sana kwa sisi kutumaela. Sasa nakutakia kazi njema na mchana mwima. Mungu atakusaidia. Kila lahiri kwako.
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 7 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text"> Alik. Hello, everyone. I'd like to leave a review of Marat's work transferring Russian rubles from Russian bank cards directly to your Tanzanian shilling account. This is via phone. It's the M-Pesa system, with agents all over the country. It's very convenient. Marat's terms and conditions are on the website. Everything was done precisely as agreed.
+I just made my first transfer myself, and he explained everything to me and gave me tips on how to do it. Overall, I highly recommend him—no hassle, no exorbitant fees, by the way, like they offered us. Contact Marat. Thank you very much, Marat, everything was perfect.
+
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 8 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Alexander. Hi everyone. I'd like to leave a review about Marat's currency exchange. The exchange was quick, efficient, and done remotely, with no hidden fees. I recommend Marat as a reliable person—write or call him. He responds promptly to any questions you may have. Everything is clear and understandable. Thank you all, and have a nice day. Contact him.</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 9 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/1.jpg">
+<source src="REW_en/1.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Kasmeer. My name is Kasmeer Octavius ​​Richard from Tanzania. I'm in Russia currently for studies. I've been having trouble with transactions for a while. But now it's been solved by Marat. He helped me make transactions. And I converted money from Tanzanian shillings into rubles. From rubles into shillings - Marat is very fast.</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 10 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/10.jpg">
+<source src="REW_en/10.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Kasmeer. Kumajina unahitua Kasmeer Octavius Richard from Tanzania. I'm in Russia currently for studies. Ni kwa nashida ya transactions for a while. Lakini kwa sasa yimekua solved by Marat. Ka nisaidia ufanya ya transactions. Na badilisha hela from Tanzanian shillings into rubles. From rubles into shillings - Marat is very fast.</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 11 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/11.jpg">
+<source src="REW_en/11.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Alexander. I have a problem. For those who are planning to make transfers within Tanzania, I desperately need to make a payment. I contacted Marat, who is in Tanzania. I'm at the airport now, flying to Moscow. We'll see. Will he make the payment in time for me to arrive or not. I hope you can handle it. I'm already on the plane. So I'm counting on you.
+
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 12 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/12.jpg">
+<source src="REW_en/12.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Anonymous. I needed to transfer USDT from Russia to Tanzania to M-Pesa in shillings. I contacted Marat. Within 10 minutes of depositing the USDT to the correct address, I received my shillings in my M-Pesa. Thanks, Marat!
+
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 13 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/13.jpg">
+<source src="REW_en/13.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Alexander. Marat excelled once again, thank you very much. We needed urgent help, truly humanitarian aid. The money had to be transferred right away. I mean, without waiting a minute. He did it very quickly and without any problems. Thank you, Marat. Well, you understand, we've turned to you before, and we'll definitely keep coming back.
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 14 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/14.jpg">
+<source src="REW_en/14.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Oksana. Tanzanian shillings arrived in Zanzibar today, looking so beautiful. Just five minutes ago, they were still in Moscow. Marat, I don't know how you do it, but everything was quick, clear, understandable, and exactly as agreed. Thank you! I highly recommend it.
+
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 15 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/15.jpg">
+<source src="REW_en/15.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Ahmed. Hello everybody. I want to make trust review on the work of Marat, app2.cash. We transferred with his help our currency, national currency, into the Tanzanian shillings in just maybe one hour. The whole thing took a little time, so it was very convenient and quick, actually. And also it's good that you get this money here on your national, here, M-Pesa wallet.
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+<!-- EN 16 -->
+<div class="video-slide">
+<div class="progress"><div class="progress-bar"></div></div>
+<video preload="metadata" playsinline poster="POS_en/16.jpg">
+<source src="REW_en/16.mp4" type="video/mp4">
+</video>
+<div class="overlay">
+<button onclick="toggleText(this,'en')">Read more</button>
+<div class="hidden-text">Vasily. My name is Vasily. I'm a traveler in Africa. I want to express my deepest gratitude to my friend Marat. He very quickly transferred rubles to shillings from Russia to Zanzibar. Many people wonder how we Russian tourists live and how we even receive money. Because we're cut off from SWIFT, and transactions usually go through third parties. He's responsive, pleasant to talk to, and has a very lively energy.
+His name is Marat. I'll provide his contact information under the video. Marat, thank you so much for your help. I want to recommend my friend as a ruble-to-shilling exchanger. And I'd also like to thank him for helping me get a Visa card abroad. I thought it was impossible, but fortunately, it is. And it couldn't be done in Dubai for a huge amount of money. Thank you so much, Marat.
+He really helped me out with both the card and the money.
+</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+</div>
+</div>
+
+</div> <!-- EN container -->
+
+</div> <!-- закрытие div#en -->
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/255756687444" class="whatsapp">WhatsApp</a>
+
+<!-- ONLINE -->
+<div id="onlineBox">👀 Онлайн: <span id="onlineCount">7</span></div>
+
+<!-- LIVE FOMO -->
+<div id="liveBox"></div>
+
+<!-- GALLERY -->
+<div class="gallery-viewer" id="gallery">
+<div class="gallery-close" onclick="closeGallery()">✕</div>
+<div class="gallery-nav gallery-prev" onclick="prevImage()">‹</div>
+<img id="gallery-img" />
+<div class="gallery-nav gallery-next" onclick="nextImage()">›</div>
+</div>
+
+<script>
+/* ===== ЕДИНЫЙ КОНФИГ ===== */
+const config = {
+ru: { img: 10, video: 14 },
+en: { img: 11, video: 16 }
+};
+
+/* ===== ГАЛЕРЕЯ ===== */
+let galleryImages = { ru:[], en:[] };
+let currentLang='ru', currentIndex=0;
+
+function generateGallery(){
+["ru","en"].forEach(lang=>{
+  galleryImages[lang] = [];
+  for(let i=1;i<=config[lang].img;i++){
+    galleryImages[lang].push(`IMG_${lang}/${i}.jpg`);
+  }
+});
+}
+
+function openGallery(lang,i){
+currentLang = lang;
+currentIndex = i - 1; // 0-based внутри массива
+document.getElementById("gallery").classList.add("active");
+updateGallery();
+}
+
+function updateGallery(){
+const arr = galleryImages[currentLang];
+if(!arr || arr.length === 0) return;
+document.getElementById("gallery-img").src = arr[currentIndex];
+}
+
+function nextImage(){
+const arr = galleryImages[currentLang];
+if(!arr || arr.length === 0) return;
+currentIndex = (currentIndex + 1) % arr.length;
+updateGallery();
+}
+
+function prevImage(){
+const arr = galleryImages[currentLang];
+if(!arr || arr.length === 0) return;
+currentIndex = (currentIndex - 1 + arr.length) % arr.length;
+updateGallery();
+}
+
+function closeGallery(){
+document.getElementById("gallery").classList.remove("active");
+}
+
+/* ===== ОБЩЕЕ ИНИЦИАЛИЗАЦИЯ ===== */
+function generateCarousel(lang){
+const container = document.querySelector(`#${lang} .carousel`);
+if(!container) return;
+// заменяем на единый подход
+container.innerHTML = "";
+for(let i=1;i<=config[lang].img;i++){
+  container.innerHTML += `<img src="IMG_${lang}/${i}.jpg" onclick="openGallery('${lang}',${i})">`;
+}
+}
+
+function generateVideos(lang){
+const container = document.querySelector(`#${lang} .container`);
+if(!container) return;
+container.innerHTML = "";
+for(let i=1;i<=config[lang].video;i++){
+  container.innerHTML += `
+  <div class="video-slide">
+    <div class="progress"><div class="progress-bar"></div></div>
+
+    <video preload="metadata" playsinline poster="POS_${lang}/${i}.jpg">
+      <source src="REW_${lang}/${i}.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay">
+      <button onclick="toggleText(this,'${lang}')">
+        ${lang==='ru'?'Читать далее':'Read more'}
+      </button>
+      <div class="hidden-text">
+        ${lang==='ru'?'Транскрибация':'Transcription'} ${i}
+      </div>
+      <a href="https://wa.me/255756687444" class="cta">
+        ${lang==='ru'?'Обменять':'Exchange'}
+      </a>
+    </div>
+
+    <div class="speed-badge">x2</div>
+  </div>
+  `;
+}
+}
+
+function init(){
+// инициализация галереи
+generateGallery();
+
+// карусели/видео
+// generateCarousel("ru");
+// generateCarousel("en");
+generateVideos("ru");
+generateVideos("en");
+
+// запуск наблюдателя за видео и скорости
+initObserver();
+initSpeed();
+}
+
+function initObserver(){
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    const video = entry.target;
+    const slide = video.closest(".video-slide");
+    const bar = slide.querySelector(".progress-bar");
+
+    if(entry.isIntersecting){
+      document.querySelectorAll("video").forEach(v=>{
+        if(v!==video) v.pause();
+      });
+
+      video.play().catch(()=>{});
+
+      video.ontimeupdate = () => {
+        if(video.duration){
+          bar.style.width = (video.currentTime / video.duration) * 100 + "%";
+        }
+      };
+    } else {
+      video.pause();
+      bar.style.width = "0%";
+    }
+  });
+}, { threshold: 0.6 });
+
+document.querySelectorAll("video").forEach(v=>observer.observe(v));
+}
+
+function initSpeed(){
+document.querySelectorAll("video").forEach(v=>{
+  let timer;
+
+  v.addEventListener("touchstart",()=>{
+    timer=setTimeout(()=>{
+      v.playbackRate=2;
+      let badge=v.parentElement.querySelector(".speed-badge");
+      badge && badge.classList.add("show");
+    },200);
+  });
+
+  v.addEventListener("touchend",()=>{
+    clearTimeout(timer);
+    v.playbackRate=1;
+    let badge=v.parentElement.querySelector(".speed-badge");
+    badge && badge.classList.remove("show");
+  });
+});
+}
+
+/* ===== КОНТРОЛЬ ЯЗЫКА ===== */
+function setLang(lang){
+// скрыть все языки и показать выбранный
+document.getElementById("ru").classList.add("hidden");
+document.getElementById("en").classList.add("hidden");
+document.getElementById(lang).classList.remove("hidden");
+// можно дополнительно переключать видимость каруселей
+// но текущая логика скрывает/показывает div#ru и div#en
+}
+
+function toggleText(btn){
+const el = btn.nextElementSibling;
+
+if(!el) return;
+
+if(el.classList.contains("open")){
+  el.classList.remove("open");
+  el.style.maxHeight = "60px"; // свернутый режим
+  btn.innerText = btn.innerText.includes("Read") ? "Read more" : "Читать далее";
+} else {
+  el.classList.add("open");
+  el.style.maxHeight = el.scrollHeight + "px";
+  btn.innerText = btn.innerText.includes("Read") ? "Hide" : "Скрыть";
+}
+}
+
+window.addEventListener("load",init);
+</script>
+
+</body>
+</html>
+
+
 
