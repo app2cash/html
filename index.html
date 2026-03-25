@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Обмен валют — app2.cash</title>
+
+<style>
+body{
+  margin:0;
+  background:#0b0b0f;
+  color:#fff;
+  font-family:Montserrat, Arial;
+  padding-bottom:70px;
+}
+
+.container{
+  max-width:520px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{ font-size:26px; line-height:1.3; }
+h2{ font-size:20px; margin-top:30px; }
+
+/* CTA */
+.cta{
+  display:block;
+  text-align:center;
+  background:#FFD700;
+  color:#000;
+  padding:14px;
+  border-radius:12px;
+  font-weight:bold;
+  margin-top:15px;
+  text-decoration:none;
+}
+
+/* FOMO */
+.fomo{
+  background:#111;
+  border:1px solid #FFD700;
+  padding:10px;
+  border-radius:10px;
+  margin:15px 0;
+  font-size:13px;
+}
+
+/* card */
+.card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,215,0,0.2);
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+}
+
+/* input */
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin-top:10px;
+  font-size:16px;
+}
+
+/* video */
+.video-slide{ margin-top:15px; }
+video{ width:100%; border-radius:12px; }
+
+/* screens */
+.screens{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+}
+.screens img{
+  width:140px;
+  border:2px solid #FFD700;
+  border-radius:10px;
+}
+
+/* FAQ */
+.faq-q{
+  cursor:pointer;
+  background:#111;
+  padding:10px;
+  border-radius:8px;
+  margin-top:10px;
+}
+.faq-a{
+  display:none;
+  padding:10px;
+  font-size:13px;
+  color:#aaa;
+}
+
+/* stats */
+.stats{
+  display:flex;
+  justify-content:space-around;
+  margin-top:20px;
+  text-align:center;
+}
+.stats b{
+  color:#FFD700;
+  font-size:18px;
+}
+
+/* fixed contacts */
+.contact-fixed{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  z-index:9999;
+}
+
+.cf-btn{
+  flex:1;
+  text-align:center;
+  padding:14px 0;
+  font-weight:bold;
+  text-decoration:none;
+  color:#000;
+  font-size:14px;
+}
+
+.whatsapp{ background:#25D366; animation:pulse 1.5s infinite; }
+.telegram{ background:#229ED9; }
+.imo{ background:#00AEEF; }
+
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
+  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+}
+
+/* hint */
+.contact-hint{
+  position:fixed;
+  bottom:50px;
+  width:100%;
+  text-align:center;
+  font-size:12px;
+  color:#aaa;
+  z-index:9998;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HERO -->
+<h1>
+Меняем деньги между странами  
+<br>Быстро. Без банков. Без SWIFT.
+</h1>
+
+<a href="https://wa.me/255756687444" class="cta">Обменять сейчас</a>
+
+<div style="margin-top:10px;font-size:13px;color:#aaa;">
+✔ Конфиденциально • ✔ 100+ валют • ✔ Ежедневно
+</div>
+
+<!-- FOMO -->
+<div id="fomo" class="fomo"></div>
+
+<!-- HOW -->
+<h2>Как это работает</h2>
+<div class="card">
+1. Отправляете деньги<br>
+2. Мы обмениваем<br>
+3. Получаете
+</div>
+
+<!-- CALC -->
+<h2>Сколько вы получите?</h2>
+<input id="amount" placeholder="Введите сумму">
+<div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+
+<!-- VIDEO -->
+<h2>Отзывы клиентов</h2>
+
+<div class="video-slide">
+<video src="../REW_ru/1.mp4" controls poster="../POS_ru/1.jpg"></video>
+</div>
+
+<div class="video-slide">
+<video src="../REW_ru/2.mp4" controls poster="../POS_ru/2.jpg"></video>
+</div>
+
+<!-- SCREENS -->
+<h2>Подтверждения</h2>
+<div class="screens">
+<img src="../IMG_ru/1.jpg">
+<img src="../IMG_ru/2.jpg">
+<img src="../IMG_ru/3.jpg">
+</div>
+
+<!-- COMPARE -->
+<h2>Почему не банки</h2>
+<div class="card">
+✔ Быстро<br>✔ Без блокировок<br>✔ Без SWIFT
+</div>
+
+<div class="card">
+✖ Медленно<br>✖ Ограничения<br>✖ Риски
+</div>
+
+<!-- FAQ -->
+<h2>Вопросы</h2>
+
+<div class="faq-q" onclick="toggleFaq(this)">Это безопасно?</div>
+<div class="faq-a">Да, вы общаетесь напрямую.</div>
+
+<div class="faq-q" onclick="toggleFaq(this)">Сколько времени?</div>
+<div class="faq-a">5–60 минут.</div>
+
+<!-- TRUST -->
+<h2>Доверие</h2>
+<div class="stats">
+<div><b>1000+</b><br>обменов</div>
+<div><b>7/7</b><br>работаем</div>
+<div><b>15 мин</b><br>среднее</div>
+</div>
+
+<div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
+🔒 Конфиденциально • Без передачи данных
+</div>
+
+<!-- FINAL CTA -->
+<a href="https://wa.me/255756687444" class="cta">Начать обмен</a>
+
+</div>
+
+<!-- FIXED CONTACTS -->
+<div class="contact-hint">
+Отвечаем быстро • без регистрации
+</div>
+
+<div class="contact-fixed">
+  <a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/RaBright" class="cf-btn telegram">Telegram</a>
+  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">imo</a>
+</div>
+
+<script>
+
+/* калькулятор */
+document.getElementById("amount").oninput = function(){
+  let v = this.value;
+  document.getElementById("result").innerText = "≈ " + (v * 0.95).toFixed(2);
+}
+
+/* FAQ */
+function toggleFaq(el){
+  let a = el.nextElementSibling;
+  a.style.display = a.style.display === "block" ? "none" : "block";
+}
+
+/* FOMO */
+const fomo = document.getElementById("fomo");
+
+function showFomo(){
+  const names = ["Оксана","Александр","Али","Ахмед"];
+  const amounts = ["1200$","3500$","800$","2200$"];
+
+  let n = names[Math.floor(Math.random()*names.length)];
+  let a = amounts[Math.floor(Math.random()*amounts.length)];
+
+  fomo.innerText = `${n} обменял ${a} • только что`;
+}
+
+setInterval(showFomo,5000);
+showFomo();
+
+</script>
+
+</body>
+</html>
