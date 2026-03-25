@@ -138,27 +138,6 @@ video{ width:100%; border-radius:12px; }
   color:#aaa;
   z-index:9998;
 }
-
-/* живые сделки */
-#deals{
-  position:fixed;
-  bottom:110px;
-  left:50%;
-  transform:translateX(-50%);
-  width:90%;
-  max-width:400px;
-  z-index:9997;
-  font-size:13px;
-}
-.deal{
-  background:#111;
-  border:1px solid #FFD700;
-  border-radius:10px;
-  padding:10px;
-  margin-top:8px;
-  opacity:0;
-  transition:0.5s;
-}
 </style>
 </head>
 
@@ -255,9 +234,6 @@ video{ width:100%; border-radius:12px; }
 
 </div>
 
-<!-- ЖИВЫЕ СДЕЛКИ -->
-<div id="deals"></div>
-
 <div class="contact-hint">
 Отвечаем быстро • без регистрации
 </div>
@@ -269,20 +245,16 @@ video{ width:100%; border-radius:12px; }
 </div>
 
 <script>
-
-/* калькулятор */
 document.getElementById("amount").oninput = function(){
   let v = this.value;
   document.getElementById("result").innerText = "≈ " + (v * 0.95).toFixed(2);
 }
 
-/* FAQ */
 function toggleFaq(el){
   let a = el.nextElementSibling;
   a.style.display = a.style.display === "block" ? "none" : "block";
 }
 
-/* FOMO */
 const fomo = document.getElementById("fomo");
 
 function showFomo(){
@@ -297,42 +269,6 @@ function showFomo(){
 
 setInterval(showFomo,5000);
 showFomo();
-
-/* ЖИВЫЕ СДЕЛКИ */
-
-const dealsContainer = document.getElementById("deals");
-
-const names2 = ["Али","Ахмед","Иван","Омар","Сергей","Анна"];
-const routes = [
-  "🇷🇺 Россия → 🇦🇪 Дубай",
-  "🇹🇷 Турция → 🇩🇪 Германия",
-  "🇦🇪 Дубай → 🇬🇧 Лондон",
-  "🇺🇿 Узбекистан → 🇷🇺 Россия"
-];
-const amounts2 = ["500$","1200$","2200$","3500$","800$"];
-
-function createDeal(){
-
-  const name = names2[Math.floor(Math.random()*names2.length)];
-  const route = routes[Math.floor(Math.random()*routes.length)];
-  const amount = amounts2[Math.floor(Math.random()*amounts2.length)];
-
-  const deal = document.createElement("div");
-  deal.className = "deal";
-  deal.innerText = `${name} • ${route} • ${amount} • только что`;
-
-  dealsContainer.prepend(deal);
-
-  setTimeout(()=>{ deal.style.opacity = "1"; },100);
-
-  if(dealsContainer.children.length > 3){
-    dealsContainer.removeChild(dealsContainer.lastChild);
-  }
-}
-
-setInterval(createDeal,4000);
-createDeal();
-
 </script>
 
 </body>
