@@ -4,21 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Обмен валют — app2.cash</title>
+
 <style>
 body{
   margin:0;
   background:#0b0b0f;
   color:#fff;
-  font-family:Montserrat, Arial;
+  font-family:Montserrat, Arial, sans-serif;
   padding-bottom:70px;
 }
-
-.container{
-  max-width:520px;
-  margin:auto;
-  padding:20px;
-}
-
+.container{ max-width:520px; margin:auto; padding:20px; }
 h1{ font-size:26px; line-height:1.3; }
 h2{ font-size:20px; margin-top:30px; }
 
@@ -83,10 +78,7 @@ video{ width:100%; border-radius:12px; }
   margin-top:20px;
   text-align:center;
 }
-.stats b{
-  color:#FFD700;
-  font-size:18px;
-}
+.stats b{ color:#FFD700; font-size:18px; }
 
 .contact-fixed{
   position:fixed;
@@ -138,79 +130,54 @@ video{ width:100%; border-radius:12px; }
   margin:0 10px;
 }
 
-/* --- Стили для скриншотов и видео Lightbox --- */
-.screens-carousel {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.screens-row {
-  display: flex;
-  gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 5px;
-}
-.screens-row img {
-  width: 140px;
-  border: 2px solid #FFD700;
-  border-radius: 10px;
-  cursor: pointer;
-  flex-shrink: 0;
+/* --- Скриншоты и видео --- */
+.screens-carousel { display:flex; flex-direction:column; gap:10px; }
+.screens-row{ display:flex; gap:10px; overflow-x:auto; padding-bottom:5px; }
+.screens-row img{
+  width:140px;
+  border:2px solid #FFD700;
+  border-radius:10px;
+  cursor:pointer;
+  flex-shrink:0;
 }
 
-.videos-carousel {
-  display: flex;
-  overflow-x: auto;
-  gap: 10px;
-  padding-bottom: 10px;
-}
-.videos-carousel video {
-  width: 220px;
-  border-radius: 12px;
-  flex-shrink: 0;
-  cursor: pointer;
+.videos-carousel{ display:flex; overflow-x:auto; gap:10px; padding-bottom:10px; }
+.videos-carousel video{
+  width:220px;
+  border-radius:12px;
+  flex-shrink:0;
+  cursor:pointer;
 }
 
-/* Lightbox для скриншотов и видео */
-.lightbox {
+/* --- Lightbox --- */
+.lightbox{
   position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.9);
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.95);
   display:none;
   align-items:center;
   justify-content:center;
   z-index:9999;
 }
-.lightbox img, .lightbox video {
+.lightbox img, .lightbox video{
   max-width:90%;
   max-height:90%;
 }
-.lightbox video {
-  display:block;
-}
-.lightbox:target {
-  display:flex;
-}
+.lightbox video{ display:block; }
 </style>
 
 <link rel="icon" href="/favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
 </head>
 
 <body>
 
 <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА -->
 <div style="position:absolute;top:20px;right:20px;z-index:1000;font-family:sans-serif;">
-  <a href="en" style="color:#f5c542;text-decoration:none;font-weight:bold;">
-   🇬🇧 English
-  </a>
+  <a href="en" style="color:#f5c542;text-decoration:none;font-weight:bold;">🇬🇧 English</a>
 </div>
 
 <section style="background:#0b0b0b;color:white;padding:60px 20px;text-align:center;font-family:sans-serif;">
@@ -231,9 +198,7 @@ video{ width:100%; border-radius:12px; }
 </section>
 
 <section style="background:#111;color:white;padding:40px 20px;text-align:center;font-family:sans-serif;">
-  <h2 style="font-size:24px;margin-bottom:20px;">
-   Популярные направления
-  </h2>
+  <h2 style="font-size:24px;margin-bottom:20px;">Популярные направления</h2>
   <p style="font-size:16px;color:#ccc;max-width:600px;margin:0 auto;">
    Россия ↔ Танзания • Россия ↔ Турция • Россия ↔ Индонезия<br>
    Переводы между картами, мобильными кошельками и криптовалютой
@@ -254,244 +219,98 @@ video{ width:100%; border-radius:12px; }
 ✔ Конфиденциально • ✔ 115+ валют • ✔ Ежедневно
 </div>
 <div id="fomo" class="fomo"></div>
+
 <h2>Подтверждения</h2>
 
-<!-- СКРИНШОТЫ КАРУСЕЛЬ -->
+<!-- СКРИНШОТЫ -->
 <div class="screens-carousel">
   <div class="screens-row">
-    <a href="#lb1"><img src="IMG_ru/1.jpg" alt="скрин 1"></a>
-    <a href="#lb2"><img src="IMG_ru/2.jpg" alt="скрин 2"></a>
-    <a href="#lb3"><img src="IMG_ru/3.jpg" alt="скрин 3"></a>
-    <a href="#lb4"><img src="IMG_ru/4.jpg" alt="скрин 4"></a>
-    <a href="#lb5"><img src="IMG_ru/5.jpg" alt="скрин 5"></a>
+    <img src="IMG_ru/1.jpg" alt="скрин 1">
+    <img src="IMG_ru/2.jpg" alt="скрин 2">
+    <img src="IMG_ru/3.jpg" alt="скрин 3">
+    <img src="IMG_ru/4.jpg" alt="скрин 4">
+    <img src="IMG_ru/5.jpg" alt="скрин 5">
   </div>
   <div class="screens-row">
-    <a href="#lb6"><img src="IMG_ru/6.jpg" alt="скрин 6"></a>
-    <a href="#lb7"><img src="IMG_ru/7.jpg" alt="скрин 7"></a>
-    <a href="#lb8"><img src="IMG_ru/8.jpg" alt="скрин 8"></a>
-    <a href="#lb9"><img src="IMG_ru/9.jpg" alt="скрин 9"></a>
-    <a href="#lb10"><img src="IMG_ru/10.jpg" alt="скрин 10"></a>
+    <img src="IMG_ru/6.jpg" alt="скрин 6">
+    <img src="IMG_ru/7.jpg" alt="скрин 7">
+    <img src="IMG_ru/8.jpg" alt="скрин 8">
+    <img src="IMG_ru/9.jpg" alt="скрин 9">
+    <img src="IMG_ru/10.jpg" alt="скрин 10">
   </div>
 </div>
 
-<!-- ВИДЕО КАРУСЕЛЬ -->
+<!-- ВИДЕО -->
 <h2>Отзывы клиентов</h2>
 <div class="videos-carousel">
-  <a href="#v1"><video src="REW_ru/1.mp4" poster="POS_ru/1.jpg" muted></video></a>
-  <a href="#v2"><video src="REW_ru/2.mp4" poster="POS_ru/2.jpg" muted></video></a>
-  <a href="#v3"><video src="REW_ru/3.mp4" poster="POS_ru/3.jpg" muted></video></a>
-  <a href="#v4"><video src="REW_ru/4.mp4" poster="POS_ru/4.jpg" muted></video></a>
-  <a href="#v5"><video src="REW_ru/5.mp4" poster="POS_ru/5.jpg" muted></video></a>
-  <a href="#v6"><video src="REW_ru/6.mp4" poster="POS_ru/6.jpg" muted></video></a>
-  <a href="#v7"><video src="REW_ru/7.mp4" poster="POS_ru/7.jpg" muted></video></a>
-  <a href="#v8"><video src="REW_ru/8.mp4" poster="POS_ru/8.jpg" muted></video></a>
-  <a href="#v9"><video src="REW_ru/9.mp4" poster="POS_ru/9.jpg" muted></video></a>
-  <a href="#v10"><video src="REW_ru/10.mp4" poster="POS_ru/10.jpg" muted></video></a>
-  <a href="#v11"><video src="REW_ru/11.mp4" poster="POS_ru/11.jpg" muted></video></a>
-  <a href="#v12"><video src="REW_ru/12.mp4" poster="POS_ru/12.jpg" muted></video></a>
-  <a href="#v13"><video src="REW_ru/13.mp4" poster="POS_ru/13.jpg" muted></video></a>
-  <a href="#v14"><video src="REW_ru/14.mp4" poster="POS_ru/14.jpg" muted></video></a>
+  <video src="REW_ru/1.mp4" poster="POS_ru/1.jpg" muted></video>
+  <video src="REW_ru/2.mp4" poster="POS_ru/2.jpg" muted></video>
+  <video src="REW_ru/3.mp4" poster="POS_ru/3.jpg" muted></video>
+  <video src="REW_ru/4.mp4" poster="POS_ru/4.jpg" muted></video>
+  <video src="REW_ru/5.mp4" poster="POS_ru/5.jpg" muted></video>
+  <video src="REW_ru/6.mp4" poster="POS_ru/6.jpg" muted></video>
+  <video src="REW_ru/7.mp4" poster="POS_ru/7.jpg" muted></video>
+  <video src="REW_ru/8.mp4" poster="POS_ru/8.jpg" muted></video>
+  <video src="REW_ru/9.mp4" poster="POS_ru/9.jpg" muted></video>
+  <video src="REW_ru/10.mp4" poster="POS_ru/10.jpg" muted></video>
+  <video src="REW_ru/11.mp4" poster="POS_ru/11.jpg" muted></video>
+  <video src="REW_ru/12.mp4" poster="POS_ru/12.jpg" muted></video>
+  <video src="REW_ru/13.mp4" poster="POS_ru/13.jpg" muted></video>
+  <video src="REW_ru/14.mp4" poster="POS_ru/14.jpg" muted></video>
 </div>
 
-<!-- LIGHTBOX для скриншотов -->
-<div id="lb1" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/1.jpg"></div>
-<div id="lb2" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/2.jpg"></div>
-<div id="lb3" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/3.jpg"></div>
-<div id="lb4" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/4.jpg"></div>
-<div id="lb5" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/5.jpg"></div>
-<div id="lb6" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/6.jpg"></div>
-<div id="lb7" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/7.jpg"></div>
-<div id="lb8" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/8.jpg"></div>
-<div id="lb9" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/9.jpg"></div>
-<div id="lb10" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><img src="IMG_ru/10.jpg"></div>
-
-<!-- LIGHTBOX для видео -->
-<div id="v1" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/1.mp4" controls autoplay></video></div>
-<div id="v2" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/2.mp4" controls autoplay></video></div>
-<div id="v3" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/3.mp4" controls autoplay></video></div>
-<div id="v4" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/4.mp4" controls autoplay></video></div>
-<div id="v5" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/5.mp4" controls autoplay></video></div>
-<div id="v6" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/6.mp4" controls autoplay></video></div>
-<div id="v7" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/7.mp4" controls autoplay></video></div>
-<div id="v8" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/8.mp4" controls autoplay></video></div>
-<div id="v9" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/9.mp4" controls autoplay></video></div>
-<div id="v10" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/10.mp4" controls autoplay></video></div>
-<div id="v11" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/11.mp4" controls autoplay></video></div>
-<div id="v12" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/12.mp4" controls autoplay></video></div>
-<div id="v13" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/13.mp4" controls autoplay></video></div>
-<div id="v14" class="lightbox"><a href="#!" style="position:absolute;top:20px;right:20px;font-size:32px;color:#FFD700;text-decoration:none;">×</a><video src="REW_ru/14.mp4" controls autoplay></video></div>
-
-<!-- Почему не банки -->
-<h2>Почему не банки</h2>
-
-<div class="card">
-✔ Быстро<br>
-✔ Без блокировок<br>
-✔ Без SWIFT
-</div>
-
-<div class="card">
-✖ Медленно<br>
-✖ Ограничения<br>
-✖ Риски
-</div>
-
-<!-- Вопросы FAQ -->
-<h2>Вопросы</h2>
-
-<div class="faq-q" onclick="toggleFaq(this)">Это безопасно?</div>
-<div class="faq-a">Да, вы общаетесь напрямую.</div>
-
-<div class="faq-q" onclick="toggleFaq(this)">Сколько времени?</div>
-<div class="faq-a">5–60 минут.</div>
-
-<div class="faq-q" onclick="toggleFaq(this)">Можно ли отправить на карту или M-Pesa?</div>
-<div class="faq-a">Да, поддерживаем карты РФ, M-Pesa и Mixx.</div>
-
-<div class="faq-q" onclick="toggleFaq(this)">Есть поддержка USDT?</div>
-<div class="faq-a">Да, можно использовать USDT для обмена и перевода.</div>
-
-<!-- Доверие / статистика -->
-<h2>Доверие</h2>
-
-<div class="stats">
-  <div><b>1000+</b><br>обменов</div>
-  <div><b>7/7</b><br>работаем</div>
-  <div><b>15 мин</b><br>среднее</div>
-</div>
-
-<div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
-🔒 Конфиденциально • Без передачи данных
-</div>
-
-<a href="https://wa.me/255756687444" class="cta">Начать обмен</a>
-
-<!-- Фиксированный футер с мессенджерами -->
-<div class="contact-hint">
-Отвечаем быстро • без регистрации
-</div>
-
-<div class="contact-fixed">
-  <a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
-  <a href="https://t.me/app2cas" class="cf-btn telegram">Telegram</a>
-  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">imo</a>
-</div>
-
-<!-- Скрипты для калькулятора и FAQ -->
-<script>
-document.getElementById("amount").oninput = function(){
-  let v = parseFloat(this.value) || 0;
-  document.getElementById("result").innerText = "≈ " + (v * 0.95).toFixed(2);
-}
-
-function toggleFaq(el){
-  let a = el.nextElementSibling;
-  a.style.display = a.style.display === "block" ? "none" : "block";
-}
-
-// FOMO уведомления
-const fomo = document.getElementById("fomo");
-function showFomo(){
-  const names = ["Касмир","Александр","Али","Аноним"];
-  const amounts = ["1200$","3500$","800$","2200$"];
-  let n = names[Math.floor(Math.random()*names.length)];
-  let a = amounts[Math.floor(Math.random()*amounts.length)];
-  fomo.innerText = `${n} обменял ${a} • через ватсап`;
-}
-setInterval(showFomo,5000);
-showFomo();
-<!-- FULLSCREEN GALLERY -->
-<div id="fullscreen-gallery" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;justify-content:center;align-items:center;">
-  <span id="gallery-close" style="position:absolute;top:20px;right:30px;font-size:30px;color:#fff;cursor:pointer;">&times;</span>
-  <img id="gallery-img" src="" style="max-width:90%;max-height:90%;border-radius:10px;display:none;">
-  <video id="gallery-video" controls style="max-width:90%;max-height:90%;border-radius:10px;display:none;"></video>
+<!-- UNIVERSAL LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+  <span id="lightbox-close" style="position:absolute;top:20px;right:30px;font-size:32px;color:#FFD700;cursor:pointer;">&times;</span>
+  <img id="lightbox-img" style="max-width:90%;max-height:90%;display:none;">
+  <video id="lightbox-video" controls style="max-width:90%;max-height:90%;display:none;"></video>
 </div>
 
 <script>
-const gallery = document.getElementById('fullscreen-gallery');
-const galleryImg = document.getElementById('gallery-img');
-const galleryVideo = document.getElementById('gallery-video');
-const galleryClose = document.getElementById('gallery-close');
+const items=[
+  {type:'img', src:'IMG_ru/1.jpg'}, {type:'img', src:'IMG_ru/2.jpg'}, {type:'img', src:'IMG_ru/3.jpg'},
+  {type:'img', src:'IMG_ru/4.jpg'}, {type:'img', src:'IMG_ru/5.jpg'}, {type:'img', src:'IMG_ru/6.jpg'},
+  {type:'img', src:'IMG_ru/7.jpg'}, {type:'img', src:'IMG_ru/8.jpg'}, {type:'img', src:'IMG_ru/9.jpg'},
+  {type:'img', src:'IMG_ru/10.jpg'},
+  {type:'video', src:'REW_ru/1.mp4'}, {type:'video', src:'REW_ru/2.mp4'}, {type:'video', src:'REW_ru/3.mp4'},
+  {type:'video', src:'REW_ru/4.mp4'}, {type:'video', src:'REW_ru/5.mp4'}, {type:'video', src:'REW_ru/6.mp4'},
+  {type:'video', src:'REW_ru/7.mp4'}, {type:'video', src:'REW_ru/8.mp4'}, {type:'video', src:'REW_ru/9.mp4'},
+  {type:'video', src:'REW_ru/10.mp4'}, {type:'video', src:'REW_ru/11.mp4'}, {type:'video', src:'REW_ru/12.mp4'},
+  {type:'video', src:'REW_ru/13.mp4'}, {type:'video', src:'REW_ru/14.mp4'}
+];
 
-let items = []; // массив всех скринов и видео
-let currentIndex = 0;
+let currentIndex=0;
+const lb=document.getElementById('lightbox');
+const img=document.getElementById('lightbox-img');
+const video=document.getElementById('lightbox-video');
 
-// Собираем все скриншоты и видео
-document.querySelectorAll('.screens img, .video-slide video').forEach(el => {
-  items.push(el);
-  el.style.cursor = 'pointer';
-  el.onclick = () => openGallery(el);
-});
-
-function openGallery(el){
-  gallery.style.display = 'flex';
-  currentIndex = items.indexOf(el);
-  updateGallery();
-}
-
-function updateGallery(){
-  const item = items[currentIndex];
-  if(item.tagName === 'IMG'){
-    galleryImg.src = item.src;
-    galleryImg.style.display = 'block';
-    galleryVideo.style.display = 'none';
-  } else {
-    galleryVideo.src = item.src;
-    galleryVideo.style.display = 'block';
-    galleryImg.style.display = 'none';
+function openLightbox(index){
+  currentIndex=index;
+  lb.style.display='flex';
+  if(items[index].type==='img'){
+    img.src=items[index].src; img.style.display='block'; video.style.display='none'; video.pause();
+  } else{
+    video.src=items[index].src; video.style.display='block'; img.style.display='none'; video.play();
   }
 }
 
-galleryClose.onclick = () => {
-  gallery.style.display = 'none';
-  galleryVideo.pause();
-}
+function closeLightbox(){ lb.style.display='none'; video.pause(); }
+function showNext(){ currentIndex=(currentIndex+1)%items.length; openLightbox(currentIndex); }
+function showPrev(){ currentIndex=(currentIndex-1+items.length)%items.length; openLightbox(currentIndex); }
 
-// swipe support
-let startX = 0;
-gallery.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-gallery.addEventListener('touchend', e => {
-  let diff = e.changedTouches[0].clientX - startX;
-  if(diff > 50) prevItem();
-  if(diff < -50) nextItem();
-});
-
-function prevItem(){ currentIndex = (currentIndex-1+items.length)%items.length; updateGallery(); }
-function nextItem(){ currentIndex = (currentIndex+1)%items.length; updateGallery(); }
-
-// arrow keys
-document.addEventListener('keydown', e => {
-  if(gallery.style.display === 'flex'){
-    if(e.key === 'ArrowLeft') prevItem();
-    if(e.key === 'ArrowRight') nextItem();
-    if(e.key === 'Escape') gallery.style.display='none';
+document.getElementById('lightbox-close').onclick=closeLightbox;
+document.addEventListener('keydown', function(e){
+  if(lb.style.display==='flex'){
+    if(e.key==='Escape') closeLightbox();
+    if(e.key==='ArrowRight') showNext();
+    if(e.key==='ArrowLeft') showPrev();
   }
 });
+
+// Клики на скриншоты и видео
+document.querySelectorAll('.screens-row img').forEach((el,i)=>el.onclick=()=>openLightbox(i));
+document.querySelectorAll('.videos-carousel video').forEach((el,i)=>el.onclick=()=>openLightbox(i+10));
 </script>
 
-<!-- Lightbox стили -->
-<style>
-.lightbox {
-  display: none;
-  position: fixed;
-  z-index: 10000;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.95);
-  text-align:center;
-}
-
-.lightbox img, .lightbox video {
-  max-width:90%;
-  max-height:90%;
-  margin-top:3%;
-}
-
-.lightbox:target {
-  display:block;
-}
-</style>
 </body>
 </html>
