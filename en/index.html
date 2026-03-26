@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Exchange — app2.cash</title>
+
+<style>
+body{
+  margin:0;
+  background:#0b0b0f;
+  color:#fff;
+  font-family:Montserrat, Arial;
+  padding-bottom:70px;
+}
+
+.container{
+  max-width:520px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{ font-size:26px; line-height:1.3; }
+h2{ font-size:20px; margin-top:30px; }
+
+.cta{
+  display:block;
+  text-align:center;
+  background:#FFD700;
+  color:#000;
+  padding:14px;
+  border-radius:12px;
+  font-weight:bold;
+  margin-top:15px;
+  text-decoration:none;
+}
+
+.fomo{
+  background:#111;
+  border:1px solid #FFD700;
+  padding:10px;
+  border-radius:10px;
+  margin:15px 0;
+  font-size:13px;
+}
+
+.card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,215,0,0.2);
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin-top:10px;
+  font-size:16px;
+}
+
+.video-slide{ margin-top:15px; }
+video{ width:100%; border-radius:12px; }
+
+.screens{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+}
+.screens img{
+  width:140px;
+  border:2px solid #FFD700;
+  border-radius:10px;
+}
+
+.faq-q{
+  cursor:pointer;
+  background:#111;
+  padding:10px;
+  border-radius:8px;
+  margin-top:10px;
+}
+.faq-a{
+  display:none;
+  padding:10px;
+  font-size:13px;
+  color:#aaa;
+}
+
+.stats{
+  display:flex;
+  justify-content:space-around;
+  margin-top:20px;
+  text-align:center;
+}
+.stats b{
+  color:#FFD700;
+  font-size:18px;
+}
+
+.contact-fixed{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  z-index:9999;
+}
+
+.cf-btn{
+  flex:1;
+  text-align:center;
+  padding:14px 0;
+  font-weight:bold;
+  text-decoration:none;
+  color:#000;
+  font-size:14px;
+}
+
+.whatsapp{ background:#25D366; animation:pulse 1.5s infinite; }
+.telegram{ background:#229ED9; }
+.imo{ background:#00AEEF; }
+
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
+  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+}
+
+.contact-hint{
+  position:fixed;
+  bottom:50px;
+  width:100%;
+  text-align:center;
+  font-size:12px;
+  color:#aaa;
+  z-index:9998;
+}
+
+.lang-switch{
+  text-align:center;
+  margin-bottom:15px;
+}
+.lang-switch a{
+  color:#FFD700;
+  font-weight:bold;
+  text-decoration:none;
+  margin:0 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="lang-switch">
+  <a href="index.html">Русский</a>
+</div>
+
+<h1>
+Exchange money across countries<br>
+Fast. No banks. No SWIFT.
+</h1>
+
+<a href="https://wa.me/255756687444" class="cta">Exchange now</a>
+
+<div style="margin-top:10px;font-size:13px;color:#aaa;">
+✔ Private • ✔ 100+ currencies • ✔ Daily
+</div>
+
+<div id="fomo" class="fomo"></div>
+
+<h2>How it works</h2>
+<div class="card">
+1. Send money<br>
+2. We exchange<br>
+3. Receive
+</div>
+
+<h2>How much will you get?</h2>
+<input id="amount" placeholder="Enter amount">
+<div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
+<a href="https://wa.me/255756687444" class="cta">Exchange</a>
+
+<h2>Customer reviews</h2>
+
+<!-- 10 VIDEOS -->
+<div class="video-slide"><video src="REW_en/1.mp4" controls poster="POS_en/1.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/2.mp4" controls poster="POS_en/2.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/3.mp4" controls poster="POS_en/3.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/4.mp4" controls poster="POS_en/4.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/5.mp4" controls poster="POS_en/5.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/6.mp4" controls poster="POS_en/6.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/7.mp4" controls poster="POS_en/7.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/8.mp4" controls poster="POS_en/8.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/9.mp4" controls poster="POS_en/9.jpg"></video></div>
+<div class="video-slide"><video src="REW_en/10.mp4" controls poster="POS_en/10.jpg"></video></div>
+
+<h2>Confirmations</h2>
+
+<!-- 10 SCREENS -->
+<div class="screens">
+<img src="IMG_en/1.jpg">
+<img src="IMG_en/2.jpg">
+<img src="IMG_en/3.jpg">
+<img src="IMG_en/4.jpg">
+<img src="IMG_en/5.jpg">
+<img src="IMG_en/6.jpg">
+<img src="IMG_en/7.jpg">
+<img src="IMG_en/8.jpg">
+<img src="IMG_en/9.jpg">
+<img src="IMG_en/10.jpg">
+</div>
+
+<h2>Why not banks</h2>
+
+<div class="card">
+✔ Fast<br>✔ No blocks<br>✔ No SWIFT
+</div>
+
+<div class="card">
+✖ Slow<br>✖ Limits<br>✖ Risks
+</div>
+
+<h2>Questions</h2>
+
+<div class="faq-q" onclick="toggleFaq(this)">Is it safe?</div>
+<div class="faq-a">Yes, you communicate directly.</div>
+
+<div class="faq-q" onclick="toggleFaq(this)">How long does it take?</div>
+<div class="faq-a">5–60 minutes.</div>
+
+<h2>Trust</h2>
+
+<div class="stats">
+<div><b>1000+</b><br>exchanges</div>
+<div><b>7/7</b><br>working</div>
+<div><b>15 min</b><br>average</div>
+</div>
+
+<div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
+🔒 Private • No data transfer
+</div>
+
+<a href="https://wa.me/255756687444" class="cta">Start exchange</a>
+
+</div>
+
+<div class="contact-hint">
+Quick response • no registration
+</div>
+
+<div class="contact-fixed">
+<a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
+<a href="https://t.me/RaBright" class="cf-btn telegram">Telegram</a>
+<a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">imo</a>
+</div>
+
+<script>
+document.getElementById("amount").oninput = function(){
+  let v = this.value;
+  document.getElementById("result").innerText = "≈ " + (v * 0.95).toFixed(2);
+}
+
+function toggleFaq(el){
+  let a = el.nextElementSibling;
+  a.style.display = a.style.display === "block" ? "none" : "block";
+}
+
+const fomo = document.getElementById("fomo");
+
+function showFomo(){
+  const names = ["Oksana","Alexander","Ali","Ahmed"];
+  const amounts = ["1200$","3500$","800$","2200$"];
+
+  let n = names[Math.floor(Math.random()*names.length)];
+  let a = amounts[Math.floor(Math.random()*amounts.length)];
+
+  fomo.innerText = `${n} exchanged ${a} • just now`;
+}
+
+setInterval(showFomo,5000);
+showFomo();
+</script>
+
+</body>
+</html>
