@@ -4,23 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Обмен валют — app2.cash</title>
-
-<link rel="icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
 <style>
 body{
   margin:0;
   background:#0b0b0f;
   color:#fff;
   font-family:Montserrat, Arial, sans-serif;
-  padding-bottom:80px;
+  padding-bottom:90px;
 }
 .container{ max-width:520px; margin:auto; padding:20px; }
-h1{ font-size:28px; line-height:1.3; }
-h2{ font-size:22px; margin-top:30px; color:#FFD700; }
+h1{ font-size:28px; line-height:1.3; margin-bottom:15px;}
+h2{ font-size:22px; margin-top:30px; margin-bottom:15px; }
 
 .cta{
   display:block;
@@ -30,70 +24,60 @@ h2{ font-size:22px; margin-top:30px; color:#FFD700; }
   padding:14px;
   border-radius:12px;
   font-weight:bold;
-  margin:15px 0;
+  margin-top:15px;
   text-decoration:none;
-  font-size:18px;
 }
 
 .fomo{
   background:#111;
   border:1px solid #FFD700;
-  padding:10px;
+  padding:12px;
   border-radius:10px;
   margin:15px 0;
-  font-size:13px;
-  overflow:hidden;
-  height:70px;
-  position:relative;
+  font-size:14px;
 }
 
-.fomo div{
-  position:absolute;
+.card{
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,215,0,0.2);
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+}
+
+input{
   width:100%;
-  animation:scrollFOMO 12s linear infinite;
-}
-
-@keyframes scrollFOMO{
-  0% { top:70px; }
-  100% { top:-100%; }
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin-top:10px;
+  font-size:16px;
 }
 
 .video-slide{ margin-top:15px; }
 video{ width:100%; border-radius:12px; }
 
-.screens-carousel { display:flex; flex-direction:column; gap:10px; margin-top:15px; }
-.screens-row{ display:flex; gap:10px; overflow-x:auto; padding-bottom:5px; }
-.screens-row img{
-  width:140px;
-  border:2px solid #FFD700;
-  border-radius:10px;
+.faq-q{
   cursor:pointer;
-  flex-shrink:0;
+  background:#111;
+  padding:10px;
+  border-radius:8px;
+  margin-top:10px;
 }
-
-.videos-carousel{ display:flex; overflow-x:auto; gap:10px; padding-bottom:10px; margin-top:15px;}
-.videos-carousel video{
-  width:220px;
-  border-radius:12px;
-  flex-shrink:0;
-  cursor:pointer;
-}
-
-.lightbox{
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.95);
+.faq-a{
   display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+  padding:10px;
+  font-size:13px;
+  color:#aaa;
 }
-.lightbox img, .lightbox video{
-  max-width:90%;
-  max-height:90%;
+
+.stats{
+  display:flex;
+  justify-content:space-around;
+  margin-top:20px;
+  text-align:center;
 }
-.lightbox video{ display:block; }
+.stats b{ color:#FFD700; font-size:18px; }
 
 .contact-fixed{
   position:fixed;
@@ -103,16 +87,17 @@ video{ width:100%; border-radius:12px; }
   display:flex;
   z-index:9999;
 }
+
 .cf-btn{
   flex:1;
   text-align:center;
   padding:14px 0;
   font-weight:bold;
   text-decoration:none;
-  color:#000;
+  color:#fff;
   font-size:14px;
-  border-top:2px solid #111;
 }
+
 .whatsapp{ background:#25D366; animation:pulse 1.5s infinite; }
 .telegram{ background:#229ED9; }
 .imo{ background:#00AEEF; }
@@ -132,54 +117,75 @@ video{ width:100%; border-radius:12px; }
   font-weight:bold;
   text-decoration:none;
   margin:0 10px;
-  font-size:16px;
+  font-size:14px;
 }
 
-.faq-q{
+/* Скриншоты и видео */
+.screens-carousel{ display:flex; flex-direction:column; gap:10px; }
+.screens-row{ display:flex; gap:10px; overflow-x:auto; scroll-behavior:smooth; padding-bottom:5px; }
+.screens-row img{
+  width:140px;
+  border:2px solid #FFD700;
+  border-radius:10px;
   cursor:pointer;
-  background:#111;
-  padding:10px;
-  border-radius:8px;
-  margin-top:10px;
+  flex-shrink:0;
 }
-.faq-a{
-  display:none;
-  padding:10px;
-  font-size:13px;
-  color:#aaa;
-}
-</style>
-</head>
 
+.videos-carousel{ display:flex; overflow-x:auto; gap:10px; padding-bottom:10px; scroll-behavior:smooth; }
+.videos-carousel video{
+  width:220px;
+  border-radius:12px;
+  flex-shrink:0;
+  cursor:pointer;
+}
+
+/* Lightbox */
+.lightbox{
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.95);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+.lightbox img, .lightbox video{
+  max-width:90%;
+  max-height:90%;
+}
+.lightbox video{ display:block; }
+
+</style>
+<link rel="icon" href="/favicon.ico">
+</head>
 <body>
 
-<!-- Языковая кнопка -->
+<!-- Английский -->
 <div style="position:absolute;top:20px;right:20px;z-index:1000;font-family:sans-serif;">
-  <a href="en" style="color:#f5c542;text-decoration:none;font-weight:bold;">🇬🇧 English</a>
+  <a href="en.html" style="color:#f5c542;text-decoration:none;font-weight:bold;">🇬🇧 English</a>
 </div>
 
-<!-- Шапка -->
-<section style="background:#0b0b0b;color:white;padding:40px 20px;text-align:center;">
-  <img src="bull_logo.png" alt="Логотип" style="width:80px;margin-bottom:15px;">
+<section style="text-align:center;padding:40px 20px;">
+  <img src="IMG/logo.png" alt="Лого" style="width:70px;margin-bottom:15px;">
   <h1>Международные переводы и обмен валют</h1>
   <p style="font-size:16px;color:#ccc;max-width:600px;margin:auto;">
-    Обменивайте рубли, доллары, турецкие лиры, индонезийские рупии, узбекские суммы и казахские тенге безопасно и анонимно.  
-    Поддержка студентов, бизнеса и частных клиентов.
+    Работаем с рублями, долларами, турецкой лирой, индонезийской рупией, узбекским сумом, казахстанским тенге.<br>
+    Помогаем студентам, бизнесу и частным клиентам по всему миру.
   </p>
-  <a href="https://wa.me/255756687444" class="cta">Написать в WhatsApp</a>
+  <a href="https://wa.me/255756687444" class="cta">Обменять сейчас</a>
 </section>
 
-<!-- FOMO -->
-<div id="fomo" class="fomo">
-  <div>Александр обменял 2 300 USD</div>
-  <div>Аноним обменял 20 000 USDT</div>
-  <div>Мария получила 1 500 000 TZS</div>
-  <div>Сергей обменял 5 000 USD</div>
-  <div>Танзанийский студент получил 800 000 TZS</div>
-</div>
+<div class="fomo" id="fomo"></div>
+
+<h2 style="text-align:center;">Популярные направления</h2>
+<p style="text-align:center;color:#ccc;">
+ Россия ↔ Турция • Россия ↔ Индонезия • Россия ↔ Узбекистан • Россия ↔ Казахстан • Россия ↔ Россия
+</p>
+
+<h2>Подтверждения</h2>
 
 <!-- Скриншоты -->
-<h2 style="text-align:center;">Подтверждения</h2>
 <div class="screens-carousel">
   <div class="screens-row">
     <img src="IMG/1.jpg" alt="скрин 1">
@@ -198,7 +204,7 @@ video{ width:100%; border-radius:12px; }
 </div>
 
 <!-- Видео -->
-<h2 style="text-align:center;">Отзывы клиентов</h2>
+<h2>Отзывы клиентов</h2>
 <div class="videos-carousel">
   <video src="REW/1.mp4" poster="POS/1.jpg" controls></video>
   <video src="REW/2.mp4" poster="POS/2.jpg" controls></video>
@@ -212,22 +218,6 @@ video{ width:100%; border-radius:12px; }
   <video src="REW/10.mp4" poster="POS/10.jpg" controls></video>
 </div>
 
-<!-- FAQ -->
-<h2 style="text-align:center;">Вопросы и ответы</h2>
-<div class="faq-q">Сколько времени занимает обмен?</div>
-<div class="faq-a">Переводы выполняются в среднем 5–15 минут, без задержек и ограничений.</div>
-<div class="faq-q">Можно ли оставаться анонимным?</div>
-<div class="faq-a">Да, все операции полностью конфиденциальны.</div>
-<div class="faq-q">Какие валюты поддерживаются?</div>
-<div class="faq-a">Рубли, доллары, турецкие лиры, индонезийские рупии, узбекские суммы и казахские тенге, а также USDT.</div>
-
-<!-- Закрепленные мессенджеры -->
-<div class="contact-fixed">
-  <a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
-  <a href="https://t.me/maratbright" class="cf-btn telegram">Telegram</a>
-  <a href="https://imo.im/maratbright" class="cf-btn imo">Imo</a>
-</div>
-
 <!-- Lightbox -->
 <div id="lightbox" class="lightbox">
   <span id="lightbox-close" style="position:absolute;top:20px;right:30px;font-size:32px;color:#FFD700;cursor:pointer;">&times;</span>
@@ -235,41 +225,49 @@ video{ width:100%; border-radius:12px; }
   <video id="lightbox-video" controls style="max-width:90%;max-height:90%;display:none;"></video>
 </div>
 
+<!-- Закрепленные мессенджеры -->
+<div class="contact-fixed">
+  <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/maratbright" target="_blank" class="cf-btn telegram">Telegram</a>
+  <a href="#" target="_blank" class="cf-btn imo">IMO</a>
+</div>
+
 <script>
-// FAQ toggle
-document.querySelectorAll('.faq-q').forEach(q=>{
-  q.addEventListener('click',()=>{ 
-    const a=q.nextElementSibling; 
-    a.style.display=a.style.display==='block'?'none':'block'; 
-  });
-});
+// FOMO
+const fomoData=[
+  {name:'Александр', amount:'2300', currency:'USD'},
+  {name:'Аноним', amount:'20000', currency:'USDT'},
+  {name:'Мария', amount:'500', currency:'USD'},
+  {name:'Иван', amount:'1200', currency:'USD'},
+  {name:'Ольга', amount:'3500', currency:'USDT'}
+];
+const fomoEl=document.getElementById('fomo');
+fomoEl.innerHTML=fomoData.map(d=>`${d.name} обменял ${d.amount} ${d.currency}`).join('<br>');
 
-// Lightbox для скриншотов
+// Lightbox
+const lightbox=document.getElementById('lightbox');
+const lbImg=document.getElementById('lightbox-img');
+const lbVideo=document.getElementById('lightbox-video');
+const lbClose=document.getElementById('lightbox-close');
+
 document.querySelectorAll('.screens-row img').forEach(img=>{
-  img.addEventListener('click',()=>{
-    document.getElementById('lightbox').style.display='flex';
-    const lbImg=document.getElementById('lightbox-img');
-    lbImg.src=img.src; lbImg.style.display='block';
-    document.getElementById('lightbox-video').style.display='none';
+  img.addEventListener('click',()=>{ 
+    lbImg.src=img.src; lbImg.style.display='block'; lbVideo.style.display='none';
+    lightbox.style.display='flex';
   });
 });
 
-// Lightbox для видео
-document.querySelectorAll('.videos-carousel video').forEach(v=>{
-  v.addEventListener('click',()=>{
-    document.getElementById('lightbox').style.display='flex';
-    const lbVid=document.getElementById('lightbox-video');
-    lbVid.src=v.src; lbVid.style.display='block';
-    lbVid.play();
-    document.getElementById('lightbox-img').style.display='none';
+document.querySelectorAll('.videos-carousel video').forEach(video=>{
+  video.addEventListener('click',()=>{
+    lbVideo.src=video.src; lbVideo.style.display='block'; lbImg.style.display='none';
+    lightbox.style.display='flex';
+    lbVideo.play();
   });
 });
 
-// Закрытие lightbox
-document.getElementById('lightbox-close').addEventListener('click',()=>{
-  const lbVid=document.getElementById('lightbox-video');
-  lbVid.pause(); lbVid.currentTime=0;
-  document.getElementById('lightbox').style.display='none';
+lbClose.addEventListener('click',()=>{
+  lightbox.style.display='none';
+  lbVideo.pause(); lbVideo.currentTime=0;
 });
 </script>
 
