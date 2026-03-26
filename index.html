@@ -4,15 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Обмен валют — app2.cash</title>
-
 <style>
 body{
   margin:0;
   background:#0b0b0f;
   color:#fff;
   font-family:Montserrat, Arial, sans-serif;
-  padding-bottom:70px;
+  padding-bottom:80px;
 }
+header{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  background:#111;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+header img{
+  height:40px;
+  margin-right:10px;
+}
+header h1{
+  font-size:22px;
+  color:#FFD700;
+}
+
 .container{ max-width:520px; margin:auto; padding:20px; }
 h1{ font-size:26px; line-height:1.3; }
 h2{ font-size:20px; margin-top:30px; }
@@ -56,7 +74,7 @@ input{
 }
 
 .video-slide{ margin-top:15px; }
-video{ width:100%; border-radius:12px; }
+video{ width:100%; border-radius:12px; cursor:pointer; }
 
 .faq-q{
   cursor:pointer;
@@ -147,6 +165,10 @@ video{ width:100%; border-radius:12px; }
   border-radius:12px;
   flex-shrink:0;
   cursor:pointer;
+  transition: transform 0.3s;
+}
+.videos-carousel video.playing{
+  transform: scale(1.05);
 }
 
 /* --- Lightbox --- */
@@ -165,6 +187,7 @@ video{ width:100%; border-radius:12px; }
   max-height:90%;
 }
 .lightbox video{ display:block; }
+
 </style>
 
 <link rel="icon" href="/favicon.ico">
@@ -174,6 +197,12 @@ video{ width:100%; border-radius:12px; }
 </head>
 
 <body>
+
+<!-- ШАПКА С ЛОГО -->
+<header>
+  <img src="favicon-32x32.png" alt="Лого">
+  <h1>app2.cash</h1>
+</header>
 
 <!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА -->
 <div style="position:absolute;top:20px;right:20px;z-index:1000;font-family:sans-serif;">
@@ -197,6 +226,7 @@ video{ width:100%; border-radius:12px; }
   </a>
 </section>
 
+<!-- Популярные направления -->
 <section style="background:#111;color:white;padding:40px 20px;text-align:center;font-family:sans-serif;">
   <h2 style="font-size:24px;margin-bottom:20px;">Популярные направления</h2>
   <p style="font-size:16px;color:#ccc;max-width:600px;margin:0 auto;">
@@ -205,6 +235,7 @@ video{ width:100%; border-radius:12px; }
   </p>
 </section>
 
+<!-- Преимущества -->
 <section style="background:#0b0b0b;color:white;padding:40px 20px;text-align:center;font-family:sans-serif;">
   <p style="font-size:16px;color:#ccc;">
    ✔ Работаем с 2022 года<br>
@@ -242,7 +273,8 @@ video{ width:100%; border-radius:12px; }
 
 <!-- ВИДЕО -->
 <h2>Отзывы клиентов</h2>
-<div class="videos-carousel">
+<div class="videos-carousel" id="video-carousel">
+  <!-- 14 видео -->
   <video src="REW_ru/1.mp4" poster="POS_ru/1.jpg" muted></video>
   <video src="REW_ru/2.mp4" poster="POS_ru/2.jpg" muted></video>
   <video src="REW_ru/3.mp4" poster="POS_ru/3.jpg" muted></video>
@@ -259,57 +291,54 @@ video{ width:100%; border-radius:12px; }
   <video src="REW_ru/14.mp4" poster="POS_ru/14.jpg" muted></video>
 </div>
 
-<!-- UNIVERSAL LIGHTBOX -->
+<!-- Lightbox -->
 <div id="lightbox" class="lightbox">
   <span id="lightbox-close" style="position:absolute;top:20px;right:30px;font-size:32px;color:#FFD700;cursor:pointer;">&times;</span>
-  <img id="lightbox-img" style="max-width:90%;max-height:90%;display:none;">
   <video id="lightbox-video" controls style="max-width:90%;max-height:90%;display:none;"></video>
 </div>
 
+<!-- БАНКИ, МЕССЕНДЖЕРЫ -->
+<section style="background:#111;color:white;padding:20px;text-align:center;">
+  <h2>Доступные методы оплаты</h2>
+  <p>Россия: Т-Банк, Сбер, Альфа-Банк, СБП<br>
+     Танзания: Mixx, M-Pesa, CRDB Bank</p>
+  <div class="contact-fixed">
+    <a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
+    <a href="https://t.me/maratbright" class="cf-btn telegram">Telegram</a>
+    <a href="#" class="cf-btn imo">Imo</a>
+  </div>
+</section>
+
 <script>
-const items=[
-  {type:'img', src:'IMG_ru/1.jpg'}, {type:'img', src:'IMG_ru/2.jpg'}, {type:'img', src:'IMG_ru/3.jpg'},
-  {type:'img', src:'IMG_ru/4.jpg'}, {type:'img', src:'IMG_ru/5.jpg'}, {type:'img', src:'IMG_ru/6.jpg'},
-  {type:'img', src:'IMG_ru/7.jpg'}, {type:'img', src:'IMG_ru/8.jpg'}, {type:'img', src:'IMG_ru/9.jpg'},
-  {type:'img', src:'IMG_ru/10.jpg'},
-  {type:'video', src:'REW_ru/1.mp4'}, {type:'video', src:'REW_ru/2.mp4'}, {type:'video', src:'REW_ru/3.mp4'},
-  {type:'video', src:'REW_ru/4.mp4'}, {type:'video', src:'REW_ru/5.mp4'}, {type:'video', src:'REW_ru/6.mp4'},
-  {type:'video', src:'REW_ru/7.mp4'}, {type:'video', src:'REW_ru/8.mp4'}, {type:'video', src:'REW_ru/9.mp4'},
-  {type:'video', src:'REW_ru/10.mp4'}, {type:'video', src:'REW_ru/11.mp4'}, {type:'video', src:'REW_ru/12.mp4'},
-  {type:'video', src:'REW_ru/13.mp4'}, {type:'video', src:'REW_ru/14.mp4'}
-];
-
-let currentIndex=0;
-const lb=document.getElementById('lightbox');
-const img=document.getElementById('lightbox-img');
-const video=document.getElementById('lightbox-video');
-
-function openLightbox(index){
-  currentIndex=index;
-  lb.style.display='flex';
-  if(items[index].type==='img'){
-    img.src=items[index].src; img.style.display='block'; video.style.display='none'; video.pause();
-  } else{
-    video.src=items[index].src; video.style.display='block'; img.style.display='none'; video.play();
-  }
-}
-
-function closeLightbox(){ lb.style.display='none'; video.pause(); }
-function showNext(){ currentIndex=(currentIndex+1)%items.length; openLightbox(currentIndex); }
-function showPrev(){ currentIndex=(currentIndex-1+items.length)%items.length; openLightbox(currentIndex); }
-
-document.getElementById('lightbox-close').onclick=closeLightbox;
-document.addEventListener('keydown', function(e){
-  if(lb.style.display==='flex'){
-    if(e.key==='Escape') closeLightbox();
-    if(e.key==='ArrowRight') showNext();
-    if(e.key==='ArrowLeft') showPrev();
-  }
+// Видео карусель с кликом для воспроизведения/паузы
+const videos = document.querySelectorAll('.videos-carousel video');
+videos.forEach(v=>{
+  v.addEventListener('click',()=>{
+    if(v.paused){
+      v.play(); v.classList.add('playing');
+    }else{
+      v.pause(); v.classList.remove('playing');
+    }
+  });
 });
 
-// Клики на скриншоты и видео
-document.querySelectorAll('.screens-row img').forEach((el,i)=>el.onclick=()=>openLightbox(i));
-document.querySelectorAll('.videos-carousel video').forEach((el,i)=>el.onclick=()=>openLightbox(i+10));
+// Lightbox (опционально)
+const lb = document.getElementById('lightbox');
+const lbVid = document.getElementById('lightbox-video');
+const lbClose = document.getElementById('lightbox-close');
+videos.forEach(v=>{
+  v.addEventListener('dblclick',()=>{
+    lb.style.display='flex';
+    lbVid.src = v.src;
+    lbVid.style.display='block';
+    lbVid.play();
+  });
+});
+lbClose.onclick = ()=>{
+  lb.style.display='none';
+  lbVid.pause();
+  lbVid.src='';
+};
 </script>
 
 </body>
