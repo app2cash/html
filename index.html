@@ -72,7 +72,6 @@ video{ width:100%; border-radius:12px; }
   font-size:13px;
   color:#aaa;
 }
-
 .stats{
   display:flex;
   justify-content:space-around;
@@ -182,16 +181,16 @@ video{ width:100%; border-radius:12px; }
   Александр обменял 2300 USD.<br>
   Аноним обменял 22 000 USDT.<br>
   Мария обменяла 1500 EUR.<br>
-  Илья обменял 50 000 RUB.<br>
-  Аноним обменял 0.5 BTC.
+  Илья обменял 53 000 RUB.<br>
+  Аноним обменял 25 000 000 TZS.
 </div>
 
 <!-- Популярные направления -->
 <section style="background:#111;color:white;padding:30px 20px;text-align:center;">
   <h2>Популярные направления</h2>
   <p style="color:#ccc;">
-    Россия ↔ Танзания ↔ Турция ↔ Индонезия ↔ Узбекистан ↔ Казахстан<br>
-    Уточняйте ваше направление в личных сообщениях<br>
+    Россия, Танзания, Турция, Индонезия, Узбекистан, Казахстан<br>
+    Уточняйте страны и методы оплаты в личных сообщениях<br>
     Поддержка карт, мобильных кошельков и крипто.
   </p>
 </section>
@@ -309,6 +308,11 @@ images.forEach(img => {
     lightbox.style.display = 'flex';
   });
 });
+  
+function toggleFaq(el){
+  let a = el.nextElementSibling;
+  a.style.display = a.style.display === "block" ? "none" : "block";
+}
 
 const videos = document.querySelectorAll('.videos-carousel video');
 videos.forEach(v=>{
