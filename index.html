@@ -9,18 +9,18 @@ body{
   margin:0;
   background:#0b0b0f;
   color:#fff;
-  font-family:Montserrat, Arial;
+  font-family:Montserrat, Arial, sans-serif;
   padding-bottom:70px;
 }
 
 .container{
-  max-width:520px;
+  max-width:960px;
   margin:auto;
   padding:20px;
 }
 
-h1{ font-size:26px; line-height:1.3; }
-h2{ font-size:20px; margin-top:30px; }
+h1{ font-size:28px; line-height:1.3; text-align:center; }
+h2{ font-size:22px; margin-top:30px; text-align:center; }
 
 .cta{
   display:block;
@@ -30,8 +30,9 @@ h2{ font-size:20px; margin-top:30px; }
   padding:14px;
   border-radius:12px;
   font-weight:bold;
-  margin-top:15px;
+  margin:15px auto;
   text-decoration:none;
+  width:220px;
 }
 
 .fomo{
@@ -41,6 +42,7 @@ h2{ font-size:20px; margin-top:30px; }
   border-radius:10px;
   margin:15px 0;
   font-size:13px;
+  text-align:center;
 }
 
 .card{
@@ -60,18 +62,34 @@ input{
   font-size:16px;
 }
 
-.video-slide{ margin-top:15px; }
-video{ width:100%; border-radius:12px; }
+.video-row{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  margin-top:15px;
+  padding-bottom:10px;
+}
+
+.video-row video{
+  width:200px;
+  border-radius:12px;
+  flex-shrink:0;
+}
 
 .screens{
   display:flex;
   overflow-x:auto;
   gap:10px;
+  margin-top:10px;
+  padding-bottom:10px;
 }
+
 .screens img{
   width:140px;
   border:2px solid #FFD700;
   border-radius:10px;
+  cursor:pointer;
+  flex-shrink:0;
 }
 
 .faq-q{
@@ -107,7 +125,6 @@ video{ width:100%; border-radius:12px; }
   display:flex;
   z-index:9999;
 }
-
 .cf-btn{
   flex:1;
   text-align:center;
@@ -117,7 +134,6 @@ video{ width:100%; border-radius:12px; }
   color:#000;
   font-size:14px;
 }
-
 .whatsapp{ background:#25D366; animation:pulse 1.5s infinite; }
 .telegram{ background:#229ED9; }
 .imo{ background:#00AEEF; }
@@ -148,204 +164,183 @@ video{ width:100%; border-radius:12px; }
   text-decoration:none;
   margin:0 10px;
 }
+
+/* Lightbox для скриншотов */
+#lightbox{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:10000;
+}
+#lightbox img{
+  max-width:90%;
+  max-height:90%;
+  border:2px solid #FFD700;
+  border-radius:12px;
+  cursor:pointer;
+}
 </style>
 <link rel="icon" href="/favicon.ico">
-
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-
-<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
 </head>
-
 <body>
 
-
-<!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА -->
-<div style="position:absolute;top:20px;right:20px;z-index:1000;font-family:sans-serif;">
-  <a href="en" style="color:#f5c542;text-decoration:none;font-weight:bold;">
-    🇬🇧 English
-  </a>
+<!-- Языковое переключение -->
+<div style="position:absolute;top:20px;right:20px;z-index:1000;">
+  <a href="en" style="color:#FFD700;text-decoration:none;font-weight:bold;">🇬🇧 English</a>
 </div>
 
-<section style="background:#0b0b0b;color:white;padding:60px 20px;text-align:center;font-family:sans-serif;">
-
-  <h1 style="font-size:32px;max-width:700px;margin:0 auto 20px;">
-    Международные переводы и обмен валют<br>
-    <span style="color:#f5c542;">за 5–15 минут без ограничений</span>
-  </h1>
-
-  <p style="font-size:18px;max-width:600px;margin:0 auto 30px;color:#ccc;">
+<section style="padding:60px 20px;text-align:center;">
+  <h1>Международные переводы и обмен валют<br><span style="color:#FFD700;">за 5–15 минут без ограничений</span></h1>
+  <p style="font-size:18px;color:#ccc;max-width:600px;margin:10px auto;">
     Работаем с рублями, танзанийскими шиллингами и USDT.<br>
     Помогаем студентам, бизнесу и частным клиентам по всему миру.
   </p>
-
-  <a href="https://wa.me/255756687444" target="_blank"
-     style="display:inline-block;background:#25D366;color:white;
-     padding:15px 25px;font-size:18px;border-radius:8px;
-     text-decoration:none;font-weight:bold;">
-     Написать в WhatsApp
-  </a>
-
+  <a href="https://wa.me/255756687444" target="_blank" class="cta">Написать в WhatsApp</a>
 </section>
 
-<section style="background:#111;color:white;padding:40px 20px;text-align:center;font-family:sans-serif;">
-
-  <h2 style="font-size:24px;margin-bottom:20px;">
-    Популярные направления
-  </h2>
-
-  <p style="font-size:16px;color:#ccc;max-width:600px;margin:0 auto;">
+<section style="padding:40px 20px;text-align:center;background:#111;">
+  <h2>Популярные направления</h2>
+  <p style="font-size:16px;color:#ccc;">
     Россия ↔ Танзания • Россия ↔ Турция • Россия ↔ Индонезия<br>
     Переводы между картами, мобильными кошельками и криптовалютой
   </p>
-
 </section>
 
-
-<section style="background:#0b0b0b;color:white;padding:40px 20px;text-align:center;font-family:sans-serif;">
-
+<section style="padding:40px 20px;text-align:center;">
   <p style="font-size:16px;color:#ccc;">
     ✔ Работаем с 2022 года<br>
     ✔ Быстрые переводы 5–15 минут<br>
     ✔ Поддержка в WhatsApp<br>
     ✔ Реальные клиенты по всему миру
   </p>
-
 </section>
 
-
 <a href="https://wa.me/255756687444" class="cta">Обменять сейчас</a>
-
-<div style="margin-top:10px;font-size:13px;color:#aaa;">
+<div style="text-align:center;font-size:13px;color:#aaa;margin-top:10px;">
 ✔ Конфиденциально • ✔ 115+ валют • ✔ Ежедневно
 </div>
 
 <div id="fomo" class="fomo"></div>
 
 <h2>Как работает Марат Брайт</h2>
-<div class="card">
-1. Отправляете<br>
-2. Мы обмениваем<br>
-3. Вы или ваш человек получаете
-</div>
+<div class="card">1. Отправляете<br>2. Мы обмениваем<br>3. Вы или ваш человек получаете</div>
 
 <h2>Сколько вы получите?</h2>
 <input id="amount" placeholder="Введите сумму">
 <div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
 
-
 <h2>Подтверждения</h2>
-
-<!-- 10 СКРИНОВ -->
 <div class="screens">
-<img src="IMG_ru/1.jpg">
-<img src="IMG_ru/2.jpg">
-<img src="IMG_ru/3.jpg">
-<img src="IMG_ru/4.jpg">
-<img src="IMG_ru/5.jpg">
-<img src="IMG_ru/6.jpg">
-<img src="IMG_ru/7.jpg">
-<img src="IMG_ru/8.jpg">
-<img src="IMG_ru/9.jpg">
-<img src="IMG_ru/10.jpg">
+  <img src="IMG_ru/1.jpg">
+  <img src="IMG_ru/2.jpg">
+  <img src="IMG_ru/3.jpg">
+  <img src="IMG_ru/4.jpg">
+  <img src="IMG_ru/5.jpg">
+  <img src="IMG_ru/6.jpg">
+  <img src="IMG_ru/7.jpg">
+  <img src="IMG_ru/8.jpg">
+  <img src="IMG_ru/9.jpg">
+  <img src="IMG_ru/10.jpg">
 </div>
-
-<a href="https://wa.me/255756687444" class="cta">Обменять</a>
 
 <h2>Отзывы клиентов</h2>
-
-<!-- 14 ВИДЕО -->
-<div class="video-slide"><video src="REW_ru/1.mp4" controls poster="POS_ru/1.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/2.mp4" controls poster="POS_ru/2.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/3.mp4" controls poster="POS_ru/3.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/4.mp4" controls poster="POS_ru/4.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/5.mp4" controls poster="POS_ru/5.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/6.mp4" controls poster="POS_ru/6.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/7.mp4" controls poster="POS_ru/7.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/8.mp4" controls poster="POS_ru/8.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/9.mp4" controls poster="POS_ru/9.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/10.mp4" controls poster="POS_ru/10.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/11.mp4" controls poster="POS_ru/11.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/12.mp4" controls poster="POS_ru/12.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/13.mp4" controls poster="POS_ru/13.jpg"></video></div>
-<div class="video-slide"><video src="REW_ru/14.mp4" controls poster="POS_ru/14.jpg"></video></div>
-
+<!-- 14 видео в 3 ряда -->
+<div class="video-row">
+  <video src="REW_ru/1.mp4" controls poster="POS_ru/1.jpg"></video>
+  <video src="REW_ru/2.mp4" controls poster="POS_ru/2.jpg"></video>
+  <video src="REW_ru/3.mp4" controls poster="POS_ru/3.jpg"></video>
+  <video src="REW_ru/4.mp4" controls poster="POS_ru/4.jpg"></video>
+</div>
+<div class="video-row">
+  <video src="REW_ru/5.mp4" controls poster="POS_ru/5.jpg"></video>
+  <video src="REW_ru/6.mp4" controls poster="POS_ru/6.jpg"></video>
+  <video src="REW_ru/7.mp4" controls poster="POS_ru/7.jpg"></video>
+  <video src="REW_ru/8.mp4" controls poster="POS_ru/8.jpg"></video>
+</div>
+<div class="video-row">
+  <video src="REW_ru/9.mp4" controls poster="POS_ru/9.jpg"></video>
+  <video src="REW_ru/10.mp4" controls poster="POS_ru/10.jpg"></video>
+  <video src="REW_ru/11.mp4" controls poster="POS_ru/11.jpg"></video>
+  <video src="REW_ru/12.mp4" controls poster="POS_ru/12.jpg"></video>
+</div>
+<div class="video-row">
+  <video src="REW_ru/13.mp4" controls poster="POS_ru/13.jpg"></video>
+  <video src="REW_ru/14.mp4" controls poster="POS_ru/14.jpg"></video>
+</div>
 
 <h2>Почему не банки</h2>
-
-<div class="card">
-✔ Быстро<br>✔ Без блокировок<br>✔ Без SWIFT
-</div>
-
-<div class="card">
-✖ Медленно<br>✖ Ограничения<br>✖ Риски
-</div>
+<div class="card">✔ Быстро<br>✔ Без блокировок<br>✔ Без SWIFT</div>
+<div class="card">✖ Медленно<br>✖ Ограничения<br>✖ Риски</div>
 
 <h2>Вопросы</h2>
-
 <div class="faq-q" onclick="toggleFaq(this)">Это безопасно?</div>
 <div class="faq-a">Да, вы общаетесь напрямую.</div>
-
 <div class="faq-q" onclick="toggleFaq(this)">Сколько времени?</div>
 <div class="faq-a">5–60 минут.</div>
 
 <h2>Доверие</h2>
-
 <div class="stats">
-<div><b>1000+</b><br>обменов</div>
-<div><b>7/7</b><br>работаем</div>
-<div><b>15 мин</b><br>среднее</div>
+  <div><b>1000+</b><br>обменов</div>
+  <div><b>7/7</b><br>работаем</div>
+  <div><b>15 мин</b><br>среднее</div>
 </div>
 
-<div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
+<div style="text-align:center;font-size:13px;color:#aaa;margin-top:10px;">
 🔒 Конфиденциально • Без передачи данных
 </div>
 
 <a href="https://wa.me/255756687444" class="cta">Начать обмен</a>
 
-</div>
-
-<div class="contact-hint">
-Отвечаем быстро • без регистрации
-</div>
+<div class="contact-hint">Отвечаем быстро • без регистрации</div>
 
 <div class="contact-fixed">
-<a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
-<a href="https://t.me/app2cas" class="cf-btn telegram">Telegram</a>
-<a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">imo</a>
+  <a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/app2cas" class="cf-btn telegram">Telegram</a>
+  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">imo</a>
 </div>
 
+<!-- Lightbox -->
+<div id="lightbox"><img src=""></div>
+
 <script>
+// калькулятор
 document.getElementById("amount").oninput = function(){
   let v = this.value;
   document.getElementById("result").innerText = "≈ " + (v * 0.95).toFixed(2);
 }
 
+// FAQ
 function toggleFaq(el){
   let a = el.nextElementSibling;
   a.style.display = a.style.display === "block" ? "none" : "block";
 }
 
+// FOMO
 const fomo = document.getElementById("fomo");
-
 function showFomo(){
   const names = ["Касмир","Александр","Али","Аноним"];
   const amounts = ["1200$","3500$","800$","2200$"];
-
   let n = names[Math.floor(Math.random()*names.length)];
   let a = amounts[Math.floor(Math.random()*amounts.length)];
-
   fomo.innerText = `${n} обменял ${a} • через ватсап`;
 }
-
 setInterval(showFomo,5000);
 showFomo();
+
+// Lightbox для скриншотов
+const lightbox = document.getElementById("lightbox");
+document.querySelectorAll('.screens img').forEach(img=>{
+  img.onclick = ()=>{
+    lightbox.style.display='flex';
+    lightbox.querySelector('img').src = img.src;
+  }
+});
+lightbox.onclick = ()=> lightbox.style.display='none';
 </script>
 
 </body>
 </html>
-
-
