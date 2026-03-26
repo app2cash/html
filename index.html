@@ -400,6 +400,73 @@ function showFomo(){
 }
 setInterval(showFomo,5000);
 showFomo();
+<!-- FULLSCREEN GALLERY -->
+<div id="fullscreen-gallery" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:9999;justify-content:center;align-items:center;">
+  <span id="gallery-close" style="position:absolute;top:20px;right:30px;font-size:30px;color:#fff;cursor:pointer;">&times;</span>
+  <img id="gallery-img" src="" style="max-width:90%;max-height:90%;border-radius:10px;display:none;">
+  <video id="gallery-video" controls style="max-width:90%;max-height:90%;border-radius:10px;display:none;"></video>
+</div>
+
+<script>
+const gallery = document.getElementById('fullscreen-gallery');
+const galleryImg = document.getElementById('gallery-img');
+const galleryVideo = document.getElementById('gallery-video');
+const galleryClose = document.getElementById('gallery-close');
+
+let items = []; // массив всех скринов и видео
+let currentIndex = 0;
+
+// Собираем все скриншоты и видео
+document.querySelectorAll('.screens img, .video-slide video').forEach(el => {
+  items.push(el);
+  el.style.cursor = 'pointer';
+  el.onclick = () => openGallery(el);
+});
+
+function openGallery(el){
+  gallery.style.display = 'flex';
+  currentIndex = items.indexOf(el);
+  updateGallery();
+}
+
+function updateGallery(){
+  const item = items[currentIndex];
+  if(item.tagName === 'IMG'){
+    galleryImg.src = item.src;
+    galleryImg.style.display = 'block';
+    galleryVideo.style.display = 'none';
+  } else {
+    galleryVideo.src = item.src;
+    galleryVideo.style.display = 'block';
+    galleryImg.style.display = 'none';
+  }
+}
+
+galleryClose.onclick = () => {
+  gallery.style.display = 'none';
+  galleryVideo.pause();
+}
+
+// swipe support
+let startX = 0;
+gallery.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+gallery.addEventListener('touchend', e => {
+  let diff = e.changedTouches[0].clientX - startX;
+  if(diff > 50) prevItem();
+  if(diff < -50) nextItem();
+});
+
+function prevItem(){ currentIndex = (currentIndex-1+items.length)%items.length; updateGallery(); }
+function nextItem(){ currentIndex = (currentIndex+1)%items.length; updateGallery(); }
+
+// arrow keys
+document.addEventListener('keydown', e => {
+  if(gallery.style.display === 'flex'){
+    if(e.key === 'ArrowLeft') prevItem();
+    if(e.key === 'ArrowRight') nextItem();
+    if(e.key === 'Escape') gallery.style.display='none';
+  }
+});
 </script>
 
 <!-- Lightbox стили -->
