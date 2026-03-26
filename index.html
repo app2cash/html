@@ -162,14 +162,62 @@ video{ width:100%; border-radius:12px; }
 
 <body>
 
-<div class="container">
 
-<div class="lang-switch">
-  <a href="en">🇬🇧 English</a>
+<!-- ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА -->
+<div style="position:absolute;top:20px;right:20px;z-index:1000;font-family:sans-serif;">
+  <a href="en" style="color:#f5c542;text-decoration:none;font-weight:bold;">
+    🇬🇧 English
+  </a>
 </div>
 
+<section style="background:#0b0b0b;color:white;padding:60px 20px;text-align:center;font-family:sans-serif;">
+
+  <h1 style="font-size:32px;max-width:700px;margin:0 auto 20px;">
+    Международные переводы и обмен валют<br>
+    <span style="color:#f5c542;">за 5–15 минут без ограничений</span>
+  </h1>
+
+  <p style="font-size:18px;max-width:600px;margin:0 auto 30px;color:#ccc;">
+    Работаем с рублями, танзанийскими шиллингами и USDT.<br>
+    Помогаем студентам, бизнесу и частным клиентам по всему миру.
+  </p>
+
+  <a href="https://wa.me/255756687444" target="_blank"
+     style="display:inline-block;background:#25D366;color:white;
+     padding:15px 25px;font-size:18px;border-radius:8px;
+     text-decoration:none;font-weight:bold;">
+     Написать в WhatsApp
+  </a>
+
+</section>
+
+<section style="background:#111;color:white;padding:40px 20px;text-align:center;font-family:sans-serif;">
+
+  <h2 style="font-size:24px;margin-bottom:20px;">
+    Популярные направления
+  </h2>
+
+  <p style="font-size:16px;color:#ccc;max-width:600px;margin:0 auto;">
+    Россия ↔ Танзания • Россия ↔ Турция • Россия ↔ Индонезия<br>
+    Переводы между картами, мобильными кошельками и криптовалютой
+  </p>
+
+</section>
+
+
+<section style="background:#0b0b0b;color:white;padding:40px 20px;text-align:center;font-family:sans-serif;">
+
+  <p style="font-size:16px;color:#ccc;">
+    ✔ Работаем с 2022 года<br>
+    ✔ Быстрые переводы 5–15 минут<br>
+    ✔ Поддержка в WhatsApp<br>
+    ✔ Реальные клиенты по всему миру
+  </p>
+
+</section>
+
 <h1>
-МЕНЯЕМ ДЕНЬГИ МЕЖДУ СТРАНАМИ. АНОНИМНО ПО СМАРТ-КОНТРАКТАМ.<br>
+МЕНЯЕМ ДЕНЬГИ МЕЖДУ СТРАНАМИ. АНОНИМНО ПО СМАРТ-КОНТРАКТАМ.<br>
 
 </h1>
 
@@ -292,7 +340,7 @@ function showFomo(){
   let n = names[Math.floor(Math.random()*names.length)];
   let a = amounts[Math.floor(Math.random()*amounts.length)];
 
-  fomo.innerText = `${n} обменял ${a} • через ватсап`;
+  fomo.innerText = `${n} обменял ${a} • через ватсап`;
 }
 
 setInterval(showFomo,5000);
@@ -301,3 +349,5 @@ showFomo();
 
 </body>
 </html>
+
+
