@@ -176,6 +176,12 @@ video{ width:100%; border-radius:12px; }
   <a href="https://wa.me/255756687444" target="_blank" class="cta">Написать в WhatsApp</a>
 </section>
 
+<h2>Сколько вы получите?</h2>
+<input id="amount" placeholder="Введите сумму">
+<div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+
+
 <!-- FOMO -->
 <div id="fomo" class="fomo">
   Александр обменял 2300 USD<br>
@@ -314,6 +320,10 @@ images.forEach(img => {
 function toggleFaq(el){
   let a = el.nextElementSibling;
   a.style.display = a.style.display === "block" ? "none" : "block";
+}
+document.getElementById("amount").oninput = function(){
+  let v = this.value;
+  document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
 }
 
 const videos = document.querySelectorAll('.videos-carousel video');
