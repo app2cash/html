@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Обмен валют</title>
-
 <style>
 body{
   margin:0;
@@ -97,8 +96,26 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   border-radius:12px;
   border:2px solid gold;
   transition: transform 0.3s;
+  cursor:pointer;
 }
 .screens img:hover{ transform:scale(1.05); }
+
+/* lightbox */
+#lightbox{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+#lightbox img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+}
 
 /* Netflix-style видео слайдер */
 .video-slider{
@@ -175,6 +192,7 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 /* преимущества */
 .checks{ color:#ccc; padding-left:10px; }
+
 </style>
 </head>
 
@@ -193,7 +211,7 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 <section style="text-align:right; padding:20px;">
 <img src="https://i.ibb.co/LDc0JwxD/B080-D83-E-0-B53-490-F-B897-3-B1-C5219-C42-C.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
 </section>
-  
+
 <div id="fomo" class="fomo"></div>
 
 <h2>Как это работает</h2>
@@ -284,72 +302,82 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
 </div>
 
+<!-- Lightbox для скриншотов -->
+<div id="lightbox"><img src="" alt="Screenshot"></div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-// FOMO
-const list=[
-  {name:'Александр',text:'2300 USD'},
-  {name:'Мария',text:'1500 EUR'},
-  {name:'Илья',text:'53 000 RUB'},
-  {name:'Аноним',text:'22 000 USDT'}
-];
-let i=0;
-const f=document.getElementById('fomo');
+  // FOMO
+  const list=[
+    {name:'Александр',text:'2300 USD'},
+    {name:'Мария',text:'1500 EUR'},
+    {name:'Илья',text:'53 000 RUB'},
+    {name:'Аноним',text:'22 000 USDT'}
+  ];
+  let i=0;
+  const f=document.getElementById('fomo');
+  function update(){
+    f.style.opacity=0;
+    setTimeout(()=>{
+      let d=list[i];
+      f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
+                     <div><b>${d.name}</b> обменял ${d.text}</div>`;
+      f.style.opacity=1;
+      i=(i+1)%list.length;
+    },300);
+  }
+  update();
+  setInterval(update,4000);
 
-function updateFOMO(){
-  f.style.opacity=0;
-  setTimeout(()=>{
-    let d=list[i];
-    f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
-                   <div><b>${d.name}</b> обменял ${d.text}</div>`;
-    f.style.opacity=1;
-    i=(i+1)%list.length;
-  },300);
-}
-updateFOMO();
-setInterval(updateFOMO,4000);
+  // Видео-слайдер
+  const container=document.getElementById('videos');
+  for(let i=1;i<=14;i++){
+    const div=document.createElement('div');
+    div.className='video-item';
+    div.innerHTML=`<img src="POS_ru/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src=`REW_ru/${i}.mp4`;
+    container.appendChild(div);
+  }
 
-// Создаём 14 видео постеров
-const container=document.getElementById('videos');
-for(let i=1;i<=14;i++){
-  const div=document.createElement('div');
-  div.className='video-item';
-  div.innerHTML=`
-    <img src="POS_ru/${i}.jpg">
-    <div class="play">▶</div>
-  `;
-  div.dataset.src=`REW_ru/${i}.mp4`;
-  container.appendChild(div);
-}
+  document.getElementById("amount").oninput = function(){
+    let v = this.value;
+    document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
+  }
 
-// клик по постеру — подгрузка видео
-document.querySelectorAll('.video-item').forEach(item=>{
-  item.addEventListener('click', function(){
-    if(this.querySelector('video')){
-      let v=this.querySelector('video');
-      v.muted=false;
-      v.playbackRate = v.playbackRate === 1 ? 2 : 1;
-      return;
-    }
-    const v=document.createElement('video');
-    v.src=this.dataset.src;
-    v.controls=true;
-    v.autoplay=true;
-    v.playsInline=true;
-    this.innerHTML='';
-    this.appendChild(v);
+  // Воспроизведение видео внутри слайдера
+  document.querySelectorAll('.video-item').forEach(item=>{
+    item.addEventListener('click', function(){
+      if(this.querySelector('video')){
+        let v=this.querySelector('video');
+        v.muted=false;
+        v.playbackRate = v.playbackRate === 1 ? 2 : 1;
+        return;
+      }
+      const v=document.createElement('video');
+      v.src=this.dataset.src;
+      v.controls=true;
+      v.autoplay=true;
+      v.playsInline=true;
+      v.style.width='100%';
+      v.style.height='auto';
+      this.innerHTML='';
+      this.appendChild(v);
+    });
   });
-});
 
-// калькулятор
-document.getElementById("amount").oninput = function(){
-  let v = this.value;
-  document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
-}
+  // Скриншоты Lightbox
+  const lightbox=document.getElementById('lightbox');
+  const lightImg=lightbox.querySelector('img');
+  document.querySelectorAll('.screens img').forEach(img=>{
+    img.addEventListener('click', ()=>{
+      lightImg.src=img.src;
+      lightbox.style.display='flex';
+    });
+  });
+  lightbox.addEventListener('click', ()=>lightbox.style.display='none');
 
 });
 </script>
-
 </body>
 </html>
