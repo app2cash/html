@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -11,65 +10,77 @@ body{
   margin:0;
   background:#0b0b0f;
   color:#fff;
-  font-family:Montserrat, Arial;
-  padding-bottom:80px;
+  font-family:'Montserrat', Arial, sans-serif;
+  line-height:1.5;
+  padding-bottom:100px;
 }
 
+/* контейнер */
 .container{
-  max-width:520px;
+  max-width:540px;
   margin:0 auto;
   padding:20px;
 }
 
-.lang{
-  text-align:right;
-}
+/* язык */
+.lang{text-align:right;margin-bottom:10px;}
 .lang a{
   color:#FFD700;
   text-decoration:none;
   font-weight:bold;
+  transition:0.3s;
 }
+.lang a:hover{color:#fff;}
 
-h1{text-align:center;font-size:26px;}
-h2{margin-top:30px;}
+/* заголовки */
+h1{text-align:center;font-size:28px;margin-bottom:5px;}
+h2{margin-top:35px;font-size:22px;border-bottom:1px solid #333;padding-bottom:8px;}
+h3{font-weight:400;color:#ccc;text-align:center;margin-bottom:5px;}
+h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
+/* кнопки */
 .cta{
   display:block;
   text-align:center;
-  background:#FFD700;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
   color:#000;
   padding:14px;
-  border-radius:12px;
+  border-radius:16px;
   font-weight:bold;
-  margin-top:15px;
+  margin:20px 0;
   text-decoration:none;
+  transition:0.3s;
+}
+.cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(255,215,0,0.4);
 }
 
+/* карточки */
 .card{
   background:#111;
-  padding:15px;
-  border-radius:12px;
+  padding:18px;
+  border-radius:16px;
   margin-top:15px;
+  box-shadow:0 4px 15px rgba(255,255,255,0.05);
 }
-
-.checks{ text-align:left; color:#ccc; }
 
 /* FOMO */
 .fomo{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
   background:#111;
   border:1px solid #FFD700;
-  padding:10px;
-  border-radius:10px;
+  padding:12px;
+  border-radius:12px;
   margin:15px 0;
-  font-size:13px;
-  transition:0.3s;
+  font-size:14px;
+  transition:opacity 0.5s;
+  box-shadow:0 4px 12px rgba(255,215,0,0.2);
 }
-
 .fomo img{
-  width:28px;
+  width:36px;
   border-radius:50%;
 }
 
@@ -78,29 +89,42 @@ h2{margin-top:30px;}
   display:flex;
   overflow-x:auto;
   gap:10px;
+  margin-top:10px;
+  padding-bottom:10px;
 }
 .screens img{
   width:140px;
-  border-radius:10px;
+  border-radius:12px;
   border:2px solid gold;
+  transition: transform 0.3s;
 }
+.screens img:hover{ transform:scale(1.05); }
 
-/* видео */
+/* Netflix-style видео слайдер */
+.video-slider{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px 0;
+  scroll-snap-type: x mandatory;
+}
+.video-slider::-webkit-scrollbar{display:none;}
 .video-item{
-  margin-top:20px;
+  flex:0 0 auto;
+  width:200px;
   position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  scroll-snap-align:start;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  cursor:pointer;
 }
-
 .video-item img{
   width:100%;
-  border-radius:12px;
+  display:block;
+  transition:transform 0.3s;
 }
-
-video{
-  width:100%;
-  border-radius:12px;
-}
-
+.video-item:hover img{transform:scale(1.05);}
 .play{
   position:absolute;
   top:50%;
@@ -108,6 +132,7 @@ video{
   transform:translate(-50%,-50%);
   font-size:40px;
   color:#FFD700;
+  opacity:0.9;
 }
 
 /* фикс кнопки */
@@ -117,28 +142,40 @@ video{
   left:0;
   width:100%;
   display:flex;
+  z-index:99;
 }
-
 .cf-btn{
   flex:1;
   text-align:center;
-  padding:12px;
+  padding:14px;
   font-weight:bold;
-  color:#000;
+  color:#fff;
+  border-top:2px solid #222;
+  transition:0.3s;
 }
-
-.whatsapp{ background:#25D366; animation:pulse 1.5s infinite; }
-.telegram{ background:#229ED9; }
-.imo{ background:#00AEEF; }
-
+.cf-btn:hover{filter:brightness(1.1);}
+.whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
+.telegram{background:#229ED9;}
+.imo{background:#00AEEF;}
 @keyframes pulse{
   0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
   70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
   100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
 }
 
-</style>
+/* input */
+#amount{
+  width:100%;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+  margin-top:10px;
+}
 
+/* преимущества */
+.checks{ color:#ccc; padding-left:10px; }
+</style>
 </head>
 
 <body>
@@ -150,7 +187,7 @@ video{
 </div>
 
 <h1>ОБМЕН ВАЛЮТ И ОТПРАВКА ДЕНЕГ</h1>
-<h3>туристы, студенты, мигранты,<br> бизнес, частные клинты</h3>
+<h3>туристы, студенты, мигранты,<br>бизнес, частные клиенты</h3>
 <h4>комиссия от 0,5% до 3,6%</h4>
 
 <section style="text-align:right; padding:20px;">
@@ -165,13 +202,8 @@ video{
 ✔ Делаете перевод в своей валюте<br>
 ✔ Вы или ваш человек получаете необходимую валюту
 </div>
-  
 
-
-
-
-
-<div style="margin:0 auto; padding:5px; border:1.5px solid gold; text-align:center;">
+<div style="margin:20px 0; padding:10px; border:1.5px solid gold; border-radius:12px; text-align:center;">
   <div class="card">
     <h4>Популярно:</h4>
     Россия, Турция, Узбекистан<br>
@@ -182,8 +214,7 @@ video{
   </div>
   <h4>Уточняйте ваши страны и методы оплаты в лс.</h4>
 </div>
-  
-  <!-- Преимущества -->
+
 <section style="background:#0b0b0b;color:white;padding:30px 20px;text-align:left;">
   <p style="color:#ccc;">
     ✔ Работаем с 2022 года<br>
@@ -192,13 +223,13 @@ video{
     ✔ Конфиденциально и застраховано
   </p>
 </section>
+
 <h2>Сколько вы получите?</h2>
 <input id="amount" placeholder="Введите сумму">
 <div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
 <a href="https://wa.me/255756687444" class="cta">Обменять</a>
-  
-<h2>Читайте подтверждения</h2>
 
+<h2>Читайте подтверждения</h2>
 <div class="screens">
 <img src="IMG_ru/1.jpg">
 <img src="IMG_ru/2.jpg">
@@ -213,40 +244,45 @@ video{
 </div>
 
 <h2>Смотрите видео отзывы</h2>
-
-<div id="videos"></div>
+<div class="video-slider" id="videos"></div>
 <a href="https://wa.me/255756687444" class="cta">Написать Марату в WhatsApp</a>
+
 <h2>Почему не банки</h2>
 <div class="card">
 ✔ Без пошлин<br>✔ Без блокировок<br>✔ Без SWIFT
 </div>
 <div class="card">
 ✖ Медленно<br>✖ Ограничения<br>✖ Риски
-</div
+</div>
+
 <h2>Вопросы</h2>
-Это безопасно? - Да, вы общаетесь напрямую.
+<div class="card checks">
+Это безопасно? - Да, вы общаетесь напрямую.<br>
 Какие гарантии? - Репутация, двойное шифрование и смарт-контракты.
+</div>
+
 <h2>Нам доверяют</h2>
 <section style="text-align:right; padding:20px;">
 <img src="https://i.ibb.co/LDc0JwxD/B080-D83-E-0-B53-490-F-B897-3-B1-C5219-C42-C.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
 </section>
-с 2022 года тысячи обменов
+<div class="card checks" style="text-align:center;">
+с 2022 года тысячи обменов<br>
 Проверено Русской диаспорой
+</div>
 
 <div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
-🔒 Конфиденциально. Застраховано<br>
-  
+🔒 Конфиденциально. Застраховано
 </div>
 <a href="https://wa.me/255756687444" class="cta">Отвечаем быстро. Обмен без регистрации</a>
-</div>
 
 </div>
+
+<!-- фикс кнопки -->
 <div class="contact-fixed">
   <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
   <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
   <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
 </div>
-
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
@@ -258,70 +294,5 @@ const list=[
 {name:'Илья',text:'53 000 RUB'},
 {name:'Аноним',text:'22 000 USDT'}
 ];
-
 let i=0;
-const f=document.getElementById('fomo');
-
-function update(){
-f.style.opacity=0;
-setTimeout(()=>{
-let d=list[i];
-f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
-<div><b>${d.name}</b> обменял ${d.text}</div>`;
-f.style.opacity=1;
-i=(i+1)%list.length;
-},300);
-}
-update();
-setInterval(update,4000);
-
-
-/* создаём 14 видео */
-const container=document.getElementById('videos');
-
-for(let i=1;i<=14;i++){
-const div=document.createElement('div');
-div.className='video-item';
-div.innerHTML=`
-<img src="POS_ru/${i}.jpg">
-<div class="play">▶</div>
-`;
-div.dataset.src=`REW_ru/${i}.mp4`;
-container.appendChild(div);
-}
-
-document.getElementById("amount").oninput = function(){
-  let v = this.value;
-  document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
-}
-
-
-/* lazy + звук + x2 */
-document.querySelectorAll('.video-item').forEach(item=>{
-item.addEventListener('click', function(){
-
-if(this.querySelector('video')){
-let v=this.querySelector('video');
-v.muted=false;
-v.playbackRate = v.playbackRate === 1 ? 2 : 1;
-return;
-}
-
-const v=document.createElement('video');
-v.src=this.dataset.src;
-v.controls=true;
-v.autoplay=true;
-v.playsInline=true;
-
-this.innerHTML='';
-this.appendChild(v);
-
-});
-});
-
-});
-</script>
-
-</body>
-</html>
-
+const f=document.getElementById('fomo
