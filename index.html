@@ -4,19 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Обмен валют — app2.cash</title>
-
 <style>
 body{
   margin:0;
   background:#0b0b0f;
   color:#fff;
-  font-family:Montserrat, Arial, sans-serif;
-  padding-bottom:80px;
+  font-family:Montserrat, Arial;
+  padding-bottom:70px;
 }
-.container{ max-width:520px; margin:auto; padding:20px; }
 
-h1{ font-size:28px; line-height:1.3; text-align:center; }
-h2{ font-size:22px; margin-top:30px; text-align:center; }
+.container{
+  max-width:520px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{ font-size:26px; line-height:1.3; }
+h2{ font-size:20px; margin-top:30px; }
 
 .cta{
   display:block;
@@ -26,7 +30,7 @@ h2{ font-size:22px; margin-top:30px; text-align:center; }
   padding:14px;
   border-radius:12px;
   font-weight:bold;
-  margin:15px 0;
+  margin-top:15px;
   text-decoration:none;
 }
 
@@ -59,6 +63,17 @@ input{
 .video-slide{ margin-top:15px; }
 video{ width:100%; border-radius:12px; }
 
+.screens{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+}
+.screens img{
+  width:140px;
+  border:2px solid #FFD700;
+  border-radius:10px;
+}
+
 .faq-q{
   cursor:pointer;
   background:#111;
@@ -72,62 +87,18 @@ video{ width:100%; border-radius:12px; }
   font-size:13px;
   color:#aaa;
 }
+
 .stats{
   display:flex;
   justify-content:space-around;
   margin-top:20px;
   text-align:center;
 }
-.stats b{ color:#FFD700; font-size:18px; }
-
-.lang-switch{
-  text-align:center;
-  margin:10px 0;
-}
-.lang-switch a{
+.stats b{
   color:#FFD700;
-  font-weight:bold;
-  text-decoration:none;
-  margin:0 10px;
+  font-size:18px;
 }
 
-/* --- Скриншоты и видео --- */
-.screens-carousel { display:flex; flex-direction:column; gap:10px; margin-top:15px; }
-.screens-row{ display:flex; gap:10px; overflow-x:auto; padding-bottom:5px; }
-.screens-row img{
-  width:140px;
-  border:2px solid #FFD700;
-  border-radius:10px;
-  cursor:pointer;
-  flex-shrink:0;
-}
-
-.videos-carousel{ display:flex; overflow-x:auto; gap:10px; padding-bottom:10px; margin-top:15px; }
-.videos-carousel video{
-  width:220px;
-  border-radius:12px;
-  flex-shrink:0;
-  cursor:pointer;
-}
-
-/* --- Lightbox --- */
-.lightbox{
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.95);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-.lightbox img, .lightbox video{
-  max-width:90%;
-  max-height:90%;
-}
-.lightbox video{ display:block; }
-
-/* --- Закрепленные мессенджеры --- */
 .contact-fixed{
   position:fixed;
   bottom:0;
@@ -136,6 +107,7 @@ video{ width:100%; border-radius:12px; }
   display:flex;
   z-index:9999;
 }
+
 .cf-btn{
   flex:1;
   text-align:center;
@@ -145,6 +117,7 @@ video{ width:100%; border-radius:12px; }
   color:#000;
   font-size:14px;
 }
+
 .whatsapp{ background:#25D366; animation:pulse 1.5s infinite; }
 .telegram{ background:#229ED9; }
 .imo{ background:#00AEEF; }
@@ -154,49 +127,73 @@ video{ width:100%; border-radius:12px; }
   70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
   100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
 }
-</style>
 
+.contact-hint{
+  position:fixed;
+  bottom:50px;
+  width:100%;
+  text-align:center;
+  font-size:12px;
+  color:#aaa;
+  z-index:9998;
+}
+
+.lang-switch{
+  text-align:center;
+  margin-bottom:15px;
+}
+.lang-switch a{
+  color:#FFD700;
+  font-weight:bold;
+  text-decoration:none;
+  margin:0 10px;
+}
+</style>
 <link rel="icon" href="/favicon.ico">
+
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
 </head>
+
 <body>
 
-<!-- Кнопка переключения языка -->
+<div class="container">
+
 <div class="lang-switch">
   <a href="en">🇬🇧 English</a>
 </div>
 
-<!-- Шапка с логотипом -->
-<section style="text-align:center; padding:20px;">
-  <img src="logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:10px;">
-  <h1>Международные переводы и обмен валют</h1>
+<h1>
+МЕНЯЕМ ДЕНЬГИ МЕЖДУ СТРАНАМИ. АНОНИМНО ПО СМАРТ-КОНТРАКТАМ.<br>
   <p style="color:#ccc;">Быстро, анонимно и безопасно для студентов, бизнеса и частных клиентов</p>
-</section>
+</h1>
 
-<h2>Сколько вы получите?</h2>
-<input id="amount" placeholder="Введите сумму">
-<div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
-<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+<a href="https://wa.me/255756687444" class="cta">Обменять сейчас</a>
 
-
-<!-- FOMO -->
-<div id="fomo" class="fomo">
-  Александр обменял 2300 USD<br>
-  Аноним обменял 22 000 USDT<br>
-  Мария обменяла 1500 EUR<br>
-  Илья обменял 53 000 RUB<br>
-  Аноним обменял 25 000 000 TZS.
+<div style="margin-top:10px;font-size:13px;color:#aaa;">
+✔ Конфиденциально • ✔ 115+ валют • ✔ Ежедневно
 </div>
 
+<div id="fomo" class="fomo"></div>
+
+<h2>Как работает</h2>
+<div class="card">
+1. Отправляете<br>
+2. Обмениваем<br>
+3. Вы или ваш человек получаете
+</div>
 
   <h2>Популярные направления</h2>
 
 <div class="card">
 <text-align:center">
-Россия, Танзания, Турция, Индонезия, СНГ, ЮАР.<br>
-Карты, СПБ, мобильные кошельки, наличные, USDT.<br>
+Россия, Танзания, Турция, Индонезия, СНГ, ЮАР.<br>
+Карты, СПБ, мобильные кошельки, наличные, USDT.<br>
 Уточняйте страны и методы оплаты в лс.
 </div>
 
@@ -206,56 +203,50 @@ video{ width:100%; border-radius:12px; }
     ✔ Работаем с 2022 года<br>
     ✔ Переводы 15-50 минут<br>
     ✔ Поддержка на вашем языке<br>
-    ✔ Конфиденциально и застраховано
+    ✔ Конфиденциально и застраховано
   </p>
 </section>
 
-<!-- Скриншоты -->
-<h2>Подтверждения операций</h2>
-<div class="screens-carousel">
-  <div class="screens-row">
-    <img src="IMG_ru/1.jpg" alt="скрин 1">
-    <img src="IMG_ru/2.jpg" alt="скрин 2">
-    <img src="IMG_ru/3.jpg" alt="скрин 3">
-    <img src="IMG_ru/4.jpg" alt="скрин 4">
-    <img src="IMG_ru/5.jpg" alt="скрин 5">
-  </div>
-  <div class="screens-row">
-    <img src="IMG_ru/6.jpg" alt="скрин 6">
-    <img src="IMG_ru/7.jpg" alt="скрин 7">
-    <img src="IMG_ru/8.jpg" alt="скрин 8">
-    <img src="IMG_ru/9.jpg" alt="скрин 9">
-    <img src="IMG_ru/10.jpg" alt="скрин 10">
-  </div>
-</div>
 
-<!-- Видео отзывы -->
+<h2>Сколько вы получите?</h2>
+<input id="amount" placeholder="Введите сумму">
+<div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
+<a href="https://wa.me/255756687444" class="cta">Обменять</a>
+
+<h2>Подтверждения</h2>
+
+<!-- 10 СКРИНОВ -->
+<div class="screens">
+<img src="IMG_ru/1.jpg">
+<img src="IMG_ru/2.jpg">
+<img src="IMG_ru/3.jpg">
+<img src="IMG_ru/4.jpg">
+<img src="IMG_ru/5.jpg">
+<img src="IMG_ru/6.jpg">
+<img src="IMG_ru/7.jpg">
+<img src="IMG_ru/8.jpg">
+<img src="IMG_ru/9.jpg">
+<img src="IMG_ru/10.jpg">
+</div>
+  
 <h2>Отзывы клиентов</h2>
-<div class="videos-carousel">
-  <video src="REW_ru/1.mp4" poster="POS_ru/1.jpg" controls></video>
-  <video src="REW_ru/2.mp4" poster="POS_ru/2.jpg" controls></video>
-  <video src="REW_ru/3.mp4" poster="POS_ru/3.jpg" controls></video>
-  <video src="REW_ru/4.mp4" poster="POS_ru/4.jpg" controls></video>
-  <video src="REW_ru/5.mp4" poster="POS_ru/5.jpg" controls></video>
-  <video src="REW_ru/6.mp4" poster="POS_ru/6.jpg" controls></video>
-  <video src="REW_ru/7.mp4" poster="POS_ru/7.jpg" controls></video>
-  <video src="REW_ru/8.mp4" poster="POS_ru/8.jpg" controls></video>
-  <video src="REW_ru/9.mp4" poster="POS_ru/9.jpg" controls></video>
-  <video src="REW_ru/10.mp4" poster="POS_ru/10.jpg" controls></video>
-  <video src="REW_ru/11.mp4" poster="POS_ru/11.jpg" controls></video>
-  <video src="REW_ru/12.mp4" poster="POS_ru/12.jpg" controls></video>
-  <video src="REW_ru/13.mp4" poster="POS_ru/13.jpg" controls></video>
-  <video src="REW_ru/14.mp4" poster="POS_ru/14.jpg" controls></video>
-</div>
 
-   <a href="https://wa.me/255756687444" target="_blank" class="cta">Написать в WhatsApp напрямую Марату</a>
+<!-- 14 ВИДЕО -->
+<div class="video-slide"><video src="REW_ru/1.mp4" controls poster="POS_ru/1.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/2.mp4" controls poster="POS_ru/2.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/3.mp4" controls poster="POS_ru/3.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/4.mp4" controls poster="POS_ru/4.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/5.mp4" controls poster="POS_ru/5.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/6.mp4" controls poster="POS_ru/6.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/7.mp4" controls poster="POS_ru/7.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/8.mp4" controls poster="POS_ru/8.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/9.mp4" controls poster="POS_ru/9.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/10.mp4" controls poster="POS_ru/10.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/11.mp4" controls poster="POS_ru/11.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/12.mp4" controls poster="POS_ru/12.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/13.mp4" controls poster="POS_ru/13.jpg"></video></div>
+<div class="video-slide"><video src="REW_ru/14.mp4" controls poster="POS_ru/14.jpg"></video></div>
 
-<!-- Lightbox -->
-<div id="lightbox" class="lightbox">
-  <span id="lightbox-close" style="position:absolute;top:20px;right:30px;font-size:32px;color:#FFD700;cursor:pointer;">&times;</span>
-  <img id="lightbox-img" style="max-width:90%;max-height:90%;display:none;">
-  <video id="lightbox-video" controls style="max-width:90%;max-height:90%;display:none;"></video>
-</div>
 
 <h2>Почему не банки</h2>
 
@@ -346,7 +337,7 @@ const fomoList=[
   'Аноним обменял 22 000 USDT',
   'Мария обменяла 1500 EUR',
   'Илья обменял 53 000 RUB',
-  'Аноним обменял 25 000 000 TZS'
+  'Аноним обменял 25 000 000 TZS'
 ];
 let fIndex=0;
 function updateFomo(){
@@ -359,3 +350,5 @@ setInterval(updateFomo, 4000);
 
 </body>
 </html>
+
+
