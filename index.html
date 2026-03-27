@@ -144,22 +144,22 @@ video{
 
 <h1>МЕНЯЕМ ДЕНЬГИ МЕЖДУ СТРАНАМИ</h1>
 
-Обменять
-<div id="fomo" class="fomo"></div>
-
 <h2>Как работает</h2>
 <div class="card checks">
 ✔ Пишете → получаете курс<br>
 ✔ Делаете перевод<br>
 ✔ Получаете деньги
 </div>
+  
+<div id="fomo" class="fomo"></div>
+
+
 <section style="text-align:right; padding:20px;">
   <img src="https://i.ibb.co/LDc0JwxD/B080-D83-E-0-B53-490-F-B897-3-B1-C5219-C42-C.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
 </section>
-<h2>Комиссия процессинга<br>
-от 0,5% до 3,6%<br>
+<h4>Комиссия процессинга от 0,5% до 3,6%<h4>
   
- Евразия и Африка</h2>
+</h2>Евразия и Африка</h2>
 <div style="margin-center: 5px; padding: 5px; border: 1,5px solid gold;">
   
 <div class="card">
@@ -172,7 +172,7 @@ video{
 мобильные кошельки, M-Pesa, USDT, 800+ методов<br>
 </div>
   
-<h4>Уточняйте ваши страны и<br> методы оплаты в лс.</h4>
+<h4>Уточняйте ваши страны и методы оплаты в лс.</h4>
   
   <!-- Преимущества -->
 <section style="background:#0b0b0b;color:white;padding:30px 20px;text-align:left;">
@@ -187,8 +187,9 @@ video{
 <input id="amount" placeholder="Введите сумму">
 <div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
 <a href="https://wa.me/255756687444" class="cta">Обменять</a>
+  
 <h2>Читайте подтверждения</h2>
-<h2>Скриншоты</h2>
+
 <div class="screens">
 <img src="IMG_ru/1.jpg">
 <img src="IMG_ru/2.jpg">
@@ -202,16 +203,16 @@ video{
 <img src="IMG_ru/10.jpg">
 </div>
 
-<h2>Видео отзывы</h2>
+<h2>Смотрите видео отзывы</h2>
 
 <div id="videos"></div>
 
 </div>
 
 <div class="contact-fixed">
-<div class="cf-btn whatsapp">WhatsApp</div>
-<div class="cf-btn telegram">Telegram</div>
-<div class="cf-btn imo">IMO</div>
+<div class="https://wa.me/255756687444">WhatsApp</div>
+<div class="https://t.me/app2cas">Telegram</div>
+<div class="https://s.imoim.net/5LFqJT">IMO</div>
 </div>
 
 <script>
@@ -254,6 +255,11 @@ div.innerHTML=`
 `;
 div.dataset.src=`REW_ru/${i}.mp4`;
 container.appendChild(div);
+}
+
+document.getElementById("amount").oninput = function(){
+  let v = this.value;
+  document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
 }
 
 
