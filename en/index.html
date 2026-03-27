@@ -3,152 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Currency Exchange — app2.cash</title>
-
+<title>Currency Exchange – 1Money.Exchange</title>
 <style>
 body{
   margin:0;
   background:#0b0b0f;
   color:#fff;
-  font-family:Montserrat, Arial;
-  padding-bottom:70px;
+  font-family:'Montserrat', Arial, sans-serif;
+  line-height:1.5;
+  padding-bottom:100px;
 }
 
+/* контейнер */
 .container{
-  max-width:520px;
-  margin:auto;
+  max-width:540px;
+  margin:0 auto;
   padding:20px;
 }
 
-h1{ font-size:26px; line-height:1.3; }
-h2{ font-size:20px; margin-top:30px; }
+/* язык */
+.lang{text-align:right;margin-bottom:10px;}
+.lang a{
+  color:#FFD700;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+.lang a:hover{color:#fff;}
 
+/* заголовки */
+h1{text-align:center;font-size:28px;margin-bottom:5px;}
+h2{margin-top:35px;font-size:22px;border-bottom:1px solid #333;padding-bottom:8px;}
+h3{font-weight:400;color:#ccc;text-align:center;margin-bottom:5px;}
+h4{margin-top:10px;font-weight:500;color:#FFD700;}
+
+/* кнопки */
 .cta{
   display:block;
   text-align:center;
-  background:#FFD700;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
   color:#000;
   padding:14px;
-  border-radius:12px;
+  border-radius:16px;
   font-weight:bold;
-  margin-top:15px;
+  margin:20px 0;
   text-decoration:none;
+  transition:0.3s;
+}
+.cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(255,215,0,0.4);
 }
 
+/* карточки */
+.card{
+  background:#111;
+  padding:18px;
+  border-radius:16px;
+  margin-top:15px;
+  box-shadow:0 4px 15px rgba(255,255,255,0.05);
+}
+
+/* FOMO */
 .fomo{
+  display:flex;
+  align-items:center;
+  gap:12px;
   background:#111;
   border:1px solid #FFD700;
-  padding:10px;
-  border-radius:10px;
-  margin:15px 0;
-  font-size:13px;
-}
-
-.card{
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,215,0,0.2);
-  padding:15px;
-  border-radius:12px;
-  margin-top:15px;
-}
-
-input{
-  width:100%;
   padding:12px;
-  border-radius:10px;
-  border:none;
-  margin-top:10px;
-  font-size:16px;
+  border-radius:12px;
+  margin:15px 0;
+  font-size:14px;
+  transition:opacity 0.5s;
+  box-shadow:0 4px 12px rgba(255,215,0,0.2);
+}
+.fomo img{
+  width:36px;
+  border-radius:50%;
 }
 
-.video-slide{ margin-top:15px; }
-video{ width:100%; border-radius:12px; }
-
+/* скриншоты */
 .screens{
   display:flex;
   overflow-x:auto;
   gap:10px;
+  margin-top:10px;
+  padding-bottom:10px;
 }
 .screens img{
   width:140px;
-  border:2px solid #FFD700;
-  border-radius:10px;
-}
-
-.faq-q{
+  border-radius:12px;
+  border:2px solid gold;
+  transition: transform 0.3s;
   cursor:pointer;
-  background:#111;
-  padding:10px;
-  border-radius:8px;
-  margin-top:10px;
 }
-.faq-a{
+.screens img:hover{ transform:scale(1.05); }
+
+/* lightbox */
+#lightbox{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.85);
   display:none;
-  padding:10px;
-  font-size:13px;
-  color:#aaa;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+#lightbox img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
 }
 
-.stats{
+/* Netflix-style видео слайдер */
+.video-slider{
   display:flex;
-  justify-content:space-around;
-  margin-top:20px;
-  text-align:center;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px 0;
+  scroll-snap-type: x mandatory;
 }
-.stats b{
+.video-slider::-webkit-scrollbar{display:none;}
+.video-item{
+  flex:0 0 auto;
+  width:200px;
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  scroll-snap-align:start;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  cursor:pointer;
+}
+.video-item img{
+  width:100%;
+  display:block;
+  transition:transform 0.3s;
+}
+.video-item:hover img{transform:scale(1.05);}
+.play{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:40px;
   color:#FFD700;
-  font-size:18px;
+  opacity:0.9;
 }
 
+/* фикс кнопки */
 .contact-fixed{
   position:fixed;
   bottom:0;
   left:0;
   width:100%;
   display:flex;
-  z-index:9999;
+  z-index:99;
 }
-
 .cf-btn{
   flex:1;
   text-align:center;
-  padding:14px 0;
+  padding:14px;
   font-weight:bold;
-  text-decoration:none;
-  color:#000;
-  font-size:14px;
+  color:#fff;
+  border-top:2px solid #222;
+  transition:0.3s;
 }
-
-.whatsapp{ background:#25D366; animation:pulse 1.5s infinite; }
-.telegram{ background:#229ED9; }
-.imo{ background:#00AEEF; }
-
+.cf-btn:hover{filter:brightness(1.1);}
+.whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
+.telegram{background:#229ED9;}
+.imo{background:#00AEEF;}
 @keyframes pulse{
   0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
   70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
   100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
 }
 
-.contact-hint{
-  position:fixed;
-  bottom:50px;
+/* input */
+#amount{
   width:100%;
-  text-align:center;
-  font-size:12px;
-  color:#aaa;
-  z-index:9998;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+  margin-top:10px;
 }
 
-.lang-switch{
-  text-align:center;
-  margin-bottom:15px;
-}
-.lang-switch a{
-  color:#FFD700;
-  font-weight:bold;
-  text-decoration:none;
-  margin:0 10px;
-}
+/* преимущества */
+.checks{ color:#ccc; padding-left:10px; }
+
 </style>
 </head>
 
@@ -156,39 +200,54 @@ video{ width:100%; border-radius:12px; }
 
 <div class="container">
 
-<div class="lang-switch">
-  <a href="/">🇷🇺 Русский</a>
+<div class="lang">
+<a href="index.htm">🇷🇺 Russian</a>
 </div>
 
-<h1>
-EXCHANGE MONEY ACROSS COUNTRIES.<br>
-ANONYMOUSLY BY SMART CONTRACTS.<br>
+<h1>CURRENCY EXCHANGE AND MONEY TRANSFERS</h1>
+<h3>tourists, students, migrants,<br>businesses, private clients</h3>
+<h4 style="text-align:center;">commission from 0.5% to 3.6%</h4>
 
-</h1>
-
-<a href="https://wa.me/255756687444" class="cta">Exchange now</a>
-
-<div style="margin-top:10px;font-size:13px;color:#aaa;">
-✔ Private • ✔ 115+ currencies • ✔ Daily
-</div>
+<section style="text-align:right; padding:20px;">
+<img src="https://i.ibb.co/LDc0JwxD/B080-D83-E-0-B53-490-F-B897-3-B1-C5219-C42-C.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
+</section>
 
 <div id="fomo" class="fomo"></div>
 
-<h2>How does the Golden Bull work</h2>
-<div class="card">
-1. Send money<br>
-2. We exchange<br>
-3. You or your Person receives
+<h2>How it works</h2>
+<div class="card checks">
+✔ You write → get the rate<br>
+✔ Make the transfer in your currency<br>
+✔ You or your person receive the desired currency
 </div>
+
+<div style="margin:20px 0; padding:10px; border:1.5px solid gold; border-radius:12px; text-align:center;">
+  <div class="card">
+    <h4>Popular:</h4>
+    Russia, Turkey, Uzbekistan<br>
+    Tanzania, Indonesia, China<br>
+    <h4>Methods:</h4>
+    MIR/VISA/Mastercard<br>
+    mobile wallets, M-Pesa, USDT, 800+ methods<br>
+  </div>
+  <h4>Check your countries and payment methods in private chat.</h4>
+</div>
+
+<section style="background:#0b0b0b;color:white;padding:30px 20px;text-align:left;">
+  <p style="color:#ccc;">
+    ✔ Operating since 2022<br>
+    ✔ Transfers 15-50 minutes<br>
+    ✔ Support in your language<br>
+    ✔ Confidential and insured
+  </p>
+</section>
 
 <h2>How much will you get?</h2>
 <input id="amount" placeholder="Enter amount">
 <div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
 <a href="https://wa.me/255756687444" class="cta">Exchange</a>
 
-<h2>Confirmations</h2>
-
-<!-- 10 SCREENS -->
+<h2>Read confirmations</h2>
 <div class="screens">
 <img src="IMG_en/1.jpg">
 <img src="IMG_en/2.jpg">
@@ -202,98 +261,124 @@ ANONYMOUSLY BY SMART CONTRACTS.<br>
 <img src="IMG_en/10.jpg">
 <img src="IMG_en/11.jpg">
 </div>
-  
-<h2>Customer reviews</h2>
 
-<!-- 10 VIDEOS -->
-<div class="video-slide"><video src="REW_en/1.mp4" controls poster="POS_en/1.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/2.mp4" controls poster="POS_en/2.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/3.mp4" controls poster="POS_en/3.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/4.mp4" controls poster="POS_en/4.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/5.mp4" controls poster="POS_en/5.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/6.mp4" controls poster="POS_en/6.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/7.mp4" controls poster="POS_en/7.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/8.mp4" controls poster="POS_en/8.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/9.mp4" controls poster="POS_en/9.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/10.mp4" controls poster="POS_en/10.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/11.mp4" controls poster="POS_en/11.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/12.mp4" controls poster="POS_en/12.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/13.mp4" controls poster="POS_en/13.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/14.mp4" controls poster="POS_en/14.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/15.mp4" controls poster="POS_en/15.jpg"></video></div>
-<div class="video-slide"><video src="REW_en/16.mp4" controls poster="POS_en/16.jpg"></video></div>
-
+<h2>Watch video reviews</h2>
+<div class="video-slider" id="videos"></div>
+<a href="https://wa.me/255756687444" class="cta">Message Marat on WhatsApp</a>
 
 <h2>Why not banks</h2>
-
 <div class="card">
-✔ Fast<br>✔ No blocks<br>✔ No SWIFT
+✔ No fees<br>✔ No blocks<br>✔ No SWIFT
 </div>
-
 <div class="card">
-✖ Slow<br>✖ Limits<br>✖ Risks
+✖ Slow<br>✖ Restrictions<br>✖ Risks
 </div>
 
 <h2>Questions</h2>
+<div class="card checks">
+Is it safe? - Yes, you communicate directly.<br>
+What guarantees? - Reputation, double encryption and smart contracts.
+</div>
 
-<div class="faq-q" onclick="toggleFaq(this)">Is it safe?</div>
-<div class="faq-a">Yes, you communicate directly.</div>
-
-<div class="faq-q" onclick="toggleFaq(this)">How long does it take?</div>
-<div class="faq-a">5–60 minutes.</div>
-
-<h2>Trust</h2>
-
-<div class="stats">
-<div><b>1000+</b><br>exchanges</div>
-<div><b>7/7</b><br>working</div>
-<div><b>15 min</b><br>average</div>
+<h2>Trusted by</h2>
+<section style="text-align:center; padding:20px;">
+<img src="https://i.ibb.co/LDc0JwxD/B080-D83-E-0-B53-490-F-B897-3-B1-C5219-C42-C.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
+</section>
+<div class="card checks" style="text-align:center;">
+Thousands of exchanges since 2022<br>
+Verified by Russian diaspora
 </div>
 
 <div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
-🔒 Private • No data transfer
+🔒 Confidential. Insured
+</div>
+<a href="https://wa.me/255756687444" class="cta">Quick response. Exchange without registration</a>
+
 </div>
 
-<a href="https://wa.me/255756687444" class="cta">Start exchange</a>
-
-</div>
-
-<div class="contact-hint">
-Quick response • no registration
-</div>
-
+<!-- фикс кнопки -->
 <div class="contact-fixed">
-<a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
-<a href="https://t.me/app2cas" class="cf-btn telegram">Telegram</a>
-<a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">imo</a>
+  <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
+  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
 </div>
+
+<!-- Lightbox для скриншотов -->
+<div id="lightbox"><img src="" alt="Screenshot"></div>
 
 <script>
-document.getElementById("amount").oninput = function(){
-  let v = this.value;
-  document.getElementById("result").innerText = "≈ " + (v * 0.95).toFixed(2);
-}
+document.addEventListener("DOMContentLoaded", function(){
 
-function toggleFaq(el){
-  let a = el.nextElementSibling;
-  a.style.display = a.style.display === "block" ? "none" : "block";
-}
+  // FOMO
+  const list=[
+    {name:'Alexander',text:'2300 USD'},
+    {name:'Maria',text:'1500 EUR'},
+    {name:'Ilya',text:'53 000 RUB'},
+    {name:'Anonymous',text:'22 000 USDT'}
+  ];
+  let i=0;
+  const f=document.getElementById('fomo');
+  function update(){
+    f.style.opacity=0;
+    setTimeout(()=>{
+      let d=list[i];
+      f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
+                     <div><b>${d.name}</b> exchanged ${d.text}</div>`;
+      f.style.opacity=1;
+      i=(i+1)%list.length;
+    },300);
+  }
+  update();
+  setInterval(update,4000);
 
-const fomo = document.getElementById("fomo");
+  // Видео-слайдер
+  const container=document.getElementById('videos');
+  for(let i=1;i<=16;i++){
+    const div=document.createElement('div');
+    div.className='video-item';
+    div.innerHTML=`<img src="POS_en/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src=`REW_en/${i}.mp4`;
+    container.appendChild(div);
+  }
 
-function showFomo(){
-  const names = ["Oksana","Alexander","Ali","Anonymous"];
-  const amounts = ["1200$","3500$","800$","2200$"];
+  document.getElementById("amount").oninput = function(){
+    let v = this.value;
+    document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
+  }
 
-  let n = names[Math.floor(Math.random()*names.length)];
-  let a = amounts[Math.floor(Math.random()*amounts.length)];
+  // Воспроизведение видео внутри слайдера
+  document.querySelectorAll('.video-item').forEach(item=>{
+    item.addEventListener('click', function(){
+      if(this.querySelector('video')){
+        let v=this.querySelector('video');
+        v.muted=false;
+        v.playbackRate = v.playbackRate === 1 ? 2 : 1;
+        return;
+      }
+      const v=document.createElement('video');
+      v.src=this.dataset.src;
+      v.controls=true;
+      v.autoplay=true;
+      v.playsInline=true;
+      v.style.width='100%';
+      v.style.height='auto';
+      this.innerHTML='';
+      this.appendChild(v);
+    });
+  });
 
-  fomo.innerText = `${n} exchanged ${a} • through WhatsApp`;
-}
+  // Скриншоты Lightbox
+  const lightbox=document.getElementById('lightbox');
+  const lightImg=lightbox.querySelector('img');
+  document.querySelectorAll('.screens img').forEach(img=>{
+    img.addEventListener('click', ()=>{
+      lightImg.src=img.src;
+      lightbox.style.display='flex';
+    });
+  });
+  lightbox.addEventListener('click', ()=>lightbox.style.display='none');
 
-setInterval(showFomo,5000);
-showFomo();
+});
 </script>
-
 </body>
 </html>
