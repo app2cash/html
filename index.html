@@ -127,9 +127,16 @@ video{
   color:#000;
 }
 
-.whatsapp{background:#25D366;}
-.telegram{background:#229ED9;}
-.imo{background:#00AEEF;}
+.whatsapp{ background:#25D366; animation:pulse 1.5s infinite; }
+.telegram{ background:#229ED9; }
+.imo{ background:#00AEEF; }
+
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
+  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+}
+
 </style>
 
 </head>
@@ -207,12 +214,12 @@ video{
 <div id="videos"></div>
 
 </div>
-
 <div class="contact-fixed">
-<div class="https://wa.me/255756687444">WhatsApp</div>
-<div class="https://t.me/app2cas">Telegram</div>
-<div class="https://s.imoim.net/5LFqJT">IMO</div>
+  <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
+  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
 </div>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
