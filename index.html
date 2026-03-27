@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>app2.cash - Обмен валют и переводы</title>
+<title>app2.cash — Обмен валют и переводы</title>
 <style>
 body{
   margin:0;
@@ -11,218 +11,112 @@ body{
   color:#fff;
   font-family:'Montserrat', Arial, sans-serif;
   line-height:1.5;
-  padding-bottom:100px;
+  padding-bottom:90px;
 }
 
-/* контейнер */
-.container{
-  max-width:540px;
-  margin:0 auto;
-  padding:20px;
-}
-
-/* шапка */
+/* Шапка */
 header{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  padding:10px 20px;
+  align-items:center;
   background:#111;
-  border-bottom:2px solid gold;
+  padding:12px 20px;
+  border-bottom:3px solid #FFD700;
 }
-header img{height:50px;}
+header img{ height:50px; }
 header nav a{
-  margin-left:15px;
+  margin-left:16px;
   color:#FFD700;
   text-decoration:none;
   font-weight:bold;
   transition:0.3s;
 }
-header nav a:hover{color:#fff;}
+header nav a:hover{ color:#fff; }
 
-/* кнопка языка */
-.lang a{
-  color:#FFD700;
-  text-decoration:none;
-  font-weight:bold;
-  transition:0.3s;
-}
-.lang a:hover{color:#fff;}
-
-/* заголовки */
-h1{text-align:center;font-size:28px;margin-bottom:5px;}
-h2{margin-top:35px;font-size:22px;border-bottom:1px solid #333;padding-bottom:8px;}
-h3{font-weight:400;color:#ccc;text-align:center;margin-bottom:5px;}
-h4{margin-top:10px;font-weight:500;color:#FFD700;}
-
-/* кнопки */
+/* Общие стили */
+.container{max-width:580px; margin:0 auto; padding:20px;}
+h1{text-align:center;font-size:30px;margin:10px 0;}
+h2{font-size:24px; margin-top:35px; border-bottom:1px solid #333; padding-bottom:8px;}
+h3{font-size:18px; color:#ccc; text-align:center;}
+h4{font-size:18px; color:#FFD700; text-align:center; margin-top:6px;}
 .cta{
-  display:block;
-  text-align:center;
-  background:linear-gradient(90deg,#FFD700,#FFA500);
-  color:#000;
-  padding:14px;
-  border-radius:16px;
-  font-weight:bold;
-  margin:20px 0;
-  text-decoration:none;
-  transition:0.3s;
+  display:block;text-align:center;background:linear-gradient(90deg,#FFD700,#FFA500);
+  color:#000;padding:14px;border-radius:15px;font-weight:bold;
+  margin:18px 0;text-decoration:none;transition:0.3s;
 }
-.cta:hover{
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(255,215,0,0.4);
-}
-
-/* карточки */
-.card{
-  background:#111;
-  padding:18px;
-  border-radius:16px;
-  margin-top:15px;
-  box-shadow:0 4px 15px rgba(255,255,255,0.05);
-}
+.cta:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,215,0,0.4);}
 
 /* FOMO */
 .fomo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:#111;
-  border:1px solid #FFD700;
-  padding:12px;
-  border-radius:12px;
-  margin:15px 0;
-  font-size:14px;
-  transition:opacity 0.5s;
-  box-shadow:0 4px 12px rgba(255,215,0,0.2);
+  display:flex;gap:12px;align-items:center;
+  background:#111;border:1px solid #FFD700;
+  padding:12px;border-radius:12px;margin:16px 0;
 }
-.fomo img{
-  width:36px;
-  border-radius:50%;
-}
+.fomo img{width:36px;border-radius:50%;}
 
-/* скриншоты */
+/* Скриншоты */
 .screens{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  margin-top:10px;
-  padding-bottom:10px;
+  display:flex;overflow-x:auto;gap:10px;padding-bottom:12px;
 }
 .screens img{
-  width:140px;
-  border-radius:12px;
-  border:2px solid gold;
-  transition: transform 0.3s;
-  cursor:pointer;
+  width:140px;border-radius:12px;border:2px solid gold;
+  cursor:pointer;transition:0.3s;
 }
-.screens img:hover{ transform:scale(1.05); }
+.screens img:hover{transform:scale(1.05);}
 
-/* lightbox */
+/* Lightbox */
 #lightbox{
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.9);display:none;justify-content:center;align-items:center;
   z-index:999;
 }
-#lightbox img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-}
+#lightbox img{max-width:90%;max-height:90%;border-radius:12px;}
 
-/* Netflix-style видео слайдер */
+/* Видео слайдер */
 .video-slider{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  padding:10px 0;
-  scroll-snap-type: x mandatory;
+  display:flex;overflow-x:auto;gap:12px;padding:10px 0;
+  scroll-snap-type:x mandatory;
 }
 .video-slider::-webkit-scrollbar{display:none;}
 .video-item{
-  flex:0 0 auto;
-  width:200px;
-  position:relative;
-  border-radius:12px;
-  overflow:hidden;
-  scroll-snap-align:start;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-  cursor:pointer;
+  flex:0 0 auto;width:200px;position:relative;
+  border-radius:12px;overflow:hidden;scroll-snap-align:start;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);cursor:pointer;
 }
 .video-item img{
-  width:100%;
-  display:block;
-  transition:transform 0.3s;
+  width:100%;transition:0.3s;
 }
 .video-item:hover img{transform:scale(1.05);}
 .play{
-  position:absolute;
-  top:50%;
-  left:50%;
+  position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
-  font-size:40px;
-  color:#FFD700;
-  opacity:0.9;
+  font-size:38px;color:#FFD700;opacity:0.9;
 }
 
-/* фикс кнопки */
+/* Фикс контакты */
 .contact-fixed{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  display:flex;
-  z-index:99;
+  position:fixed;bottom:0;left:0;width:100%;display:flex;z-index:99;
 }
 .cf-btn{
-  flex:1;
-  text-align:center;
-  padding:14px;
-  font-weight:bold;
-  color:#fff;
-  border-top:2px solid #222;
-  transition:0.3s;
+  flex:1;text-align:center;padding:14px;font-weight:bold;color:#fff;
+  border-top:2px solid #222;transition:0.3s;
 }
 .cf-btn:hover{filter:brightness(1.1);}
-.whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
+.whatsapp{background:#25D366;}
 .telegram{background:#229ED9;}
 .imo{background:#00AEEF;}
 .line{background:#00C300;}
 .imessage{background:#007AFF;}
-@keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
-  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
-  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
-}
 
-/* input */
-#amount{
-  width:100%;
-  padding:10px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-  margin-top:10px;
+/* Курсы */
+#rates-box{
+  background:#111;padding:15px;border-radius:12px;
+  margin:14px 0;box-shadow:0 4px 10px rgba(255,215,0,0.1);
 }
-
-/* преимущества */
-.checks{ color:#ccc; padding-left:10px; }
-
-/* блок курсов */
-#rates{
-  background:#111;
-  padding:15px;
-  border-radius:12px;
-  margin:20px 0;
-  box-shadow:0 4px 12px rgba(255,215,0,0.1);
+#rates-box .rate-item{
+  display:flex;justify-content:space-between;padding:6px 0;
+  font-size:16px;border-bottom:1px solid #222;
 }
-#rates h4{color:#FFD700; margin-bottom:10px;}
-.rate-item{display:flex;justify-content:space-between;margin-bottom:6px;}
 </style>
 </head>
 <body>
@@ -239,53 +133,31 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <div class="container">
 
-<h1>ОБМЕН ВАЛЮТ И ОТПРАВКА ДЕНЕГ</h1>
-<h3>туристы, студенты, мигранты,<br>бизнес, частные клиенты</h3>
-<h4 style="text-align:center;">комиссия от 0,5% до 3,6%</h4>
+<h1>ОБМЕН ВАЛЮТ И ПЕРЕВОДЫ</h1>
+<h3>туристы, студенты, мигранты,<br>бизнес и частные клиенты</h3>
+<h4>комиссия от 0,5% до 3,6%</h4>
 
-<section style="text-align:right; padding:20px;">
-<img src="https://i.ibb.co/LDc0JwxD/B080-D83-E-0-B53-490-F-B897-3-B1-C5219-C42-C.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
+<section style="text-align:right; padding:18px;">
+<img src="https://i.ibb.co/LDc0JwxD/B080-D83-E-0-B53-490-F-B897-3-B1-C5219-C42-C.png" alt="app2.cash" style="width:120px;">
 </section>
 
 <div id="fomo" class="fomo"></div>
 
 <h2 id="how">Как это работает</h2>
-<div class="card checks">
+<div class="card">
 ✔ Пишете → получаете курс<br>
-✔ Делаете перевод в своей валюте<br>
-✔ Вы или ваш человек получаете необходимую валюту
+✔ Делаете перевод<br>
+✔ Получаете валюту быстрее, чем в банке
 </div>
-
-<div style="margin:20px 0; padding:10px; border:1.5px solid gold; border-radius:12px; text-align:center;">
-  <div class="card">
-    <h4>Популярно:</h4>
-    Россия, Турция, Узбекистан<br>
-    Танзания, Индонезия, Китай<br>
-    <h4>Методы:</h4>
-    карты МИР/ VISA/ Mastercard<br>
-    мобильные кошельки, M-Pesa, USDT, 800+ методов<br>
-  </div>
-  <h4>Уточняйте ваши страны и методы оплаты в лс.</h4>
-</div>
-
-<section style="background:#0b0b0b;color:white;padding:30px 20px;text-align:left;">
-  <p style="color:#ccc;">
-    ✔ Работаем с 2022 года<br>
-    ✔ Переводы 15-50 минут<br>
-    ✔ Поддержка на вашем языке<br>
-    ✔ Конфиденциально и застраховано
-  </p>
-</section>
 
 <h2 id="rates">Курсы валют (к доллару)</h2>
-<div id="rates" class="card">
-<h4>Обновляется онлайн:</h4>
-<div class="rate-item">RUB <span id="rate-rub">—</span></div>
-<div class="rate-item">AED <span id="rate-aed">—</span></div>
-<div class="rate-item">TZS <span id="rate-tzs">—</span></div>
-<div class="rate-item">CNY <span id="rate-cny">—</span></div>
-<div class="rate-item">EUR <span id="rate-eur">—</span></div>
-<div class="rate-item">TRY <span id="rate-try">—</span></div>
+<div id="rates-box">
+  <div class="rate-item"><span>RUB</span><span id="rate-rub">—</span></div>
+  <div class="rate-item"><span>AED</span><span id="rate-aed">—</span></div>
+  <div class="rate-item"><span>TZS</span><span id="rate-tzs">—</span></div>
+  <div class="rate-item"><span>CNY</span><span id="rate-cny">—</span></div>
+  <div class="rate-item"><span>EUR</span><span id="rate-eur">—</span></div>
+  <div class="rate-item"><span>TRY</span><span id="rate-try">—</span></div>
 </div>
 
 <h2>Сколько вы получите?</h2>
@@ -295,147 +167,112 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <h2>Читайте подтверждения</h2>
 <div class="screens">
-<img src="IMG_en/1.jpg">
-<img src="IMG_en/2.jpg">
-<img src="IMG_en/3.jpg">
-<img src="IMG_en/4.jpg">
-<img src="IMG_en/5.jpg">
-<img src="IMG_en/6.jpg">
-<img src="IMG_en/7.jpg">
-<img src="IMG_en/8.jpg">
-<img src="IMG_en/9.jpg">
-<img src="IMG_en/10.jpg">
-<img src="IMG_en/11.jpg">
+  <img src="IMG_ru/1.jpg">
+  <img src="IMG_ru/2.jpg">
+  <img src="IMG_ru/3.jpg">
+  <img src="IMG_ru/4.jpg">
+  <img src="IMG_ru/5.jpg">
+  <img src="IMG_ru/6.jpg">
+  <img src="IMG_ru/7.jpg">
+  <img src="IMG_ru/8.jpg">
+  <img src="IMG_ru/9.jpg">
+  <img src="IMG_ru/10.jpg">
+  <img src="IMG_ru/11.jpg">
 </div>
 
-<h2>Смотрите видео отзывы</h2>
+<h2>Видео отзывы</h2>
 <div class="video-slider" id="videos"></div>
-<a href="https://wa.me/255756687444" class="cta">Написать Марату в WhatsApp</a>
+
+<a href="https://wa.me/255756687444" class="cta">Написать в WhatsApp</a>
 
 <h2>Почему не банки</h2>
+<div class="card">✔ Нет SWIFT и комиссий</div>
+<div class="card">✖ Медленно, ограничения, блокировки</div>
+
+<h2 id="contacts">Контакты</h2>
 <div class="card">
-✔ Без пошлин<br>✔ Без блокировок<br>✔ Без SWIFT
+WhatsApp / Telegram / IMO / LINE / iMessage
 </div>
-<div class="card">
-✖ Медленно<br>✖ Ограничения<br>✖ Риски
-</div>
-
-<h2>Вопросы</h2>
-<div class="card checks">
-Это безопасно? - Да, вы общаетесь напрямую.<br>
-Какие гарантии? - Репутация, двойное шифрование и смарт-контракты.
-</div>
-
-<h2 id="contacts">Нам доверяют</h2>
-<div class="card checks" style="text-align:center;">
-с 2022 года тысячи обменов<br>
-Проверено Русской диаспорой
-</div>
-
-<div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
-🔒 Конфиденциально. Застраховано
-</div>
-<a href="https://wa.me/255756687444" class="cta">Отвечаем быстро. Обмен без регистрации</a>
 
 </div>
 
-<!-- фикс кнопки -->
+<!-- Контактные кнопки -->
 <div class="contact-fixed">
-  <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
-  <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
+  <a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/app2cas" class="cf-btn telegram">Telegram</a>
   <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
   <a href="line://ti/p/@app2cash" class="cf-btn line">LINE</a>
   <a href="sms:maratyarkov@icloud.com" class="cf-btn imessage">iMessage</a>
 </div>
 
 <!-- Lightbox для скриншотов -->
-<div id="lightbox"><img src="" alt="Screenshot"></div>
+<div id="lightbox"><img src="" alt="Скриншот"></div>
 
 <script>
 // FOMO
-document.addEventListener("DOMContentLoaded", function(){
-  const list=[
-    {name:'Александр',text:'2300 USD'},
-    {name:'Мария',text:'1500 EUR'},
-    {name:'Илья',text:'53 000 RUB'},
-    {name:'Аноним',text:'22 000 USDT'}
-  ];
-  let i=0;
-  const f=document.getElementById('fomo');
-  function updateFOMO(){
-    f.style.opacity=0;
-    setTimeout(()=>{
-      let d=list[i];
-      f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
-                     <div><b>${d.name}</b> обменял ${d.text}</div>`;
-      f.style.opacity=1;
-      i=(i+1)%list.length;
-    },300);
-  }
-  updateFOMO();
-  setInterval(updateFOMO,4000);
+const fomoList=[
+  {name:'Александр',text:'2300 USD'},
+  {name:'Мария',text:'1500 EUR'},
+  {name:'Илья',text:'53 000 RUB'},
+  {name:'Аноним',text:'22 000 USDT'}
+];
+let fi=0;
+const fDiv=document.getElementById('fomo');
+function showFomo(){
+  fDiv.style.opacity=0;
+  setTimeout(()=>{
+    let d=fomoList[fi];
+    fDiv.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}"><div><b>${d.name}</b> обменял ${d.text}</div>`;
+    fDiv.style.opacity=1;
+    fi=(fi+1)%fomoList.length;
+  },300);
+}
+showFomo();setInterval(showFomo,3800);
 
-  // Видео-слайдер
-  const container=document.getElementById('videos');
-  for(let i=1;i<=16;i++){
-    const div=document.createElement('div');
-    div.className='video-item';
-    div.innerHTML=`<img src="REW_en/${i}.jpg"><div class="play">▶</div>`;
-    div.dataset.src=`REW_en/${i}.mp4`;
-    container.appendChild(div);
-  }
-
-  document.getElementById("amount").oninput = function(){
-    let v = this.value;
-    document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
-  }
-
-  // Воспроизведение видео внутри слайдера
-  document.querySelectorAll('.video-item').forEach(item=>{
-    item.addEventListener('click', function(){
-      if(this.querySelector('video')){
-        let v=this.querySelector('video');
-        v.muted=false;
-        v.playbackRate = v.playbackRate === 1 ? 2 : 1;
-        return;
-      }
-      const v=document.createElement('video');
-      v.src=this.dataset.src;
-      v.controls=true;
-      v.autoplay=true;
-      v.playsInline=true;
-      v.style.width='100%';
-      v.style.height='auto';
-      this.innerHTML='';
-      this.appendChild(v);
-    });
-  });
-
-  // Скриншоты Lightbox
-  const lightbox=document.getElementById('lightbox');
-  const lightImg=lightbox.querySelector('img');
-  document.querySelectorAll('.screens img').forEach(img=>{
-    img.addEventListener('click', ()=>{
-      lightImg.src=img.src;
-      lightbox.style.display='flex';
-    });
-  });
-  lightbox.addEventListener('click', ()=>lightbox.style.display='none');
-
-  // Онлайн-курсы через API
-  fetch('https://api.exchangerate.host/latest?base=USD&symbols=RUB,AED,TZS,CNY,EUR,TRY')
-    .then(res=>res.json())
-    .then(data=>{
-      document.getElementById('rate-rub').innerText = data.rates.RUB.toFixed(2);
-      document.getElementById('rate-aed').innerText = data.rates.AED.toFixed(2);
-      document.getElementById('rate-tzs').innerText = data.rates.TZS.toFixed(2);
-      document.getElementById('rate-cny').innerText = data.rates.CNY.toFixed(2);
-      document.getElementById('rate-eur').innerText = data.rates.EUR.toFixed(2);
-      document.getElementById('rate-try').innerText = data.rates.TRY.toFixed(2);
-    })
-    .catch(err=>console.error('Ошибка загрузки курса:', err));
-
+// Скриншоты Lightbox
+const lb=document.getElementById('lightbox');
+const lbImg=lb.querySelector('img');
+document.querySelectorAll('.screens img').forEach(img=>{
+  img.addEventListener('click',()=>{lbImg.src=img.src;lb.style.display='flex';});
 });
+lb.addEventListener('click',()=>{lb.style.display='none';});
+
+// Видео слайдер
+const vCont=document.getElementById('videos');
+for(let i=1;i<=16;i++){
+  const div=document.createElement('div');
+  div.className='video-item';
+  div.innerHTML=`<img src="REW_ru/${i}.jpg"><div class="play">▶</div>`;
+  div.dataset.src=`REW_ru/${i}.mp4`;
+  vCont.appendChild(div);
+}
+document.querySelectorAll('.video-item').forEach(item=>{
+  item.addEventListener('click',function(){
+    if(this.querySelector('video')) return;
+    const v=document.createElement('video');
+    v.src=this.dataset.src;v.controls=true;v.autoplay=true;
+    v.style.width='100%';this.innerHTML='';this.appendChild(v);
+  });
+});
+
+// Онлайн курсы валют
+fetch('https://api.exchangerate.host/latest?base=USD&symbols=RUB,AED,TZS,CNY,EUR,TRY')
+.then(res=>res.json())
+.then(d=>{
+  document.getElementById('rate-rub').innerText = d.rates.RUB.toFixed(2);
+  document.getElementById('rate-aed').innerText = d.rates.AED.toFixed(2);
+  document.getElementById('rate-tzs').innerText = d.rates.TZS.toFixed(2);
+  document.getElementById('rate-cny').innerText = d.rates.CNY.toFixed(2);
+  document.getElementById('rate-eur').innerText = d.rates.EUR.toFixed(2);
+  document.getElementById('rate-try').innerText = d.rates.TRY.toFixed(2);
+});
+
+// Расчёт
+document.getElementById('amount').oninput=function(){
+  let v=+this.value||0;
+  document.getElementById('result').innerText="≈ "+(v*0.97).toFixed(2);
+};
 </script>
+
 </body>
 </html>
