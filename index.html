@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Обмен валют</title>
+<title>app2.cash - Обмен валют и переводы</title>
 <style>
 body{
   margin:0;
@@ -21,8 +21,26 @@ body{
   padding:20px;
 }
 
-/* язык */
-.lang{text-align:right;margin-bottom:10px;}
+/* шапка */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 20px;
+  background:#111;
+  border-bottom:2px solid gold;
+}
+header img{height:50px;}
+header nav a{
+  margin-left:15px;
+  color:#FFD700;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+header nav a:hover{color:#fff;}
+
+/* кнопка языка */
 .lang a{
   color:#FFD700;
   text-decoration:none;
@@ -174,6 +192,8 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 .whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
 .telegram{background:#229ED9;}
 .imo{background:#00AEEF;}
+.line{background:#00C300;}
+.imessage{background:#007AFF;}
 @keyframes pulse{
   0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
   70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
@@ -193,32 +213,31 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 /* преимущества */
 .checks{ color:#ccc; padding-left:10px; }
 
-<!-- Шапка с логотипом -->
-<header style="background:#0b0b0f; padding:15px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #FFD700;">
-  <!-- Логотип -->
-  <a href="/" style="display:flex; align-items:center; text-decoration:none;">
-    <img src="logo-bull.png" alt="Бул лого" style="height:50px; margin-right:12px;">
-    <span style="color:#FFD700; font-size:24px; font-weight:bold; font-family:'Montserrat', sans-serif;">Бул Логово</span>
-  </a>
-  
-  <!-- Навигация (по желанию) -->
+/* блок курсов */
+#rates{
+  background:#111;
+  padding:15px;
+  border-radius:12px;
+  margin:20px 0;
+  box-shadow:0 4px 12px rgba(255,215,0,0.1);
+}
+#rates h4{color:#FFD700; margin-bottom:10px;}
+.rate-item{display:flex;justify-content:space-between;margin-bottom:6px;}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="logo-bull.png" alt="app2.cash">
   <nav>
-    <a href="#how" style="color:#fff; margin-right:15px; text-decoration:none; font-weight:500;">Как работает</a>
-    <a href="#rates" style="color:#fff; margin-right:15px; text-decoration:none; font-weight:500;">Курсы</a>
-    <a href="#contacts" style="color:#fff; text-decoration:none; font-weight:500;">Контакты</a>
+    <a href="#how">Как работает</a>
+    <a href="#rates">Курсы</a>
+    <a href="#contacts">Контакты</a>
+    <a href="en.html">🇬🇧 English</a>
   </nav>
 </header>
 
-</style>
-</head>
-
-<body>
-
 <div class="container">
-
-<div class="lang">
-<a href="en">🇬🇧 English</a>
-</div>
 
 <h1>ОБМЕН ВАЛЮТ И ОТПРАВКА ДЕНЕГ</h1>
 <h3>туристы, студенты, мигранты,<br>бизнес, частные клиенты</h3>
@@ -230,7 +249,7 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <div id="fomo" class="fomo"></div>
 
-<h2>Как это работает</h2>
+<h2 id="how">Как это работает</h2>
 <div class="card checks">
 ✔ Пишете → получаете курс<br>
 ✔ Делаете перевод в своей валюте<br>
@@ -258,6 +277,17 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   </p>
 </section>
 
+<h2 id="rates">Курсы валют (к доллару)</h2>
+<div id="rates" class="card">
+<h4>Обновляется онлайн:</h4>
+<div class="rate-item">RUB <span id="rate-rub">—</span></div>
+<div class="rate-item">AED <span id="rate-aed">—</span></div>
+<div class="rate-item">TZS <span id="rate-tzs">—</span></div>
+<div class="rate-item">CNY <span id="rate-cny">—</span></div>
+<div class="rate-item">EUR <span id="rate-eur">—</span></div>
+<div class="rate-item">TRY <span id="rate-try">—</span></div>
+</div>
+
 <h2>Сколько вы получите?</h2>
 <input id="amount" placeholder="Введите сумму">
 <div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
@@ -265,16 +295,17 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <h2>Читайте подтверждения</h2>
 <div class="screens">
-<img src="IMG_ru/1.jpg">
-<img src="IMG_ru/2.jpg">
-<img src="IMG_ru/3.jpg">
-<img src="IMG_ru/4.jpg">
-<img src="IMG_ru/5.jpg">
-<img src="IMG_ru/6.jpg">
-<img src="IMG_ru/7.jpg">
-<img src="IMG_ru/8.jpg">
-<img src="IMG_ru/9.jpg">
-<img src="IMG_ru/10.jpg">
+<img src="IMG_en/1.jpg">
+<img src="IMG_en/2.jpg">
+<img src="IMG_en/3.jpg">
+<img src="IMG_en/4.jpg">
+<img src="IMG_en/5.jpg">
+<img src="IMG_en/6.jpg">
+<img src="IMG_en/7.jpg">
+<img src="IMG_en/8.jpg">
+<img src="IMG_en/9.jpg">
+<img src="IMG_en/10.jpg">
+<img src="IMG_en/11.jpg">
 </div>
 
 <h2>Смотрите видео отзывы</h2>
@@ -295,18 +326,16 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 Какие гарантии? - Репутация, двойное шифрование и смарт-контракты.
 </div>
 
-<h2>Нам доверяют</h2>
-<section style="text-align:center; padding:20px;">
-<img src="https://i.ibb.co/LDc0JwxD/B080-D83-E-0-B53-490-F-B897-3-B1-C5219-C42-C.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
-</section>
+<h2 id="contacts">Нам доверяют</h2>
 <div class="card checks" style="text-align:center;">
 с 2022 года тысячи обменов<br>
+Проверено Русской диаспорой
 </div>
 
 <div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
 🔒 Конфиденциально. Застраховано
 </div>
-<a href="https://wa.me/255756687444" class="cta">Отвечаем быстро<br> Обмен без регистрации</a>
+<a href="https://wa.me/255756687444" class="cta">Отвечаем быстро. Обмен без регистрации</a>
 
 </div>
 
@@ -315,15 +344,16 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
   <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
   <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
+  <a href="line://ti/p/@app2cash" class="cf-btn line">LINE</a>
+  <a href="sms:maratyarkov@icloud.com" class="cf-btn imessage">iMessage</a>
 </div>
 
 <!-- Lightbox для скриншотов -->
 <div id="lightbox"><img src="" alt="Screenshot"></div>
 
 <script>
+// FOMO
 document.addEventListener("DOMContentLoaded", function(){
-
-  // FOMO
   const list=[
     {name:'Александр',text:'2300 USD'},
     {name:'Мария',text:'1500 EUR'},
@@ -332,7 +362,7 @@ document.addEventListener("DOMContentLoaded", function(){
   ];
   let i=0;
   const f=document.getElementById('fomo');
-  function update(){
+  function updateFOMO(){
     f.style.opacity=0;
     setTimeout(()=>{
       let d=list[i];
@@ -342,16 +372,16 @@ document.addEventListener("DOMContentLoaded", function(){
       i=(i+1)%list.length;
     },300);
   }
-  update();
-  setInterval(update,4000);
+  updateFOMO();
+  setInterval(updateFOMO,4000);
 
   // Видео-слайдер
   const container=document.getElementById('videos');
-  for(let i=1;i<=14;i++){
+  for(let i=1;i<=16;i++){
     const div=document.createElement('div');
     div.className='video-item';
-    div.innerHTML=`<img src="POS_ru/${i}.jpg"><div class="play">▶</div>`;
-    div.dataset.src=`REW_ru/${i}.mp4`;
+    div.innerHTML=`<img src="REW_en/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src=`REW_en/${i}.mp4`;
     container.appendChild(div);
   }
 
@@ -391,6 +421,19 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
   lightbox.addEventListener('click', ()=>lightbox.style.display='none');
+
+  // Онлайн-курсы через API
+  fetch('https://api.exchangerate.host/latest?base=USD&symbols=RUB,AED,TZS,CNY,EUR,TRY')
+    .then(res=>res.json())
+    .then(data=>{
+      document.getElementById('rate-rub').innerText = data.rates.RUB.toFixed(2);
+      document.getElementById('rate-aed').innerText = data.rates.AED.toFixed(2);
+      document.getElementById('rate-tzs').innerText = data.rates.TZS.toFixed(2);
+      document.getElementById('rate-cny').innerText = data.rates.CNY.toFixed(2);
+      document.getElementById('rate-eur').innerText = data.rates.EUR.toFixed(2);
+      document.getElementById('rate-try').innerText = data.rates.TRY.toFixed(2);
+    })
+    .catch(err=>console.error('Ошибка загрузки курса:', err));
 
 });
 </script>
