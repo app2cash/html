@@ -13,46 +13,180 @@ body{
   line-height:1.5;
   padding-bottom:100px;
 }
-.container{max-width:540px;margin:0 auto;padding:20px;}
-.lang{display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
-.lang a{color:#FFD700;text-decoration:none;font-weight:bold;padding:6px 12px;border-radius:12px;transition:0.3s;}
-.lang a:hover{color:#fff;background:linear-gradient(90deg,#FFD700,#FFA500);}
-.lang a.active{background:#FFD700;color:#000;}
+.container{
+  max-width:540px;
+  margin:0 auto;
+  padding:20px;
+}
+.lang {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap:6px;
+  margin-bottom:10px;
+}
+.lang a{
+  text-decoration:none;
+  font-weight:bold;
+  padding:2px 6px;
+  border-radius:6px;
+  color:#FFD700;
+  transition:0.3s;
+}
+.lang a:hover{color:#fff;}
+.lang a.active{
+  background:#FFD700;
+  color:#000;
+}
 h1{text-align:center;font-size:28px;margin-bottom:5px;}
 h2{margin-top:35px;font-size:22px;border-bottom:1px solid #333;padding-bottom:8px;}
-h3{text-align:center;color:#ccc;margin-bottom:5px;}
-h4{color:#FFD700;font-weight:500;margin-top:10px;text-align:center;}
-.cta{display:block;text-align:center;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;padding:14px;border-radius:16px;font-weight:bold;margin:20px 0;text-decoration:none;transition:0.3s;}
-.cta:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,215,0,0.4);}
-.card{background:#111;padding:18px;border-radius:16px;margin-top:15px;box-shadow:0 4px 15px rgba(255,255,255,0.05);}
-.fomo{display:flex;align-items:center;gap:12px;background:#111;border:1px solid #FFD700;padding:12px;border-radius:12px;margin:15px 0;font-size:14px;transition:opacity 0.5s;box-shadow:0 4px 12px rgba(255,215,0,0.2);}
-.fomo img{width:36px;border-radius:50%;}
-.screens{display:flex;overflow-x:auto;gap:10px;margin-top:10px;padding-bottom:10px;}
-.screens img{width:140px;border-radius:12px;border:2px solid gold;transition: transform 0.3s;cursor:pointer;}
-.screens img:hover{transform:scale(1.05);}
-#lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:999;}
-#lightbox img{max-width:90%;max-height:90%;border-radius:12px;}
-.video-slider{display:flex;overflow-x:auto;gap:10px;padding:10px 0;scroll-snap-type:x mandatory;}
+h3{font-weight:400;color:#ccc;text-align:center;margin-bottom:5px;}
+h4{margin-top:10px;font-weight:500;color:#FFD700;}
+.cta{
+  display:block;
+  text-align:center;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
+  color:#000;
+  padding:14px;
+  border-radius:16px;
+  font-weight:bold;
+  margin:20px 0;
+  text-decoration:none;
+  transition:0.3s;
+}
+.cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(255,215,0,0.4);
+}
+.card{
+  background:#111;
+  padding:18px;
+  border-radius:16px;
+  margin-top:15px;
+  box-shadow:0 4px 15px rgba(255,255,255,0.05);
+}
+.fomo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#111;
+  border:1px solid #FFD700;
+  padding:12px;
+  border-radius:12px;
+  margin:15px 0;
+  font-size:14px;
+  transition:opacity 0.5s;
+  box-shadow:0 4px 12px rgba(255,215,0,0.2);
+}
+.fomo img{
+  width:36px;
+  border-radius:50%;
+}
+.screens{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  margin-top:10px;
+  padding-bottom:10px;
+}
+.screens img{
+  width:140px;
+  border-radius:12px;
+  border:2px solid gold;
+  transition: transform 0.3s;
+  cursor:pointer;
+}
+.screens img:hover{ transform:scale(1.05); }
+#lightbox{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+#lightbox img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+}
+.video-slider{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px 0;
+  scroll-snap-type: x mandatory;
+}
 .video-slider::-webkit-scrollbar{display:none;}
-.video-item{flex:0 0 auto;width:200px;position:relative;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 4px 15px rgba(0,0,0,0.3);cursor:pointer;}
-.video-item img{width:100%;display:block;transition:transform 0.3s;}
+.video-item{
+  flex:0 0 auto;
+  width:200px;
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  scroll-snap-align:start;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  cursor:pointer;
+}
+.video-item img{
+  width:100%;
+  display:block;
+  transition:transform 0.3s;
+}
 .video-item:hover img{transform:scale(1.05);}
-.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;color:#FFD700;opacity:0.9;}
-.contact-fixed{position:fixed;bottom:0;left:0;width:100%;display:flex;z-index:99;}
-.cf-btn{flex:1;text-align:center;padding:14px;font-weight:bold;color:#fff;border-top:2px solid #222;transition:0.3s;}
+.play{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:40px;
+  color:#FFD700;
+  opacity:0.9;
+}
+.contact-fixed{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  z-index:99;
+}
+.cf-btn{
+  flex:1;
+  text-align:center;
+  padding:14px;
+  font-weight:bold;
+  color:#fff;
+  border-top:2px solid #222;
+  transition:0.3s;
+}
 .cf-btn:hover{filter:brightness(1.1);}
 .whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
 .telegram{background:#229ED9;}
 .imo{background:#00AEEF;}
-@keyframes pulse{0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7);}70%{ box-shadow:0 0 0 10px rgba(37,211,102,0);}100%{ box-shadow:0 0 0 0 rgba(37,211,102,0);}}
-#amount{width:100%;padding:10px;border-radius:12px;border:none;font-size:16px;margin-top:10px;}
-.checks{color:#ccc;padding-left:10px;}
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
+  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+}
+#amount{
+  width:100%;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+  margin-top:10px;
+}
+.checks{ color:#ccc; padding-left:10px; }
 </style>
 </head>
 <body>
+
 <div class="container">
 <div class="lang">
-  <a href="/">🇷🇺 Русский</a>
+  <a href="/ru">🇷🇺 Русский</a>
   <a href="/en">🇬🇧 English</a>
   <a href="/cn" class="active">🇨🇳 中文</a>
 </div>
@@ -60,12 +194,12 @@ h4{color:#FFD700;font-weight:500;margin-top:10px;text-align:center;}
 <section style="text-align:center; padding:20px;">
   <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:12px;">
   <br>
-  <img src="/en/9615-A3-F8-EE6-A-4-AE2-974-B-D6712810-B65-D.png" alt="Stamp" style="width:120px;margin-top:12px;">
+  <img src="https://i.ibb.co/jjVNymr/9615-A3-F8-EE6-A-4-AE2-974-B-D6712810-B65-D.png" alt="Stamp" style="width:120px;margin-top:12px;">
 </section>
 
 <h1>货币兑换和汇款</h1>
 <h3>游客，学生，移民，<br>企业，私人客户</h3>
-<h4>手续费从0.5%到3.6%</h4>
+<h4 style="text-align:center;">手续费从0.5%到3.6%</h4>
 
 <div id="fomo" class="fomo"></div>
 
@@ -104,16 +238,16 @@ h4{color:#FFD700;font-weight:500;margin-top:10px;text-align:center;}
 
 <h2>查看确认记录</h2>
 <div class="screens">
-  <img src="/en/IMG_en/1.jpg">
-  <img src="/en/IMG_en/2.jpg">
-  <img src="/en/IMG_en/3.jpg">
-  <img src="/en/IMG_en/4.jpg">
-  <img src="/en/IMG_en/5.jpg">
-  <img src="/en/IMG_en/6.jpg">
-  <img src="/en/IMG_en/7.jpg">
-  <img src="/en/IMG_en/8.jpg">
-  <img src="/en/IMG_en/9.jpg">
-  <img src="/en/IMG_en/10.jpg">
+  <img src="/IMG_en/1.jpg">
+  <img src="/IMG_en/2.jpg">
+  <img src="/IMG_en/3.jpg">
+  <img src="/IMG_en/4.jpg">
+  <img src="/IMG_en/5.jpg">
+  <img src="/IMG_en/6.jpg">
+  <img src="/IMG_en/7.jpg">
+  <img src="/IMG_en/8.jpg">
+  <img src="/IMG_en/9.jpg">
+  <img src="/IMG_en/10.jpg">
 </div>
 
 <h2>观看视频评价</h2>
@@ -147,6 +281,7 @@ h4{color:#FFD700;font-weight:500;margin-top:10px;text-align:center;}
 🔒 保密. 已投保
 </div>
 <a href="https://wa.me/255756687444" class="cta">快速响应，无需注册即可兑换</a>
+
 </div>
 
 <div class="contact-fixed">
@@ -159,12 +294,12 @@ h4{color:#FFD700;font-weight:500;margin-top:10px;text-align:center;}
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
-  // FOMO
+
   const list=[
-    {name:'亚历山大', text:'兑换了2300美元'},
-    {name:'玛丽亚', text:'兑换了1500欧元'},
-    {name:'伊利亚', text:'兑换了53,000卢布'},
-    {name:'匿名', text:'兑换了22,000 USDT'}
+    {name:'Alexander', text:'兑换了2300美元'},
+    {name:'Maria', text:'兑换了1500欧元'},
+    {name:'Ilya', text:'兑换了53,000卢布'},
+    {name:'Anonymous', text:'兑换了22,000 USDT'}
   ];
   let i=0;
   const f=document.getElementById('fomo');
@@ -181,13 +316,12 @@ document.addEventListener("DOMContentLoaded", function(){
   update();
   setInterval(update,4000);
 
-  // Видео-слайдер
   const container=document.getElementById('videos');
   for(let i=1;i<=16;i++){
     const div=document.createElement('div');
     div.className='video-item';
-    div.innerHTML=`<img src="/en/POS_en/${i}.jpg"><div class="play">▶</div>`;
-    div.dataset.src=`/en/REW_en/${i}.mp4`;
+    div.innerHTML=`<img src="/POS_en/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src=`/REW_en/${i}.mp4`;
     container.appendChild(div);
   }
 
@@ -225,6 +359,7 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
   lightbox.addEventListener('click', ()=>lightbox.style.display='none');
+
 });
 </script>
 </body>
