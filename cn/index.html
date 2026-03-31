@@ -13,221 +13,59 @@ body{
   line-height:1.5;
   padding-bottom:100px;
 }
-
-/* контейнер */
-.container{
-  max-width:540px;
-  margin:0 auto;
-  padding:20px;
-}
-
-/* язык */
-.lang {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  gap:6px;
-  margin-bottom:10px;
-}
-.lang a{
-  text-decoration:none;
-  font-weight:bold;
-  padding:2px 6px;
-  border-radius:6px;
-  color:#FFD700;
-  transition:0.3s;
-}
-.lang a:hover{color:#fff;}
-.lang a.active{
-  background:#FFD700;
-  color:#000;
-}
-
-/* заголовки */
+.container{max-width:540px;margin:0 auto;padding:20px;}
+.lang{display:flex;justify-content:center;gap:10px;margin-bottom:20px;}
+.lang a{color:#FFD700;text-decoration:none;font-weight:bold;padding:6px 12px;border-radius:12px;transition:0.3s;}
+.lang a:hover{color:#fff;background:linear-gradient(90deg,#FFD700,#FFA500);}
+.lang a.active{background:#FFD700;color:#000;}
 h1{text-align:center;font-size:28px;margin-bottom:5px;}
 h2{margin-top:35px;font-size:22px;border-bottom:1px solid #333;padding-bottom:8px;}
-h3{font-weight:400;color:#ccc;text-align:center;margin-bottom:5px;}
-h4{margin-top:10px;font-weight:500;color:#FFD700;}
-
-/* кнопки */
-.cta{
-  display:block;
-  text-align:center;
-  background:linear-gradient(90deg,#FFD700,#FFA500);
-  color:#000;
-  padding:14px;
-  border-radius:16px;
-  font-weight:bold;
-  margin:20px 0;
-  text-decoration:none;
-  transition:0.3s;
-}
-.cta:hover{
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(255,215,0,0.4);
-}
-
-/* карточки */
-.card{
-  background:#111;
-  padding:18px;
-  border-radius:16px;
-  margin-top:15px;
-  box-shadow:0 4px 15px rgba(255,255,255,0.05);
-}
-
-/* FOMO */
-.fomo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:#111;
-  border:1px solid #FFD700;
-  padding:12px;
-  border-radius:12px;
-  margin:15px 0;
-  font-size:14px;
-  transition:opacity 0.5s;
-  box-shadow:0 4px 12px rgba(255,215,0,0.2);
-}
-.fomo img{
-  width:36px;
-  border-radius:50%;
-}
-
-/* скриншоты */
-.screens{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  margin-top:10px;
-  padding-bottom:10px;
-}
-.screens img{
-  width:140px;
-  border-radius:12px;
-  border:2px solid gold;
-  transition: transform 0.3s;
-  cursor:pointer;
-}
-.screens img:hover{ transform:scale(1.05); }
-
-/* lightbox */
-#lightbox{
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-}
-#lightbox img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-}
-
-/* Netflix-style видео слайдер */
-.video-slider{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  padding:10px 0;
-  scroll-snap-type: x mandatory;
-}
+h3{text-align:center;color:#ccc;margin-bottom:5px;}
+h4{color:#FFD700;font-weight:500;margin-top:10px;text-align:center;}
+.cta{display:block;text-align:center;background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;padding:14px;border-radius:16px;font-weight:bold;margin:20px 0;text-decoration:none;transition:0.3s;}
+.cta:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,215,0,0.4);}
+.card{background:#111;padding:18px;border-radius:16px;margin-top:15px;box-shadow:0 4px 15px rgba(255,255,255,0.05);}
+.fomo{display:flex;align-items:center;gap:12px;background:#111;border:1px solid #FFD700;padding:12px;border-radius:12px;margin:15px 0;font-size:14px;transition:opacity 0.5s;box-shadow:0 4px 12px rgba(255,215,0,0.2);}
+.fomo img{width:36px;border-radius:50%;}
+.screens{display:flex;overflow-x:auto;gap:10px;margin-top:10px;padding-bottom:10px;}
+.screens img{width:140px;border-radius:12px;border:2px solid gold;transition: transform 0.3s;cursor:pointer;}
+.screens img:hover{transform:scale(1.05);}
+#lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:999;}
+#lightbox img{max-width:90%;max-height:90%;border-radius:12px;}
+.video-slider{display:flex;overflow-x:auto;gap:10px;padding:10px 0;scroll-snap-type:x mandatory;}
 .video-slider::-webkit-scrollbar{display:none;}
-.video-item{
-  flex:0 0 auto;
-  width:200px;
-  position:relative;
-  border-radius:12px;
-  overflow:hidden;
-  scroll-snap-align:start;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-  cursor:pointer;
-}
-.video-item img{
-  width:100%;
-  display:block;
-  transition:transform 0.3s;
-}
+.video-item{flex:0 0 auto;width:200px;position:relative;border-radius:12px;overflow:hidden;scroll-snap-align:start;box-shadow:0 4px 15px rgba(0,0,0,0.3);cursor:pointer;}
+.video-item img{width:100%;display:block;transition:transform 0.3s;}
 .video-item:hover img{transform:scale(1.05);}
-.play{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:40px;
-  color:#FFD700;
-  opacity:0.9;
-}
-
-/* фикс кнопки */
-.contact-fixed{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  display:flex;
-  z-index:99;
-}
-.cf-btn{
-  flex:1;
-  text-align:center;
-  padding:14px;
-  font-weight:bold;
-  color:#fff;
-  border-top:2px solid #222;
-  transition:0.3s;
-}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;color:#FFD700;opacity:0.9;}
+.contact-fixed{position:fixed;bottom:0;left:0;width:100%;display:flex;z-index:99;}
+.cf-btn{flex:1;text-align:center;padding:14px;font-weight:bold;color:#fff;border-top:2px solid #222;transition:0.3s;}
 .cf-btn:hover{filter:brightness(1.1);}
 .whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
 .telegram{background:#229ED9;}
 .imo{background:#00AEEF;}
-@keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
-  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
-  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
-}
-
-/* input */
-#amount{
-  width:100%;
-  padding:10px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-  margin-top:10px;
-}
-
-/* преимущества */
-.checks{ color:#ccc; padding-left:10px; }
+@keyframes pulse{0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7);}70%{ box-shadow:0 0 0 10px rgba(37,211,102,0);}100%{ box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+#amount{width:100%;padding:10px;border-radius:12px;border:none;font-size:16px;margin-top:10px;}
+.checks{color:#ccc;padding-left:10px;}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
-<!-- Языки -->
 <div class="lang">
   <a href="/">🇷🇺 Русский</a>
   <a href="/en">🇬🇧 English</a>
   <a href="/cn" class="active">🇨🇳 中文</a>
 </div>
 
-<!-- Логотип и печать -->
 <section style="text-align:center; padding:20px;">
   <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:12px;">
   <br>
-  <img src="https://i.ibb.co/jjVNymr/9615-A3-F8-EE6-A-4-AE2-974-B-D6712810-B65-D.png" alt="Stamp" style="width:120px;margin-top:12px;">
+  <img src="/en/9615-A3-F8-EE6-A-4-AE2-974-B-D6712810-B65-D.png" alt="Stamp" style="width:120px;margin-top:12px;">
 </section>
 
 <h1>货币兑换和汇款</h1>
 <h3>游客，学生，移民，<br>企业，私人客户</h3>
-<h4 style="text-align:center;">手续费从0.5%到3.6%</h4>
+<h4>手续费从0.5%到3.6%</h4>
 
 <div id="fomo" class="fomo"></div>
 
@@ -298,7 +136,7 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <h2>信赖者</h2>
 <section style="text-align:center; padding:20px;">
-  <img src="/en/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
+  <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
 </section>
 <div class="card checks" style="text-align:center;">
 自2022年以来的数千次兑换<br>
@@ -309,23 +147,19 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 🔒 保密. 已投保
 </div>
 <a href="https://wa.me/255756687444" class="cta">快速响应，无需注册即可兑换</a>
-
 </div>
 
-<!-- фикс кнопки -->
 <div class="contact-fixed">
   <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
   <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
   <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
 </div>
 
-<!-- Lightbox для скриншотов -->
 <div id="lightbox"><img src="" alt="Screenshot"></div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
-
-  // FOMO на китайском
+  // FOMO
   const list=[
     {name:'亚历山大', text:'兑换了2300美元'},
     {name:'玛丽亚', text:'兑换了1500欧元'},
@@ -362,7 +196,6 @@ document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
   }
 
-  // Воспроизведение видео внутри слайдера
   document.querySelectorAll('.video-item').forEach(item=>{
     item.addEventListener('click', function(){
       if(this.querySelector('video')){
@@ -383,7 +216,6 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
 
-  // Скриншоты Lightbox
   const lightbox=document.getElementById('lightbox');
   const lightImg=lightbox.querySelector('img');
   document.querySelectorAll('.screens img').forEach(img=>{
@@ -393,7 +225,6 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
   lightbox.addEventListener('click', ()=>lightbox.style.display='none');
-
 });
 </script>
 </body>
