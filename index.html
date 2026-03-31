@@ -22,14 +22,29 @@ body{
 }
 
 /* язык */
-.lang{text-align:right;margin-bottom:10px;}
+.lang{
+  text-align:center; /* центрируем кнопки */
+  margin-bottom:20px; /* отступ снизу */
+}
 .lang a{
+  display:inline-block; /* чтобы padding работал корректно */
   color:#FFD700;
   text-decoration:none;
   font-weight:bold;
+  background:#0b0b0f;
+  border-radius:6px;
+  padding:6px 12px;
+  margin:0 5px; /* пространство между кнопками */
   transition:0.3s;
 }
-.lang a:hover{color:#fff;}
+.lang a:first-child{
+  background:#FFD700;
+  color:#000;
+}
+.lang a:hover{
+  color:#fff;
+  background:#FFA500; /* эффект при наведении */
+}
 
 /* заголовки */
 h1{text-align:center;font-size:28px;margin-bottom:5px;}
@@ -199,33 +214,13 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 <body>
 
 <div class="container">
-/* язык */
-.lang {
-  text-align: center; /* центрируем кнопки */
-  margin-bottom: 20px; /* отступ снизу */
-}
 
-.lang a {
-  display: inline-block; /* чтобы padding работал корректно */
-  color: #FFD700;
-  text-decoration: none;
-  font-weight: bold;
-  background: #0b0b0f; /* если хочешь фон у всех, кроме первой кнопки, можно убрать */
-  border-radius: 6px;
-  padding: 6px 12px;
-  margin: 0 5px; /* пространство между кнопками */
-  transition: 0.3s;
-}
+<!-- Языковые кнопки -->
+<div class="lang">
+  <a href="#">Русский</a>
+  <a href="#">English</a>
+</div>
 
-.lang a:first-child {
-  background: #FFD700;
-  color: #000;
-}
-
-.lang a:hover {
-  color: #fff;
-  background: #FFA500; /* эффект при наведении */
-}
 <section style="text-align:left; padding:20px;">
 <img src="logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
 </section>
@@ -406,5 +401,3 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 </body>
 </html>
-
-
