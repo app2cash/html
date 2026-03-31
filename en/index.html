@@ -199,12 +199,28 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 <body>
 
 <div class="container">
-
-<div class="lang">
-  <a href="/">🇷🇺 Russian</a>
-  <a href="/en" style="background:#FFD700;color:#000;border-radius:6px;padding:2px 6px;">🇬🇧 English</a>
-  <a href="/cn">🇨🇳 中文</a>
-</div>
+/* язык */
+.lang{
+  text-align:center;  /* было right → теперь центр */
+  margin-bottom:20px; /* чуть больше отступ */
+  display:flex;
+  justify-content:center;
+  gap:20px;           /* расстояние между кнопками */
+}
+.lang a{
+  color:#FFD700;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:16px;
+  padding:8px 12px;
+  border-radius:12px;
+  background:linear-gradient(90deg,#333,#222); /* кнопка визуально */
+  transition:0.3s;
+}
+.lang a:hover{
+  color:#fff;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
+}
 <section style="text-align:left; padding:20px;">
 <img src="logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
 </section>
