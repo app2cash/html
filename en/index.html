@@ -22,14 +22,27 @@ body{
 }
 
 /* язык */
-.lang{text-align:right;margin-bottom:10px;}
+.lang{
+  text-align:center;
+  margin-bottom:20px;
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
 .lang a{
   color:#FFD700;
   text-decoration:none;
   font-weight:bold;
+  font-size:16px;
+  padding:8px 12px;
+  border-radius:12px;
+  background:linear-gradient(90deg,#333,#222);
   transition:0.3s;
 }
-.lang a:hover{color:#fff;}
+.lang a:hover{
+  color:#fff;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
+}
 
 /* заголовки */
 h1{text-align:center;font-size:28px;margin-bottom:5px;}
@@ -192,38 +205,23 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 /* преимущества */
 .checks{ color:#ccc; padding-left:10px; }
-
 </style>
 </head>
 
 <body>
 
 <div class="container">
-/* язык */
-.lang{
-  text-align:center;  /* было right → теперь центр */
-  margin-bottom:20px; /* чуть больше отступ */
-  display:flex;
-  justify-content:center;
-  gap:20px;           /* расстояние между кнопками */
-}
-.lang a{
-  color:#FFD700;
-  text-decoration:none;
-  font-weight:bold;
-  font-size:16px;
-  padding:8px 12px;
-  border-radius:12px;
-  background:linear-gradient(90deg,#333,#222); /* кнопка визуально */
-  transition:0.3s;
-}
-.lang a:hover{
-  color:#fff;
-  background:linear-gradient(90deg,#FFD700,#FFA500);
-}
+
+<div class="lang">
+  <a href="#">EN</a>
+  <a href="#">RU</a>
+  <a href="#">SW</a>
+</div>
+
 <section style="text-align:left; padding:20px;">
 <img src="logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
 </section>
+
 <h1>CURRENCY EXCHANGE AND MONEY TRANSFERS</h1>
 <h3>tourists, students, migrants,<br>businesses, private clients</h3>
 <h4 style="text-align:center;">commission from 0.5% to 3.6%</h4>
@@ -402,5 +400,3 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 </body>
 </html>
-
-
