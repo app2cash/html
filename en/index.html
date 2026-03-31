@@ -6,178 +6,178 @@
 <title>Currency Exchange – app2.cash</title>
 <style>
 body{
-  margin:0;
-  background:#0b0b0f;
-  color:#fff;
-  font-family:'Montserrat', Arial, sans-serif;
-  line-height:1.5;
-  padding-bottom:100px;
+  margin:0;
+  background:#0b0b0f;
+  color:#fff;
+  font-family:'Montserrat', Arial, sans-serif;
+  line-height:1.5;
+  padding-bottom:100px;
 }
 .container{
-  max-width:540px;
-  margin:0 auto;
-  padding:20px;
+  max-width:540px;
+  margin:0 auto;
+  padding:20px;
 }
 .lang {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  gap:6px;
-  margin-bottom:10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap:6px;
+  margin-bottom:10px;
 }
 .lang a{
-  text-decoration:none;
-  font-weight:bold;
-  padding:2px 6px;
-  border-radius:6px;
-  color:#FFD700;
-  transition:0.3s;
+  text-decoration:none;
+  font-weight:bold;
+  padding:2px 6px;
+  border-radius:6px;
+  color:#FFD700;
+  transition:0.3s;
 }
 .lang a:hover{color:#fff;}
 .lang a.active{
-  background:#FFD700;
-  color:#000;
+  background:#FFD700;
+  color:#000;
 }
 h1{text-align:center;font-size:28px;margin-bottom:5px;}
 h2{margin-top:35px;font-size:22px;border-bottom:1px solid #333;padding-bottom:8px;}
 h3{font-weight:400;color:#ccc;text-align:center;margin-bottom:5px;}
 h4{margin-top:10px;font-weight:500;color:#FFD700;}
 .cta{
-  display:block;
-  text-align:center;
-  background:linear-gradient(90deg,#FFD700,#FFA500);
-  color:#000;
-  padding:14px;
-  border-radius:16px;
-  font-weight:bold;
-  margin:20px 0;
-  text-decoration:none;
-  transition:0.3s;
+  display:block;
+  text-align:center;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
+  color:#000;
+  padding:14px;
+  border-radius:16px;
+  font-weight:bold;
+  margin:20px 0;
+  text-decoration:none;
+  transition:0.3s;
 }
 .cta:hover{
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(255,215,0,0.4);
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(255,215,0,0.4);
 }
 .card{
-  background:#111;
-  padding:18px;
-  border-radius:16px;
-  margin-top:15px;
-  box-shadow:0 4px 15px rgba(255,255,255,0.05);
+  background:#111;
+  padding:18px;
+  border-radius:16px;
+  margin-top:15px;
+  box-shadow:0 4px 15px rgba(255,255,255,0.05);
 }
 .fomo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:#111;
-  border:1px solid #FFD700;
-  padding:12px;
-  border-radius:12px;
-  margin:15px 0;
-  font-size:14px;
-  transition:opacity 0.5s;
-  box-shadow:0 4px 12px rgba(255,215,0,0.2);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#111;
+  border:1px solid #FFD700;
+  padding:12px;
+  border-radius:12px;
+  margin:15px 0;
+  font-size:14px;
+  transition:opacity 0.5s;
+  box-shadow:0 4px 12px rgba(255,215,0,0.2);
 }
 .fomo img{
-  width:36px;
-  border-radius:50%;
+  width:36px;
+  border-radius:50%;
 }
 .screens{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  margin-top:10px;
-  padding-bottom:10px;
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  margin-top:10px;
+  padding-bottom:10px;
 }
 .screens img{
-  width:140px;
-  border-radius:12px;
-  border:2px solid gold;
-  transition: transform 0.3s;
-  cursor:pointer;
+  width:140px;
+  border-radius:12px;
+  border:2px solid gold;
+  transition: transform 0.3s;
+  cursor:pointer;
 }
 .screens img:hover{ transform:scale(1.05); }
 #lightbox{
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
 }
 #lightbox img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
 }
 .video-slider{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  padding:10px 0;
-  scroll-snap-type: x mandatory;
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px 0;
+  scroll-snap-type: x mandatory;
 }
 .video-slider::-webkit-scrollbar{display:none;}
 .video-item{
-  flex:0 0 auto;
-  width:200px;
-  position:relative;
-  border-radius:12px;
-  overflow:hidden;
-  scroll-snap-align:start;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-  cursor:pointer;
+  flex:0 0 auto;
+  width:200px;
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  scroll-snap-align:start;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  cursor:pointer;
 }
 .video-item img{
-  width:100%;
-  display:block;
-  transition:transform 0.3s;
+  width:100%;
+  display:block;
+  transition:transform 0.3s;
 }
 .video-item:hover img{transform:scale(1.05);}
 .play{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:40px;
-  color:#FFD700;
-  opacity:0.9;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:40px;
+  color:#FFD700;
+  opacity:0.9;
 }
 .contact-fixed{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  display:flex;
-  z-index:99;
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  z-index:99;
 }
 .cf-btn{
-  flex:1;
-  text-align:center;
-  padding:14px;
-  font-weight:bold;
-  color:#fff;
-  border-top:2px solid #222;
-  transition:0.3s;
+  flex:1;
+  text-align:center;
+  padding:14px;
+  font-weight:bold;
+  color:#fff;
+  border-top:2px solid #222;
+  transition:0.3s;
 }
 .cf-btn:hover{filter:brightness(1.1);}
 .whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
 .telegram{background:#229ED9;}
 .imo{background:#00AEEF;}
 @keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
-  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
-  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
+  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
 }
 #amount{
-  width:100%;
-  padding:10px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-  margin-top:10px;
+  width:100%;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+  margin-top:10px;
 }
 .checks{ color:#ccc; padding-left:10px; }
 </style>
@@ -186,15 +186,15 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <div class="container">
 <div class="lang">
-  <a href="/">🇷🇺 Русский</a>
-  <a href="/en" class="active">🇬🇧 English</a>
-  <a href="/cn">🇨🇳 中文</a>
+  <a href="/ru">🇷🇺 Русский</a>
+  <a href="/" class="active">🇬🇧 English</a>
+  <a href="/cn">🇨🇳 中文</a>
 </div>
 
 <section style="text-align:center; padding:20px;">
-  <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:12px;">
-  <br>
-  <img src="https://i.ibb.co/jjVNymr/9615-A3-F8-EE6-A-4-AE2-974-B-D6712810-B65-D.png" alt="Stamp" style="width:120px;margin-top:12px;">
+  <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:12px;">
+  <br>
+  <img src="https://i.ibb.co/jjVNymr/9615-A3-F8-EE6-A-4-AE2-974-B-D6712810-B65-D.png" alt="Stamp" style="width:120px;margin-top:12px;">
 </section>
 
 <h1>Currency Exchange & Transfers</h1>
@@ -211,24 +211,24 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 </div>
 
 <div style="margin:20px 0; padding:10px; border:1.5px solid gold; border-radius:12px; text-align:center;">
-  <div class="card">
-    <h4>Popular countries:</h4>
-    Russia, Turkey, Uzbekistan<br>
-    Tanzania, Indonesia, China<br>
-    <h4>Payment methods:</h4>
-    MIR/VISA/Mastercard<br>
-    Mobile wallets, M-Pesa, USDT, 800+ options<br>
-  </div>
-  <h4>Confirm country and payment method in the chat</h4>
+  <div class="card">
+    <h4>Popular countries:</h4>
+    Russia, Turkey, Uzbekistan<br>
+    Tanzania, Indonesia, China<br>
+    <h4>Payment methods:</h4>
+    MIR/VISA/Mastercard<br>
+    Mobile wallets, M-Pesa, USDT, 800+ options<br>
+  </div>
+  <h4>Confirm country and payment method in the chat</h4>
 </div>
 
 <section style="background:#0b0b0b;color:white;padding:30px 20px;text-align:left;">
-  <p style="color:#ccc;">
-    ✔ Operating since 2022<br>
-    ✔ Transfers 15-50 minutes<br>
-    ✔ Native language support<br>
-    ✔ Confidential and insured
-  </p>
+  <p style="color:#ccc;">
+    ✔ Operating since 2022<br>
+    ✔ Transfers 15-50 minutes<br>
+    ✔ Native language support<br>
+    ✔ Confidential and insured
+  </p>
 </section>
 
 <h2>How much will you get?</h2>
@@ -238,16 +238,16 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <h2>Confirmation Screenshots</h2>
 <div class="screens">
-  <img src="/en/IMG_en/1.jpg">
-  <img src="/en/IMG_en/2.jpg">
-  <img src="/en/IMG_en/3.jpg">
-  <img src="/en/IMG_en/4.jpg">
-  <img src="/en/IMG_en/5.jpg">
-  <img src="/en/IMG_en/6.jpg">
-  <img src="/en/IMG_en/7.jpg">
-  <img src="/en/IMG_en/8.jpg">
-  <img src="/en/IMG_en/9.jpg">
-  <img src="/en/IMG_en/10.jpg">
+  <img src="/IMG_en/1.jpg">
+  <img src="/IMG_en/2.jpg">
+  <img src="/IMG_en/3.jpg">
+  <img src="/IMG_en/4.jpg">
+  <img src="/IMG_en/5.jpg">
+  <img src="/IMG_en/6.jpg">
+  <img src="/IMG_en/7.jpg">
+  <img src="/IMG_en/8.jpg">
+  <img src="/IMG_en/9.jpg">
+  <img src="/IMG_en/10.jpg">
 </div>
 
 <h2>Video Reviews</h2>
@@ -256,7 +256,7 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <h2>Why not a bank</h2>
 <div class="card">
-✔ Duty-free<br>✔ No blocks<br>✔ No SWIFT
+✔ No fees<br>✔ No blocks<br>✔ No SWIFT
 </div>
 <div class="card">
 ✖ Slow<br>✖ Limits<br>✖ Risk
@@ -264,13 +264,13 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <h2>FAQ</h2>
 <div class="card checks">
-Safe? - Yes, You work directly.<br>
+Safe? - Yes, you interact directly.<br>
 Guarantee? - Reputation, double encryption, and smart contracts.
 </div>
 
 <h2>Client trust</h2>
 <section style="text-align:center; padding:20px;">
-  <img src="https://i.ibb.co/jjVNymr/9615-A3-F8-EE6-A-4-AE2-974-B-D6712810-B65-D.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
+  <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
 </section>
 <div class="card checks" style="text-align:center;">
 Thousands of exchanges since 2022<br>
@@ -285,9 +285,9 @@ Confirmed by Russian diaspora
 </div>
 
 <div class="contact-fixed">
-  <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
-  <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
-  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
+  <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
+  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
 </div>
 
 <div id="lightbox"><img src="" alt="Screenshot"></div>
@@ -295,70 +295,70 @@ Confirmed by Russian diaspora
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-  const list=[
-    {name:'Alexander', text:'exchanged 2300 USD'},
-    {name:'Maria', text:'exchanged 1500 EUR'},
-    {name:'Ilya', text:'exchanged 53,000 RUB'},
-    {name:'Anonymous', text:'exchanged 22,000 USDT'}
-  ];
-  let i=0;
-  const f=document.getElementById('fomo');
-  function update(){
-    f.style.opacity=0;
-    setTimeout(()=>{
-      let d=list[i];
-      f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
-                     <div><b>${d.name}</b> ${d.text}</div>`;
-      f.style.opacity=1;
-      i=(i+1)%list.length;
-    },300);
-  }
-  update();
-  setInterval(update,4000);
+  const list=[
+    {name:'Alexander', text:'exchanged 2300 USD'},
+    {name:'Maria', text:'exchanged 1500 EUR'},
+    {name:'Ilya', text:'exchanged 53,000 RUB'},
+    {name:'Anonymous', text:'exchanged 22,000 USDT'}
+  ];
+  let i=0;
+  const f=document.getElementById('fomo');
+  function update(){
+    f.style.opacity=0;
+    setTimeout(()=>{
+      let d=list[i];
+      f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
+                     <div><b>${d.name}</b> ${d.text}</div>`;
+      f.style.opacity=1;
+      i=(i+1)%list.length;
+    },300);
+  }
+  update();
+  setInterval(update,4000);
 
-  const container=document.getElementById('videos');
-  for(let i=1;i<=16;i++){
-    const div=document.createElement('div');
-    div.className='video-item';
-    div.innerHTML=`<img src="/en/POS_en/${i}.jpg"><div class="play">▶</div>`;
-    div.dataset.src=`/en/REW_en/${i}.mp4`;
-    container.appendChild(div);
-  }
+  const container=document.getElementById('videos');
+  for(let i=1;i<=16;i++){
+    const div=document.createElement('div');
+    div.className='video-item';
+    div.innerHTML=`<img src="/POS_en/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src=`/REW_en/${i}.mp4`;
+    container.appendChild(div);
+  }
 
-  document.getElementById("amount").oninput = function(){
-    let v = this.value;
-    document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
-  }
+  document.getElementById("amount").oninput = function(){
+    let v = this.value;
+    document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
+  }
 
-  document.querySelectorAll('.video-item').forEach(item=>{
-    item.addEventListener('click', function(){
-      if(this.querySelector('video')){
-        let v=this.querySelector('video');
-        v.muted=false;
-        v.playbackRate = v.playbackRate === 1 ? 2 : 1;
-        return;
-      }
-      const v=document.createElement('video');
-      v.src=this.dataset.src;
-      v.controls=true;
-      v.autoplay=true;
-      v.playsInline=true;
-      v.style.width='100%';
-      v.style.height='auto';
-      this.innerHTML='';
-      this.appendChild(v);
-    });
-  });
+  document.querySelectorAll('.video-item').forEach(item=>{
+    item.addEventListener('click', function(){
+      if(this.querySelector('video')){
+        let v=this.querySelector('video');
+        v.muted=false;
+        v.playbackRate = v.playbackRate === 1 ? 2 : 1;
+        return;
+      }
+      const v=document.createElement('video');
+      v.src=this.dataset.src;
+      v.controls=true;
+      v.autoplay=true;
+      v.playsInline=true;
+      v.style.width='100%';
+      v.style.height='auto';
+      this.innerHTML='';
+      this.appendChild(v);
+    });
+  });
 
-  const lightbox=document.getElementById('lightbox');
-  const lightImg=lightbox.querySelector('img');
-  document.querySelectorAll('.screens img').forEach(img=>{
-    img.addEventListener('click', ()=>{
-      lightImg.src=img.src;
-      lightbox.style.display='flex';
-    });
-  });
-  lightbox.addEventListener('click', ()=>lightbox.style.display='none');
+  const lightbox=document.getElementById('lightbox');
+  const lightImg=lightbox.querySelector('img');
+  document.querySelectorAll('.screens img').forEach(img=>{
+    img.addEventListener('click', ()=>{
+      lightImg.src=img.src;
+      lightbox.style.display='flex';
+    });
+  });
+  lightbox.addEventListener('click', ()=>lightbox.style.display='none');
 
 });
 </script>
