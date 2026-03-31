@@ -1,1 +1,326 @@
-hello
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>货币兑换与转账 – app2.cash</title>
+
+<style>
+body{
+  margin:0;
+  background:#0b0b0f;
+  color:#fff;
+  font-family:'PingFang SC','Microsoft YaHei',Arial,sans-serif;
+  line-height:1.5;
+  padding-bottom:100px;
+}
+.container{max-width:540px;margin:0 auto;padding:20px;}
+
+.lang{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-bottom:10px;
+}
+.lang a{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:10px;
+  background:#111;
+  color:#FFD700;
+  text-decoration:none;
+  font-weight:bold;
+  border:1px solid #333;
+}
+
+h1{text-align:center;font-size:26px;}
+h2{margin-top:35px;font-size:20px;border-bottom:1px solid #333;padding-bottom:8px;}
+h3{color:#ccc;text-align:center;}
+h4{text-align:center;color:#FFD700;}
+
+.cta{
+  display:block;
+  text-align:center;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
+  color:#000;
+  padding:14px;
+  border-radius:16px;
+  font-weight:bold;
+  margin:20px 0;
+  text-decoration:none;
+}
+
+.card{
+  background:#111;
+  padding:18px;
+  border-radius:16px;
+  margin-top:15px;
+}
+
+.fomo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#111;
+  border:1px solid #FFD700;
+  padding:12px;
+  border-radius:12px;
+  margin:15px 0;
+}
+.fomo img{width:36px;border-radius:50%;}
+
+/* скрины */
+.screens{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+}
+.screens img{
+  width:140px;
+  border-radius:12px;
+  border:2px solid gold;
+  cursor:pointer;
+}
+
+/* lightbox */
+#lightbox{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+#lightbox img{
+  max-width:90%;
+  max-height:90%;
+}
+
+/* видео */
+.video-slider{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+}
+.video-item{
+  flex:0 0 auto;
+  width:200px;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+}
+.video-item img{width:100%;}
+.play{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:40px;
+  color:#FFD700;
+}
+
+/* фикс */
+.contact-fixed{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+}
+.cf-btn{
+  flex:1;
+  text-align:center;
+  padding:14px;
+  font-weight:bold;
+  color:#fff;
+}
+.whatsapp{background:#25D366;}
+.telegram{background:#229ED9;}
+.imo{background:#00AEEF;}
+
+#amount{
+  width:100%;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ЯЗЫКИ -->
+<div class="lang">
+  <a href="/">🇷🇺 Русский</a>
+  <a href="/en">🇬🇧 English</a>
+</div>
+
+<h1>货币兑换与国际转账</h1>
+<h3>游客 · 学生 · 移民 · 企业 · 私人客户</h3>
+<h4>手续费 0.5% – 3.6%</h4>
+
+<div id="fomo" class="fomo"></div>
+
+<h2>如何操作</h2>
+<div class="card">
+✔ 联系我们 → 获取汇率<br>
+✔ 按您的货币转账<br>
+✔ 您或收款人收到目标货币
+</div>
+
+<div class="card">
+<h4>热门国家：</h4>
+俄罗斯 · 土耳其 · 乌兹别克斯坦<br>
+坦桑尼亚 · 印度尼西亚 · 中国<br><br>
+<h4>支持方式：</h4>
+银行卡 / 电子钱包 / USDT / 800+方式
+</div>
+
+<div class="card">
+✔ 自2022年运营<br>
+✔ 转账15–50分钟完成<br>
+✔ 多语言支持<br>
+✔ 安全保密
+</div>
+
+<h2>你能收到多少？</h2>
+<input id="amount" placeholder="输入金额">
+<div id="result" style="margin-top:10px;color:#FFD700;">≈ —</div>
+
+<a href="https://wa.me/255756687444" class="cta">立即兑换</a>
+
+<h2>交易确认</h2>
+<div class="screens">
+<img src="../en/IMG_en/1.jpg">
+<img src="../en/IMG_en/2.jpg">
+<img src="../en/IMG_en/3.jpg">
+<img src="../en/IMG_en/4.jpg">
+<img src="../en/IMG_en/5.jpg">
+<img src="../en/IMG_en/6.jpg">
+<img src="../en/IMG_en/7.jpg">
+<img src="../en/IMG_en/8.jpg">
+<img src="../en/IMG_en/9.jpg">
+<img src="../en/IMG_en/10.jpg">
+</div>
+
+<h2>视频评价</h2>
+<div class="video-slider" id="videos"></div>
+
+<a href="https://wa.me/255756687444" class="cta">联系经理</a>
+
+<h2>为什么不选择银行</h2>
+<div class="card">
+✔ 无冻结 ✔ 无SWIFT ✔ 无隐藏费用
+</div>
+<div class="card">
+✖ 慢 ✖ 限制多 ✖ 风险
+</div>
+
+<h2>常见问题</h2>
+<div class="card">
+安全吗？— 是的，直接沟通<br>
+有什么保障？— 信誉 + 加密 + 智能合约
+</div>
+
+<div class="card" style="text-align:center;">
+自2022年以来完成数千笔交易<br>
+全球用户信任
+</div>
+
+<a href="https://wa.me/255756687444" class="cta">无需注册，立即兑换</a>
+
+</div>
+
+<!-- фикс -->
+<div class="contact-fixed">
+  <a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/app2cas" class="cf-btn telegram">Telegram</a>
+  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
+</div>
+
+<!-- lightbox -->
+<div id="lightbox"><img src=""></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+// FOMO
+const list=[
+{name:'张伟',text:'2300 USD'},
+{name:'李娜',text:'1500 EUR'},
+{name:'王强',text:'53000 RUB'},
+{name:'客户',text:'22000 USDT'}
+];
+let i=0;
+const f=document.getElementById('fomo');
+
+function update(){
+  let d=list[i];
+  f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
+  <div><b>${d.name}</b> 刚刚兑换了 ${d.text}</div>`;
+  i=(i+1)%list.length;
+}
+update();
+setInterval(update,4000);
+
+// ВИДЕО 16 (EN папка)
+const container=document.getElementById('videos');
+for(let i=1;i<=16;i++){
+  const div=document.createElement('div');
+  div.className='video-item';
+  div.innerHTML=`<img src="../en/POS_en/${i}.jpg"><div class="play">▶</div>`;
+  div.dataset.src=`../en/REW_en/${i}.mp4`;
+  container.appendChild(div);
+}
+
+// воспроизведение
+document.querySelectorAll('.video-item').forEach(item=>{
+  item.addEventListener('click', function(){
+    if(this.querySelector('video')){
+      let v=this.querySelector('video');
+      v.muted=false;
+      v.playbackRate = v.playbackRate === 1 ? 2 : 1;
+      return;
+    }
+    const v=document.createElement('video');
+    v.src=this.dataset.src;
+    v.controls=true;
+    v.autoplay=true;
+    v.playsInline=true;
+    v.style.width='100%';
+    this.innerHTML='';
+    this.appendChild(v);
+  });
+});
+
+// калькулятор
+document.getElementById("amount").oninput = function(){
+  let v = this.value;
+  document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
+}
+
+// lightbox
+const lightbox=document.getElementById('lightbox');
+const lightImg=lightbox.querySelector('img');
+
+document.querySelectorAll('.screens img').forEach(img=>{
+  img.addEventListener('click', ()=>{
+    lightImg.src=img.src;
+    lightbox.style.display='flex';
+  });
+});
+lightbox.addEventListener('click', ()=>lightbox.style.display='none');
+
+});
+</script>
+
+</body>
+</html>
