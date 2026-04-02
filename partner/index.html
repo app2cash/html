@@ -3,216 +3,214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Partner Cabinet – app2.cash</title>
+<title>Партнёрка и Франшиза – app2.cash</title>
 
 <style>
 body{
   margin:0;
+  font-family:Arial;
   background:#0b0b0f;
   color:#fff;
-  font-family:'Montserrat', Arial, sans-serif;
 }
 
 .container{
-  max-width:560px;
-  margin:0 auto;
+  max-width:720px;
+  margin:auto;
   padding:20px;
 }
 
-h1{text-align:center;font-size:26px;margin-bottom:5px;}
-h2{font-size:20px;margin-top:25px;border-bottom:1px solid #333;padding-bottom:6px;}
-h3{text-align:center;color:#ccc;font-weight:400;margin-top:0;}
+h1{
+  text-align:center;
+  font-size:30px;
+  margin-bottom:5px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#aaa;
+  margin-bottom:25px;
+}
 
 .card{
   background:#111;
   padding:16px;
-  border-radius:16px;
+  border-radius:14px;
   margin-top:12px;
-  box-shadow:0 4px 15px rgba(255,255,255,0.05);
 }
 
-.cta{
+.gold{color:#FFD700;font-weight:bold;}
+
+.level{
+  border-left:4px solid #FFD700;
+  padding-left:10px;
+}
+
+.btn{
   display:block;
   text-align:center;
-  background:linear-gradient(90deg,#FFD700,#FFA500);
-  color:#000;
   padding:14px;
-  border-radius:14px;
-  font-weight:bold;
-  margin:18px 0;
+  margin-top:15px;
+  border-radius:12px;
   text-decoration:none;
+  font-weight:bold;
 }
 
-.ref{
-  background:#FFD700;
+.btn-yellow{
+  background:linear-gradient(90deg,#FFD700,#FFA500);
   color:#000;
-  padding:10px;
-  border-radius:12px;
-  text-align:center;
-  font-weight:bold;
-  word-break:break-all;
+}
+
+.btn-dark{
+  background:#222;
+  color:#fff;
+  border:1px solid #333;
 }
 
 .stat{
   display:flex;
   justify-content:space-between;
-  color:#ccc;
   padding:6px 0;
   border-bottom:1px solid #222;
+  color:#ccc;
 }
 
-.level{
-  padding:12px;
-  border-radius:12px;
-  margin-top:10px;
-  border:1px solid #333;
-}
-
-.level span{
-  color:#FFD700;
-  font-weight:bold;
+.section-title{
+  margin-top:25px;
+  font-size:20px;
+  border-bottom:1px solid #222;
+  padding-bottom:6px;
 }
 
 .small{
   font-size:13px;
-  color:#aaa;
+  color:#888;
   text-align:center;
+  margin-top:15px;
 }
-
-/* fixed buttons */
-.fixed{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  display:flex;
-}
-
-.fixed a{
-  flex:1;
-  text-align:center;
-  padding:14px;
-  font-weight:bold;
-  color:#fff;
-  text-decoration:none;
-}
-
-.wa{background:#25D366;}
-.tg{background:#229ED9;}
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>Partner Cabinet</h1>
-<h3>app2.cash affiliate system</h3>
+<h1>🤝 Партнёрка + Франшиза</h1>
+<div class="subtitle">Две модели дохода внутри одной системы app2.cash</div>
+
+<!-- ================= -->
+<h2 class="section-title">💰 1. ПАРТНЁРСКАЯ ПРОГРАММА</h2>
 
 <div class="card">
-  <div class="small">Your referral link</div>
-  <div class="ref" id="refLink">loading...</div>
+Ты приводишь клиента → он делает обмен → ты получаешь процент от комиссии сервиса.
 </div>
 
 <div class="card">
-  <div class="stat"><span>Leads</span><span id="leads">0</span></div>
-  <div class="stat"><span>Deals</span><span id="deals">0</span></div>
-  <div class="stat"><span>Earnings</span><span id="earnings">$0</span></div>
-</div>
-
-<a class="cta" href="https://app2.cash/?ref=START">Get referral link</a>
-
-<h2>Affiliate Levels</h2>
-
-<div class="card level">
-  <span>LEVEL 1 – START</span><br>
-  0 – 10,000 USD turnover<br>
-  <b>20% commission</b>
+<div class="stat"><span>Комиссия сервиса</span><span>0.5% – 3.6%</span></div>
+<div class="stat"><span>Выплаты партнёрам</span><span>20% – 50%</span></div>
+<div class="stat"><span>Валюта выплат</span><span>USDT / Cash</span></div>
+<div class="stat"><span>Закрепление клиента</span><span>30–90 дней</span></div>
 </div>
 
 <div class="card level">
-  <span>LEVEL 2 – PRO</span><br>
-  10,000 – 50,000 USD turnover<br>
-  <b>30% commission</b>
+<span class="gold">LEVEL 1 – START</span><br>
+Оборот до $10,000<br>
+→ 20% от комиссии
 </div>
 
 <div class="card level">
-  <span>LEVEL 3 – VIP</span><br>
-  50,000+ USD turnover<br>
-  <b>50% commission</b>
+<span class="gold">LEVEL 2 – PRO</span><br>
+$10,000 – $50,000<br>
+→ 30% от комиссии
 </div>
 
-<h2>How it works</h2>
+<div class="card level">
+<span class="gold">LEVEL 3 – VIP</span><br>
+$50,000+<br>
+→ 50% от комиссии
+</div>
+
+<!-- ================= -->
+<h2 class="section-title">💸 Пример дохода</h2>
 
 <div class="card">
-✔ Bring clients via link<br>
-✔ We process exchange (15–50 min)<br>
-✔ You earn % from our fee<br>
-✔ Payments in USDT / crypto / cash
+Клиент делает обмен: $1000<br>
+Комиссия сервиса: 2% = $20<br><br>
+
+Партнёр LEVEL 2:<br>
+→ 30% = $6 доход<br>
+→ автоматическое начисление
 </div>
 
-<h2>Example earnings</h2>
+<!-- ================= -->
+<h2 class="section-title">🏢 2. ФРАНШИЗА (БИЗНЕС-УРОВЕНЬ)</h2>
 
 <div class="card">
-Client: $1000 exchange<br>
-Fee: 2% = $20<br><br>
-
-Partner LEVEL 2 (30%)<br>
-→ $6 profit<br>
-→ automatic payout
+Франшиза = ты становишься точкой обмена в своём регионе и управляешь потоками клиентов через систему app2.cash.
 </div>
 
-<h2>Leads (demo)</h2>
+<div class="card">
+<div class="stat"><span>Формат</span><span>онлайн / офис</span></div>
+<div class="stat"><span>Роль</span><span>обработка заявок</span></div>
+<div class="stat"><span>Доход</span><span>до $100k+/мес</span></div>
+<div class="stat"><span>Система</span><span>бот + CRM + кабинет</span></div>
+</div>
 
-<div class="card" id="leadsBox">
-Loading leads...
+<div class="card level">
+<span class="gold">🟢 MINI FRANCHISE</span><br>
+Онлайн агент<br>
+→ $300 – $2000 / мес
+</div>
+
+<div class="card level">
+<span class="gold">🟡 CITY FRANCHISE</span><br>
+Город / регион<br>
+→ $2000 – $15000 / мес
+</div>
+
+<div class="card level">
+<span class="gold">🔴 MASTER FRANCHISE</span><br>
+Страна / регион<br>
+→ $10k – $100k+ / мес
+</div>
+
+<!-- ================= -->
+<h2 class="section-title">🌍 Как работает система</h2>
+
+<div class="card">
+1. Ты приводишь клиента через ссылку<br>
+2. Клиент делает обмен<br>
+3. Бот фиксирует partner_id<br>
+4. Система считает комиссию<br>
+5. Выплата автоматически
+</div>
+
+<!-- ================= -->
+<h2 class="section-title">🚀 Масштабирование</h2>
+
+<div class="card">
+✔ TikTok / Instagram трафик<br>
+✔ Telegram боты<br>
+✔ Африка / Азия / СНГ / Европа<br>
+✔ 24/7 поток заявок<br>
+✔ мультивалютная система
+</div>
+
+<!-- ================= -->
+<h2 class="section-title">⚡ Начать</h2>
+
+<a class="btn btn-yellow" href="/partner/cabinet">
+Войти в кабинет
+</a>
+
+<a class="btn btn-dark" href="/partner/cabinet">
+Получить реферальную ссылку
+</a>
+
+<div class="small">
+app2.cash affiliate + franchise system
 </div>
 
 </div>
-
-<div class="fixed">
-  <a class="wa" href="https://wa.me/255756687444">WhatsApp</a>
-  <a class="tg" href="https://t.me/app2cas">Telegram</a>
-</div>
-
-<script>
-// ----------------------
-// REF SYSTEM
-// ----------------------
-function getRef(){
-  const p = new URLSearchParams(window.location.search);
-  return p.get("ref") || localStorage.getItem("partner_id") || "guest";
-}
-
-const ref = getRef();
-localStorage.setItem("partner_id", ref);
-
-document.getElementById("refLink").innerText =
-"https://app2.cash/?ref=" + ref;
-
-// ----------------------
-// DEMO STATS
-// ----------------------
-document.getElementById("leads").innerText = Math.floor(Math.random()*30);
-document.getElementById("deals").innerText = Math.floor(Math.random()*15);
-document.getElementById("earnings").innerText = "$" + (Math.random()*500).toFixed(2);
-
-// ----------------------
-// DEMO LEADS
-// ----------------------
-const demoLeads = [
-  "Ali – $1200 – pending",
-  "Maria – $800 – done",
-  "John – $2500 – in progress",
-  "Ahmed – $500 – done",
-  "Sara – $1500 – pending"
-];
-
-document.getElementById("leadsBox").innerHTML =
-demoLeads.map(x => "• " + x).join("<br>");
-
-</script>
 
 </body>
 </html>
