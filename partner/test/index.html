@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Партнёрская программа</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0f17;
+      color: #fff;
+    }
+
+    header {
+      padding: 30px;
+      text-align: center;
+      background: linear-gradient(90deg, #111827, #0f172a);
+    }
+
+    h1 { margin: 0; font-size: 28px; }
+    p { color: #cbd5e1; }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #111827;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 12px;
+      border: 1px solid #1f2937;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #22c55e;
+      color: black;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    .btn-blue { background: #3b82f6; color: white; }
+    .btn-dark { background: #1f2937; color: white; }
+
+    .hidden { display: none; }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #1f2937;
+      border-radius: 6px;
+      margin: 3px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Партнёрская программа 1money.exchange</h1>
+  <p>Зарабатывай на обменах USDT и валют. Без ограничений. Глобальная модель.</p>
+</header>
+
+<div class="container">
+
+  <!-- ВХОД -->
+  <div class="card">
+    <h2>Вход в кабинет</h2>
+    <p>Введите ID партнёра (или он создастся автоматически)</p>
+    <input id="partnerId" placeholder="например: partner_1024" />
+    <button onclick="enterCabinet()">Войти</button>
+  </div>
+
+  <!-- ПРЕЗЕНТАЦИЯ -->
+  <div class="card">
+    <h2>Как это работает</h2>
+    <p>Ты получаешь персональную ссылку → клиент делает обмен → ты получаешь % с комиссии.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>1. Приведи клиента</h3>
+        <p>Telegram / сайт / соцсети</p>
+      </div>
+
+      <div class="card">
+        <h3>2. Сделка</h3>
+        <p>Обмен валют или USDT</p>
+      </div>
+
+      <div class="card">
+        <h3>3. Прибыль</h3>
+        <p>Ты получаешь % автоматически</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ТАРИФЫ -->
+  <div class="card">
+    <h2>Уровни партнёрства</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Starter</h3>
+        <p>10% с комиссии</p>
+        <span class="tag">новичок</span>
+      </div>
+
+      <div class="card">
+        <h3>Pro</h3>
+        <p>20% с комиссии</p>
+        <span class="tag">активный</span>
+      </div>
+
+      <div class="card">
+        <h3>VIP</h3>
+        <p>30% + франшиза</p>
+        <span class="tag">масштаб</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ФРАНШИЗА -->
+  <div class="card">
+    <h2>Франшиза</h2>
+    <p>Открывай свой мини-обменный пункт под брендом системы.</p>
+    <ul>
+      <li>Подключение ликвидности</li>
+      <li>Готовая CRM система</li>
+      <li>Telegram бот</li>
+      <li>Поддержка сделок</li>
+    </ul>
+  </div>
+
+  <!-- КАБИНЕТ -->
+  <div id="cabinet" class="card hidden">
+    <h2>Партнёрский кабинет</h2>
+
+    <p>Ваш ID: <span id="showId"></span></p>
+    <p>Реферальная ссылка:</p>
+    <input id="refLink" readonly />
+
+    <button class="btn-blue" onclick="copyLink()">Скопировать ссылку</button>
+
+    <div class="card">
+      <h3>Статистика</h3>
+      <p>Клиенты: <span id="clients">0</span></p>
+      <p>Оборот: $0</p>
+      <p>Заработано: $0</p>
+    </div>
+
+    <button class="btn-dark" onclick="openTelegram()">Открыть Telegram менеджера</button>
+  </div>
+
+</div>
+
+<script>
+  let baseUrl = window.location.origin + "/partner/";
+
+  function enterCabinet() {
+    let id = document.getElementById("partnerId").value;
+    if (!id) {
+      id = "partner_" + Math.floor(Math.random() * 10000);
+    }
+
+    localStorage.setItem("partnerId", id);
+
+    document.getElementById("cabinet").classList.remove("hidden");
+    document.getElementById("showId").innerText = id;
+
+    let link = baseUrl + "?ref=" + id;
+    document.getElementById("refLink").value = link;
+  }
+
+  function copyLink() {
+    let link = document.getElementById("refLink");
+    link.select();
+    document.execCommand("copy");
+    alert("Ссылка скопирована");
+  }
+
+  function openTelegram() {
+    window.open("https://t.me/your_manager", "_blank");
+  }
+
+  // автозагрузка
+  window.onload = function () {
+    let saved = localStorage.getItem("partnerId");
+    if (saved) {
+      document.getElementById("partnerId").value = saved;
+    }
+  }
+</script>
+
+</body>
+</html>
