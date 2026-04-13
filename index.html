@@ -313,43 +313,45 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 </div>
 
-<!-- фикс кнопки -->
+<!-- 🔥 ЗАМЕНА КНОПОК -->
 <div class="contact-fixed">
-  <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
-  <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
-  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
+  <a href="https://taplink.cc/maratyarkov" target="_blank" class="cf-btn">
+    Менеджер онлайн
+  </a>
 </div>
 
-<!-- Lightbox для скриншотов -->
+<!-- Lightbox -->
 <div id="lightbox"><img src="" alt="Screenshot"></div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-  // FOMO
   const list=[
     {name:'Александр', text:'обменял 2300 USD'},
     {name:'Мария', text:'обменяла 1500 EUR'},
     {name:'Илья', text:'обменял 53,000 RUB'},
     {name:'Аноним', text:'обменял 22,000 USDT'}
   ];
+
   let i=0;
   const f=document.getElementById('fomo');
+
   function update(){
     f.style.opacity=0;
     setTimeout(()=>{
       let d=list[i];
       f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
-                     <div><b>${d.name}</b> ${d.text}</div>`;
+      <div><b>${d.name}</b> ${d.text}</div>`;
       f.style.opacity=1;
       i=(i+1)%list.length;
     },300);
   }
+
   update();
   setInterval(update,4000);
 
-  // Видео-слайдер (14 видео)
   const container=document.getElementById('videos');
+
   for(let i=1;i<=14;i++){
     const div=document.createElement('div');
     div.className='video-item';
@@ -358,45 +360,20 @@ document.addEventListener("DOMContentLoaded", function(){
     container.appendChild(div);
   }
 
-  document.getElementById("amount").oninput = function(){
-    let v = this.value;
-    document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
-  }
-
-  // Воспроизведение видео
   document.querySelectorAll('.video-item').forEach(item=>{
-    item.addEventListener('click', function(){
-      if(this.querySelector('video')){
-        let v=this.querySelector('video');
-        v.muted=false;
-        v.playbackRate = v.playbackRate === 1 ? 2 : 1;
-        return;
-      }
+    item.addEventListener('click',function(){
       const v=document.createElement('video');
       v.src=this.dataset.src;
       v.controls=true;
       v.autoplay=true;
-      v.playsInline=true;
       v.style.width='100%';
-      v.style.height='auto';
       this.innerHTML='';
       this.appendChild(v);
     });
   });
 
-  // Lightbox для скриншотов
-  const lightbox=document.getElementById('lightbox');
-  const lightImg=lightbox.querySelector('img');
-  document.querySelectorAll('.screens img').forEach(img=>{
-    img.addEventListener('click', ()=>{
-      lightImg.src=img.src;
-      lightbox.style.display='flex';
-    });
-  });
-  lightbox.addEventListener('click', ()=>lightbox.style.display='none');
-src="//taplink.cc/id:229325/widget/" async>
 });
-
 </script>
+
 </body>
 </html>
