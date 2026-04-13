@@ -129,13 +129,12 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   border-radius:12px;
 }
 
-/* Netflix-style видео слайдер */
+/* видео */
 .video-slider{
   display:flex;
   overflow-x:auto;
   gap:10px;
   padding:10px 0;
-  scroll-snap-type: x mandatory;
 }
 .video-slider::-webkit-scrollbar{display:none;}
 .video-item{
@@ -144,16 +143,8 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   position:relative;
   border-radius:12px;
   overflow:hidden;
-  scroll-snap-align:start;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-  cursor:pointer;
 }
-.video-item img{
-  width:100%;
-  display:block;
-  transition:transform 0.3s;
-}
-.video-item:hover img{transform:scale(1.05);}
+.video-item img{width:100%;}
 .play{
   position:absolute;
   top:50%;
@@ -161,10 +152,9 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   transform:translate(-50%,-50%);
   font-size:40px;
   color:#FFD700;
-  opacity:0.9;
 }
 
-/* фикс кнопки */
+/* одна кнопка */
 .contact-fixed{
   position:fixed;
   bottom:0;
@@ -176,20 +166,11 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 .cf-btn{
   flex:1;
   text-align:center;
-  padding:14px;
+  padding:16px;
   font-weight:bold;
-  color:#fff;
-  border-top:2px solid #222;
-  transition:0.3s;
-}
-.cf-btn:hover{filter:brightness(1.1);}
-.whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
-.telegram{background:#229ED9;}
-.imo{background:#00AEEF;}
-@keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
-  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
-  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+  color:#000;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
+  text-decoration:none;
 }
 
 /* input */
@@ -218,16 +199,13 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   <a href="/cn">🇨🇳 中文</a>
 </div>
 
-<!-- Логотип и печать -->
+<!-- Логотип -->
 <section style="text-align:center; padding:20px;">
-  <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:12px;">
-  <br>
-  <img src="печать рус.png" alt="Stamp" style="width:120px;margin-top:12px;">
+  <img src="/logo-bull.png" style="width:120px;">
 </section>
 
 <h1>Обмен валют и переводы</h1>
 <h3>Туристы, студенты, мигранты,<br>бизнес и частные клиенты</h3>
-<h4 style="text-align:center;">Комиссия от 0.5% до 3.6%</h4>
 
 <div id="fomo" class="fomo"></div>
 
@@ -238,164 +216,27 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 ✔ Вы или ваш контакт получаете нужную валюту
 </div>
 
-<div style="margin:20px 0; padding:10px; border:1.5px solid gold; border-radius:12px; text-align:center;">
-  <div class="card">
-    <h4>Популярные страны:</h4>
-    Россия, Турция, Узбекистан<br>
-    Танзания, Индонезия, Китай<br>
-    <h4>Способы оплаты:</h4>
-    МИР/VISA/Mastercard<br>
-    Мобильные кошельки, M-Pesa, USDT.. 800+ способов<br>
-    Рубли, доллары, лиры.. 115+ валют<br>
-  </div>
-  <h4>Подтвердите страну и способ оплаты в личном чате</h4>
-</div>
-
-<section style="background:#0b0b0b;color:white;padding:30px 20px;text-align:left;">
-  <p style="color:#ccc;">
-    ✔ Работаем с 2022 года<br>
-    ✔ Переводы 15-50 минут<br>
-    ✔ Поддержка на родном языке<br>
-    ✔ Конфиденциально и застраховано
-  </p>
-</section>
+<a href="https://taplink.cc/maratyarkov" class="cta">Все способы связи</a>
 
 <h2>Сколько вы получите?</h2>
 <input id="amount" placeholder="Введите сумму">
-<div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
-<a href="https://wa.me/255756687444" class="cta">Обменять</a>
-
-<h2>Скриншоты подтверждений</h2>
-<div class="screens">
-  <img src="/IMG_ru/1.jpg">
-  <img src="/IMG_ru/2.jpg">
-  <img src="/IMG_ru/3.jpg">
-  <img src="/IMG_ru/4.jpg">
-  <img src="/IMG_ru/5.jpg">
-  <img src="/IMG_ru/6.jpg">
-  <img src="/IMG_ru/7.jpg">
-  <img src="/IMG_ru/8.jpg">
-  <img src="/IMG_ru/9.jpg">
-  <img src="/IMG_ru/10.jpg">
-</div>
-
-<h2>Видеоотзывы ➔</h2>
-<div class="video-slider" id="videos"></div>
-<a href="https://wa.me/255756687444" class="cta">Связаться с Маратом в WhatsApp</a>
-
-<h2>Почему не банк</h2>
-<div class="card">
-✔ Без пошлин<br>✔ Без блокировок<br>✔ Без SWIFT
-</div>
-<div class="card">
-✖ Медленно<br>✖ Ограничения<br>✖ Риск
-</div>
-
-<h2>Частые вопросы</h2>
-<div class="card checks">
-Безопасно? - Да, вы работаете напрямую.<br>
-Есть гарантия? - Репутация, двойное шифрование и смарт-контракты.
-</div>
-
-<h2>Доверие клиентов</h2>
-<section style="text-align:center; padding:20px;">
-  <img src="печать рус.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
-</section>
-<div class="card checks" style="text-align:center;">
-Тысячи обменов с 2022 года<br>
-Подтверждено русской диаспорой
-</div>
-
-<div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
-🔒 Конфиденциально. Защищено страховкой
-</div>
-<a href="https://wa.me/255756687444" class="cta">Быстрый обмен без регистрации</a>
+<div id="result">≈ —</div>
 
 </div>
 
-<!-- фикс кнопки -->
+<!-- ОДНА КНОПКА -->
 <div class="contact-fixed">
-  <a href="https://wa.me/255756687444" target="_blank" class="cf-btn whatsapp">WhatsApp</a>
-  <a href="https://t.me/app2cas" target="_blank" class="cf-btn telegram">Telegram</a>
-  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
+  <a href="https://taplink.cc/maratyarkov" target="_blank" class="cf-btn">
+    Все способы связи
+  </a>
 </div>
-
-<!-- Lightbox для скриншотов -->
-<div id="lightbox"><img src="" alt="Screenshot"></div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-
-  // FOMO
-  const list=[
-    {name:'Александр', text:'обменял 2300 USD'},
-    {name:'Мария', text:'обменяла 1500 EUR'},
-    {name:'Илья', text:'обменял 53,000 RUB'},
-    {name:'Аноним', text:'обменял 22,000 USDT'}
-  ];
-  let i=0;
-  const f=document.getElementById('fomo');
-  function update(){
-    f.style.opacity=0;
-    setTimeout(()=>{
-      let d=list[i];
-      f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
-                     <div><b>${d.name}</b> ${d.text}</div>`;
-      f.style.opacity=1;
-      i=(i+1)%list.length;
-    },300);
-  }
-  update();
-  setInterval(update,4000);
-
-  // Видео-слайдер (14 видео)
-  const container=document.getElementById('videos');
-  for(let i=1;i<=14;i++){
-    const div=document.createElement('div');
-    div.className='video-item';
-    div.innerHTML=`<img src="/POS_ru/${i}.jpg"><div class="play">▶</div>`;
-    div.dataset.src=`/REW_ru/${i}.mp4`;
-    container.appendChild(div);
-  }
-
-  document.getElementById("amount").oninput = function(){
-    let v = this.value;
-    document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
-  }
-
-  // Воспроизведение видео
-  document.querySelectorAll('.video-item').forEach(item=>{
-    item.addEventListener('click', function(){
-      if(this.querySelector('video')){
-        let v=this.querySelector('video');
-        v.muted=false;
-        v.playbackRate = v.playbackRate === 1 ? 2 : 1;
-        return;
-      }
-      const v=document.createElement('video');
-      v.src=this.dataset.src;
-      v.controls=true;
-      v.autoplay=true;
-      v.playsInline=true;
-      v.style.width='100%';
-      v.style.height='auto';
-      this.innerHTML='';
-      this.appendChild(v);
-    });
-  });
-
-  // Lightbox для скриншотов
-  const lightbox=document.getElementById('lightbox');
-  const lightImg=lightbox.querySelector('img');
-  document.querySelectorAll('.screens img').forEach(img=>{
-    img.addEventListener('click', ()=>{
-      lightImg.src=img.src;
-      lightbox.style.display='flex';
-    });
-  });
-  lightbox.addEventListener('click', ()=>lightbox.style.display='none');
-
-});
+document.getElementById("amount").oninput = function(){
+  let v = this.value;
+  document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
+}
 </script>
+
 </body>
 </html>
