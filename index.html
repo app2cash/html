@@ -129,12 +129,13 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   border-radius:12px;
 }
 
-/* видео */
+/* Netflix-style видео слайдер */
 .video-slider{
   display:flex;
   overflow-x:auto;
   gap:10px;
   padding:10px 0;
+  scroll-snap-type: x mandatory;
 }
 .video-slider::-webkit-scrollbar{display:none;}
 .video-item{
@@ -143,8 +144,16 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   position:relative;
   border-radius:12px;
   overflow:hidden;
+  scroll-snap-align:start;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  cursor:pointer;
 }
-.video-item img{width:100%;}
+.video-item img{
+  width:100%;
+  display:block;
+  transition:transform 0.3s;
+}
+.video-item:hover img{transform:scale(1.05);}
 .play{
   position:absolute;
   top:50%;
@@ -152,9 +161,10 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   transform:translate(-50%,-50%);
   font-size:40px;
   color:#FFD700;
+  opacity:0.9;
 }
 
-/* одна кнопка */
+/* фикс кнопки */
 .contact-fixed{
   position:fixed;
   bottom:0;
@@ -163,28 +173,17 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   display:flex;
   z-index:99;
 }
+
 .cf-btn{
   flex:1;
   text-align:center;
-  padding:16px;
+  padding:14px;
   font-weight:bold;
   color:#000;
   background:linear-gradient(90deg,#FFD700,#FFA500);
   text-decoration:none;
+  line-height:1.2;
 }
-
-/* input */
-#amount{
-  width:100%;
-  padding:10px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-  margin-top:10px;
-}
-
-/* преимущества */
-.checks{ color:#ccc; padding-left:10px; }
 </style>
 </head>
 
@@ -216,27 +215,87 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 ✔ Вы или ваш контакт получаете нужную валюту
 </div>
 
-<a href="https://taplink.cc/maratyarkov" class="cta">Все способы связи</a>
+<h2>Скриншоты подтверждений</h2>
+<div class="screens">
+  <img src="/IMG_ru/1.jpg">
+  <img src="/IMG_ru/2.jpg">
+  <img src="/IMG_ru/3.jpg">
+  <img src="/IMG_ru/4.jpg">
+  <img src="/IMG_ru/5.jpg">
+  <img src="/IMG_ru/6.jpg">
+  <img src="/IMG_ru/7.jpg">
+  <img src="/IMG_ru/8.jpg">
+  <img src="/IMG_ru/9.jpg">
+  <img src="/IMG_ru/10.jpg">
+</div>
 
-<h2>Сколько вы получите?</h2>
-<input id="amount" placeholder="Введите сумму">
-<div id="result">≈ —</div>
+<h2>Видеоотзывы ➔</h2>
+<div class="video-slider" id="videos"></div>
 
 </div>
 
-<!-- ОДНА КНОПКА -->
+<!-- ✔ ЕДИНСТВЕННАЯ КНОПКА TAPLINK -->
 <div class="contact-fixed">
   <a href="https://taplink.cc/maratyarkov" target="_blank" class="cf-btn">
-    Все способы связи
+    Написать менеджеру<br>
+    <span style="font-size:12px;font-weight:400;">Все мессенджеры внутри</span>
   </a>
 </div>
 
+<!-- Lightbox -->
+<div id="lightbox"><img src=""></div>
+
 <script>
-document.getElementById("amount").oninput = function(){
-  let v = this.value;
-  document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
-}
+document.addEventListener("DOMContentLoaded", function(){
+
+  // FOMO
+  const list=[
+    {name:'Александр', text:'обменял 2300 USD'},
+    {name:'Мария', text:'обменяла 1500 EUR'},
+    {name:'Илья', text:'обменял 53,000 RUB'}
+  ];
+
+  let i=0;
+  const f=document.getElementById('fomo');
+
+  setInterval(()=>{
+    let d=list[i];
+    f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${i+12}">
+    <div><b>${d.name}</b> ${d.text}</div>`;
+    i=(i+1)%list.length;
+  },3000);
+
+  // VIDEO
+  const container=document.getElementById('videos');
+
+  for(let i=1;i<=14;i++){
+    const div=document.createElement('div');
+    div.className='video-item';
+    div.innerHTML=`
+      <img src="/POS_ru/${i}.jpg">
+      <div class="play">▶</div>
+    `;
+    div.dataset.src=`/REW_ru/${i}.mp4`;
+    container.appendChild(div);
+  }
+
+  document.querySelectorAll('.video-item').forEach(item=>{
+    item.addEventListener('click',function(){
+      const v=document.createElement('video');
+      v.src=this.dataset.src;
+      v.controls=true;
+      v.autoplay=true;
+      v.style.width='100%';
+      this.innerHTML='';
+      this.appendChild(v);
+    });
+  });
+
+});
 </script>
+
+<!-- TAPLINK WIDGET -->
+<script src="//taplink.cc/id:229325/widget/" async></script>
 
 </body>
 </html>
