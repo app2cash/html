@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Обмен валют и отправка денег – app2.cash</title>
+
 <style>
 body{
   margin:0;
@@ -14,14 +15,12 @@ body{
   padding-bottom:100px;
 }
 
-/* контейнер */
 .container{
   max-width:540px;
   margin:0 auto;
   padding:20px;
 }
 
-/* язык */
 .lang {
   text-align: center;
   display: flex;
@@ -43,13 +42,11 @@ body{
   color:#000;
 }
 
-/* заголовки */
 h1{text-align:center;font-size:28px;margin-bottom:5px;}
 h2{margin-top:35px;font-size:22px;border-bottom:1px solid #333;padding-bottom:8px;}
 h3{font-weight:400;color:#ccc;text-align:center;margin-bottom:5px;}
 h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
-/* кнопки */
 .cta{
   display:block;
   text-align:center;
@@ -67,7 +64,6 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   box-shadow:0 4px 12px rgba(255,215,0,0.4);
 }
 
-/* карточки */
 .card{
   background:#111;
   padding:18px;
@@ -76,7 +72,6 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   box-shadow:0 4px 15px rgba(255,255,255,0.05);
 }
 
-/* FOMO */
 .fomo{
   display:flex;
   align-items:center;
@@ -95,7 +90,6 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   border-radius:50%;
 }
 
-/* скриншоты */
 .screens{
   display:flex;
   overflow-x:auto;
@@ -112,7 +106,6 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 }
 .screens img:hover{ transform:scale(1.05); }
 
-/* lightbox */
 #lightbox{
   position:fixed;
   top:0; left:0;
@@ -129,7 +122,6 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   border-radius:12px;
 }
 
-/* Netflix-style видео слайдер */
 .video-slider{
   display:flex;
   overflow-x:auto;
@@ -164,7 +156,6 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   opacity:0.9;
 }
 
-/* фикс кнопки */
 .contact-fixed{
   position:fixed;
   bottom:0;
@@ -186,13 +177,13 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 .whatsapp{background:#25D366;animation:pulse 1.5s infinite;}
 .telegram{background:#229ED9;}
 .imo{background:#00AEEF;}
+
 @keyframes pulse{
   0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
   70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
   100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
 }
 
-/* input */
 #amount{
   width:100%;
   padding:10px;
@@ -202,7 +193,6 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   margin-top:10px;
 }
 
-/* преимущества */
 .checks{ color:#ccc; padding-left:10px; }
 </style>
 </head>
@@ -211,18 +201,16 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <div class="container">
 
-<!-- Языки -->
 <div class="lang">
   <a href="/" class="active">🇷🇺 Русский</a>
   <a href="/en">🇬🇧 English</a>
   <a href="/cn">🇨🇳 中文</a>
 </div>
 
-<!-- Логотип и печать -->
 <section style="text-align:center; padding:20px;">
-  <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:12px;">
+  <img src="/logo-bull.png" style="width:120px;margin-bottom:12px;">
   <br>
-  <img src="печать рус.png" alt="Stamp" style="width:120px;margin-top:12px;">
+  <img src="печать рус.png" style="width:120px;margin-top:12px;">
 </section>
 
 <h1>Обмен валют и переводы</h1>
@@ -238,31 +226,19 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 ✔ Вы или ваш контакт получаете нужную валюту
 </div>
 
-<div style="margin:20px 0; padding:10px; border:1.5px solid gold; border-radius:12px; text-align:center;">
-  <div class="card">
-    <h4>Популярные страны:</h4>
-    Россия, Турция, Узбекистан<br>
-    Танзания, Индонезия, Китай<br>
-    <h4>Способы оплаты:</h4>
-    МИР/VISA/Mastercard<br>
-    Мобильные кошельки, M-Pesa, USDT.. 800+ способов<br>
-    Рубли, доллары, лиры.. 115+ валют<br>
-  </div>
-  <h4>Подтвердите страну и способ оплаты в личном чате</h4>
+<div class="card">
+<h4>Популярные страны:</h4>
+Россия, Турция, Узбекистан<br>
+Танзания, Индонезия, Китай<br>
+<h4>Способы оплаты:</h4>
+МИР/VISA/Mastercard<br>
+M-Pesa, USDT, кошельки<br>
 </div>
-
-<section style="background:#0b0b0b;color:white;padding:30px 20px;text-align:left;">
-  <p style="color:#ccc;">
-    ✔ Работаем с 2022 года<br>
-    ✔ Переводы 15-50 минут<br>
-    ✔ Поддержка на родном языке<br>
-    ✔ Конфиденциально и застраховано
-  </p>
-</section>
 
 <h2>Сколько вы получите?</h2>
 <input id="amount" placeholder="Введите сумму">
 <div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
+
 <a href="https://wa.me/255756687444" class="cta">Обменять</a>
 
 <h2>Скриншоты подтверждений</h2>
@@ -271,57 +247,47 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
   <img src="/IMG_ru/2.jpg">
   <img src="/IMG_ru/3.jpg">
   <img src="/IMG_ru/4.jpg">
-  <img src="/IMG_ru/5.jpg">
-  <img src="/IMG_ru/6.jpg">
-  <img src="/IMG_ru/7.jpg">
-  <img src="/IMG_ru/8.jpg">
-  <img src="/IMG_ru/9.jpg">
-  <img src="/IMG_ru/10.jpg">
 </div>
 
 <h2>Видеоотзывы ➔</h2>
-<div class="video-slider" id="videos"></div>
-<a href="https://wa.me/255756687444" class="cta">Связаться с Маратом в WhatsApp</a>
+<div class="video-slider" id="videos"></div><!-- 🔥 TAPLINK ВСТАВКА (внутри сайта) -->
+<h2>Менеджер онлайн</h2>
+
+<iframe 
+  src="https://taplink.cc/id229325/" 
+  style="width:100%; height:650px; border:none; border-radius:16px;">
+</iframe>
+
+<a href="https://wa.me/255756687444" class="cta">Связаться в WhatsApp</a>
 
 <h2>Почему не банк</h2>
 <div class="card">
 ✔ Без пошлин<br>✔ Без блокировок<br>✔ Без SWIFT
 </div>
-<div class="card">
-✖ Медленно<br>✖ Ограничения<br>✖ Риск
-</div>
 
 <h2>Частые вопросы</h2>
 <div class="card checks">
-Безопасно? - Да, вы работаете напрямую.<br>
-Есть гарантия? - Репутация, двойное шифрование и смарт-контракты.
+Безопасно? — Да<br>
+Гарантия? — Репутация и защита
 </div>
 
 <h2>Доверие клиентов</h2>
-<section style="text-align:center; padding:20px;">
-  <img src="печать рус.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
-</section>
 <div class="card checks" style="text-align:center;">
-Тысячи обменов с 2022 года<br>
-Подтверждено русской диаспорой
+Тысячи обменов с 2022 года
 </div>
 
-<div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
-🔒 Конфиденциально. Защищено страховкой
-</div>
 <a href="https://wa.me/255756687444" class="cta">Быстрый обмен без регистрации</a>
 
 </div>
 
-<!-- 🔥 ЗАМЕНА КНОПОК -->
+<!-- фикс кнопки -->
 <div class="contact-fixed">
-  <a href="https://taplink.cc/maratyarkov" target="_blank" class="cf-btn">
-    Менеджер онлайн
-  </a>
+  <a href="https://wa.me/255756687444" class="cf-btn whatsapp">WhatsApp</a>
+  <a href="https://t.me/app2cas" class="cf-btn telegram">Telegram</a>
+  <a href="https://s.imoim.net/5LFqJT" class="cf-btn imo">IMO</a>
 </div>
 
-<!-- Lightbox -->
-<div id="lightbox"><img src="" alt="Screenshot"></div>
+<div id="lightbox"><img src=""></div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
@@ -329,22 +295,17 @@ document.addEventListener("DOMContentLoaded", function(){
   const list=[
     {name:'Александр', text:'обменял 2300 USD'},
     {name:'Мария', text:'обменяла 1500 EUR'},
-    {name:'Илья', text:'обменял 53,000 RUB'},
-    {name:'Аноним', text:'обменял 22,000 USDT'}
+    {name:'Илья', text:'обменял 53,000 RUB'}
   ];
 
   let i=0;
   const f=document.getElementById('fomo');
 
   function update(){
-    f.style.opacity=0;
-    setTimeout(()=>{
-      let d=list[i];
-      f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
-      <div><b>${d.name}</b> ${d.text}</div>`;
-      f.style.opacity=1;
-      i=(i+1)%list.length;
-    },300);
+    let d=list[i];
+    f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
+                 <div><b>${d.name}</b> ${d.text}</div>`;
+    i=(i+1)%list.length;
   }
 
   update();
@@ -352,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
   const container=document.getElementById('videos');
 
-  for(let i=1;i<=14;i++){
+  for(let i=1;i<=6;i++){
     const div=document.createElement('div');
     div.className='video-item';
     div.innerHTML=`<img src="/POS_ru/${i}.jpg"><div class="play">▶</div>`;
@@ -361,7 +322,7 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 
   document.querySelectorAll('.video-item').forEach(item=>{
-    item.addEventListener('click',function(){
+    item.addEventListener('click', function(){
       const v=document.createElement('video');
       v.src=this.dataset.src;
       v.controls=true;
@@ -372,8 +333,14 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   });
 
+  document.getElementById("amount").oninput = function(){
+    document.getElementById("result").innerText =
+      "≈ " + (this.value * 0.97 || 0).toFixed(2);
+  }
+
 });
 </script>
 
 </body>
 </html>
+
