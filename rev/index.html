@@ -19,12 +19,14 @@ body{
   padding:20px;
 }
 
-/* язык */
+/* язык + навигация */
 .lang{
   display:flex;
   justify-content:center;
-  gap:6px;
+  align-items:center;
+  gap:8px;
   margin-bottom:15px;
+  flex-wrap:wrap;
 }
 .lang a{
   text-decoration:none;
@@ -32,6 +34,7 @@ body{
   padding:4px 8px;
   border-radius:6px;
   color:#FFD700;
+  display:inline-block;
 }
 .lang a.active{
   background:#FFD700;
@@ -179,10 +182,16 @@ h2{margin-top:30px;border-bottom:1px solid #333;padding-bottom:6px;}
 
 <div class="container">
 
-<!-- язык -->
+<!-- навигация -->
 <div class="lang">
+
+  <a href="/" id="homeBtnRu">🏠 Главная</a>
+
   <a href="#" class="active" onclick="switchLang('ru')">🇷🇺 RU</a>
   <a href="#" onclick="switchLang('en')">🇬🇧 EN</a>
+
+  <a href="/en/" id="homeBtnEn" style="display:none;">🏠 Home</a>
+
 </div>
 
 <!-- RU -->
@@ -254,10 +263,11 @@ Contact on WhatsApp
 </div>
 
 </div>
+
 <!-- Lightbox -->
 <div id="lightbox"><img src=""></div>
 
-<!-- Taplink Popup -->
+<!-- Taplink -->
 <div id="taplinkModal">
   <div class="taplink-content">
     <span class="close" onclick="closeTaplink()">✕</span>
@@ -265,7 +275,6 @@ Contact on WhatsApp
   </div>
 </div>
 
-<!-- Кнопка -->
 <div class="taplink-fixed" onclick="openTaplink()">
   <span id="taplinkText">Менеджер онлайн</span>
 </div>
@@ -273,7 +282,6 @@ Contact on WhatsApp
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-  // переключение языка
   window.switchLang = function(lang){
     document.getElementById('ru').style.display = lang === 'ru' ? 'block' : 'none';
     document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
@@ -281,15 +289,17 @@ document.addEventListener("DOMContentLoaded", function(){
     document.querySelectorAll('.lang a').forEach(a=>a.classList.remove('active'));
 
     if(lang === 'ru'){
-      document.querySelectorAll('.lang a')[0].classList.add('active');
+      document.querySelectorAll('.lang a')[1].classList.add('active');
       document.getElementById("taplinkText").innerText = "Менеджер онлайн";
     } else {
-      document.querySelectorAll('.lang a')[1].classList.add('active');
+      document.querySelectorAll('.lang a')[2].classList.add('active');
       document.getElementById("taplinkText").innerText = "Online Manager";
     }
+
+    document.getElementById('homeBtnRu').style.display = lang === 'ru' ? 'inline-block' : 'none';
+    document.getElementById('homeBtnEn').style.display = lang === 'en' ? 'inline-block' : 'none';
   }
 
-  // видео RU (14)
   const ru = document.getElementById('videos_ru');
   for(let i=1;i<=14;i++){
     const div=document.createElement('div');
@@ -299,7 +309,6 @@ document.addEventListener("DOMContentLoaded", function(){
     ru.appendChild(div);
   }
 
-  // видео EN (16)
   const en = document.getElementById('videos_en');
   for(let i=1;i<=16;i++){
     const div=document.createElement('div');
@@ -309,7 +318,6 @@ document.addEventListener("DOMContentLoaded", function(){
     en.appendChild(div);
   }
 
-  // воспроизведение видео
   document.addEventListener('click', function(e){
     const item = e.target.closest('.video-item');
     if(!item) return;
@@ -332,7 +340,6 @@ document.addEventListener("DOMContentLoaded", function(){
     item.appendChild(v);
   });
 
-  // lightbox
   const lightbox=document.getElementById('lightbox');
   const img=lightbox.querySelector('img');
 
@@ -349,12 +356,21 @@ document.addEventListener("DOMContentLoaded", function(){
 
 });
 
-// Taplink открыть
 function openTaplink(){
   document.getElementById("taplinkModal").style.display="block";
+
+  setTimeout(()=>{
+    try{
+      const iframe = document.querySelector("#taplinkModal iframe");
+      if(!iframe.contentWindow || iframe.contentWindow.length === 0){
+        window.open("https://taplink.cc/maratyarkov","_blank");
+      }
+    }catch(e){
+      window.open("https://taplink.cc/maratyarkov","_blank");
+    }
+  },1000);
 }
 
-// Taplink закрыть
 function closeTaplink(){
   document.getElementById("taplinkModal").style.display="none";
 }
