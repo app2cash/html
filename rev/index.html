@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Отзывы клиентов – app2.cash</title>
+
+<style>
+body{
+  margin:0;
+  background:#0b0b0f;
+  color:#fff;
+  font-family:'Montserrat', Arial, sans-serif;
+}
+
+.container{
+  max-width:540px;
+  margin:0 auto;
+  padding:20px;
+}
+
+/* язык */
+.lang{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-bottom:15px;
+}
+.lang a{
+  text-decoration:none;
+  font-weight:bold;
+  padding:4px 8px;
+  border-radius:6px;
+  color:#FFD700;
+}
+.lang a.active{
+  background:#FFD700;
+  color:#000;
+}
+
+/* заголовки */
+h1{text-align:center;margin-bottom:20px;}
+h2{margin-top:30px;border-bottom:1px solid #333;padding-bottom:6px;}
+
+/* карточки */
+.card{
+  background:#111;
+  padding:16px;
+  border-radius:16px;
+  margin-top:12px;
+}
+
+/* скриншоты */
+.screens{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px 0;
+}
+.screens img{
+  width:140px;
+  border-radius:12px;
+  border:2px solid gold;
+  cursor:pointer;
+}
+
+/* видео */
+.video-slider{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+}
+.video-item{
+  flex:0 0 auto;
+  width:200px;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+}
+.video-item img{width:100%;}
+.play{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:40px;
+  color:#FFD700;
+}
+
+/* lightbox */
+#lightbox{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+#lightbox img{
+  max-width:90%;
+  border-radius:12px;
+}
+
+/* CTA */
+.cta{
+  display:block;
+  text-align:center;
+  background:linear-gradient(90deg,#FFD700,#FFA500);
+  color:#000;
+  padding:14px;
+  border-radius:16px;
+  font-weight:bold;
+  margin:25px 0;
+  text-decoration:none;
+}
+
+/* Taplink кнопка */
+.taplink-fixed{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#25D366;
+  color:#fff;
+  text-align:center;
+  padding:16px;
+  font-weight:bold;
+  z-index:999;
+  cursor:pointer;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
+  70%{ box-shadow:0 0 0 12px rgba(37,211,102,0); }
+  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
+}
+
+/* модалка */
+#taplinkModal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.95);
+  display:none;
+  z-index:1001;
+}
+
+.taplink-content{
+  width:100%;
+  height:100%;
+  position:relative;
+}
+
+.taplink-content iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+.close{
+  position:absolute;
+  top:15px;
+  right:20px;
+  font-size:28px;
+  color:white;
+  cursor:pointer;
+  z-index:1002;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- язык -->
+<div class="lang">
+  <a href="#" class="active" onclick="switchLang('ru')">🇷🇺 RU</a>
+  <a href="#" onclick="switchLang('en')">🇬🇧 EN</a>
+</div>
+
+<!-- RU -->
+<div id="ru">
+
+<h1>Отзывы клиентов</h1>
+
+<h2>Скриншоты переводов</h2>
+<div class="screens">
+  <img src="/IMG_ru/1.jpg">
+  <img src="/IMG_ru/2.jpg">
+  <img src="/IMG_ru/3.jpg">
+  <img src="/IMG_ru/4.jpg">
+  <img src="/IMG_ru/5.jpg">
+  <img src="/IMG_ru/6.jpg">
+  <img src="/IMG_ru/7.jpg">
+  <img src="/IMG_ru/8.jpg">
+  <img src="/IMG_ru/9.jpg">
+  <img src="/IMG_ru/10.jpg">
+</div>
+
+<h2>Видеоотзывы</h2>
+<div class="video-slider" id="videos_ru"></div>
+
+<div class="card">
+✔ Тысячи обменов с 2022 года<br>
+✔ Реальные клиенты<br>
+✔ Подтверждено скриншотами и видео
+</div>
+
+<a href="https://wa.me/255756687444" class="cta">
+Написать в WhatsApp
+</a>
+
+</div>
+
+<!-- EN -->
+<div id="en" style="display:none;">
+
+<h1>Client Reviews</h1>
+
+<h2>Transfer Screenshots</h2>
+<div class="screens">
+  <img src="/en/IMG_en/1.jpg">
+  <img src="/en/IMG_en/2.jpg">
+  <img src="/en/IMG_en/3.jpg">
+  <img src="/en/IMG_en/4.jpg">
+  <img src="/en/IMG_en/5.jpg">
+  <img src="/en/IMG_en/6.jpg">
+  <img src="/en/IMG_en/7.jpg">
+  <img src="/en/IMG_en/8.jpg">
+  <img src="/en/IMG_en/9.jpg">
+  <img src="/en/IMG_en/10.jpg">
+</div>
+
+<h2>Video Reviews</h2>
+<div class="video-slider" id="videos_en"></div>
+
+<div class="card">
+✔ Thousands of exchanges since 2022<br>
+✔ Real clients<br>
+✔ Verified by screenshots & videos
+</div>
+
+<a href="https://wa.me/255756687444" class="cta">
+Contact on WhatsApp
+</a>
+
+</div>
+
+</div>
+<!-- Lightbox -->
+<div id="lightbox"><img src=""></div>
+
+<!-- Taplink Popup -->
+<div id="taplinkModal">
+  <div class="taplink-content">
+    <span class="close" onclick="closeTaplink()">✕</span>
+    <iframe src="https://taplink.cc/maratyarkov"></iframe>
+  </div>
+</div>
+
+<!-- Кнопка -->
+<div class="taplink-fixed" onclick="openTaplink()">
+  <span id="taplinkText">Менеджер онлайн</span>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  // переключение языка
+  window.switchLang = function(lang){
+    document.getElementById('ru').style.display = lang === 'ru' ? 'block' : 'none';
+    document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
+
+    document.querySelectorAll('.lang a').forEach(a=>a.classList.remove('active'));
+
+    if(lang === 'ru'){
+      document.querySelectorAll('.lang a')[0].classList.add('active');
+      document.getElementById("taplinkText").innerText = "Менеджер онлайн";
+    } else {
+      document.querySelectorAll('.lang a')[1].classList.add('active');
+      document.getElementById("taplinkText").innerText = "Online Manager";
+    }
+  }
+
+  // видео RU (14)
+  const ru = document.getElementById('videos_ru');
+  for(let i=1;i<=14;i++){
+    const div=document.createElement('div');
+    div.className='video-item';
+    div.innerHTML=`<img src="/POS_ru/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src=`/REW_ru/${i}.mp4`;
+    ru.appendChild(div);
+  }
+
+  // видео EN (16)
+  const en = document.getElementById('videos_en');
+  for(let i=1;i<=16;i++){
+    const div=document.createElement('div');
+    div.className='video-item';
+    div.innerHTML=`<img src="/en/POS_en/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src=`/en/REW_en/${i}.mp4`;
+    en.appendChild(div);
+  }
+
+  // воспроизведение видео
+  document.addEventListener('click', function(e){
+    const item = e.target.closest('.video-item');
+    if(!item) return;
+
+    if(item.querySelector('video')){
+      let v=item.querySelector('video');
+      v.muted=false;
+      v.playbackRate = v.playbackRate === 1 ? 2 : 1;
+      return;
+    }
+
+    const v=document.createElement('video');
+    v.src=item.dataset.src;
+    v.controls=true;
+    v.autoplay=true;
+    v.playsInline=true;
+    v.style.width='100%';
+
+    item.innerHTML='';
+    item.appendChild(v);
+  });
+
+  // lightbox
+  const lightbox=document.getElementById('lightbox');
+  const img=lightbox.querySelector('img');
+
+  document.querySelectorAll('.screens img').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      img.src=el.src;
+      lightbox.style.display='flex';
+    });
+  });
+
+  lightbox.addEventListener('click', ()=>{
+    lightbox.style.display='none';
+  });
+
+});
+
+// Taplink открыть
+function openTaplink(){
+  document.getElementById("taplinkModal").style.display="block";
+}
+
+// Taplink закрыть
+function closeTaplink(){
+  document.getElementById("taplinkModal").style.display="none";
+}
+</script>
+
+</body>
+</html>
