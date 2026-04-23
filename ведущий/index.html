@@ -2,160 +2,291 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Ведущий Марат Ярков | Златоуст и ЗГО</title>
-<meta name="description" content="Ведущий на свадьбу, юбилей, корпоратив в Златоусте, Кусе, Миассе и Сатке. Профессиональный шоумен с современным подходом и полным звуковым сопровождением.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Марат Ярков — Ведущий Златоуст | Свадьбы и мероприятия</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
 <style>
+
 body{
 margin:0;
-font-family:Arial,Helvetica,sans-serif;
-background:#0f0f0f;
+font-family:Inter, sans-serif;
 color:#fff;
-line-height:1.6;
+background: radial-gradient(circle at top, #1a1a1a, #050505 60%, #000);
+overflow-x:hidden;
 }
-.container{max-width:1100px;margin:0 auto;padding:20px;}
-section{padding:60px 0;border-bottom:1px solid rgba(255,255,255,0.08);}
-h1{font-size:42px;margin-bottom:20px;}
-h2{font-size:30px;margin-bottom:20px;}
-p{color:#d6d6d6;font-size:18px;}
+
+/* мягкие световые пятна */
+body::before{
+content:"";
+position:fixed;
+top:-200px;
+left:-200px;
+width:600px;
+height:600px;
+background:rgba(255,215,0,0.08);
+filter:blur(120px);
+z-index:-1;
+}
+
+body::after{
+content:"";
+position:fixed;
+bottom:-200px;
+right:-200px;
+width:600px;
+height:600px;
+background:rgba(255,255,255,0.05);
+filter:blur(120px);
+z-index:-1;
+}
+
+.container{
+max-width:1100px;
+margin:0 auto;
+padding:40px 20px;
+}
+
+/* HERO */
+.hero{
+text-align:center;
+padding:100px 20px 60px;
+}
+
 .badge{
 display:inline-block;
-padding:6px 12px;
-border:1px solid #444;
-border-radius:40px;
-font-size:13px;
-margin-bottom:15px;
+padding:8px 16px;
+border:1px solid rgba(255,215,0,0.4);
+border-radius:50px;
+font-size:12px;
+letter-spacing:2px;
+color:#ffd700;
+text-transform:uppercase;
 }
+
+h1{
+font-size:52px;
+margin:20px 0;
+font-weight:800;
+line-height:1.1;
+}
+
+h1 span{
+color:#ffd700;
+}
+
+p{
+color:rgba(255,255,255,0.75);
+font-size:18px;
+line-height:1.7;
+}
+
+/* CTA */
 .btn{
 display:inline-block;
-margin-top:20px;
-padding:15px 25px;
-background:#fff;
+margin-top:25px;
+padding:16px 28px;
+background:linear-gradient(135deg,#ffd700,#ffb300);
 color:#000;
+font-weight:700;
+border-radius:12px;
 text-decoration:none;
-font-weight:bold;
-border-radius:8px;
+box-shadow:0 10px 30px rgba(255,215,0,0.25);
+transition:0.3s;
 }
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
-.card{background:#1a1a1a;padding:22px;border-radius:12px;}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;}
-.photo{height:220px;background:#222;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#777;border:1px dashed #444;}
-.highlight{font-weight:bold;color:#fff;}
-footer{text-align:center;padding:40px 0;color:#888;font-size:14px;}
+
+.btn:hover{
+transform:translateY(-2px);
+box-shadow:0 15px 40px rgba(255,215,0,0.4);
+}
+
+/* GRID CARDS */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:20px;
+margin-top:40px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(10px);
+padding:22px;
+border-radius:16px;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+border-color:rgba(255,215,0,0.3);
+}
+
+h2{
+font-size:34px;
+margin-bottom:10px;
+}
+
+h3{
+color:#ffd700;
+margin-bottom:10px;
+}
+
+.highlight{
+color:#ffd700;
+font-weight:600;
+}
+
+section{
+padding:70px 0;
+border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+/* gallery */
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:12px;
+margin-top:30px;
+}
+
+.photo{
+height:200px;
+border-radius:14px;
+background:rgba(255,255,255,0.06);
+border:1px dashed rgba(255,255,255,0.2);
+display:flex;
+align-items:center;
+justify-content:center;
+color:rgba(255,255,255,0.4);
+font-size:14px;
+}
+
+footer{
+text-align:center;
+padding:50px 0;
+color:rgba(255,255,255,0.4);
+font-size:13px;
+}
+
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
-<section style="text-align:center;">
+<!-- HERO -->
+<section class="hero">
 <div class="badge">Златоуст • Куса • Миасс • Сатка</div>
-<h1>Ведущий Марат Ярков</h1>
+
+<h1>Ведущий <span>Марат Ярков</span><br>праздники нового уровня</h1>
+
 <p>
-Современный ведущий мероприятий, который делает свадьбы, юбилеи и корпоративы живыми, динамичными и запоминающимися.
-Без устаревшего «тамады» — только стиль, энергия и управление настроением гостей.
+Не “тамада”. Не набор конкурсов.  
+Это управление атмосферой, эмоциями и вниманием гостей.
 </p>
 
 <p>
-Работаю по <span class="highlight">Златоусту и Златоустскому городскому округу</span>:
-Златоуст, Куса, Миасс, Сатка.
+Работаю в <span class="highlight">Златоусте и ЗГО</span>, выезжаю в Челябинск и другие города.
 </p>
 
-<a class="btn" href="https://taplink.cc/">Написать и проверить дату</a>
+<a href="https://taplink.cc/" class="btn">Забронировать дату</a>
 </section>
 
+<!-- ABOUT -->
 <section>
-<h2>Почему меня выбирают</h2>
+<h2>Почему это уровень выше</h2>
 
 <div class="grid">
 
 <div class="card">
-<h3>Живой формат</h3>
-<p>Без кринжа, без скучных пауз. Только современный сценарий и естественная атмосфера.</p>
+<h3>Атмосфера</h3>
+<p>Каждый гость вовлечён, никто не “сидит в телефоне”.</p>
+</div>
+
+<div class="card">
+<h3>Сценарий</h3>
+<p>Не шаблон. Каждый праздник пишется под людей.</p>
 </div>
 
 <div class="card">
 <h3>Опыт</h3>
-<p>Более 200 мероприятий: свадьбы, юбилеи, корпоративы, городские события.</p>
+<p>200+ мероприятий: свадьбы, корпоративы, юбилеи.</p>
 </div>
 
 <div class="card">
-<h3>Импровизация</h3>
-<p>Быстро реагирую на гостей, настроение и ситуацию в зале.</p>
-</div>
-
-<div class="card">
-<h3>Организация под ключ</h3>
-<p>Сценарий, тайминг, координация гостей, техническая часть.</p>
+<h3>Контроль зала</h3>
+<p>Чувствую аудиторию и управляю вниманием.</p>
 </div>
 
 </div>
 </section>
 
+<!-- SERVICES -->
 <section>
-<h2>География работы</h2>
+<h2>Какие события я веду</h2>
 
 <div class="grid">
 
 <div class="card">
-<h3>Златоуст</h3>
-<p>Основная работа и база. Полное сопровождение мероприятий.</p>
+<h3>Свадьбы</h3>
+<p>Эмоции, стиль, вовлечение всех гостей. Без кринжа и устаревших сценариев.</p>
 </div>
 
 <div class="card">
-<h3>Куса</h3>
-<p>Выезд с полным комплектом оборудования и DJ.</p>
+<h3>Юбилеи</h3>
+<p>Тёплая атмосфера, уважение к гостям, грамотный баланс юмора и эмоций.</p>
 </div>
 
 <div class="card">
-<h3>Миасс</h3>
-<p>Свадьбы, банкеты, корпоративы любой сложности.</p>
+<h3>Корпоративы</h3>
+<p>Объединяю коллектив, создаю энергию команды, не “веду вечер”, а управляю им.</p>
 </div>
 
 <div class="card">
-<h3>Сатка</h3>
-<p>Выездные мероприятия с полным звуковым оснащением.</p>
+<h3>Частные события</h3>
+<p>Закрытые мероприятия, VIP-форматы, индивидуальный сценарий.</p>
 </div>
 
 </div>
-
-<p style="margin-top:20px;">
-Также возможны выезды в <span class="highlight">Челябинск, Москву, Санкт-Петербург, Сочи</span> —
-по договорённости с оборудованием или с вашей площадкой.
-</p>
 </section>
 
+<!-- TECH -->
 <section>
-<h2>Техническое оснащение</h2>
+<h2>Технический уровень</h2>
 
 <div class="grid">
 
 <div class="card">
-<h3>DJ и музыка</h3>
-<p>Современные треки, клубная подача, индивидуальные плейлисты.</p>
+<h3>DJ + музыка</h3>
+<p>Современные треки, клубная подача, адаптация под аудиторию.</p>
 </div>
 
 <div class="card">
 <h3>Звук</h3>
-<p>Профессиональная акустика высокой мощности для больших залов.</p>
+<p>Профессиональная акустика — чистый, мощный, плотный звук.</p>
 </div>
 
 <div class="card">
 <h3>Микрофоны</h3>
-<p>Качественные беспроводные системы без шумов и перебоев.</p>
+<p>Беспроводные системы без шумов и перебоев.</p>
 </div>
 
 <div class="card">
-<h3>Пульт</h3>
-<p>DJ-контроллер для живого микса и динамики вечера.</p>
+<h3>Полное оснащение</h3>
+<p>Пульт, свет, звук, DJ — можно закрыть мероприятие под ключ.</p>
 </div>
 
 </div>
 </section>
 
+<!-- GALLERY -->
 <section>
-<h2>Галерея</h2>
-<p>Ниже — места под ваши реальные фото</p>
+<h2>Живые моменты</h2>
 
 <div class="gallery">
 <div class="photo">/ведущий/1</div>
@@ -171,46 +302,61 @@ footer{text-align:center;padding:40px 0;color:#888;font-size:14px;}
 </div>
 </section>
 
+<!-- WHY ME -->
 <section>
-<h2>Как работаем</h2>
-
-<div class="grid">
+<h2>Почему меня выбирают</h2>
 
 <div class="card">
-<h3>1. Связь</h3>
-<p>Вы пишете дату, город и формат мероприятия.</p>
-</div>
-
-<div class="card">
-<h3>2. Сценарий</h3>
-<p>Создаём концепцию под вашу аудиторию и бюджет.</p>
-</div>
-
-<div class="card">
-<h3>3. Подготовка</h3>
-<p>Подключаем звук, DJ, тайминг, программу.</p>
-</div>
-
-<div class="card">
-<h3>4. Событие</h3>
-<p>Вы отдыхаете — я веду, управляю и создаю атмосферу.</p>
-</div>
-
+<p>
+Клиенты приходят не за “ведущим”, а за спокойствием в день события.
+<br><br>
+Я беру на себя:
+<br>
+— атмосферу<br>
+— управление гостями<br>
+— сценарий<br>
+— динамику вечера<br>
+<br>
+А вы просто проживаете свой праздник.
+</p>
 </div>
 </section>
 
-<section style="text-align:center;">
-<h2>Забронировать дату</h2>
+<!-- FINANCE NOTE -->
+<section>
+<h2>Подход</h2>
+
+<div class="card">
 <p>
-Лучшие даты разбираются заранее. Напишите сейчас и уточните доступность.
+Помимо event-деятельности я работаю в сфере финансов и международных проектов.
+<br><br>
+Поэтому в работе всегда:
+<br>
+— точность<br>
+— договорённости<br>
+— ответственность<br>
+— отсутствие хаоса
 </p>
-<a class="btn" href="https://taplink.cc/">Написать в личные сообщения</a>
+</div>
+</section>
+
+<!-- CTA -->
+<section style="text-align:center;">
+<h2>Проверим вашу дату?</h2>
+
+<p>
+Лучшие даты в сезоне разбираются заранее.  
+Напишите сейчас — скажу свободен ли день и предложу формат.
+</p>
+
+<a href="https://taplink.cc/" class="btn">Написать в Taplink</a>
 </section>
 
 <footer>
-Марат Ярков — ведущий мероприятий | Златоуст • ЗГО
+Марат Ярков — ведущий мероприятий | Златоуст • Куса • Миасс • Сатка
 </footer>
 
 </div>
+
 </body>
 </html>
