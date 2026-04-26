@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM — app2.cash</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--gold:#FFD700;--gold2:#FFA500;--bg:#0b0b0f;--surface:#111;--surface2:#1a1a1a;--border:#2a2a2a;--text:#fff;--muted:#777;--red:#e55353;}
+body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;min-height:100vh;}
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-box{width:100%;max-width:360px;}
+.login-logo{font-size:22px;font-weight:700;color:var(--gold);text-align:center;margin-bottom:8px;}
+.login-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:28px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.field input,.field select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:14px;outline:none;transition:.2s;}
+.field input:focus{border-color:var(--gold);}
+.btn-gold{display:block;width:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#000;padding:13px;border-radius:12px;font-weight:700;font-size:14px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;}
+.btn-gold:hover{box-shadow:0 4px 12px rgba(255,215,0,.4);}
+.err{font-size:12px;color:var(--red);text-align:center;margin-top:10px;}
+#crm{display:none;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;}
+.topbar-logo{font-size:16px;font-weight:700;color:var(--gold);}
+.badge-admin{font-size:11px;background:rgba(255,215,0,.1);border:1px solid var(--gold);color:var(--gold);padding:3px 10px;border-radius:6px;}
+.logout-btn{font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;}
+.layout{display:flex;min-height:calc(100vh - 49px);}
+.sidebar{width:200px;background:var(--surface);border-right:1px solid var(--border);padding:16px 0;flex-shrink:0;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;color:var(--muted);cursor:pointer;transition:.2s;border-left:3px solid transparent;}
+.nav-item:hover{color:var(--text);background:var(--surface2);}
+.nav-item.active{color:var(--gold);border-left-color:var(--gold);background:var(--surface2);}
+.main{flex:1;padding:24px;overflow-x:auto;}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:24px;}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.stat.gold{border-color:var(--gold);}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.stat-val{font-size:24px;font-weight:700;}
+.stat-val.gold{color:var(--gold);}
+.sec-title{font-size:16px;font-weight:700;margin-bottom:14px;}
+.search-input{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;width:200px;}
+.search-input:focus{border-color:var(--gold);}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead th{background:var(--surface);padding:10px 14px;text-align:left;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap;}
+tbody tr{border-bottom:1px solid var(--border);transition:.15s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--surface2);}
+tbody td{padding:10px 14px;vertical-align:middle;}
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;}
+.badge-new{background:rgba(0,200,150,.15);color:#00c896;}
+.badge-work{background:rgba(255,215,0,.15);color:var(--gold);}
+.badge-done{background:rgba(100,100,100,.2);color:var(--muted);}
+.badge-level{background:var(--surface2);color:var(--gold);border:1px solid var(--border);}
+.actions{display:flex;gap:6px;flex-wrap:wrap;}
+.act-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:5px 10px;border-radius:7px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;text-decoration:none;transition:.2s;white-space:nowrap;}
+.act-wa{background:#25D366;color:#fff;}
+.act-tg{background:#229ED9;color:#fff;}
+.act-email{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.act-pay{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
+select.act-btn{padding:5px 8px;}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:400px;}
+.modal h3{font-size:16px;margin-bottom:16px;color:var(--gold);}
+.modal-actions{display:flex;gap:10px;margin-top:16px;}
+.btn-cancel{flex:1;background:var(--surface2);color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:11px;font-family:'Montserrat',sans-serif;font-size:13px;cursor:pointer;}
+.btn-save{flex:1;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:10px;padding:11px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+.page{display:none;}
+.page.active{display:block;}
+.empty{text-align:center;padding:30px;color:var(--muted);font-size:13px;}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--gold);color:#000;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:200;}
+.toast.show{opacity:1;}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;}
+@media(max-width:700px){.sidebar{display:none;}.mobile-nav{display:flex!important;}.dash-grid{grid-template-columns:1fr;}.main{padding:14px;}}
+.mobile-nav{display:none;overflow-x:auto;gap:8px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);}
+.mob-btn{flex-shrink:0;font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;font-family:'Montserrat',sans-serif;}
+.mob-btn.active{border-color:var(--gold);color:var(--gold);}
+</style>
+</head>
+<body>
+ 
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">app2.cash CRM</div>
+    <div class="login-sub">Панель администратора</div>
+    <div class="field"><label>Email</label><input type="email" id="a-email" placeholder="admin@app2.cash"></div>
+    <div class="field"><label>Пароль</label><input type="password" id="a-pass" placeholder="••••••••"></div>
+    <button class="btn-gold" onclick="doLogin()">Войти</button>
+    <div class="err" id="a-err"></div>
+  </div>
+</div>
+ 
+<div id="crm">
+  <div class="topbar">
+    <div class="topbar-logo">app2.cash CRM</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span class="badge-admin">ADMIN</span>
+      <button class="logout-btn" onclick="doLogout()">Выйти</button>
+    </div>
+  </div>
+  <div class="mobile-nav">
+    <button class="mob-btn active" onclick="switchPage('dashboard',this)">📊 Дашборд</button>
+    <button class="mob-btn" onclick="switchPage('partners',this)">👥 Партнёры</button>
+    <button class="mob-btn" onclick="switchPage('leads',this)">🎯 Лиды</button>
+    <button class="mob-btn" onclick="switchPage('commissions',this)">💰 Комиссии</button>
+  </div>
+  <div class="layout">
+    <div class="sidebar">
+      <div class="nav-item active" onclick="switchPage('dashboard',this)"><span>📊</span>Дашборд</div>
+      <div class="nav-item" onclick="switchPage('partners',this)"><span>👥</span>Партнёры</div>
+      <div class="nav-item" onclick="switchPage('leads',this)"><span>🎯</span>Лиды</div>
+      <div class="nav-item" onclick="switchPage('commissions',this)"><span>💰</span>Комиссии</div>
+    </div>
+    <div class="main">
+ 
+      <div class="page active" id="page-dashboard">
+        <div class="stats-row" id="dash-stats">
+          <div class="stat gold"><div class="stat-label">Партнёров</div><div class="stat-val gold" id="d-partners">—</div></div>
+          <div class="stat"><div class="stat-label">Всего лидов</div><div class="stat-val" id="d-leads">—</div></div>
+          <div class="stat"><div class="stat-label">Новых лидов</div><div class="stat-val" id="d-new">—</div></div>
+          <div class="stat gold"><div class="stat-label">Выплачено</div><div class="stat-val gold" id="d-paid">—</div></div>
+          <div class="stat"><div class="stat-label">Оборот</div><div class="stat-val" id="d-volume">—</div></div>
+        </div>
+        <div class="dash-grid">
+          <div>
+            <div class="sec-title">Последние лиды</div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Имя</th><th>Сумма</th><th>Статус</th></tr></thead>
+              <tbody id="dash-leads-body"></tbody>
+            </table></div>
+          </div>
+          <div>
+            <div class="sec-title">Топ партнёры</div>
+            <div class="tbl-wrap"><table>
+              <thead><tr><th>Имя</th><th>Баланс</th><th>LVL</th></tr></thead>
+              <tbody id="dash-partners-body"></tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="page" id="page-partners">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+          <div class="sec-title" style="margin:0">Партнёры</div>
+          <input class="search-input" id="partners-search" placeholder="🔍 Поиск..." oninput="filterPartners()">
+        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Имя</th><th>Код</th><th>Telegram</th><th>Email</th><th>Уровень</th><th>Баланс</th><th>Приглашён от</th><th>Действия</th></tr></thead>
+          <tbody id="partners-body"></tbody>
+        </table></div>
+      </div>
+ 
+      <div class="page" id="page-leads">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+          <div class="sec-title" style="margin:0">Лиды</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <select id="leads-filter" onchange="filterLeads()" style="width:auto;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;">
+              <option value="">Все</option>
+              <option value="new">Новые</option>
+              <option value="in_progress">В работе</option>
+              <option value="done">Закрыты</option>
+            </select>
+            <input class="search-input" id="leads-search" placeholder="🔍 Поиск..." oninput="filterLeads()">
+          </div>
+        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Дата</th><th>Имя</th><th>Телефон</th><th>Сумма</th><th>Партнёр</th><th>Статус</th><th>Связь</th></tr></thead>
+          <tbody id="leads-body"></tbody>
+        </table></div>
+      </div>
+ 
+      <div class="page" id="page-commissions">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+          <div class="sec-title" style="margin:0">Комиссии</div>
+          <button class="btn-gold" style="width:auto;padding:9px 18px;font-size:13px;" onclick="openPayModal()">+ Начислить</button>
+        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Дата</th><th>Партнёр</th><th>От</th><th>Линия</th><th>Тип</th><th>Сумма</th></tr></thead>
+          <tbody id="comms-body"></tbody>
+        </table></div>
+      </div>
+ 
+    </div>
+  </div>
+</div>
+ 
+<div class="modal-bg" id="pay-modal">
+  <div class="modal">
+    <h3>💰 Начислить комиссию</h3>
+    <div class="field"><label>Партнёр</label><select id="m-partner"></select></div>
+    <div class="field"><label>Тип</label>
+      <select id="m-type"><option value="exchange">Обмен</option><option value="activation">Активация уровня</option></select>
+    </div>
+    <div class="field"><label>Линия</label>
+      <select id="m-line"><option value="1">Линия 1</option><option value="2">Линия 2</option><option value="3">Линия 3</option><option value="4">Линия 4</option></select>
+    </div>
+    <div class="field"><label>Сумма ($)</label><input type="number" id="m-amount" placeholder="25.00" min="0" step="0.01"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closePayModal()">Отмена</button>
+      <button class="btn-save" onclick="saveCommission()">Начислить</button>
+    </div>
+  </div>
+</div>
+ 
+<div class="toast" id="toast"></div>
+ 
+<script>
+const SB_URL='https://vpeqbsctlysjkuceejxp.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZXFic2N0bHlzamt1Y2VlanhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMzIwNDgsImV4cCI6MjA5MDcwODA0OH0.3Hhszztxhhl_X55rWIBGNoAIfxxu31N16-rv1wrruuc';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+ 
+// ДОБАВЬ СЮДА СВОЙ EMAIL
+const ADMIN_EMAILS=['maratyarkov@gmail.com','admin@app2.cash'];
+ 
+const LEVEL_NAMES=['Start','Basic','Pro','VIP','Elite'];
+let allPartners=[], allLeads=[], allComms=[];
+ 
+function statusBadge(s){
+  if(!s||s==='new') return '<span class="badge badge-new">Новый</span>';
+  if(s==='in_progress') return '<span class="badge badge-work">В работе</span>';
+  return '<span class="badge badge-done">Закрыт</span>';
+}
+ 
+async function doLogin(){
+  const email=document.getElementById('a-email').value.trim();
+  const pass=document.getElementById('a-pass').value;
+  const err=document.getElementById('a-err');
+  err.textContent='';
+  if(!ADMIN_EMAILS.includes(email)){err.textContent='Доступ запрещён';return;}
+  const{data,error}=await sb.auth.signInWithPassword({email,password:pass});
+  if(error){err.textContent='Неверный email или пароль';return;}
+  await initCRM();
+}
+ 
+async function doLogout(){
+  await sb.auth.signOut();
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('crm').style.display='none';
+}
+ 
+async function initCRM(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('crm').style.display='block';
+  await Promise.all([loadPartners(),loadLeads(),loadComms()]);
+  renderDashboard();
+}
+ 
+async function loadPartners(){
+  const{data}=await sb.from('partners').select('*').order('id',{ascending:false});
+  allPartners=data||[];
+  renderPartners();
+  document.getElementById('m-partner').innerHTML=allPartners.map(p=>`<option value="${p.partner_code}">${p.name} (${p.partner_code})</option>`).join('');
+}
+ 
+async function loadLeads(){
+  const{data}=await sb.from('leads').select('*').order('created_at',{ascending:false});
+  allLeads=data||[];
+  renderLeads();
+}
+ 
+async function loadComms(){
+  const{data}=await sb.from('commissions').select('*').order('created_at',{ascending:false}).limit(100);
+  allComms=data||[];
+  renderComms();
+}
+ 
+function renderDashboard(){
+  document.getElementById('d-partners').textContent=allPartners.length;
+  document.getElementById('d-leads').textContent=allLeads.length;
+  document.getElementById('d-new').textContent=allLeads.filter(l=>!l.status||l.status==='new').length;
+  document.getElementById('d-paid').textContent='$'+allComms.reduce((s,c)=>s+parseFloat(c.amount||0),0).toFixed(2);
+  document.getElementById('d-volume').textContent='$'+allLeads.reduce((s,l)=>s+parseFloat(l.amount||0),0).toFixed(0);
+  const lb=document.getElementById('dash-leads-body');
+  lb.innerHTML=allLeads.slice(0,5).map(l=>`<tr><td>${l.name||'—'}</td><td style="color:var(--gold)">$${parseFloat(l.amount||0).toFixed(0)}</td><td>${statusBadge(l.status)}</td></tr>`).join('')||'<tr><td colspan="3" class="empty">Нет лидов</td></tr>';
+  const pb=document.getElementById('dash-partners-body');
+  pb.innerHTML=[...allPartners].sort((a,b)=>(b.balance||0)-(a.balance||0)).slice(0,5).map(p=>`<tr><td>${p.name}</td><td style="color:var(--gold)">$${parseFloat(p.balance||0).toFixed(2)}</td><td><span class="badge badge-level">LVL${p.level||0}</span></td></tr>`).join('')||'<tr><td colspan="3" class="empty">Нет партнёров</td></tr>';
+}
+ 
+function renderPartners(data){
+  const list=data||allPartners;
+  const body=document.getElementById('partners-body');
+  if(!list.length){body.innerHTML='<tr><td colspan="8" class="empty">Нет партнёров</td></tr>';return;}
+  body.innerHTML=list.map(p=>`<tr>
+    <td><b>${p.name}</b></td>
+    <td><span style="color:var(--gold);font-size:12px;font-weight:700">${p.partner_code}</span></td>
+    <td style="font-size:12px">${p.telegram||'—'}</td>
+    <td style="font-size:12px">${p.email||'—'}</td>
+    <td><span class="badge badge-level">${LEVEL_NAMES[p.level||0]}</span></td>
+    <td style="color:var(--gold);font-weight:700">$${parseFloat(p.balance||0).toFixed(2)}</td>
+    <td style="font-size:12px;color:var(--muted)">${p.referred_by||'—'}</td>
+    <td><div class="actions">
+      ${p.telegram?`<a class="act-btn act-tg" href="https://t.me/${p.telegram.replace('@','')}" target="_blank">✈ TG</a>`:''}
+      ${p.email?`<a class="act-btn act-email" href="mailto:${p.email}">✉ Email</a>`:''}
+      <button class="act-btn act-pay" onclick="openPayModalFor('${p.partner_code}')">$ Начислить</button>
+      <select class="act-btn" style="background:var(--surface2);color:var(--muted);border:1px solid var(--border);" onchange="changeLevel('${p.id}',this.value)">
+        ${LEVEL_NAMES.map((n,i)=>`<option value="${i}" ${(p.level||0)==i?'selected':''}>${n}</option>`).join('')}
+      </select>
+    </div></td>
+  </tr>`).join('');
+}
+ 
+function filterPartners(){
+  const q=document.getElementById('partners-search').value.toLowerCase();
+  renderPartners(allPartners.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.partner_code||'').toLowerCase().includes(q)||(p.telegram||'').toLowerCase().includes(q)||(p.email||'').toLowerCase().includes(q)));
+}
+ 
+async function changeLevel(id,level){
+  await sb.from('partners').update({level:parseInt(level)}).eq('id',id);
+  showToast('Уровень обновлён');
+  await loadPartners();renderDashboard();
+}
+ 
+function renderLeads(data){
+  const list=data||allLeads;
+  const body=document.getElementById('leads-body');
+  if(!list.length){body.innerHTML='<tr><td colspan="7" class="empty">Нет лидов</td></tr>';return;}
+  body.innerHTML=list.map(l=>`<tr>
+    <td style="font-size:12px;color:var(--muted)">${new Date(l.created_at).toLocaleDateString('ru')}</td>
+    <td><b>${l.name||'—'}</b></td>
+    <td style="font-size:12px">${l.phone||'—'}</td>
+    <td style="color:var(--gold);font-weight:700">$${parseFloat(l.amount||0).toFixed(0)}</td>
+    <td style="font-size:11px;color:var(--muted)">${l.partner_code||'—'}</td>
+    <td><select style="background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;" onchange="changeLeadStatus('${l.id}',this.value)">
+      <option value="new" ${(!l.status||l.status==='new')?'selected':''}>🟢 Новый</option>
+      <option value="in_progress" ${l.status==='in_progress'?'selected':''}>🟡 В работе</option>
+      <option value="done" ${l.status==='done'?'selected':''}>⚫ Закрыт</option>
+    </select></td>
+    <td><div class="actions">
+      ${l.phone?`<a class="act-btn act-wa" href="https://wa.me/${l.phone.replace(/\D/g,'')}" target="_blank">💬 WA</a>`:''}
+    </div></td>
+  </tr>`).join('');
+}
+ 
+function filterLeads(){
+  const q=document.getElementById('leads-search').value.toLowerCase();
+  const s=document.getElementById('leads-filter').value;
+  renderLeads(allLeads.filter(l=>{
+    const mq=(l.name||'').toLowerCase().includes(q)||(l.phone||'').includes(q);
+    const ms=!s||(l.status||'new')===s;
+    return mq&&ms;
+  }));
+}
+ 
+async function changeLeadStatus(id,status){
+  await sb.from('leads').update({status}).eq('id',id);
+  const l=allLeads.find(x=>x.id===id);if(l)l.status=status;
+  showToast('Статус обновлён');renderDashboard();
+}
+ 
+function renderComms(){
+  const body=document.getElementById('comms-body');
+  if(!allComms.length){body.innerHTML='<tr><td colspan="6" class="empty">Нет начислений</td></tr>';return;}
+  body.innerHTML=allComms.map(c=>`<tr>
+    <td style="font-size:12px;color:var(--muted)">${new Date(c.created_at).toLocaleDateString('ru')}</td>
+    <td style="color:var(--gold);font-size:12px;font-weight:700">${c.partner_code||'—'}</td>
+    <td style="font-size:12px;color:var(--muted)">${c.from_partner||'—'}</td>
+    <td><span class="badge badge-level">L${c.line||1}</span></td>
+    <td style="font-size:12px">${c.type==='activation'?'Активация':'Обмен'}</td>
+    <td style="color:var(--gold);font-weight:700">+$${parseFloat(c.amount||0).toFixed(2)}</td>
+  </tr>`).join('');
+}
+ 
+function openPayModal(){document.getElementById('pay-modal').classList.add('open');}
+function openPayModalFor(code){
+  const sel=document.getElementById('m-partner');
+  for(let i=0;i<sel.options.length;i++)if(sel.options[i].value===code)sel.selectedIndex=i;
+  openPayModal();
+}
+function closePayModal(){document.getElementById('pay-modal').classList.remove('open');}
+ 
+async function saveCommission(){
+  const partner_code=document.getElementById('m-partner').value;
+  const type=document.getElementById('m-type').value;
+  const line=parseInt(document.getElementById('m-line').value);
+  const amount=parseFloat(document.getElementById('m-amount').value);
+  if(!amount||isNaN(amount)){showToast('Введите сумму');return;}
+  await sb.from('commissions').insert({partner_code,type,line,amount});
+  const p=allPartners.find(x=>x.partner_code===partner_code);
+  if(p) await sb.from('partners').update({balance:(p.balance||0)+amount,total_earned:(p.total_earned||0)+amount}).eq('partner_code',partner_code);
+  closePayModal();
+  document.getElementById('m-amount').value='';
+  showToast('Комиссия начислена!');
+  await Promise.all([loadPartners(),loadComms()]);renderDashboard();
+}
+ 
+function switchPage(name,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item,.mob-btn').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if(n.textContent.trim().includes(el?.textContent?.trim()?.slice(-4)))n.classList.add('active');});
+}
+ 
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+ 
+document.getElementById('pay-modal').addEventListener('click',e=>{if(e.target===document.getElementById('pay-modal'))closePayModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('login-screen').style.display!=='none')doLogin();});
+ 
+sb.auth.getSession().then(({data})=>{
+  if(data.session&&ADMIN_EMAILS.includes(data.session.user.email))initCRM();
+});
+</script>
+</body>
+</html>
+ 
