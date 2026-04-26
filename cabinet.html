@@ -4,669 +4,436 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Кабинет партнёра — app2.cash</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  :root {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --surface2: #1a1a1a;
-    --border: #222222;
-    --border2: #2a2a2a;
-    --text: #f0f0f0;
-    --muted: #666666;
-    --accent: #00e5a0;
-    --accent2: #00b37a;
-    --warn: #f0b429;
-    --danger: #e55353;
-    --mono: 'IBM Plex Mono', monospace;
-    --sans: 'Manrope', sans-serif;
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --gold:#FFD700;--gold2:#FFA500;--bg:#0b0b0f;--surface:#111;
+    --surface2:#1a1a1a;--border:#333;--text:#fff;--muted:#aaa;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
-
-  /* LOGIN */
-  #login-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
-  .login-box {
-    width: 100%;
-    max-width: 380px;
-  }
-  .login-logo {
-    font-family: var(--mono);
-    font-size: 20px;
-    color: var(--accent);
-    margin-bottom: 2.5rem;
-    letter-spacing: -0.5px;
-  }
-  .login-logo span { color: var(--muted); }
-  .login-title { font-size: 24px; font-weight: 600; margin-bottom: 0.5rem; }
-  .login-sub { font-size: 14px; color: var(--muted); margin-bottom: 2rem; }
-  .field { margin-bottom: 1rem; }
-  .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
-  .field input {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
-    padding: 12px 14px;
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 15px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .field input:focus { border-color: var(--accent); }
-  .btn-primary {
-    width: 100%;
-    background: var(--accent);
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    padding: 13px;
-    font-family: var(--sans);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    margin-top: 0.5rem;
-  }
-  .btn-primary:hover { background: var(--accent2); }
-  .btn-primary:active { transform: scale(0.98); }
-  .btn-primary:disabled { background: var(--border2); color: var(--muted); cursor: not-allowed; }
-  .error-msg { font-size: 13px; color: var(--danger); margin-top: 0.75rem; text-align: center; }
-  .register-link { text-align: center; margin-top: 1.5rem; font-size: 13px; color: var(--muted); }
-  .register-link a { color: var(--accent); text-decoration: none; cursor: pointer; }
-
-  /* REGISTER */
-  #register-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
-  .register-box { width: 100%; max-width: 380px; }
-
-  /* CABINET */
-  #cabinet-screen { display: none; }
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .topbar-logo { font-family: var(--mono); font-size: 16px; color: var(--accent); }
-  .topbar-logo span { color: var(--muted); }
-  .topbar-right { display: flex; align-items: center; gap: 12px; }
-  .partner-code-badge {
-    font-family: var(--mono);
-    font-size: 12px;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    padding: 5px 10px;
-    border-radius: 6px;
-    color: var(--accent);
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-  .partner-code-badge:hover { border-color: var(--accent); }
-  .logout-btn {
-    font-size: 12px;
-    color: var(--muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: var(--sans);
-    padding: 5px 8px;
-    border-radius: 6px;
-    transition: color 0.2s, background 0.2s;
-  }
-  .logout-btn:hover { color: var(--text); background: var(--surface2); }
-
-  .cabinet-body { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
-
-  .welcome { margin-bottom: 2rem; }
-  .welcome h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
-  .welcome p { font-size: 14px; color: var(--muted); }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 12px;
-    margin-bottom: 2rem;
-  }
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-  }
-  .stat-card.accent { border-color: var(--accent); background: rgba(0,229,160,0.04); }
-  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-  .stat-value { font-size: 26px; font-weight: 600; font-family: var(--mono); color: var(--text); }
-  .stat-value.green { color: var(--accent); }
-  .stat-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-  .section { margin-bottom: 2rem; }
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  .section-title { font-size: 14px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-
-  /* REFLINK */
-  .reflink-box {
-    background: var(--surface);
-    border: 1px solid var(--border2);
-    border-radius: 12px;
-    padding: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .reflink-url {
-    flex: 1;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--accent);
-    word-break: break-all;
-  }
-  .copy-btn {
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-size: 12px;
-    font-family: var(--sans);
-    padding: 8px 14px;
-    border-radius: 7px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .copy-btn:hover { border-color: var(--accent); background: rgba(0,229,160,0.05); }
-  .copy-btn.copied { color: var(--accent); border-color: var(--accent); }
-
-  /* LEVELS */
-  .levels-row {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-  }
-  .level-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem 0.75rem;
-    text-align: center;
-  }
-  .level-item.current { border-color: var(--accent); }
-  .level-num { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-bottom: 4px; }
-  .level-pct { font-size: 18px; font-weight: 600; color: var(--text); }
-  .level-pct.active { color: var(--accent); }
-  .level-desc { font-size: 10px; color: var(--muted); margin-top: 4px; }
-
-  /* LINES TABLE */
-  .lines-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-  .line-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-  }
-  .line-num { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
-  .line-count { font-size: 22px; font-weight: 600; font-family: var(--mono); }
-  .line-earned { font-size: 12px; color: var(--accent); margin-top: 4px; }
-
-  /* COMMISSIONS TABLE */
-  .comm-table { width: 100%; border-collapse: collapse; }
-  .comm-table th {
-    font-size: 11px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    text-align: left;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .comm-table td {
-    font-size: 13px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    color: var(--text);
-  }
-  .comm-table tr:last-child td { border-bottom: none; }
-  .badge-line {
-    display: inline-block;
-    font-size: 10px;
-    font-family: var(--mono);
-    padding: 2px 7px;
-    border-radius: 4px;
-    background: var(--surface2);
-    color: var(--muted);
-  }
-  .amount-pos { color: var(--accent); font-family: var(--mono); }
-  .empty-state { text-align: center; padding: 2rem; color: var(--muted); font-size: 14px; }
-
-  .copied-toast {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--accent);
-    color: #000;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 8px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-    z-index: 100;
-  }
-  .copied-toast.show { opacity: 1; }
-
-  .loading { text-align: center; padding: 3rem; color: var(--muted); font-size: 14px; }
-
-  @media (max-width: 600px) {
-    .levels-row { grid-template-columns: repeat(3, 1fr); }
-    .lines-grid { grid-template-columns: repeat(2, 1fr); }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+  body{background:var(--bg);color:var(--text);font-family:'Montserrat',Arial,sans-serif;min-height:100vh;padding-bottom:80px;}
+  .container{max-width:580px;margin:0 auto;padding:20px;}
+  .lang{display:flex;justify-content:center;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+  .lang a{text-decoration:none;font-weight:700;padding:4px 10px;border-radius:8px;color:var(--gold);transition:0.2s;font-size:14px;cursor:pointer;}
+  .lang a:hover{color:#fff;}
+  .lang a.active{background:var(--gold);color:#000;}
+  .auth-wrap{display:flex;align-items:center;justify-content:center;padding:20px;}
+  .auth-box{width:100%;max-width:400px;}
+  .auth-logo{text-align:center;margin-bottom:24px;}
+  .auth-logo img{width:80px;}
+  .auth-title{font-size:22px;font-weight:700;text-align:center;margin-bottom:6px;}
+  .auth-sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:24px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
+  .field input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:15px;outline:none;transition:border-color 0.2s;}
+  .field input:focus{border-color:var(--gold);}
+  .btn-gold{display:block;width:100%;text-align:center;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#000;padding:14px;border-radius:16px;font-weight:700;font-size:15px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;transition:0.2s;margin-top:6px;text-decoration:none;}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,215,0,0.4);}
+  .btn-gold:active{transform:scale(0.98);}
+  .btn-gold:disabled{background:#333;color:var(--muted);cursor:not-allowed;transform:none;box-shadow:none;}
+  .auth-link{text-align:center;margin-top:16px;font-size:13px;color:var(--muted);}
+  .auth-link a{color:var(--gold);cursor:pointer;text-decoration:none;}
+  .error-msg{font-size:13px;color:#e55353;text-align:center;margin-top:10px;min-height:18px;}
+  #cabinet-screen{display:none;}
+  .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+  .topbar-logo{font-size:18px;font-weight:700;color:var(--gold);}
+  .topbar-right{display:flex;align-items:center;gap:8px;}
+  .code-pill{font-size:12px;font-weight:700;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:5px 10px;color:var(--gold);cursor:pointer;transition:0.2s;}
+  .code-pill:hover{border-color:var(--gold);}
+  .logout-btn{font-size:12px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;padding:5px 8px;border-radius:6px;transition:0.2s;}
+  .logout-btn:hover{color:var(--text);background:var(--surface2);}
+  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;}
+  .stat-card.gold-border{border-color:var(--gold);box-shadow:0 4px 12px rgba(255,215,0,0.1);}
+  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
+  .stat-value{font-size:24px;font-weight:700;color:var(--text);}
+  .stat-value.gold{color:var(--gold);}
+  .stat-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+  h2{margin-top:30px;font-size:20px;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:15px;}
+  .reflink-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .reflink-url{flex:1;font-size:13px;color:var(--gold);word-break:break-all;font-weight:500;min-width:0;}
+  .copy-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-size:13px;font-family:'Montserrat',sans-serif;padding:9px 16px;border-radius:10px;cursor:pointer;white-space:nowrap;font-weight:600;transition:0.2s;}
+  .copy-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .levels-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+  .level-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center;}
+  .level-item.current{border-color:var(--gold);box-shadow:0 0 8px rgba(255,215,0,0.2);}
+  .level-num{font-size:10px;color:var(--muted);margin-bottom:4px;}
+  .level-pct{font-size:18px;font-weight:700;color:var(--text);}
+  .level-pct.active{color:var(--gold);}
+  .level-name{font-size:10px;color:var(--muted);margin-top:4px;}
+  .level-entry{font-size:10px;color:var(--gold);margin-top:2px;}
+  .lines-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  .line-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+  .line-label{font-size:10px;color:var(--muted);margin-bottom:6px;}
+  .line-count{font-size:22px;font-weight:700;color:var(--text);}
+  .line-pct{font-size:11px;color:var(--gold);margin-top:4px;}
+  .comm-table{width:100%;border-collapse:collapse;}
+  .comm-table th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;text-align:left;padding:8px 0;border-bottom:1px solid var(--border);}
+  .comm-table td{font-size:13px;padding:10px 0;border-bottom:1px solid var(--border);}
+  .comm-table tr:last-child td{border-bottom:none;}
+  .badge-line{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;background:var(--surface2);color:var(--muted);}
+  .amount-pos{color:var(--gold);font-weight:700;}
+  .empty-state{text-align:center;padding:24px;color:var(--muted);font-size:14px;}
+  .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:13px;font-weight:700;padding:10px 20px;border-radius:10px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:200;white-space:nowrap;}
+  .toast.show{opacity:1;}
+  .contact-fixed{position:fixed;bottom:0;left:0;width:100%;display:flex;z-index:99;}
+  .cf-btn{flex:1;text-align:center;padding:14px;font-weight:700;color:#fff;border-top:2px solid #222;transition:0.3s;text-decoration:none;font-family:'Montserrat',sans-serif;font-size:14px;}
+  .whatsapp{background:#25D366;}
+  .telegram{background:#229ED9;}
+  .loading{text-align:center;padding:40px;color:var(--muted);font-size:14px;}
+  @media(max-width:500px){.levels-row{grid-template-columns:repeat(3,1fr);}.lines-grid{grid-template-columns:repeat(2,1fr);}.stats-grid{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
-
+ 
 <!-- LOGIN -->
 <div id="login-screen">
-  <div class="login-box">
-    <div class="login-logo">app2<span>.cash</span></div>
-    <h1 class="login-title">Вход в кабинет</h1>
-    <p class="login-sub">Партнёрская панель управления</p>
-    <div class="field">
-      <label>Email</label>
-      <input type="email" id="login-email" placeholder="your@email.com">
+  <div class="container">
+    <div class="lang">
+      <a class="active" onclick="setLang('ru')">🇷🇺 Русский</a>
+      <a onclick="setLang('en')">🇬🇧 English</a>
     </div>
-    <div class="field">
-      <label>Пароль</label>
-      <input type="password" id="login-password" placeholder="••••••••">
+    <div class="auth-wrap">
+      <div class="auth-box">
+        <div class="auth-logo"><img src="/logo-bull.png" alt="app2.cash" onerror="this.style.display='none'"></div>
+        <div class="auth-title" data-ru="Вход в кабинет" data-en="Partner Login">Вход в кабинет</div>
+        <div class="auth-sub" data-ru="Партнёрская панель app2.cash" data-en="app2.cash Partner Dashboard">Партнёрская панель app2.cash</div>
+        <div class="field">
+          <label data-ru="Email" data-en="Email">Email</label>
+          <input type="email" id="login-email" placeholder="email@example.com">
+        </div>
+        <div class="field">
+          <label data-ru="Пароль" data-en="Password">Пароль</label>
+          <input type="password" id="login-password" placeholder="••••••••">
+        </div>
+        <button class="btn-gold" id="login-btn" onclick="doLogin()" data-ru="Войти" data-en="Sign In">Войти</button>
+        <div class="error-msg" id="login-error"></div>
+        <div class="auth-link">
+          <span data-ru="Нет аккаунта? " data-en="No account? ">Нет аккаунта? </span>
+          <a onclick="showRegister()" data-ru="Зарегистрироваться" data-en="Register">Зарегистрироваться</a>
+        </div>
+      </div>
     </div>
-    <button class="btn-primary" id="login-btn" onclick="doLogin()">Войти</button>
-    <div class="error-msg" id="login-error"></div>
-    <div class="register-link">Нет аккаунта? <a onclick="showRegister()">Зарегистрироваться</a></div>
   </div>
 </div>
-
+ 
 <!-- REGISTER -->
 <div id="register-screen" style="display:none;">
-  <div class="register-box">
-    <div class="login-logo">app2<span>.cash</span></div>
-    <h1 class="login-title">Стать партнёром</h1>
-    <p class="login-sub">Регистрация в партнёрской программе</p>
-    <div class="field">
-      <label>Имя</label>
-      <input type="text" id="reg-name" placeholder="Ваше имя">
+  <div class="container">
+    <div class="lang">
+      <a class="active" onclick="setLang('ru')">🇷🇺 Русский</a>
+      <a onclick="setLang('en')">🇬🇧 English</a>
     </div>
-    <div class="field">
-      <label>Email</label>
-      <input type="email" id="reg-email" placeholder="your@email.com">
+    <div class="auth-wrap">
+      <div class="auth-box">
+        <div class="auth-logo"><img src="/logo-bull.png" alt="app2.cash" onerror="this.style.display='none'"></div>
+        <div class="auth-title" data-ru="Стать партнёром" data-en="Become a Partner">Стать партнёром</div>
+        <div class="auth-sub" data-ru="Зарабатывай до 60% с каждого обмена" data-en="Earn up to 60% from every exchange">Зарабатывай до 60% с каждого обмена</div>
+        <div class="field">
+          <label data-ru="Имя" data-en="Name">Имя</label>
+          <input type="text" id="reg-name" data-ru-ph="Ваше имя" data-en-ph="Your name" placeholder="Ваше имя">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="reg-email" placeholder="email@example.com">
+        </div>
+        <div class="field">
+          <label>Telegram</label>
+          <input type="text" id="reg-telegram" placeholder="@username">
+        </div>
+        <div class="field">
+          <label data-ru="Реферальный код (если есть)" data-en="Referral code (optional)">Реферальный код (если есть)</label>
+          <input type="text" id="reg-ref" data-ru-ph="например: MARAT123" data-en-ph="e.g. MARAT123" placeholder="например: MARAT123">
+        </div>
+        <div class="field">
+          <label data-ru="Пароль" data-en="Password">Пароль</label>
+          <input type="password" id="reg-password" data-ru-ph="минимум 6 символов" data-en-ph="min 6 characters" placeholder="минимум 6 символов">
+        </div>
+        <button class="btn-gold" id="reg-btn" onclick="doRegister()" data-ru="Зарегистрироваться" data-en="Register">Зарегистрироваться</button>
+        <div class="error-msg" id="reg-error"></div>
+        <div class="auth-link">
+          <span data-ru="Уже есть аккаунт? " data-en="Already have an account? ">Уже есть аккаунт? </span>
+          <a onclick="showLogin()" data-ru="Войти" data-en="Sign In">Войти</a>
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <label>Telegram</label>
-      <input type="text" id="reg-telegram" placeholder="@username">
-    </div>
-    <div class="field">
-      <label>Реферальный код (если есть)</label>
-      <input type="text" id="reg-ref" placeholder="например: MARAT">
-    </div>
-    <div class="field">
-      <label>Пароль</label>
-      <input type="password" id="reg-password" placeholder="минимум 6 символов">
-    </div>
-    <button class="btn-primary" id="reg-btn" onclick="doRegister()">Зарегистрироваться</button>
-    <div class="error-msg" id="reg-error"></div>
-    <div class="register-link">Уже есть аккаунт? <a onclick="showLogin()">Войти</a></div>
   </div>
 </div>
-
+ 
 <!-- CABINET -->
 <div id="cabinet-screen">
   <div class="topbar">
-    <div class="topbar-logo">app2<span>.cash</span></div>
+    <div class="topbar-logo">app2.cash</div>
     <div class="topbar-right">
-      <div class="partner-code-badge" id="topbar-code" onclick="copyRefLink()" title="Нажми чтобы скопировать ссылку"></div>
-      <button class="logout-btn" onclick="doLogout()">Выйти</button>
+      <div class="lang" style="margin:0;">
+        <a onclick="setLang('ru')" style="font-size:12px;padding:3px 8px;" id="lang-ru-btn">🇷🇺</a>
+        <a onclick="setLang('en')" style="font-size:12px;padding:3px 8px;" id="lang-en-btn">🇬🇧</a>
+      </div>
+      <div class="code-pill" id="topbar-code" onclick="copyRefLink()"></div>
+      <button class="logout-btn" id="logout-btn" onclick="doLogout()">Выйти</button>
     </div>
   </div>
-
-  <div class="cabinet-body">
+ 
+  <div class="container">
     <div id="cabinet-loading" class="loading">Загружаем данные...</div>
     <div id="cabinet-content" style="display:none;">
-
-      <div class="welcome">
-        <h1 id="welcome-name">Привет!</h1>
-        <p id="welcome-level">Загрузка...</p>
+ 
+      <div style="margin:20px 0 15px;">
+        <div style="font-size:20px;font-weight:700;" id="welcome-name"></div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;" id="welcome-level"></div>
       </div>
-
+ 
       <div class="stats-grid">
-        <div class="stat-card accent">
-          <div class="stat-label">Баланс</div>
-          <div class="stat-value green" id="stat-balance">$0</div>
-          <div class="stat-sub">доступно к выводу</div>
+        <div class="stat-card gold-border">
+          <div class="stat-label" data-ru="Баланс" data-en="Balance">Баланс</div>
+          <div class="stat-value gold" id="stat-balance">$0.00</div>
+          <div class="stat-sub" data-ru="к выводу" data-en="available">к выводу</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Всего заработано</div>
-          <div class="stat-value" id="stat-earned">$0</div>
-          <div class="stat-sub">за всё время</div>
+          <div class="stat-label" data-ru="Заработано" data-en="Earned">Заработано</div>
+          <div class="stat-value" id="stat-earned">$0.00</div>
+          <div class="stat-sub" data-ru="за всё время" data-en="all time">за всё время</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Партнёров в сети</div>
+          <div class="stat-label" data-ru="Партнёров" data-en="Partners">Партнёров</div>
           <div class="stat-value" id="stat-partners">0</div>
-          <div class="stat-sub">всего в 4 линиях</div>
+          <div class="stat-sub" data-ru="в сети" data-en="in network">в сети</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Начислений</div>
+          <div class="stat-label" data-ru="Начислений" data-en="Transactions">Начислений</div>
           <div class="stat-value" id="stat-comms">0</div>
-          <div class="stat-sub">всего транзакций</div>
+          <div class="stat-sub" data-ru="всего" data-en="total">всего</div>
         </div>
       </div>
-
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">Реферальная ссылка</div>
-        </div>
-        <div class="reflink-box">
-          <div class="reflink-url" id="reflink-url">—</div>
-          <button class="copy-btn" id="copy-btn" onclick="copyRefLink()">Копировать</button>
-        </div>
+ 
+      <h2 id="h-reflink" data-ru="Реферальная ссылка" data-en="Referral Link">Реферальная ссылка</h2>
+      <div class="reflink-box">
+        <div class="reflink-url" id="reflink-url"></div>
+        <button class="copy-btn" id="copy-btn" onclick="copyRefLink()" data-ru="Копировать" data-en="Copy">Копировать</button>
       </div>
-
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">Уровень партнёра</div>
-        </div>
-        <div class="levels-row" id="levels-row"></div>
+ 
+      <h2 data-ru="Уровень партнёра" data-en="Partner Level">Уровень партнёра</h2>
+      <div class="levels-row" id="levels-row"></div>
+ 
+      <h2 data-ru="Моя сеть" data-en="My Network">Моя сеть</h2>
+      <div class="lines-grid" id="lines-grid"></div>
+ 
+      <h2 data-ru="Последние начисления" data-en="Recent Commissions">Последние начисления</h2>
+      <div id="comms-wrap"></div>
+ 
+      <div style="margin-top:24px;text-align:center;margin-bottom:20px;">
+        <a href="https://wa.me/255756687444" class="btn-gold" style="display:inline-block;max-width:300px;" data-ru="Связаться с менеджером" data-en="Contact Manager">Связаться с менеджером</a>
       </div>
-
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">Моя сеть по линиям</div>
-        </div>
-        <div class="lines-grid" id="lines-grid"></div>
-      </div>
-
-      <div class="section">
-        <div class="section-header">
-          <div class="section-title">Последние начисления</div>
-        </div>
-        <div id="comms-wrap"></div>
-      </div>
-
     </div>
   </div>
+ 
+  <div class="contact-fixed">
+    <a href="https://wa.me/255756687444" class="cf-btn whatsapp" data-ru="WhatsApp" data-en="WhatsApp">WhatsApp</a>
+    <a href="https://t.me/app2cas" class="cf-btn telegram" data-ru="Telegram" data-en="Telegram">Telegram</a>
+  </div>
 </div>
-
-<div class="copied-toast" id="toast">Ссылка скопирована</div>
-
+ 
+<div class="toast" id="toast">Ссылка скопирована!</div>
+ 
 <script>
-const SUPABASE_URL = 'https://vpeqbsctlysjkuceejxp.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZXFic2N0bHlzamt1Y2VlanhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMzIwNDgsImV4cCI6MjA5MDcwODA0OH0.3Hhszztxhhl_X55rWIBGNoAIfxxu31N16-rv1wrruuc';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-const LEVELS = [
-  { name: 'Start', pct: 20, entry: 'Бесплатно' },
-  { name: 'Basic', pct: 30, entry: '$80' },
-  { name: 'Pro', pct: 40, entry: '$500' },
-  { name: 'VIP', pct: 50, entry: '$5K' },
-  { name: 'Elite', pct: 60, entry: '$10K' },
-];
-
-const LINE_PCT = [10, 5, 3, 2];
-
-let currentPartner = null;
-
-function showLogin() {
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('register-screen').style.display = 'none';
-  document.getElementById('cabinet-screen').style.display = 'none';
-}
-function showRegister() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('register-screen').style.display = 'flex';
-  document.getElementById('cabinet-screen').style.display = 'none';
-}
-function showCabinet() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('register-screen').style.display = 'none';
-  document.getElementById('cabinet-screen').style.display = 'block';
-}
-
-function genCode(name) {
-  const base = name.toUpperCase().replace(/[^A-ZА-Я0-9]/g, '').substring(0, 4);
-  const rand = Math.floor(Math.random() * 900 + 100);
-  return base + rand;
-}
-
-async function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const password = document.getElementById('login-password').value;
-  const btn = document.getElementById('login-btn');
-  const err = document.getElementById('login-error');
-  err.textContent = '';
-  btn.disabled = true;
-  btn.textContent = 'Входим...';
-
-  const { data, error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) {
-    err.textContent = 'Неверный email или пароль';
-    btn.disabled = false;
-    btn.textContent = 'Войти';
-    return;
-  }
-  await loadCabinet(data.user);
-}
-
-async function doRegister() {
-  const name = document.getElementById('reg-name').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const telegram = document.getElementById('reg-telegram').value.trim();
-  const ref = document.getElementById('reg-ref').value.trim().toUpperCase();
-  const password = document.getElementById('reg-password').value;
-  const btn = document.getElementById('reg-btn');
-  const err = document.getElementById('reg-error');
-  err.textContent = '';
-
-  if (!name || !email || !password) { err.textContent = 'Заполните все обязательные поля'; return; }
-  if (password.length < 6) { err.textContent = 'Пароль минимум 6 символов'; return; }
-
-  btn.disabled = true;
-  btn.textContent = 'Регистрируем...';
-
-  const { data, error } = await sb.auth.signUp({ email, password });
-  if (error) {
-    err.textContent = error.message;
-    btn.disabled = false;
-    btn.textContent = 'Зарегистрироваться';
-    return;
-  }
-
-  const code = genCode(name);
-  const { error: pe } = await sb.from('partners').insert({
-    name,
-    email,
-    telegram,
-    partner_code: code,
-    referred_by: ref || null,
-    level: 0,
-    balance: 0,
-    total_volume: 0,
-    total_earned: 0,
-    status: 'active'
+const SB_URL='https://vpeqbsctlysjkuceejxp.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZXFic2N0bHlzamt1Y2VlanhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMzIwNDgsImV4cCI6MjA5MDcwODA0OH0.3Hhszztxhhl_X55rWIBGNoAIfxxu31N16-rv1wrruuc';
+const sb=supabase.createClient(SB_URL,SB_KEY);
+ 
+let lang=localStorage.getItem('lang')||'ru';
+let partner=null;
+ 
+const LEVEL_NAMES=['Start','Basic','Pro','VIP','Elite'];
+const LEVEL_PCT=[20,30,40,50,60];
+const LEVEL_ENTRY={ru:['Бесплатно','$80','$500','$5K','$10K'],en:['Free','$80','$500','$5K','$10K']};
+const LINE_PCT=[10,5,3,2];
+ 
+function t(ru,en){return lang==='ru'?ru:en;}
+ 
+function setLang(l){
+  lang=l;
+  localStorage.setItem('lang',l);
+  document.querySelectorAll('[data-ru]').forEach(el=>{
+    if(el.tagName==='INPUT'||el.tagName==='BUTTON') return;
+    el.textContent=el.dataset[l]||el.dataset.ru;
   });
-
-  if (pe) {
-    err.textContent = 'Ошибка создания профиля: ' + pe.message;
-    btn.disabled = false;
-    btn.textContent = 'Зарегистрироваться';
-    return;
-  }
-
-  await loadCabinet(data.user);
+  document.querySelectorAll('[data-ru-ph]').forEach(el=>{
+    el.placeholder=l==='en'?(el.dataset.enPh||el.dataset.ruPh):el.dataset.ruPh;
+  });
+  // update lang buttons
+  document.querySelectorAll('.lang a').forEach(a=>{
+    const isRu=a.textContent.includes('🇷🇺');
+    const isEn=a.textContent.includes('🇬🇧');
+    a.classList.toggle('active',(l==='ru'&&isRu)||(l==='en'&&isEn));
+  });
+  if(partner) refreshCabinetLang();
 }
-
-async function loadCabinet(user) {
-  showCabinet();
-  document.getElementById('cabinet-loading').style.display = 'block';
-  document.getElementById('cabinet-content').style.display = 'none';
-
-  const { data: partner } = await sb.from('partners').select('*').eq('email', user.email).single();
-  if (!partner) {
-    document.getElementById('cabinet-loading').textContent = 'Профиль партнёра не найден. Обратитесь к @app2cas';
-    return;
-  }
-
-  currentPartner = partner;
-
-  // Topbar
-  document.getElementById('topbar-code').textContent = partner.partner_code;
-
-  // Welcome
-  document.getElementById('welcome-name').textContent = 'Привет, ' + partner.name.split(' ')[0] + '!';
-  const lvl = partner.level || 0;
-  document.getElementById('welcome-level').textContent = 'Уровень: ' + LEVELS[lvl].name + ' · ' + LEVELS[lvl].pct + '% с обменов';
-
-  // Reflink
-  const reflink = 'https://app2.cash/?ref=' + partner.partner_code;
-  document.getElementById('reflink-url').textContent = reflink;
-
-  // Stats
-  document.getElementById('stat-balance').textContent = '$' + (partner.balance || 0).toFixed(2);
-  document.getElementById('stat-earned').textContent = '$' + (partner.total_earned || 0).toFixed(2);
-
-  // Network — count partners by line
-  const { data: allPartners } = await sb.from('partners').select('partner_code, referred_by');
-
-  function getLine(code, depth) {
-    if (depth > 4) return [];
-    const direct = (allPartners || []).filter(p => p.referred_by === code);
-    let all = [...direct];
-    for (const d of direct) all = all.concat(getLine(d.partner_code, depth + 1));
-    return all;
-  }
-
-  const myCode = partner.partner_code;
-  const line1 = (allPartners || []).filter(p => p.referred_by === myCode);
-  const line2 = line1.flatMap(p => (allPartners || []).filter(x => x.referred_by === p.partner_code));
-  const line3 = line2.flatMap(p => (allPartners || []).filter(x => x.referred_by === p.partner_code));
-  const line4 = line3.flatMap(p => (allPartners || []).filter(x => x.referred_by === p.partner_code));
-
-  const totalNet = line1.length + line2.length + line3.length + line4.length;
-  document.getElementById('stat-partners').textContent = totalNet;
-
-  // Commissions count
-  const { data: comms, count } = await sb.from('commissions').select('*', { count: 'exact' }).eq('partner_code', myCode).order('created_at', { ascending: false }).limit(10);
-  document.getElementById('stat-comms').textContent = count || 0;
-
-  // Levels
-  const levelsHTML = LEVELS.map((l, i) => `
-    <div class="level-item ${i === lvl ? 'current' : ''}">
+ 
+function refreshCabinetLang(){
+  const lvl=partner.level||0;
+  const name=partner.name.split(' ')[0];
+  document.getElementById('welcome-name').textContent=t(`Привет, ${name}!`,`Hello, ${name}!`);
+  document.getElementById('welcome-level').textContent=t(
+    `Уровень: ${LEVEL_NAMES[lvl]} · ${LEVEL_PCT[lvl]}% с обменов`,
+    `Level: ${LEVEL_NAMES[lvl]} · ${LEVEL_PCT[lvl]}% per exchange`
+  );
+  document.getElementById('logout-btn').textContent=t('Выйти','Logout');
+  const copyBtn=document.getElementById('copy-btn');
+  if(copyBtn&&!copyBtn.classList.contains('copied')) copyBtn.textContent=t('Копировать','Copy');
+  renderLevels(lvl);
+}
+ 
+function renderLevels(lvl){
+  document.getElementById('levels-row').innerHTML=LEVEL_NAMES.map((n,i)=>`
+    <div class="level-item ${i===lvl?'current':''}">
       <div class="level-num">LVL ${i}</div>
-      <div class="level-pct ${i === lvl ? 'active' : ''}">${l.pct}%</div>
-      <div class="level-desc">${l.name}<br>${l.entry}</div>
-    </div>
-  `).join('');
-  document.getElementById('levels-row').innerHTML = levelsHTML;
-
-  // Lines grid
-  const lines = [line1, line2, line3, line4];
-  const linesHTML = lines.map((l, i) => `
-    <div class="line-card">
-      <div class="line-num">Линия ${i + 1} · ${LINE_PCT[i]}%</div>
-      <div class="line-count">${l.length}</div>
-      <div class="line-earned">партнёров</div>
-    </div>
-  `).join('');
-  document.getElementById('lines-grid').innerHTML = linesHTML;
-
-  // Commissions table
-  let commsHTML = '';
-  if (!comms || comms.length === 0) {
-    commsHTML = '<div class="empty-state">Начислений пока нет. Приглашай партнёров!</div>';
-  } else {
-    commsHTML = `<table class="comm-table">
-      <thead><tr>
-        <th>Дата</th>
-        <th>От партнёра</th>
-        <th>Линия</th>
-        <th>Тип</th>
-        <th style="text-align:right">Сумма</th>
-      </tr></thead><tbody>` +
-      comms.map(c => `<tr>
-        <td>${new Date(c.created_at).toLocaleDateString('ru')}</td>
-        <td style="font-family:var(--mono);font-size:12px">${c.from_partner || '—'}</td>
-        <td><span class="badge-line">L${c.line}</span></td>
-        <td style="color:var(--muted);font-size:12px">${c.type === 'activation' ? 'Активация' : 'Обмен'}</td>
-        <td style="text-align:right"><span class="amount-pos">+$${parseFloat(c.amount || 0).toFixed(2)}</span></td>
-      </tr>`).join('') +
-      '</tbody></table>';
-  }
-  document.getElementById('comms-wrap').innerHTML = commsHTML;
-
-  document.getElementById('cabinet-loading').style.display = 'none';
-  document.getElementById('cabinet-content').style.display = 'block';
+      <div class="level-pct ${i===lvl?'active':''}">${LEVEL_PCT[i]}%</div>
+      <div class="level-name">${n}</div>
+      <div class="level-entry">${LEVEL_ENTRY[lang][i]}</div>
+    </div>`).join('');
 }
-
-function copyRefLink() {
-  if (!currentPartner) return;
-  const link = 'https://app2.cash/?ref=' + currentPartner.partner_code;
-  navigator.clipboard.writeText(link).then(() => {
-    const btn = document.getElementById('copy-btn');
-    btn.textContent = 'Скопировано!';
+ 
+function genCode(name){
+  return name.toUpperCase().replace(/[^A-ZА-Я0-9]/g,'').substring(0,4)+(Math.floor(Math.random()*900)+100);
+}
+ 
+function showLogin(){
+  document.getElementById('login-screen').style.display='block';
+  document.getElementById('register-screen').style.display='none';
+  document.getElementById('cabinet-screen').style.display='none';
+}
+function showRegister(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('register-screen').style.display='block';
+  document.getElementById('cabinet-screen').style.display='none';
+}
+function showCabinet(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('register-screen').style.display='none';
+  document.getElementById('cabinet-screen').style.display='block';
+}
+ 
+async function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pass=document.getElementById('login-password').value;
+  const btn=document.getElementById('login-btn');
+  const err=document.getElementById('login-error');
+  err.textContent='';
+  btn.disabled=true;
+  btn.textContent=t('Входим...','Signing in...');
+  const{data,error}=await sb.auth.signInWithPassword({email,password:pass});
+  if(error){
+    err.textContent=t('Неверный email или пароль','Invalid email or password');
+    btn.disabled=false;btn.textContent=t('Войти','Sign In');return;
+  }
+  await loadCabinet(data.user);
+}
+ 
+async function doRegister(){
+  const name=document.getElementById('reg-name').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const telegram=document.getElementById('reg-telegram').value.trim();
+  const ref=document.getElementById('reg-ref').value.trim().toUpperCase();
+  const pass=document.getElementById('reg-password').value;
+  const btn=document.getElementById('reg-btn');
+  const err=document.getElementById('reg-error');
+  err.textContent='';
+  if(!name||!email||!pass){err.textContent=t('Заполните все поля','Fill in all fields');return;}
+  if(pass.length<6){err.textContent=t('Пароль минимум 6 символов','Password min 6 chars');return;}
+  btn.disabled=true;btn.textContent=t('Регистрируем...','Registering...');
+  const{data,error}=await sb.auth.signUp({email,password:pass});
+  if(error){err.textContent=error.message;btn.disabled=false;btn.textContent=t('Зарегистрироваться','Register');return;}
+  await sb.from('partners').insert({
+    name,email,telegram,partner_code:genCode(name),
+    referred_by:ref||null,level:0,balance:0,total_volume:0,total_earned:0,status:'active'
+  });
+  await loadCabinet(data.user);
+}
+ 
+async function loadCabinet(user){
+  showCabinet();
+  document.getElementById('cabinet-loading').style.display='block';
+  document.getElementById('cabinet-content').style.display='none';
+  document.getElementById('cabinet-loading').textContent=t('Загружаем данные...','Loading...');
+ 
+  const{data:p}=await sb.from('partners').select('*').eq('email',user.email).single();
+  if(!p){document.getElementById('cabinet-loading').textContent=t('Профиль не найден. Напишите @app2cas','Profile not found. Contact @app2cas');return;}
+  partner=p;
+ 
+  document.getElementById('topbar-code').textContent=p.partner_code;
+  document.getElementById('reflink-url').textContent='https://app2.cash/?ref='+p.partner_code;
+  document.getElementById('stat-balance').textContent='$'+(p.balance||0).toFixed(2);
+  document.getElementById('stat-earned').textContent='$'+(p.total_earned||0).toFixed(2);
+ 
+  setLang(lang);
+ 
+  // Network
+  const{data:allP}=await sb.from('partners').select('partner_code,referred_by');
+  const mc=p.partner_code;
+  const l1=(allP||[]).filter(x=>x.referred_by===mc);
+  const l2=l1.flatMap(x=>(allP||[]).filter(y=>y.referred_by===x.partner_code));
+  const l3=l2.flatMap(x=>(allP||[]).filter(y=>y.referred_by===x.partner_code));
+  const l4=l3.flatMap(x=>(allP||[]).filter(y=>y.referred_by===x.partner_code));
+  document.getElementById('stat-partners').textContent=l1.length+l2.length+l3.length+l4.length;
+ 
+  document.getElementById('lines-grid').innerHTML=[l1,l2,l3,l4].map((l,i)=>`
+    <div class="line-card">
+      <div class="line-label">${t('Линия','Line')} ${i+1}</div>
+      <div class="line-count">${l.length}</div>
+      <div class="line-pct">${LINE_PCT[i]}%</div>
+    </div>`).join('');
+ 
+  // Commissions
+  const{data:comms,count}=await sb.from('commissions').select('*',{count:'exact'})
+    .eq('partner_code',mc).order('created_at',{ascending:false}).limit(10);
+  document.getElementById('stat-comms').textContent=count||0;
+ 
+  if(!comms||comms.length===0){
+    document.getElementById('comms-wrap').innerHTML=`<div class="empty-state">${t('Начислений пока нет. Приглашай партнёров!','No commissions yet. Invite partners!')}</div>`;
+  } else {
+    const hd=t(['Дата','От','Линия','Тип','Сумма'],['Date','From','Line','Type','Amount']);
+    document.getElementById('comms-wrap').innerHTML=`<table class="comm-table"><thead><tr>${hd.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>`+
+      comms.map(c=>`<tr>
+        <td>${new Date(c.created_at).toLocaleDateString()}</td>
+        <td style="font-size:12px">${c.from_partner||'—'}</td>
+        <td><span class="badge-line">L${c.line}</span></td>
+        <td style="color:var(--muted);font-size:12px">${c.type==='activation'?t('Активация','Activation'):t('Обмен','Exchange')}</td>
+        <td style="text-align:right"><span class="amount-pos">+$${parseFloat(c.amount||0).toFixed(2)}</span></td>
+      </tr>`).join('')+'</tbody></table>';
+  }
+ 
+  document.getElementById('cabinet-loading').style.display='none';
+  document.getElementById('cabinet-content').style.display='block';
+}
+ 
+function copyRefLink(){
+  if(!partner)return;
+  const link='https://app2.cash/?ref='+partner.partner_code;
+  navigator.clipboard.writeText(link).then(()=>{
+    const btn=document.getElementById('copy-btn');
+    btn.textContent=t('Скопировано!','Copied!');
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Копировать'; btn.classList.remove('copied'); }, 2000);
-    const toast = document.getElementById('toast');
+    setTimeout(()=>{btn.textContent=t('Копировать','Copy');btn.classList.remove('copied');},2000);
+    const toast=document.getElementById('toast');
+    toast.textContent=t('Ссылка скопирована!','Link copied!');
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2000);
+    setTimeout(()=>toast.classList.remove('show'),2000);
   });
 }
-
-async function doLogout() {
-  await sb.auth.signOut();
-  currentPartner = null;
-  showLogin();
+ 
+async function doLogout(){
+  await sb.auth.signOut();partner=null;showLogin();
 }
-
-// Auto-login if session exists
-sb.auth.getSession().then(({ data }) => {
-  if (data.session) {
-    loadCabinet(data.session.user);
-  }
+ 
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  if(document.getElementById('login-screen').style.display!=='none')doLogin();
+  if(document.getElementById('register-screen').style.display!=='none')doRegister();
 });
-
-// Enter key support
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter') {
-    if (document.getElementById('login-screen').style.display !== 'none') doLogin();
-    if (document.getElementById('register-screen').style.display !== 'none') doRegister();
-  }
-});
+ 
+setLang(lang);
+sb.auth.getSession().then(({data})=>{if(data.session)loadCabinet(data.session.user);});
 </script>
 </body>
 </html>
