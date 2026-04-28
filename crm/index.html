@@ -33,6 +33,7 @@
   </div>
   <div class="mobile-nav">
     <button class="mob-btn active" onclick="switchPage('dashboard',this)">📊 Дашборд</button>
+    <button class="mob-btn" onclick="switchPage('exchanges',this)">💱 Обмены</button>
     <button class="mob-btn" onclick="switchPage('partners',this)">👥 Партнёры</button>
     <button class="mob-btn" onclick="switchPage('leads',this)">🎯 Лиды</button>
     <button class="mob-btn" onclick="switchPage('commissions',this)">💰 Комиссии</button>
@@ -40,6 +41,7 @@
   <div class="layout">
     <div class="sidebar">
       <div class="nav-item active" onclick="switchPage('dashboard',this)"><span>📊</span>Дашборд</div>
+      <div class="nav-item" onclick="switchPage('exchanges',this)"><span>💱</span>Обмены</div>
       <div class="nav-item" onclick="switchPage('partners',this)"><span>👥</span>Партнёры</div>
       <div class="nav-item" onclick="switchPage('leads',this)"><span>🎯</span>Лиды</div>
       <div class="nav-item" onclick="switchPage('commissions',this)"><span>💰</span>Комиссии</div>
@@ -50,17 +52,18 @@
       <div class="page active" id="page-dashboard">
         <div class="stats-row">
           <div class="stat gold"><div class="stat-label">Партнёров</div><div class="stat-val gold" id="d-partners">—</div></div>
-          <div class="stat"><div class="stat-label">Всего лидов</div><div class="stat-val" id="d-leads">—</div></div>
+          <div class="stat"><div class="stat-label">Обменов</div><div class="stat-val" id="d-exchanges">—</div></div>
+          <div class="stat gold"><div class="stat-label">Оборот</div><div class="stat-val gold" id="d-volume">—</div></div>
+          <div class="stat"><div class="stat-label">Лидов</div><div class="stat-val" id="d-leads">—</div></div>
           <div class="stat"><div class="stat-label">Новых лидов</div><div class="stat-val" id="d-new">—</div></div>
           <div class="stat gold"><div class="stat-label">Выплачено</div><div class="stat-val gold" id="d-paid">—</div></div>
-          <div class="stat"><div class="stat-label">Оборот</div><div class="stat-val" id="d-volume">—</div></div>
         </div>
         <div class="dash-grid">
           <div>
-            <div class="sec-title" style="margin-bottom:12px">Последние лиды</div>
+            <div class="sec-title" style="margin-bottom:12px">Последние обмены</div>
             <div class="tbl-wrap"><table>
-              <thead><tr><th>Имя</th><th>Сумма</th><th>Статус</th></tr></thead>
-              <tbody id="dash-leads-body"></tbody>
+              <thead><tr><th>Клиент</th><th>Отдаёт</th><th>Получает</th><th>Статус</th></tr></thead>
+              <tbody id="dash-exchanges-body"></tbody>
             </table></div>
           </div>
           <div>
@@ -71,6 +74,32 @@
             </table></div>
           </div>
         </div>
+      </div>
+
+      <!-- EXCHANGES -->
+      <div class="page" id="page-exchanges">
+        <div class="sec-header">
+          <div class="sec-title">Обмены</div>
+          <div class="sec-actions">
+            <select class="filter-sel" id="ex-filter" onchange="filterExchanges()">
+              <option value="">Все статусы</option>
+              <option value="pending">Ожидает</option>
+              <option value="processing">В процессе</option>
+              <option value="done">Выполнен</option>
+              <option value="cancelled">Отменён</option>
+            </select>
+            <input class="search-input" id="ex-search" placeholder="🔍 Клиент / партнёр..." oninput="filterExchanges()">
+            <button class="act-btn act-add" onclick="openAddExchange()">➕ Новый обмен</button>
+            <button class="act-btn act-csv" onclick="exportCSV('exchanges')">📤 Экспорт</button>
+          </div>
+        </div>
+        <div class="tbl-wrap"><table>
+          <thead><tr>
+            <th>Дата</th><th>Клиент</th><th>Отдаёт</th><th>Получает</th>
+            <th>Курс</th><th>Метод</th><th>Партнёр</th><th>Статус</th><th>Комиссия</th><th>Действия</th>
+          </tr></thead>
+          <tbody id="exchanges-body"></tbody>
+        </table></div>
       </div>
 
       <!-- PARTNERS -->
@@ -117,7 +146,7 @@
       <div class="page" id="page-commissions">
         <div class="sec-header">
           <div class="sec-title">Комиссии</div>
-          <button class="btn-gold sm" onclick="openModal('pay-modal')">+ Начислить</button>
+          <button class="btn-gold sm" onclick="openModal('pay-modal')">+ Начислить вручную</button>
         </div>
         <div class="tbl-wrap"><table>
           <thead><tr><th>Дата</th><th>Партнёр</th><th>От</th><th>Линия</th><th>Тип</th><th>Сумма</th></tr></thead>
@@ -129,10 +158,70 @@
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- ═══ MODALS ═══ -->
+
+<!-- Exchange modal -->
+<div class="modal-bg" id="exchange-modal">
+  <div class="modal">
+    <h3 id="ex-title">➕ Новый обмен</h3>
+    <input type="hidden" id="ex-id">
+    <div class="field"><label>Имя клиента *</label><input type="text" id="ex-client" placeholder="Иван Иванов"></div>
+    <div class="field"><label>Телефон клиента</label><input type="text" id="ex-phone" placeholder="+255756687444"></div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-bottom:14px;align-items:end;">
+      <div class="field" style="margin:0">
+        <label>Отдаёт</label>
+        <input type="number" id="ex-amount-send" placeholder="1000" min="0" step="0.01" oninput="calcRate()">
+      </div>
+      <div class="field" style="margin:0">
+        <label>&nbsp;</label>
+        <select id="ex-currency-send" style="border-radius:10px;background:var(--surface);border:1px solid var(--border);padding:11px 8px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;">
+          CURRENCIES_SEND
+        </select>
+      </div>
+      <div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-bottom:14px;align-items:end;">
+      <div class="field" style="margin:0">
+        <label>Получает</label>
+        <input type="number" id="ex-amount-receive" placeholder="970" min="0" step="0.01" oninput="calcRate()">
+      </div>
+      <div class="field" style="margin:0">
+        <label>&nbsp;</label>
+        <select id="ex-currency-receive" style="border-radius:10px;background:var(--surface);border:1px solid var(--border);padding:11px 8px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;">
+          CURRENCIES_RECV
+        </select>
+      </div>
+      <div></div>
+    </div>
+    <div class="field"><label>Курс (авто)</label><input type="number" id="ex-rate" placeholder="0.97" step="0.000001"></div>
+    <div class="field"><label>Метод получения</label>
+      <select id="ex-method">METHODS_OPTIONS</select>
+    </div>
+    <div class="field"><label>Партнёр (код)</label><input type="text" id="ex-partner" placeholder="MARAT123"></div>
+    <div class="field"><label>Статус</label>
+      <select id="ex-status">
+        <option value="pending">⏳ Ожидает</option>
+        <option value="processing">🔄 В процессе</option>
+        <option value="done">✅ Выполнен</option>
+        <option value="cancelled">❌ Отменён</option>
+      </select>
+    </div>
+    <div class="field"><label>Заметка</label><textarea id="ex-notes" maxlength="300" placeholder="Внутренняя заметка..."></textarea></div>
+    <div class="checkbox-field">
+      <input type="checkbox" id="ex-comm-paid">
+      <label for="ex-comm-paid">Комиссия партнёру выплачена</label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('exchange-modal')">Отмена</button>
+      <button class="btn-save" onclick="saveExchange()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Commission manual -->
 <div class="modal-bg" id="pay-modal">
   <div class="modal">
-    <h3>💰 Начислить комиссию</h3>
+    <h3>💰 Начислить комиссию вручную</h3>
     <div class="field"><label>Партнёр</label><select id="m-partner"></select></div>
     <div class="field"><label>Тип</label><select id="m-type"><option value="exchange">Обмен</option><option value="activation">Активация уровня</option></select></div>
     <div class="field"><label>Линия</label><select id="m-line"><option value="1">Линия 1 (10%)</option><option value="2">Линия 2 (5%)</option><option value="3">Линия 3 (3%)</option><option value="4">Линия 4 (2%)</option></select></div>
@@ -144,6 +233,7 @@
   </div>
 </div>
 
+<!-- Partner add/edit -->
 <div class="modal-bg" id="partner-modal">
   <div class="modal">
     <h3 id="pm-title">➕ Добавить партнёра</h3>
@@ -169,6 +259,7 @@
   </div>
 </div>
 
+<!-- Partner CSV -->
 <div class="modal-bg" id="partner-csv-modal">
   <div class="modal">
     <h3>📥 Импорт партнёров из CSV</h3>
@@ -182,6 +273,7 @@
   </div>
 </div>
 
+<!-- Lead add/edit -->
 <div class="modal-bg" id="lead-modal">
   <div class="modal">
     <h3 id="lm-title">➕ Добавить лид</h3>
@@ -205,6 +297,7 @@
   </div>
 </div>
 
+<!-- Lead CSV -->
 <div class="modal-bg" id="lead-csv-modal">
   <div class="modal">
     <h3>📥 Импорт лидов из CSV</h3>
@@ -220,14 +313,22 @@
 
 <div class="toast" id="toast"></div>
 
-<!-- JS modules — порядок важен! -->
 <script src="js/config.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/exchanges.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/partners.js"></script>
 <script src="js/leads.js"></script>
 <script src="js/commissions.js"></script>
 <script src="js/auth.js"></script>
 
+<script>
+// Populate currency selects
+const CURRENCIES = ['USD','USDT','RUB','TZS','KES','AED','EUR','GBP','CNY','TRY','UZS','IDR','THB','ZAR','BTC','ETH'];
+const METHODS = ['USDT TRC20','USDT ERC20','P2P','Cash','Bank Transfer','M-Pesa','МИР','VISA/MC','Wise','Revolut'];
+document.getElementById('ex-currency-send').innerHTML = CURRENCIES.map(c=>`<option value="${c}">${c}</option>`).join('');
+document.getElementById('ex-currency-receive').innerHTML = CURRENCIES.map(c=>`<option value="${c}" ${c==='USDT'?'selected':''}>${c}</option>`).join('');
+document.getElementById('ex-method').innerHTML = METHODS.map(m=>`<option value="${m}">${m}</option>`).join('');
+</script>
 </body>
 </html>
