@@ -8,20 +8,22 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{--gold:#FFD700;--gold2:#FFA500;--bg:#0b0b0f;--surface:#111;--surface2:#1a1a1a;--border:#2a2a2a;--text:#fff;--muted:#777;--red:#e55353;}
+:root{--gold:#FFD700;--gold2:#FFA500;--bg:#0b0b0f;--surface:#111;--surface2:#1a1a1a;--border:#2a2a2a;--text:#fff;--muted:#777;--red:#e55353;--green:#00c896;}
 body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;min-height:100vh;}
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
 .login-box{width:100%;max-width:360px;}
 .login-logo{font-size:22px;font-weight:700;color:var(--gold);text-align:center;margin-bottom:8px;}
 .login-sub{font-size:13px;color:var(--muted);text-align:center;margin-bottom:28px;}
+.err{font-size:12px;color:var(--red);text-align:center;margin-top:10px;min-height:18px;}
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
 .field input,.field select,.field textarea{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:14px;outline:none;transition:.2s;}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);}
-.field textarea{resize:vertical;min-height:80px;}
-.btn-gold{display:block;width:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#000;padding:13px;border-radius:12px;font-weight:700;font-size:14px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;}
+.field textarea{resize:vertical;min-height:80px;max-height:120px;}
+.field input[type=file]{padding:8px 14px;font-size:13px;cursor:pointer;}
+.btn-gold{display:block;width:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#000;padding:13px;border-radius:12px;font-weight:700;font-size:14px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;transition:.2s;text-align:center;}
 .btn-gold:hover{box-shadow:0 4px 12px rgba(255,215,0,.4);}
-.err{font-size:12px;color:var(--red);text-align:center;margin-top:10px;}
+.btn-gold.sm{padding:8px 14px;font-size:12px;width:auto;display:inline-block;border-radius:9px;}
 #crm{display:none;}
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;}
 .topbar-logo{font-size:16px;font-weight:700;color:var(--gold);}
@@ -39,9 +41,12 @@ body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;
 .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
 .stat-val{font-size:24px;font-weight:700;}
 .stat-val.gold{color:var(--gold);}
-.sec-title{font-size:16px;font-weight:700;margin-bottom:14px;}
-.search-input{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;width:200px;}
+.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
+.sec-title{font-size:16px;font-weight:700;}
+.sec-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.search-input{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;width:180px;}
 .search-input:focus{border-color:var(--gold);}
+.filter-sel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;}
 .tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:13px;}
 thead th{background:var(--surface);padding:10px 14px;text-align:left;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap;}
@@ -54,36 +59,43 @@ tbody td{padding:10px 14px;vertical-align:middle;}
 .badge-work{background:rgba(255,215,0,.15);color:var(--gold);}
 .badge-done{background:rgba(100,100,100,.2);color:var(--muted);}
 .badge-level{background:var(--surface2);color:var(--gold);border:1px solid var(--border);}
-.actions{display:flex;gap:6px;flex-wrap:wrap;}
-.act-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:5px 10px;border-radius:7px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;text-decoration:none;transition:.2s;white-space:nowrap;}
+.actions{display:flex;gap:5px;flex-wrap:wrap;}
+.act-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:5px 9px;border-radius:7px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;text-decoration:none;transition:.2s;white-space:nowrap;}
 .act-wa{background:#25D366;color:#fff;}
 .act-tg{background:#229ED9;color:#fff;}
 .act-email{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
 .act-pay{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
 .act-edit{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
-.act-btn:hover{filter:brightness(1.15);}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+.act-csv{background:rgba(0,200,150,.1);color:var(--green);border:1px solid rgba(0,200,150,.3);}
+.act-add{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.3);}
+.act-btn:hover{filter:brightness(1.2);}
+.notes-pill{font-size:11px;color:var(--muted);font-style:italic;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
 .modal-bg.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:440px;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;}
 .modal h3{font-size:16px;margin-bottom:16px;color:var(--gold);}
 .modal-actions{display:flex;gap:10px;margin-top:16px;}
 .btn-cancel{flex:1;background:var(--surface2);color:var(--muted);border:1px solid var(--border);border-radius:10px;padding:11px;font-family:'Montserrat',sans-serif;font-size:13px;cursor:pointer;}
 .btn-save{flex:1;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:10px;padding:11px;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+.csv-hint{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.7;background:var(--surface2);padding:10px 12px;border-radius:8px;}
+.csv-hint code{color:var(--gold);}
+.progress-bar{background:var(--surface2);border-radius:6px;height:6px;margin-top:10px;overflow:hidden;display:none;}
+.progress-fill{background:var(--gold);height:100%;width:0%;transition:width .3s;}
 .page{display:none;}
 .page.active{display:block;}
 .empty{text-align:center;padding:30px;color:var(--muted);font-size:13px;}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--gold);color:#000;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:300;}
-.toast.show{opacity:1;}
 .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;}
-.notes-pill{font-size:11px;color:var(--muted);font-style:italic;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-@media(max-width:700px){.sidebar{display:none;}.mobile-nav{display:flex!important;}.dash-grid{grid-template-columns:1fr;}.main{padding:14px;}}
+.toast{position:fixed;bottom:24px;right:24px;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:300;}
+.toast.show{opacity:1;}
 .mobile-nav{display:none;overflow-x:auto;gap:8px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--border);}
 .mob-btn{flex-shrink:0;font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);cursor:pointer;font-family:'Montserrat',sans-serif;}
 .mob-btn.active{border-color:var(--gold);color:var(--gold);}
+@media(max-width:700px){.sidebar{display:none;}.mobile-nav{display:flex;}.dash-grid{grid-template-columns:1fr;}.main{padding:14px;}.search-input{width:140px;}}
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">app2.cash CRM</div>
@@ -95,6 +107,7 @@ tbody td{padding:10px 14px;vertical-align:middle;}
   </div>
 </div>
 
+<!-- CRM -->
 <div id="crm">
   <div class="topbar">
     <div class="topbar-logo">app2.cash CRM</div>
@@ -118,6 +131,7 @@ tbody td{padding:10px 14px;vertical-align:middle;}
     </div>
     <div class="main">
 
+      <!-- DASHBOARD -->
       <div class="page active" id="page-dashboard">
         <div class="stats-row">
           <div class="stat gold"><div class="stat-label">Партнёров</div><div class="stat-val gold" id="d-partners">—</div></div>
@@ -128,14 +142,14 @@ tbody td{padding:10px 14px;vertical-align:middle;}
         </div>
         <div class="dash-grid">
           <div>
-            <div class="sec-title">Последние лиды</div>
+            <div class="sec-title" style="margin-bottom:12px">Последние лиды</div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>Имя</th><th>Сумма</th><th>Статус</th></tr></thead>
               <tbody id="dash-leads-body"></tbody>
             </table></div>
           </div>
           <div>
-            <div class="sec-title">Топ партнёры</div>
+            <div class="sec-title" style="margin-bottom:12px">Топ партнёры</div>
             <div class="tbl-wrap"><table>
               <thead><tr><th>Имя</th><th>Баланс</th><th>LVL</th></tr></thead>
               <tbody id="dash-partners-body"></tbody>
@@ -144,28 +158,38 @@ tbody td{padding:10px 14px;vertical-align:middle;}
         </div>
       </div>
 
+      <!-- PARTNERS -->
       <div class="page" id="page-partners">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
-          <div class="sec-title" style="margin:0">Партнёры</div>
-          <input class="search-input" id="partners-search" placeholder="🔍 Поиск..." oninput="filterPartners()">
+        <div class="sec-header">
+          <div class="sec-title">Партнёры</div>
+          <div class="sec-actions">
+            <input class="search-input" id="partners-search" placeholder="🔍 Поиск..." oninput="filterPartners()">
+            <button class="act-btn act-add" onclick="openAddPartner()">➕ Добавить</button>
+            <button class="act-btn act-csv" onclick="openModal('partner-csv-modal')">📥 CSV импорт</button>
+            <button class="act-btn act-csv" onclick="exportCSV('partners')">📤 Экспорт</button>
+          </div>
         </div>
         <div class="tbl-wrap"><table>
-          <thead><tr><th>Имя</th><th>Код</th><th>Telegram</th><th>Уровень</th><th>Баланс</th><th>Заметка</th><th>Действия</th></tr></thead>
+          <thead><tr><th>Имя</th><th>Код</th><th>Telegram</th><th>Email</th><th>Уровень</th><th>Баланс</th><th>Приглашён от</th><th>Заметка</th><th>Действия</th></tr></thead>
           <tbody id="partners-body"></tbody>
         </table></div>
       </div>
 
+      <!-- LEADS -->
       <div class="page" id="page-leads">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
-          <div class="sec-title" style="margin:0">Лиды</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <select id="leads-filter" onchange="filterLeads()" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Montserrat',sans-serif;font-size:13px;outline:none;">
-              <option value="">Все</option>
+        <div class="sec-header">
+          <div class="sec-title">Лиды</div>
+          <div class="sec-actions">
+            <select class="filter-sel" id="leads-filter" onchange="filterLeads()">
+              <option value="">Все статусы</option>
               <option value="new">Новые</option>
               <option value="in_progress">В работе</option>
               <option value="done">Закрыты</option>
             </select>
             <input class="search-input" id="leads-search" placeholder="🔍 Поиск..." oninput="filterLeads()">
+            <button class="act-btn act-add" onclick="openAddLead()">➕ Добавить</button>
+            <button class="act-btn act-csv" onclick="openModal('lead-csv-modal')">📥 CSV импорт</button>
+            <button class="act-btn act-csv" onclick="exportCSV('leads')">📤 Экспорт</button>
           </div>
         </div>
         <div class="tbl-wrap"><table>
@@ -174,10 +198,11 @@ tbody td{padding:10px 14px;vertical-align:middle;}
         </table></div>
       </div>
 
+      <!-- COMMISSIONS -->
       <div class="page" id="page-commissions">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-          <div class="sec-title" style="margin:0">Комиссии</div>
-          <button class="btn-gold" style="width:auto;padding:9px 18px;font-size:13px;" onclick="openPayModal()">+ Начислить</button>
+        <div class="sec-header">
+          <div class="sec-title">Комиссии</div>
+          <button class="btn-gold sm" onclick="openModal('pay-modal')">+ Начислить</button>
         </div>
         <div class="tbl-wrap"><table>
           <thead><tr><th>Дата</th><th>Партнёр</th><th>От</th><th>Линия</th><th>Тип</th><th>Сумма</th></tr></thead>
@@ -189,7 +214,9 @@ tbody td{padding:10px 14px;vertical-align:middle;}
   </div>
 </div>
 
-<!-- COMMISSION MODAL -->
+<!-- ═══ MODALS ═══ -->
+
+<!-- Commission -->
 <div class="modal-bg" id="pay-modal">
   <div class="modal">
     <h3>💰 Начислить комиссию</h3>
@@ -198,9 +225,9 @@ tbody td{padding:10px 14px;vertical-align:middle;}
       <select id="m-type"><option value="exchange">Обмен</option><option value="activation">Активация уровня</option></select>
     </div>
     <div class="field"><label>Линия</label>
-      <select id="m-line"><option value="1">Линия 1</option><option value="2">Линия 2</option><option value="3">Линия 3</option><option value="4">Линия 4</option></select>
+      <select id="m-line"><option value="1">Линия 1 (10%)</option><option value="2">Линия 2 (5%)</option><option value="3">Линия 3 (3%)</option><option value="4">Линия 4 (2%)</option></select>
     </div>
-    <div class="field"><label>Сумма ($)</label><input type="number" id="m-amount" placeholder="25.00" min="0" step="0.01"></div>
+    <div class="field"><label>Сумма ($)</label><input type="number" id="m-amount" placeholder="25.00" min="0.01" step="0.01"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('pay-modal')">Отмена</button>
       <button class="btn-save" onclick="saveCommission()">Начислить</button>
@@ -208,14 +235,15 @@ tbody td{padding:10px 14px;vertical-align:middle;}
   </div>
 </div>
 
-<!-- PARTNER EDIT MODAL -->
+<!-- Partner add/edit -->
 <div class="modal-bg" id="partner-modal">
   <div class="modal">
-    <h3 id="partner-modal-title">✏️ Редактировать партнёра</h3>
+    <h3 id="pm-title">➕ Добавить партнёра</h3>
     <input type="hidden" id="pm-id">
-    <div class="field"><label>Имя</label><input type="text" id="pm-name"></div>
-    <div class="field"><label>Email</label><input type="email" id="pm-email"></div>
+    <div class="field"><label>Имя *</label><input type="text" id="pm-name" placeholder="Иван Иванов"></div>
+    <div class="field"><label>Email</label><input type="email" id="pm-email" placeholder="ivan@example.com"></div>
     <div class="field"><label>Telegram</label><input type="text" id="pm-telegram" placeholder="@username"></div>
+    <div class="field"><label>Реферальный код пригласившего</label><input type="text" id="pm-ref" placeholder="например: MARAT123"></div>
     <div class="field"><label>Уровень</label>
       <select id="pm-level">
         <option value="0">LVL 0 — Start (20%)</option>
@@ -226,7 +254,7 @@ tbody td{padding:10px 14px;vertical-align:middle;}
       </select>
     </div>
     <div class="field"><label>Заметка (до 300 символов)</label>
-      <textarea id="pm-notes" maxlength="300" placeholder="Внутренняя заметка о партнёре..."></textarea>
+      <textarea id="pm-notes" maxlength="300" placeholder="Внутренняя заметка..."></textarea>
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('partner-modal')">Отмена</button>
@@ -235,14 +263,37 @@ tbody td{padding:10px 14px;vertical-align:middle;}
   </div>
 </div>
 
-<!-- LEAD EDIT MODAL -->
+<!-- Partner CSV import -->
+<div class="modal-bg" id="partner-csv-modal">
+  <div class="modal">
+    <h3>📥 Импорт партнёров из CSV</h3>
+    <div class="field"><label>Файл CSV</label><input type="file" id="partners-csv-file" accept=".csv"></div>
+    <div class="csv-hint">
+      Колонки (первая строка — заголовки):<br>
+      <code>name</code> — имя (обязательно)<br>
+      <code>email</code> — электронная почта<br>
+      <code>telegram</code> — телеграм (@username)<br>
+      <code>referred_by</code> — код пригласившего<br>
+      <code>level</code> — уровень 0–4<br>
+      <code>notes</code> — заметка
+    </div>
+    <div class="progress-bar" id="p-csv-bar"><div class="progress-fill" id="p-csv-fill"></div></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('partner-csv-modal')">Отмена</button>
+      <button class="btn-save" onclick="importPartnersCSV()">Импортировать</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lead add/edit -->
 <div class="modal-bg" id="lead-modal">
   <div class="modal">
-    <h3>✏️ Редактировать лид</h3>
+    <h3 id="lm-title">➕ Добавить лид</h3>
     <input type="hidden" id="lm-id">
-    <div class="field"><label>Имя</label><input type="text" id="lm-name"></div>
-    <div class="field"><label>Телефон</label><input type="text" id="lm-phone"></div>
-    <div class="field"><label>Сумма ($)</label><input type="number" id="lm-amount" step="0.01"></div>
+    <div class="field"><label>Имя *</label><input type="text" id="lm-name" placeholder="Имя клиента"></div>
+    <div class="field"><label>Телефон</label><input type="text" id="lm-phone" placeholder="+255756687444"></div>
+    <div class="field"><label>Сумма ($)</label><input type="number" id="lm-amount" placeholder="500" step="0.01" min="0"></div>
+    <div class="field"><label>Партнёр (код)</label><input type="text" id="lm-partner" placeholder="MARAT123"></div>
     <div class="field"><label>Статус</label>
       <select id="lm-status">
         <option value="new">🟢 Новый</option>
@@ -260,6 +311,28 @@ tbody td{padding:10px 14px;vertical-align:middle;}
   </div>
 </div>
 
+<!-- Lead CSV import -->
+<div class="modal-bg" id="lead-csv-modal">
+  <div class="modal">
+    <h3>📥 Импорт лидов из CSV</h3>
+    <div class="field"><label>Файл CSV</label><input type="file" id="leads-csv-file" accept=".csv"></div>
+    <div class="csv-hint">
+      Колонки (первая строка — заголовки):<br>
+      <code>name</code> — имя (обязательно)<br>
+      <code>phone</code> — телефон<br>
+      <code>amount</code> — сумма в $<br>
+      <code>partner_code</code> — код партнёра<br>
+      <code>status</code> — new / in_progress / done<br>
+      <code>notes</code> — заметка
+    </div>
+    <div class="progress-bar" id="l-csv-bar"><div class="progress-fill" id="l-csv-fill"></div></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('lead-csv-modal')">Отмена</button>
+      <button class="btn-save" onclick="importLeadsCSV()">Импортировать</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -271,12 +344,38 @@ const ADMIN_EMAILS=['maratyarkov@gmail.com','admin@app2.cash'];
 const LEVEL_NAMES=['Start','Basic','Pro','VIP','Elite'];
 let allPartners=[], allLeads=[], allComms=[];
 
+// ── UTILS ──────────────────────────────────────────────
+function showToast(msg,isErr=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.background=isErr?'var(--red)':'var(--gold)';
+  t.style.color=isErr?'#fff':'#000';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 function statusBadge(s){
   if(!s||s==='new') return '<span class="badge badge-new">Новый</span>';
   if(s==='in_progress') return '<span class="badge badge-work">В работе</span>';
   return '<span class="badge badge-done">Закрыт</span>';
 }
+function genCode(name){
+  return name.toUpperCase().replace(/[^A-ZА-ЯЁ0-9]/gi,'').substring(0,4).toUpperCase()+(Math.floor(Math.random()*900)+100);
+}
+function parseCSV(text){
+  const lines=text.trim().split(/\r?\n/);
+  if(lines.length<2) return [];
+  const headers=lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,'').toLowerCase());
+  return lines.slice(1).filter(l=>l.trim()).map(line=>{
+    const vals=line.match(/(".*?"|[^,]+|(?<=,)(?=,)|(?<=,)$|^(?=,))/g)||[];
+    const obj={};
+    headers.forEach((h,i)=>obj[h]=(vals[i]||'').replace(/^"|"$/g,'').trim());
+    return obj;
+  });
+}
 
+// ── AUTH ───────────────────────────────────────────────
 async function doLogin(){
   const email=document.getElementById('a-email').value.trim();
   const pass=document.getElementById('a-pass').value;
@@ -287,13 +386,11 @@ async function doLogin(){
   if(error){err.textContent='Неверный email или пароль';return;}
   await initCRM();
 }
-
 async function doLogout(){
   await sb.auth.signOut();
   document.getElementById('login-screen').style.display='flex';
   document.getElementById('crm').style.display='none';
 }
-
 async function initCRM(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('crm').style.display='block';
@@ -301,90 +398,158 @@ async function initCRM(){
   renderDashboard();
 }
 
+// ── LOAD ───────────────────────────────────────────────
 async function loadPartners(){
   const{data,error}=await sb.from('partners').select('*').order('id',{ascending:false});
-  if(error){console.error('partners error:',error);return;}
+  if(error){console.error(error);return;}
   allPartners=data||[];
   renderPartners();
   const sel=document.getElementById('m-partner');
   sel.innerHTML=allPartners.map(p=>`<option value="${p.partner_code}">${p.name} (${p.partner_code})</option>`).join('');
 }
-
 async function loadLeads(){
   const{data,error}=await sb.from('leads').select('*').order('created_at',{ascending:false});
-  if(error){console.error('leads error:',error);return;}
+  if(error){console.error(error);return;}
   allLeads=data||[];
   renderLeads();
 }
-
 async function loadComms(){
-  const{data,error}=await sb.from('commissions').select('*').order('created_at',{ascending:false}).limit(100);
-  if(error){console.error('comms error:',error);return;}
+  const{data,error}=await sb.from('commissions').select('*').order('created_at',{ascending:false}).limit(200);
+  if(error){console.error(error);return;}
   allComms=data||[];
   renderComms();
 }
 
+// ── DASHBOARD ─────────────────────────────────────────
 function renderDashboard(){
   document.getElementById('d-partners').textContent=allPartners.length;
   document.getElementById('d-leads').textContent=allLeads.length;
   document.getElementById('d-new').textContent=allLeads.filter(l=>!l.status||l.status==='new').length;
   document.getElementById('d-paid').textContent='$'+allComms.reduce((s,c)=>s+parseFloat(c.amount||0),0).toFixed(2);
   document.getElementById('d-volume').textContent='$'+allLeads.reduce((s,l)=>s+parseFloat(l.amount||0),0).toFixed(0);
-  document.getElementById('dash-leads-body').innerHTML=allLeads.slice(0,5).map(l=>`<tr><td>${l.name||'—'}</td><td style="color:var(--gold)">$${parseFloat(l.amount||0).toFixed(0)}</td><td>${statusBadge(l.status)}</td></tr>`).join('')||'<tr><td colspan="3" class="empty">Нет лидов</td></tr>';
-  document.getElementById('dash-partners-body').innerHTML=[...allPartners].sort((a,b)=>(b.balance||0)-(a.balance||0)).slice(0,5).map(p=>`<tr><td>${p.name}</td><td style="color:var(--gold)">$${parseFloat(p.balance||0).toFixed(2)}</td><td><span class="badge badge-level">LVL${p.level||0}</span></td></tr>`).join('')||'<tr><td colspan="3" class="empty">Нет партнёров</td></tr>';
+  document.getElementById('dash-leads-body').innerHTML=
+    allLeads.slice(0,6).map(l=>`<tr><td>${l.name||'—'}</td><td style="color:var(--gold)">$${parseFloat(l.amount||0).toFixed(0)}</td><td>${statusBadge(l.status)}</td></tr>`).join('')||
+    '<tr><td colspan="3" class="empty">Нет лидов</td></tr>';
+  document.getElementById('dash-partners-body').innerHTML=
+    [...allPartners].sort((a,b)=>(b.balance||0)-(a.balance||0)).slice(0,6).map(p=>`<tr><td>${p.name}</td><td style="color:var(--gold)">$${parseFloat(p.balance||0).toFixed(2)}</td><td><span class="badge badge-level">LVL${p.level||0}</span></td></tr>`).join('')||
+    '<tr><td colspan="3" class="empty">Нет партнёров</td></tr>';
 }
 
+// ── PARTNERS ──────────────────────────────────────────
 function renderPartners(data){
   const list=data||allPartners;
   const body=document.getElementById('partners-body');
-  if(!list.length){body.innerHTML='<tr><td colspan="7" class="empty">Нет партнёров</td></tr>';return;}
+  if(!list.length){body.innerHTML='<tr><td colspan="9" class="empty">Нет партнёров</td></tr>';return;}
   body.innerHTML=list.map(p=>`<tr>
     <td><b>${p.name}</b></td>
     <td><span style="color:var(--gold);font-size:12px;font-weight:700">${p.partner_code}</span></td>
     <td style="font-size:12px">${p.telegram||'—'}</td>
+    <td style="font-size:12px">${p.email||'—'}</td>
     <td><span class="badge badge-level">${LEVEL_NAMES[p.level||0]}</span></td>
     <td style="color:var(--gold);font-weight:700">$${parseFloat(p.balance||0).toFixed(2)}</td>
-    <td><span class="notes-pill" title="${p.notes||''}">${p.notes||'—'}</span></td>
+    <td style="font-size:12px;color:var(--muted)">${p.referred_by||'—'}</td>
+    <td><span class="notes-pill" title="${(p.notes||'').replace(/"/g,'&quot;')}">${p.notes||'—'}</span></td>
     <td><div class="actions">
       ${p.telegram?`<a class="act-btn act-tg" href="https://t.me/${p.telegram.replace('@','')}" target="_blank">✈ TG</a>`:''}
       ${p.email?`<a class="act-btn act-email" href="mailto:${p.email}">✉</a>`:''}
       <button class="act-btn act-pay" onclick="openPayModalFor('${p.partner_code}')">$ Начислить</button>
-      <button class="act-btn act-edit" onclick="openPartnerModal(${p.id})">✏️ Изменить</button>
+      <button class="act-btn act-edit" onclick="openEditPartner(${p.id})">✏️</button>
     </div></td>
   </tr>`).join('');
 }
-
 function filterPartners(){
   const q=document.getElementById('partners-search').value.toLowerCase();
-  renderPartners(allPartners.filter(p=>(p.name||'').toLowerCase().includes(q)||(p.partner_code||'').toLowerCase().includes(q)||(p.telegram||'').toLowerCase().includes(q)||(p.email||'').toLowerCase().includes(q)));
+  renderPartners(allPartners.filter(p=>
+    (p.name||'').toLowerCase().includes(q)||
+    (p.partner_code||'').toLowerCase().includes(q)||
+    (p.telegram||'').toLowerCase().includes(q)||
+    (p.email||'').toLowerCase().includes(q)
+  ));
 }
-
-function openPartnerModal(id){
+function openAddPartner(){
+  document.getElementById('pm-id').value='';
+  document.getElementById('pm-title').textContent='➕ Добавить партнёра';
+  document.getElementById('pm-name').value='';
+  document.getElementById('pm-email').value='';
+  document.getElementById('pm-telegram').value='';
+  document.getElementById('pm-ref').value='';
+  document.getElementById('pm-level').value='0';
+  document.getElementById('pm-notes').value='';
+  openModal('partner-modal');
+}
+function openEditPartner(id){
   const p=allPartners.find(x=>x.id===id);
-  if(!p)return;
+  if(!p) return;
   document.getElementById('pm-id').value=p.id;
+  document.getElementById('pm-title').textContent='✏️ Редактировать партнёра';
   document.getElementById('pm-name').value=p.name||'';
   document.getElementById('pm-email').value=p.email||'';
   document.getElementById('pm-telegram').value=p.telegram||'';
+  document.getElementById('pm-ref').value=p.referred_by||'';
   document.getElementById('pm-level').value=p.level||0;
   document.getElementById('pm-notes').value=p.notes||'';
   openModal('partner-modal');
 }
-
 async function savePartner(){
   const id=document.getElementById('pm-id').value;
   const name=document.getElementById('pm-name').value.trim();
   const email=document.getElementById('pm-email').value.trim();
   const telegram=document.getElementById('pm-telegram').value.trim();
+  const referred_by=document.getElementById('pm-ref').value.trim().toUpperCase()||null;
   const level=parseInt(document.getElementById('pm-level').value);
   const notes=document.getElementById('pm-notes').value.trim();
-  const{error}=await sb.from('partners').update({name,email,telegram,level,notes}).eq('id',id);
-  if(error){showToast('Ошибка: '+error.message);return;}
+  if(!name){showToast('Введите имя',true);return;}
+  if(id){
+    const{error}=await sb.from('partners').update({name,email,telegram,referred_by,level,notes}).eq('id',id);
+    if(error){showToast('Ошибка: '+error.message,true);return;}
+    showToast('Партнёр обновлён!');
+  } else {
+    const code=genCode(name);
+    const{error}=await sb.from('partners').insert({name,email,telegram,partner_code:code,referred_by,level,notes,balance:0,total_volume:0,total_earned:0,status:'active'});
+    if(error){showToast('Ошибка: '+error.message,true);return;}
+    showToast('Партнёр добавлен! Код: '+code);
+  }
   closeModal('partner-modal');
-  showToast('Партнёр обновлён!');
+  await loadPartners();
+  renderDashboard();
+}
+async function importPartnersCSV(){
+  const file=document.getElementById('partners-csv-file').files[0];
+  if(!file){showToast('Выберите файл',true);return;}
+  const text=await file.text();
+  const rows=parseCSV(text);
+  if(!rows.length){showToast('Файл пустой или неверный формат',true);return;}
+  const bar=document.getElementById('p-csv-bar');
+  const fill=document.getElementById('p-csv-fill');
+  bar.style.display='block';
+  let ok=0,fail=0;
+  for(let i=0;i<rows.length;i++){
+    const r=rows[i];
+    const name=r.name||r['имя']||'';
+    fill.style.width=Math.round((i+1)/rows.length*100)+'%';
+    if(!name){fail++;continue;}
+    const code=r.partner_code||r['код']||genCode(name);
+    const{error}=await sb.from('partners').insert({
+      name,
+      email:r.email||r['email']||'',
+      telegram:r.telegram||r['телеграм']||'',
+      partner_code:code,
+      referred_by:r.referred_by||r['реферал']||null,
+      level:parseInt(r.level||r['уровень']||'0')||0,
+      notes:r.notes||r['заметка']||'',
+      balance:0,total_volume:0,total_earned:0,status:'active'
+    });
+    error?fail++:ok++;
+  }
+  bar.style.display='none';
+  fill.style.width='0%';
+  document.getElementById('partners-csv-file').value='';
+  closeModal('partner-csv-modal');
+  showToast(`Импорт: ${ok} добавлено, ${fail} ошибок`);
   await loadPartners();renderDashboard();
 }
 
+// ── LEADS ─────────────────────────────────────────────
 function renderLeads(data){
   const list=data||allLeads;
   const body=document.getElementById('leads-body');
@@ -396,14 +561,13 @@ function renderLeads(data){
     <td style="color:var(--gold);font-weight:700">$${parseFloat(l.amount||0).toFixed(0)}</td>
     <td style="font-size:11px;color:var(--muted)">${l.partner_code||'—'}</td>
     <td>${statusBadge(l.status)}</td>
-    <td><span class="notes-pill" title="${l.notes||''}">${l.notes||'—'}</span></td>
+    <td><span class="notes-pill" title="${(l.notes||'').replace(/"/g,'&quot;')}">${l.notes||'—'}</span></td>
     <td><div class="actions">
       ${l.phone?`<a class="act-btn act-wa" href="https://wa.me/${l.phone.replace(/\D/g,'')}" target="_blank">💬 WA</a>`:''}
-      <button class="act-btn act-edit" onclick="openLeadModal('${l.id}')">✏️</button>
+      <button class="act-btn act-edit" onclick="openEditLead('${l.id}')">✏️</button>
     </div></td>
   </tr>`).join('');
 }
-
 function filterLeads(){
   const q=document.getElementById('leads-search').value.toLowerCase();
   const s=document.getElementById('leads-filter').value;
@@ -413,35 +577,87 @@ function filterLeads(){
     return mq&&ms;
   }));
 }
-
-function openLeadModal(id){
+function openAddLead(){
+  document.getElementById('lm-id').value='';
+  document.getElementById('lm-title').textContent='➕ Добавить лид';
+  document.getElementById('lm-name').value='';
+  document.getElementById('lm-phone').value='';
+  document.getElementById('lm-amount').value='';
+  document.getElementById('lm-partner').value='';
+  document.getElementById('lm-status').value='new';
+  document.getElementById('lm-notes').value='';
+  openModal('lead-modal');
+}
+function openEditLead(id){
   const l=allLeads.find(x=>x.id===id);
-  if(!l)return;
+  if(!l) return;
   document.getElementById('lm-id').value=l.id;
+  document.getElementById('lm-title').textContent='✏️ Редактировать лид';
   document.getElementById('lm-name').value=l.name||'';
   document.getElementById('lm-phone').value=l.phone||'';
   document.getElementById('lm-amount').value=l.amount||'';
+  document.getElementById('lm-partner').value=l.partner_code||'';
   document.getElementById('lm-status').value=l.status||'new';
   document.getElementById('lm-notes').value=l.notes||'';
   openModal('lead-modal');
 }
-
 async function saveLead(){
   const id=document.getElementById('lm-id').value;
   const name=document.getElementById('lm-name').value.trim();
   const phone=document.getElementById('lm-phone').value.trim();
   const amount=parseFloat(document.getElementById('lm-amount').value)||0;
+  const partner_code=document.getElementById('lm-partner').value.trim().toUpperCase()||null;
   const status=document.getElementById('lm-status').value;
   const notes=document.getElementById('lm-notes').value.trim();
-  const{error}=await sb.from('leads').update({name,phone,amount,status,notes}).eq('id',id);
-  if(error){showToast('Ошибка: '+error.message);return;}
-  const idx=allLeads.findIndex(x=>x.id===id);
-  if(idx>-1) allLeads[idx]={...allLeads[idx],name,phone,amount,status,notes};
+  if(!name){showToast('Введите имя',true);return;}
+  if(id){
+    const{error}=await sb.from('leads').update({name,phone,amount,partner_code,status,notes}).eq('id',id);
+    if(error){showToast('Ошибка: '+error.message,true);return;}
+    const idx=allLeads.findIndex(x=>x.id===id);
+    if(idx>-1) allLeads[idx]={...allLeads[idx],name,phone,amount,partner_code,status,notes};
+    showToast('Лид обновлён!');
+  } else {
+    const{error}=await sb.from('leads').insert({name,phone,amount,partner_code,status,notes});
+    if(error){showToast('Ошибка: '+error.message,true);return;}
+    showToast('Лид добавлен!');
+    await loadLeads();
+  }
   closeModal('lead-modal');
-  showToast('Лид обновлён!');
   renderLeads();renderDashboard();
 }
+async function importLeadsCSV(){
+  const file=document.getElementById('leads-csv-file').files[0];
+  if(!file){showToast('Выберите файл',true);return;}
+  const text=await file.text();
+  const rows=parseCSV(text);
+  if(!rows.length){showToast('Файл пустой или неверный формат',true);return;}
+  const bar=document.getElementById('l-csv-bar');
+  const fill=document.getElementById('l-csv-fill');
+  bar.style.display='block';
+  let ok=0,fail=0;
+  for(let i=0;i<rows.length;i++){
+    const r=rows[i];
+    const name=r.name||r['имя']||'';
+    fill.style.width=Math.round((i+1)/rows.length*100)+'%';
+    if(!name){fail++;continue;}
+    const{error}=await sb.from('leads').insert({
+      name,
+      phone:r.phone||r['телефон']||'',
+      amount:parseFloat(r.amount||r['сумма']||'0')||0,
+      partner_code:(r.partner_code||r['партнёр']||'').toUpperCase()||null,
+      status:r.status||r['статус']||'new',
+      notes:r.notes||r['заметка']||''
+    });
+    error?fail++:ok++;
+  }
+  bar.style.display='none';fill.style.width='0%';
+  document.getElementById('leads-csv-file').value='';
+  closeModal('lead-csv-modal');
+  showToast(`Импорт: ${ok} добавлено, ${fail} ошибок`);
+  await loadLeads();renderDashboard();
+}
 
+// ── COMMISSIONS ───────────────────────────────────────
 function renderComms(){
   const body=document.getElementById('comms-body');
   if(!allComms.length){body.innerHTML='<tr><td colspan="6" class="empty">Нет начислений</td></tr>';return;}
@@ -454,41 +670,28 @@ function renderComms(){
     <td style="color:var(--gold);font-weight:700">+$${parseFloat(c.amount||0).toFixed(2)}</td>
   </tr>`).join('');
 }
-
 function openPayModal(){openModal('pay-modal');}
 function openPayModalFor(code){
   const sel=document.getElementById('m-partner');
   for(let i=0;i<sel.options.length;i++) if(sel.options[i].value===code){sel.selectedIndex=i;break;}
   openModal('pay-modal');
 }
-
 async function saveCommission(){
   const partner_code=document.getElementById('m-partner').value;
   const type=document.getElementById('m-type').value;
   const line=parseInt(document.getElementById('m-line').value);
   const amount=parseFloat(document.getElementById('m-amount').value);
-  if(!partner_code){showToast('Выберите партнёра');return;}
-  if(!amount||isNaN(amount)||amount<=0){showToast('Введите корректную сумму');return;}
-
-  const{error:ce}=await sb.from('commissions').insert({
-    partner_code:partner_code,
-    type:type,
-    line:line,
-    amount:amount
-  });
-  if(ce){showToast('Ошибка записи: '+ce.message);console.error(ce);return;}
-
+  if(!partner_code){showToast('Выберите партнёра',true);return;}
+  if(!amount||isNaN(amount)||amount<=0){showToast('Введите корректную сумму',true);return;}
+  const{error:ce}=await sb.from('commissions').insert({partner_code,type,line,amount});
+  if(ce){showToast('Ошибка: '+ce.message,true);console.error(ce);return;}
   const p=allPartners.find(x=>x.partner_code===partner_code);
   if(p){
-    const newBalance=parseFloat(p.balance||0)+amount;
-    const newEarned=parseFloat(p.total_earned||0)+amount;
-    const{error:pe}=await sb.from('partners').update({
-      balance:newBalance,
-      total_earned:newEarned
+    await sb.from('partners').update({
+      balance:parseFloat(p.balance||0)+amount,
+      total_earned:parseFloat(p.total_earned||0)+amount
     }).eq('partner_code',partner_code);
-    if(pe) console.error('balance update error:',pe);
   }
-
   closeModal('pay-modal');
   document.getElementById('m-amount').value='';
   showToast('Комиссия начислена!');
@@ -496,26 +699,41 @@ async function saveCommission(){
   renderDashboard();
 }
 
-function openModal(id){document.getElementById(id).classList.add('open');}
-function closeModal(id){document.getElementById(id).classList.remove('open');}
+// ── CSV EXPORT ────────────────────────────────────────
+function exportCSV(type){
+  let rows,cols,filename;
+  if(type==='partners'){
+    rows=allPartners;
+    cols=['name','email','telegram','partner_code','referred_by','level','balance','total_earned','notes','status'];
+    filename='partners_'+new Date().toISOString().slice(0,10)+'.csv';
+  } else {
+    rows=allLeads;
+    cols=['name','phone','amount','partner_code','status','notes','created_at'];
+    filename='leads_'+new Date().toISOString().slice(0,10)+'.csv';
+  }
+  const header=cols.join(',');
+  const body=rows.map(r=>cols.map(c=>`"${(r[c]||'').toString().replace(/"/g,'""')}"`).join(','));
+  const csv='\uFEFF'+[header,...body].join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=filename;
+  a.click();
+}
 
+// ── NAVIGATION ────────────────────────────────────────
 function switchPage(name,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.querySelectorAll('.mob-btn').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.nav-item,.mob-btn').forEach(n=>n.classList.remove('active'));
   if(el) el.classList.add('active');
+  const labels={dashboard:'Дашборд',partners:'Партнёры',leads:'Лиды',commissions:'Комиссии'};
   document.querySelectorAll('.nav-item').forEach(n=>{
-    if(n.textContent.trim().includes(name==='dashboard'?'Дашборд':name==='partners'?'Партнёры':name==='leads'?'Лиды':'Комиссии'))
-      n.classList.add('active');
+    if(n.textContent.includes(labels[name])) n.classList.add('active');
   });
 }
 
-function showToast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-
+// ── EVENTS ────────────────────────────────────────────
 document.querySelectorAll('.modal-bg').forEach(m=>{
   m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});
 });
@@ -524,6 +742,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.getElementById('login-screen').style.display!=='none') doLogin();
 });
 
+// ── INIT ──────────────────────────────────────────────
 sb.auth.getSession().then(({data})=>{
   if(data.session&&ADMIN_EMAILS.includes(data.session.user.email)) initCRM();
 });
