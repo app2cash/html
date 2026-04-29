@@ -3,4 +3,4 @@ const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJ
 const sb = supabase.createClient(SB_URL, SB_KEY);
 const ADMIN_EMAILS = ['maratyarkov@gmail.com', 'admin@app2.cash'];
 const LEVEL_NAMES = ['Start', 'Basic', 'Pro', 'VIP', 'Elite'];
-let allPartners = [], allLeads = [], allComms = [];
+let allPartners = [], allLeads = [], allComms = [], allExchanges = [];
