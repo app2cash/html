@@ -16,7 +16,7 @@ async function doLogout() {
 async function initCRM() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('crm').style.display = 'block';
-  await Promise.all([loadPartners(), loadLeads(), loadComms()]);
+  await Promise.all([loadPartners(), loadLeads(), loadComms(), loadExchanges()]);
   renderDashboard();
 }
 document.addEventListener('DOMContentLoaded', () => {
