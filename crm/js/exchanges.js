@@ -11,18 +11,14 @@ function renderExchanges(data) {
   if (!list.length) { body.innerHTML = '<tr><td colspan="10" class="empty">Нет обменов</td></tr>'; return; }
   body.innerHTML = list.map(e => `<tr>
     <td style="font-size:12px;color:var(--muted)">${new Date(e.created_at).toLocaleDateString('ru')}</td>
-    <td>
-      <b>${e.client_name || '—'}</b><br>
-      <span style="font-size:11px;color:var(--muted)">${e.client_phone || ''}</span>
+    <td><b>${e.client_name || '—'}</b><br><span style="font-size:11px;color:var(--muted)">${e.client_phone || ''}</span>
       ${e.client_telegram ? `<br><span style="font-size:11px;color:#229ED9">${e.client_telegram}</span>` : ''}
       ${e.traffic_source ? `<br><span style="font-size:10px;background:var(--surface2);padding:1px 5px;border-radius:4px;color:var(--muted)">${e.traffic_source}</span>` : ''}
     </td>
-    <td>
-      <span style="color:var(--gold);font-weight:700">${parseFloat(e.amount_send||0).toFixed(2)}</span> <span class="curr-badge">${e.currency_send||''}</span>
+    <td><span style="color:var(--gold);font-weight:700">${parseFloat(e.amount_send||0).toFixed(2)}</span> <span class="curr-badge">${e.currency_send||''}</span>
       ${e.send_extra ? `<br><span style="font-size:10px;color:var(--muted)">${e.send_extra}</span>` : ''}
     </td>
-    <td>
-      ${parseFloat(e.amount_receive||0).toFixed(2)} <span class="curr-badge">${e.currency_receive||''}</span>
+    <td>${parseFloat(e.amount_receive||0).toFixed(2)} <span class="curr-badge">${e.currency_receive||''}</span>
       ${e.receive_extra ? `<br><span style="font-size:10px;color:var(--muted)">${e.receive_extra}</span>` : ''}
     </td>
     <td style="font-size:12px;color:var(--muted)">${e.rate ? parseFloat(e.rate).toFixed(4) : '—'}</td>
