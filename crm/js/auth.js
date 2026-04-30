@@ -21,6 +21,6 @@ async function initCRM() {
 }
 document.addEventListener('DOMContentLoaded', () => {
   sb.auth.getSession().then(({ data }) => {
-    if (data.session && ADMIN_EMAILS.includes(data.session.user.email)) initCRM();
+   if (data.session && ADMIN_EMAILS.includes(data.session.user.email)) initCRM();
   });
 });
