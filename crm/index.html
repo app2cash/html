@@ -158,14 +158,12 @@
   </div>
 </div>
 
-<!-- ═══ MODALS ═══ -->
+<!-- MODALS -->
 
-<!-- Exchange modal -->
 <div class="modal-bg" id="exchange-modal">
   <div class="modal">
     <h3 id="ex-title">➕ Новый обмен</h3>
     <input type="hidden" id="ex-id">
-
     <div style="font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Данные клиента</div>
     <div class="field"><label>Имя клиента *</label><input type="text" id="ex-client" placeholder="Иван Иванов"></div>
     <div class="field"><label>Телефон</label><input type="text" id="ex-phone" placeholder="+255756687444"></div>
@@ -176,25 +174,20 @@
     <div class="field"><label>Страна</label><input type="text" id="ex-country" placeholder="Танзания"></div>
     <div class="field"><label>Город</label><input type="text" id="ex-city" placeholder="Дар-эс-Салам"></div>
     <div class="field"><label>Источник трафика</label><input type="text" id="ex-traffic" placeholder="Telegram, Instagram, реферал..."></div>
-
     <div style="font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 10px;">Параметры обмена</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
       <div class="field" style="margin:0"><label>Отдаёт (сумма)</label><input type="number" id="ex-amount-send" placeholder="1000" min="0" step="0.01" oninput="calcRate()"></div>
       <div class="field" style="margin:0"><label>Валюта</label><select id="ex-currency-send"></select></div>
     </div>
-    <div class="field"><label>Доп. инфо по отправке (адрес кошелька, реквизиты...)</label><textarea id="ex-send-extra" maxlength="300" placeholder="Например: TRC20 адрес, номер карты..."></textarea></div>
-
+    <div class="field"><label>Доп. инфо по отправке</label><textarea id="ex-send-extra" maxlength="300" placeholder="Адрес кошелька, номер карты..."></textarea></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
       <div class="field" style="margin:0"><label>Получает (сумма)</label><input type="number" id="ex-amount-receive" placeholder="970" min="0" step="0.01" oninput="calcRate()"></div>
       <div class="field" style="margin:0"><label>Валюта</label><select id="ex-currency-receive"></select></div>
     </div>
-    <div class="field"><label>Доп. инфо по получению (реквизиты клиента)</label><textarea id="ex-receive-extra" maxlength="300" placeholder="Например: номер карты, IBAN, адрес..."></textarea></div>
-
+    <div class="field"><label>Доп. инфо по получению</label><textarea id="ex-receive-extra" maxlength="300" placeholder="Реквизиты клиента..."></textarea></div>
     <div class="field"><label>Курс (авто)</label><input type="number" id="ex-rate" placeholder="0.97" step="0.000001"></div>
-
     <div class="field"><label>Метод получения</label><select id="ex-method"></select></div>
-    <div class="field"><label>Доп. инфо по методу</label><textarea id="ex-method-extra" maxlength="300" placeholder="Особые условия, комментарий по методу..."></textarea></div>
-
+    <div class="field"><label>Доп. инфо по методу</label><textarea id="ex-method-extra" maxlength="300" placeholder="Особые условия..."></textarea></div>
     <div class="field"><label>Партнёр (код)</label><input type="text" id="ex-partner" placeholder="MARAT123"></div>
     <div class="field"><label>Статус</label>
       <select id="ex-status">
@@ -205,10 +198,7 @@
       </select>
     </div>
     <div class="field"><label>Заметка</label><textarea id="ex-notes" maxlength="300" placeholder="Внутренняя заметка..."></textarea></div>
-    <div class="checkbox-field">
-      <input type="checkbox" id="ex-comm-paid">
-      <label for="ex-comm-paid">Комиссия партнёру выплачена</label>
-    </div>
+    <div class="checkbox-field"><input type="checkbox" id="ex-comm-paid"><label for="ex-comm-paid">Комиссия партнёру выплачена</label></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('exchange-modal')">Отмена</button>
       <button class="btn-save" onclick="saveExchange()">Сохранить</button>
@@ -216,7 +206,6 @@
   </div>
 </div>
 
-<!-- Commission manual -->
 <div class="modal-bg" id="pay-modal">
   <div class="modal">
     <h3>💰 Начислить комиссию вручную</h3>
@@ -231,7 +220,6 @@
   </div>
 </div>
 
-<!-- Partner add/edit -->
 <div class="modal-bg" id="partner-modal">
   <div class="modal">
     <h3 id="pm-title">➕ Добавить партнёра</h3>
@@ -249,7 +237,7 @@
         <option value="4">LVL 4 — Elite (60%)</option>
       </select>
     </div>
-    <div class="field"><label>Заметка (до 300 символов)</label><textarea id="pm-notes" maxlength="300" placeholder="Внутренняя заметка..."></textarea></div>
+    <div class="field"><label>Заметка</label><textarea id="pm-notes" maxlength="300" placeholder="Внутренняя заметка..."></textarea></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('partner-modal')">Отмена</button>
       <button class="btn-save" onclick="savePartner()">Сохранить</button>
@@ -257,7 +245,6 @@
   </div>
 </div>
 
-<!-- Partner CSV -->
 <div class="modal-bg" id="partner-csv-modal">
   <div class="modal">
     <h3>📥 Импорт партнёров из CSV</h3>
@@ -271,7 +258,6 @@
   </div>
 </div>
 
-<!-- Lead add/edit -->
 <div class="modal-bg" id="lead-modal">
   <div class="modal">
     <h3 id="lm-title">➕ Добавить лид</h3>
@@ -287,7 +273,7 @@
         <option value="done">⚫ Закрыт</option>
       </select>
     </div>
-    <div class="field"><label>Заметка (до 300 символов)</label><textarea id="lm-notes" maxlength="300" placeholder="Внутренняя заметка о клиенте..."></textarea></div>
+    <div class="field"><label>Заметка</label><textarea id="lm-notes" maxlength="300" placeholder="Внутренняя заметка..."></textarea></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('lead-modal')">Отмена</button>
       <button class="btn-save" onclick="saveLead()">Сохранить</button>
@@ -295,7 +281,6 @@
   </div>
 </div>
 
-<!-- Lead CSV -->
 <div class="modal-bg" id="lead-csv-modal">
   <div class="modal">
     <h3>📥 Импорт лидов из CSV</h3>
@@ -321,11 +306,11 @@
 <script src="js/auth.js"></script>
 
 <script>
-const CURRENCIES = ['USD','USDT','RUB','TZS','KES','AED','EUR','GBP','CNY','TRY','UZS','IDR','THB','ZAR','BTC','ETH'];
-const METHODS = ['USDT TRC20','USDT ERC20','P2P','Cash','Bank Transfer','M-Pesa','МИР','VISA/MC','Wise','Revolut'];
-document.getElementById('ex-currency-send').innerHTML = CURRENCIES.map(c=>`<option value="${c}">${c}</option>`).join('');
-document.getElementById('ex-currency-receive').innerHTML = CURRENCIES.map(c=>`<option value="${c}" ${c==='RUB'?'selected':''}>${c}</option>`).join('');
-document.getElementById('ex-method').innerHTML = METHODS.map(m=>`<option value="${m}">${m}</option>`).join('');
+const CURRENCIES = ['USD','USDT','RUB','TZS','KES','AED','EUR','GBP','CNY','TRY','UZS','IDR','THB','ZAR','BTC','ETH','Другая'];
+const METHODS = ['USDT TRC20','USDT ERC20','P2P','Cash','Bank Transfer','M-Pesa','МИР','VISA/MC','Wise','Revolut','Другой'];
+document.getElementById('ex-currency-send').innerHTML = CURRENCIES.map(c=>'<option value="'+c+'">'+c+'</option>').join('');
+document.getElementById('ex-currency-receive').innerHTML = CURRENCIES.map(c=>'<option value="'+c+'"'+(c==='RUB'?' selected':'')+'>'+c+'</option>').join('');
+document.getElementById('ex-method').innerHTML = METHODS.map(m=>'<option value="'+m+'">'+m+'</option>').join('');
 </script>
 </body>
 </html>
