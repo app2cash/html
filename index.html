@@ -418,6 +418,57 @@ document.addEventListener("DOMContentLoaded", function(){
 <noscript><div><img src="https://mc.yandex.ru/watch/108736903" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 
+
+<!-- Виджет app2cash -->
+<div id="widget-btn" style="position:fixed;bottom:24px;right:24px;z-index:9999;font-family:Arial,sans-serif">
+  <button onclick="document.getElementById('widget-modal').style.display='flex'" style="background:#FFD700;color:#000;border:none;border-radius:50px;padding:14px 22px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.4);display:flex;align-items:center;gap:8px">
+    <span style="width:8px;height:8px;background:#00c853;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite"></span>
+    Получить расчёт курса
+  </button>
+</div>
+<div id="widget-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center">
+  <div style="background:#1a1a1a;border-radius:16px;padding:32px;width:360px;max-width:90vw;border:1px solid #333;position:relative">
+    <h3 style="color:#fff;margin:0 0 4px;font-size:20px">Закажите расчёт курса</h3>
+    <p style="color:#888;margin:0 0 20px;font-size:14px">Менеджер свяжется с вами в течение 5 минут</p>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button onclick="selectChannel('Telegram')" id="ch-Telegram" style="flex:1;padding:8px;border-radius:8px;border:2px solid #FFD700;background:#222;color:#FFD700;cursor:pointer;font-size:13px">✈️ Telegram</button>
+      <button onclick="selectChannel('WhatsApp')" id="ch-WhatsApp" style="flex:1;padding:8px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;cursor:pointer;font-size:13px">💬 WhatsApp</button>
+      <button onclick="selectChannel('Телефон')" id="ch-Телефон" style="flex:1;padding:8px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;cursor:pointer;font-size:13px">📞 Телефон</button>
+    </div>
+    <input id="widget-contact" placeholder="@username или номер телефона" style="width:100%;padding:12px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;font-size:14px;box-sizing:border-box;margin-bottom:12px" />
+    <button onclick="submitWidget()" id="widget-submit" style="width:100%;padding:14px;background:#FFD700;color:#000;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer">Получить расчёт →</button>
+    <div id="widget-result" style="display:none;text-align:center;color:#00c853;margin-top:16px;font-weight:600">✅ Заявка принята! Менеджер напишет в течение 5 минут.</div>
+    <button onclick="document.getElementById('widget-modal').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#666;font-size:22px;cursor:pointer">✕</button>
+  </div>
+</div>
+<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}</style>
+<script>
+var selectedChannel='Telegram';
+function selectChannel(ch){
+  selectedChannel=ch;
+  ['Telegram','WhatsApp','Телефон'].forEach(function(c){
+    document.getElementById('ch-'+c).style.borderColor=c===ch?'#FFD700':'#444';
+    document.getElementById('ch-'+c).style.color=c===ch?'#FFD700':'#fff';
+    document.getElementById('ch-'+c).style.borderWidth=c===ch?'2px':'1px';
+  });
+}
+function submitWidget(){
+  var contact=document.getElementById('widget-contact').value.trim();
+  if(!contact){alert('Введите контакт');return;}
+  var btn=document.getElementById('widget-submit');
+  btn.textContent='Отправляем...';btn.disabled=true;
+  fetch('/api/index.js',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({contact:contact,channel:selectedChannel,source:location.href,timestamp:new Date().toISOString()})
+  }).then(function(r){return r.json()}).then(function(){
+    document.getElementById('widget-result').style.display='block';
+    btn.style.display='none';
+  }).catch(function(){
+    btn.textContent='Получить расчёт →';btn.disabled=false;
+    alert('Ошибка. Попробуйте ещё раз.');
+  });
+}
+</script>
+<!-- /Виджет app2cash -->
 </body>
 </html>
 
