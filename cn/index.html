@@ -287,6 +287,7 @@ h4{margin-top:10px;font-weight:500;color:#FFD700;}
 
 <div class="contact-fixed">
   <a href="https://taplink.cc/app2cash" target="_blank" class="cf-btn whatsapp">即时通讯</a>
+  <a href="#" onclick="document.getElementById('widget-modal').style.display='flex';return false;" class="cf-btn telegram">📊 汇率报价</a>
 </div>
 
 <div id="lightbox"><img src="" alt="Screenshot"></div>
@@ -374,5 +375,50 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/108736903" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+
+<!-- 小部件 app2cash -->
+<div id="widget-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center">
+  <div style="background:#1a1a1a;border-radius:16px;padding:32px;width:360px;max-width:90vw;border:1px solid #333;position:relative">
+    <h3 style="color:#fff;margin:0 0 4px;font-size:20px">申请汇率报价</h3>
+    <p style="color:#888;margin:0 0 20px;font-size:14px">经理将在5分钟内与您联系</p>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button onclick="selectChannel('Telegram')" id="ch-Telegram" style="flex:1;padding:8px;border-radius:8px;border:2px solid #FFD700;background:#222;color:#FFD700;cursor:pointer;font-size:13px">✈️ Telegram</button>
+      <button onclick="selectChannel('WeChat')" id="ch-WeChat" style="flex:1;padding:8px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;cursor:pointer;font-size:13px">💬 WeChat</button>
+      <button onclick="selectChannel('电话')" id="ch-电话" style="flex:1;padding:8px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;cursor:pointer;font-size:13px">📞 电话</button>
+    </div>
+    <input id="widget-contact" placeholder="@用户名或电话号码" style="width:100%;padding:12px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;font-size:14px;box-sizing:border-box;margin-bottom:12px" />
+    <button onclick="submitWidget()" id="widget-submit" style="width:100%;padding:14px;background:#FFD700;color:#000;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer">获取汇率报价 →</button>
+    <div id="widget-result" style="display:none;text-align:center;color:#00c853;margin-top:16px;font-weight:600">✅ 申请已收到！经理将在5分钟内联系您。</div>
+    <button onclick="document.getElementById('widget-modal').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#666;font-size:22px;cursor:pointer">✕</button>
+  </div>
+</div>
+<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}</style>
+<script>
+var selectedChannel='Telegram';
+function selectChannel(ch){
+  selectedChannel=ch;
+  ['Telegram','WeChat','电话'].forEach(function(c){
+    document.getElementById('ch-'+c).style.borderColor=c===ch?'#FFD700':'#444';
+    document.getElementById('ch-'+c).style.color=c===ch?'#FFD700':'#fff';
+    document.getElementById('ch-'+c).style.borderWidth=c===ch?'2px':'1px';
+  });
+}
+function submitWidget(){
+  var contact=document.getElementById('widget-contact').value.trim();
+  if(!contact){alert('请输入您的联系方式');return;}
+  var btn=document.getElementById('widget-submit');
+  btn.textContent='发送中...';btn.disabled=true;
+  fetch('/api/index.js',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({contact:contact,channel:selectedChannel,source:location.href,timestamp:new Date().toISOString()})
+  }).then(function(r){return r.json()}).then(function(){
+    document.getElementById('widget-result').style.display='block';
+    btn.style.display='none';
+  }).catch(function(){
+    btn.textContent='获取汇率报价 →';btn.disabled=false;
+    alert('错误，请重试。');
+  });
+}
+</script>
+<!-- /小部件 app2cash -->
 </body>
 </html>
