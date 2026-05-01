@@ -114,7 +114,7 @@
           </div>
         </div>
         <div class="tbl-wrap"><table>
-          <thead><tr><th>Имя</th><th>Код</th><th>Telegram</th><th>Email</th><th>Уровень</th><th>Баланс</th><th>Приглашён от</th><th>Заметка</th><th>Действия</th></tr></thead>
+          <thead><tr><th>Имя</th><th>Код</th><th>Telegram</th><th>WhatsApp</th><th>Email</th><th>Уровень</th><th>Баланс</th><th>Приглашён от</th><th>Заметка</th><th>Действия</th></tr></thead>
           <tbody id="partners-body"></tbody>
         </table></div>
       </div>
@@ -227,6 +227,7 @@
     <div class="field"><label>Имя *</label><input type="text" id="pm-name" placeholder="Иван Иванов"></div>
     <div class="field"><label>Email</label><input type="email" id="pm-email" placeholder="ivan@example.com"></div>
     <div class="field"><label>Telegram</label><input type="text" id="pm-telegram" placeholder="@username"></div>
+    <div class="field"><label>WhatsApp</label><input type="text" id="pm-whatsapp" placeholder="+255756687444"></div>
     <div class="field"><label>Реферальный код пригласившего</label><input type="text" id="pm-ref" placeholder="MARAT123"></div>
     <div class="field"><label>Уровень</label>
       <select id="pm-level">
@@ -249,7 +250,7 @@
   <div class="modal">
     <h3>📥 Импорт партнёров из CSV</h3>
     <div class="field"><label>Файл CSV</label><input type="file" id="partners-csv-file" accept=".csv"></div>
-    <div class="csv-hint">Колонки: <code>name</code>, <code>email</code>, <code>telegram</code>, <code>referred_by</code>, <code>level</code>, <code>notes</code></div>
+    <div class="csv-hint">Колонки: <code>name</code>, <code>email</code>, <code>telegram</code>, <code>whatsapp</code>, <code>referred_by</code>, <code>level</code>, <code>notes</code></div>
     <div class="progress-bar" id="p-csv-bar"><div class="progress-fill" id="p-csv-fill"></div></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal('partner-csv-modal')">Отмена</button>
