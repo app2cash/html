@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Партнёрская программа — app2.cash</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --gold:#FFD700;--gold2:#FFA500;--bg:#08080d;--surface:#0f0f18;
+  --surface2:#16161f;--border:#1e1e2e;--text:#f0f0f0;--muted:#666;--green:#00d084;
+}
+body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
+
+/* GLOW */
+.glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,0,.07) 0%,transparent 70%);pointer-events:none;top:-200px;left:50%;transform:translateX(-50%);z-index:0;}
+
+.wrap{max-width:880px;margin:auto;padding:0 20px;position:relative;z-index:1;}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);letter-spacing:2px;text-decoration:none;}
+.nav-links{display:flex;gap:20px;align-items:center;}
+.nav-links a{color:var(--muted);font-size:13px;text-decoration:none;transition:.2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-btn{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);color:var(--gold);padding:8px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:.2s;}
+.nav-btn:hover{background:rgba(255,215,0,.2);}
+
+/* HERO */
+.hero{text-align:center;padding:80px 0 60px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);padding:6px 16px;border-radius:100px;font-size:12px;color:var(--gold);margin-bottom:28px;font-weight:600;letter-spacing:.5px;}
+.hero-badge span{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,96px);line-height:.95;letter-spacing:2px;margin-bottom:20px;}
+h1 span{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:17px;color:#aaa;max-width:560px;margin:0 auto 40px;line-height:1.6;}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;margin-bottom:70px;}
+.stat-box{background:var(--surface);padding:24px;text-align:center;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);line-height:1;}
+.stat-label{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px;}
+
+/* SECTION */
+.section{margin-bottom:60px;}
+.section-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);font-weight:700;margin-bottom:16px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,48px);letter-spacing:1px;margin-bottom:24px;line-height:1.1;}
+
+/* LEVELS */
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;}
+.level-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 16px;position:relative;overflow:hidden;transition:.3s;}
+.level-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,215,0,.05),transparent);opacity:0;transition:.3s;}
+.level-card:hover::before{opacity:1;}
+.level-card:hover{border-color:rgba(255,215,0,.3);transform:translateY(-2px);}
+.level-name{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;}
+.level-pct{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--gold);line-height:1;}
+.level-pct span{font-size:18px;}
+.level-tag{font-size:11px;color:var(--muted);margin-top:6px;}
+.level-price{display:inline-block;margin-top:10px;font-size:11px;background:rgba(255,215,0,.1);color:var(--gold);padding:3px 10px;border-radius:100px;font-weight:700;}
+.level-free{display:inline-block;margin-top:10px;font-size:11px;background:rgba(0,208,132,.1);color:var(--green);padding:3px 10px;border-radius:100px;font-weight:700;}
+
+/* REFERRAL LINES */
+.ref-lines{display:grid;gap:10px;}
+.ref-line{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 20px;}
+.ref-line-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--border);width:32px;flex-shrink:0;}
+.ref-line-info{flex:1;}
+.ref-line-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.ref-line-desc{font-size:12px;color:var(--muted);}
+.ref-line-pct{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold);}
+
+/* FRANCHISE */
+.franchise-card{background:linear-gradient(135deg,var(--surface) 0%,rgba(255,215,0,.05) 100%);border:1px solid rgba(255,215,0,.2);border-radius:20px;padding:40px;position:relative;overflow:hidden;}
+.franchise-card::after{content:'FRANCHISE';position:absolute;right:-20px;top:20px;font-family:'Bebas Neue',sans-serif;font-size:80px;color:rgba(255,215,0,.04);letter-spacing:4px;pointer-events:none;}
+.franchise-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:28px;}
+.franchise-item{display:flex;align-items:flex-start;gap:12px;}
+.franchise-icon{width:36px;height:36px;background:rgba(255,215,0,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.franchise-item-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+.franchise-item-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.franchise-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,208,132,.1);border:1px solid rgba(0,208,132,.2);padding:8px 18px;border-radius:100px;font-size:13px;color:var(--green);font-weight:700;margin-top:20px;}
+
+/* FORM */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;}
+.form-title{font-family:'Bebas Neue',sans-serif;font-size:36px;margin-bottom:8px;}
+.form-sub{font-size:14px;color:var(--muted);margin-bottom:30px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:4px;}
+.field label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:600;}
+.field input,.field select,.field textarea{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:'Manrope',sans-serif;font-size:14px;outline:none;transition:.2s;width:100%;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(255,215,0,.4);background:#0f0f1a;}
+.field textarea{min-height:90px;resize:vertical;}
+.field-full{grid-column:1/-1;}
+.btn-submit{width:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:12px;padding:16px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-top:20px;transition:.2s;letter-spacing:.3px;}
+.btn-submit:hover{box-shadow:0 8px 24px rgba(255,215,0,.3);transform:translateY(-1px);}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;}
+.success-msg{display:none;text-align:center;padding:40px 20px;}
+.success-icon{font-size:56px;margin-bottom:16px;}
+.success-title{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--green);margin-bottom:8px;}
+.success-sub{font-size:14px;color:var(--muted);}
+
+/* CONTACTS */
+.contacts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:40px;}
+.contact-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:.2s;}
+.contact-wa{background:#25D366;color:#000;}
+.contact-wa:hover{box-shadow:0 6px 20px rgba(37,211,102,.3);}
+.contact-tg{background:#229ED9;color:#fff;}
+.contact-tg:hover{box-shadow:0 6px 20px rgba(34,158,217,.3);}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:30px 0;text-align:center;color:var(--muted);font-size:13px;margin-top:60px;}
+footer a{color:var(--muted);text-decoration:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#000;font-weight:700;font-size:13px;padding:12px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;}
+.toast.show{opacity:1;}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.fade-up.visible{opacity:1;transform:none;}
+
+@media(max-width:640px){
+  .form-grid{grid-template-columns:1fr;}
+  .franchise-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr;}
+  .contacts{grid-template-columns:1fr;}
+  .levels{grid-template-columns:repeat(2,1fr);}
+  nav{flex-direction:column;gap:14px;}
+}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+
+  <nav>
+    <a href="/" class="nav-logo">APP2.CASH</a>
+    <div class="nav-links">
+      <a href="/">Обменник</a>
+      <a href="/cabinet" class="nav-btn">Кабинет</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero fade-up">
+    <div class="hero-badge"><span></span> Программа активна · 24/7</div>
+    <h1>ЗАРАБАТЫВАЙ<br>С <span>APP2.CASH</span></h1>
+    <p class="hero-sub">Реферальная система + франшиза без паушального взноса. Привлекай клиентов в валютный обмен — получай до 60% от комиссии в USDT.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row fade-up">
+    <div class="stat-box">
+      <div class="stat-num">60%</div>
+      <div class="stat-label">Макс. комиссия</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Реферальные линии</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">USDT</div>
+      <div class="stat-label">Выплаты</div>
+    </div>
+  </div>
+
+  <!-- LEVELS -->
+  <div class="section fade-up">
+    <div class="section-label">Партнёрская программа</div>
+    <div class="section-title">УРОВНИ И КОМИССИИ</div>
+    <div class="levels">
+      <div class="level-card">
+        <div class="level-name">LVL 0 · Start</div>
+        <div class="level-pct">20<span>%</span></div>
+        <div class="level-tag">от комиссии обмена</div>
+        <div class="level-free">Бесплатно</div>
+      </div>
+      <div class="level-card">
+        <div class="level-name">LVL 1 · Basic</div>
+        <div class="level-pct">30<span>%</span></div>
+        <div class="level-tag">от комиссии обмена</div>
+        <div class="level-price">от $80</div>
+      </div>
+      <div class="level-card">
+        <div class="level-name">LVL 2 · Pro</div>
+        <div class="level-pct">40<span>%</span></div>
+        <div class="level-tag">от комиссии обмена</div>
+        <div class="level-price">$500 оборот</div>
+      </div>
+      <div class="level-card">
+        <div class="level-name">LVL 3 · VIP</div>
+        <div class="level-pct">50<span>%</span></div>
+        <div class="level-tag">+ личный менеджер</div>
+        <div class="level-price">$5K оборот</div>
+      </div>
+      <div class="level-card">
+        <div class="level-name">LVL 4 · Elite</div>
+        <div class="level-pct">60<span>%</span></div>
+        <div class="level-tag">+ white label</div>
+        <div class="level-price">$10K оборот</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REF LINES -->
+  <div class="section fade-up">
+    <div class="section-label">Многоуровневая система</div>
+    <div class="section-title">РЕФЕРАЛЬНЫЕ ЛИНИИ</div>
+    <div class="ref-lines">
+      <div class="ref-line">
+        <div class="ref-line-num">01</div>
+        <div class="ref-line-info">
+          <div class="ref-line-name">Прямые клиенты</div>
+          <div class="ref-line-desc">Клиенты которых вы привели напрямую</div>
+        </div>
+        <div class="ref-line-pct">10%</div>
+      </div>
+      <div class="ref-line">
+        <div class="ref-line-num">02</div>
+        <div class="ref-line-info">
+          <div class="ref-line-name">Партнёры партнёров</div>
+          <div class="ref-line-desc">Клиенты рефералов которых вы пригласили</div>
+        </div>
+        <div class="ref-line-pct">5%</div>
+      </div>
+      <div class="ref-line">
+        <div class="ref-line-num">03</div>
+        <div class="ref-line-info">
+          <div class="ref-line-name">Третья линия</div>
+          <div class="ref-line-desc">Пассивный доход с глубины сети</div>
+        </div>
+        <div class="ref-line-pct">3%</div>
+      </div>
+      <div class="ref-line">
+        <div class="ref-line-num">04</div>
+        <div class="ref-line-info">
+          <div class="ref-line-name">Четвёртая линия</div>
+          <div class="ref-line-desc">Максимальная глубина реферальной сети</div>
+        </div>
+        <div class="ref-line-pct">2%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRANCHISE -->
+  <div class="section fade-up">
+    <div class="section-label">Масштабирование</div>
+    <div class="section-title">ФРАНШИЗА БЕЗ ВЗНОСА</div>
+    <div class="franchise-card">
+      <p style="font-size:15px;color:#bbb;line-height:1.7;max-width:560px;">Никакого паушального взноса. Вы получаете готовую инфраструктуру обменника под своим брендом — платите только % с оборота.</p>
+      <div class="franchise-badge">✓ Revenue Share модель — платишь только с дохода</div>
+      <div class="franchise-grid">
+        <div class="franchise-item">
+          <div class="franchise-icon">🌍</div>
+          <div>
+            <div class="franchise-item-title">Управление регионом</div>
+            <div class="franchise-item-desc">Россия, ОАЭ, Танзания, Кения, Азия — выбирайте свой рынок</div>
+          </div>
+        </div>
+        <div class="franchise-item">
+          <div class="franchise-icon">🏷️</div>
+          <div>
+            <div class="franchise-item-title">White Label</div>
+            <div class="franchise-item-desc">Обменник под вашим брендом с вашим доменом</div>
+          </div>
+        </div>
+        <div class="franchise-item">
+          <div class="franchise-icon">🤖</div>
+          <div>
+            <div class="franchise-item-title">Telegram + WhatsApp бот</div>
+            <div class="franchise-item-desc">Готовые боты для приёма заявок и автоответов</div>
+          </div>
+        </div>
+        <div class="franchise-item">
+          <div class="franchise-icon">📊</div>
+          <div>
+            <div class="franchise-item-title">CRM система</div>
+            <div class="franchise-item-desc">Управление клиентами, партнёрами, обменами и выплатами</div>
+          </div>
+        </div>
+        <div class="franchise-item">
+          <div class="franchise-icon">💰</div>
+          <div>
+            <div class="franchise-item-title">Поток заявок</div>
+            <div class="franchise-item-desc">Подключение к общему трафику платформы app2.cash</div>
+          </div>
+        </div>
+        <div class="franchise-item">
+          <div class="franchise-icon">🛡️</div>
+          <div>
+            <div class="franchise-item-title">Поддержка 24/7</div>
+            <div class="franchise-item-desc">Личный менеджер, обучение, техподдержка</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="section fade-up" id="register">
+    <div class="section-label">Начать</div>
+    <div class="section-title">РЕГИСТРАЦИЯ ПАРТНЁРА</div>
+    <div class="form-card">
+      <div id="form-wrap">
+        <div class="form-sub">Заполните форму — менеджер свяжется в течение 30 минут</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Имя *</label>
+            <input type="text" id="f-name" placeholder="Ваше имя">
+          </div>
+          <div class="field">
+            <label>Страна / регион *</label>
+            <input type="text" id="f-country" placeholder="Россия, ОАЭ, Танзания...">
+          </div>
+          <div class="field">
+            <label>Telegram</label>
+            <input type="text" id="f-telegram" placeholder="@username">
+          </div>
+          <div class="field">
+            <label>WhatsApp</label>
+            <input type="text" id="f-whatsapp" placeholder="+255756687444">
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="f-email" placeholder="email@example.com">
+          </div>
+          <div class="field">
+            <label>Интерес</label>
+            <select id="f-type">
+              <option value="partner">Партнёрская программа</option>
+              <option value="franchise">Франшиза / White Label</option>
+              <option value="both">Партнёрка + Франшиза</option>
+            </select>
+          </div>
+          <div class="field field-full">
+            <label>Реферальный код (если есть)</label>
+            <input type="text" id="f-ref" placeholder="Код того кто вас пригласил">
+          </div>
+          <div class="field field-full">
+            <label>О себе / вопросы</label>
+            <textarea id="f-notes" placeholder="Расскажите о себе, опыте, планах..."></textarea>
+          </div>
+        </div>
+        <button class="btn-submit" id="f-submit" onclick="submitForm()">Отправить заявку →</button>
+        <div class="form-note">Нажимая кнопку, вы соглашаетесь на обработку данных</div>
+      </div>
+      <div class="success-msg" id="success-msg">
+        <div class="success-icon">✅</div>
+        <div class="success-title">ЗАЯВКА ПРИНЯТА!</div>
+        <div class="success-sub">Менеджер свяжется с вами в течение 30 минут через указанный канал связи</div>
+      </div>
+    </div>
+
+    <div class="contacts">
+      <a href="https://wa.me/+255756687444?text=Здравствуйте,%20интересуюсь%20партнёрской%20программой%20app2.cash" class="contact-btn contact-wa" target="_blank">
+        💬 WhatsApp
+      </a>
+      <a href="https://t.me/app2cash" class="contact-btn contact-tg" target="_blank">
+        ✈️ Telegram
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="/">app2.cash</a> · Международный обмен валют и USDT · 2025
+  </div>
+</footer>
+
+<script>
+// Fade-up observer
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+// Read ?ref= from URL and prefill
+const urlRef = new URLSearchParams(window.location.search).get('ref');
+if (urlRef) document.getElementById('f-ref').value = urlRef;
+
+function showToast(msg, ok=true) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = ok ? 'var(--green)' : '#e55353';
+  t.style.color = ok ? '#000' : '#fff';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+async function submitForm() {
+  const name     = document.getElementById('f-name').value.trim();
+  const country  = document.getElementById('f-country').value.trim();
+  const telegram = document.getElementById('f-telegram').value.trim();
+  const whatsapp = document.getElementById('f-whatsapp').value.trim();
+  const email    = document.getElementById('f-email').value.trim();
+  const type     = document.getElementById('f-type').value;
+  const ref      = document.getElementById('f-ref').value.trim();
+  const notes    = document.getElementById('f-notes').value.trim();
+
+  if (!name) { showToast('Введите имя', false); return; }
+  if (!country) { showToast('Укажите страну / регион', false); return; }
+  if (!telegram && !whatsapp && !email) { showToast('Укажите хотя бы один контакт', false); return; }
+
+  const btn = document.getElementById('f-submit');
+  btn.disabled = true;
+  btn.textContent = 'Отправляем...';
+
+  try {
+    const res = await fetch('/api/index.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contact: telegram || whatsapp || email,
+        channel: telegram ? 'Telegram' : whatsapp ? 'WhatsApp' : 'Email',
+        source: 'partner_page · ' + (type === 'franchise' ? 'Франшиза' : type === 'both' ? 'Партнёрка+Франшиза' : 'Партнёрка'),
+        timestamp: new Date().toISOString(),
+        extra: { name, country, telegram, whatsapp, email, ref, notes }
+      })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      document.getElementById('form-wrap').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      throw new Error('Server error');
+    }
+  } catch(e) {
+    showToast('Ошибка отправки. Напишите нам напрямую.', false);
+    btn.disabled = false;
+    btn.textContent = 'Отправить заявку →';
+  }
+}
+</script>
+</body>
+</html>
