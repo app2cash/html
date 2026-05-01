@@ -10,8 +10,10 @@ async function loadPartners() {
 function renderPartners(data) {
   const list = data || allPartners;
   const body = document.getElementById('partners-body');
-  if (!list.length) { body.innerHTML = '<tr><td colspan="10" class="empty">Нет партнёров</td></tr>'; return; }
-  body.innerHTML = list.map(p => `<tr>
+  if (!list.length) { body.innerHTML = '<tr><td colspan="11" class="empty">Нет партнёров</td></tr>'; return; }
+  body.innerHTML = list.map(p => {
+    const refLink = `https://app2.cash/?ref=${p.partner_code}`;
+    return `<tr>
     <td><b>${p.name}</b></td>
     <td><span style="color:var(--gold);font-size:12px;font-weight:700">${p.partner_code}</span></td>
     <td style="font-size:12px">${p.telegram || '—'}</td>
@@ -20,6 +22,12 @@ function renderPartners(data) {
     <td><span class="badge badge-level">${LEVEL_NAMES[p.level || 0]}</span></td>
     <td style="color:var(--gold);font-weight:700">$${parseFloat(p.balance || 0).toFixed(2)}</td>
     <td style="font-size:12px;color:var(--muted)">${p.referred_by || '—'}</td>
+    <td>
+      <div style="display:flex;align-items:center;gap:5px;">
+        <span style="font-size:11px;color:var(--muted);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${refLink}</span>
+        <button class="act-btn act-edit" style="padding:3px 7px;font-size:11px;" onclick="copyRefLink('${refLink}')" title="Копировать">📋</button>
+      </div>
+    </td>
     <td><span class="notes-pill" title="${(p.notes || '').replace(/"/g, '&quot;')}">${p.notes || '—'}</span></td>
     <td><div class="actions">
       ${p.whatsapp ? `<a class="act-btn act-wa" href="https://wa.me/${p.whatsapp.replace(/\D/g,'')}" target="_blank">💬 WA</a>` : ''}
@@ -28,7 +36,20 @@ function renderPartners(data) {
       <button class="act-btn act-pay" onclick="openPayModalFor('${p.partner_code}')">$ Начислить</button>
       <button class="act-btn act-edit" onclick="openEditPartner(${p.id})">✏️</button>
     </div></td>
-  </tr>`).join('');
+  </tr>`;
+  }).join('');
+}
+
+function copyRefLink(link) {
+  navigator.clipboard.writeText(link).then(() => showToast('Ссылка скопирована!')).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = link;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    showToast('Ссылка скопирована!');
+  });
 }
 
 function filterPartners() {
