@@ -1,69 +1,153 @@
-const https = require('https');
-const nodemailer = require('nodemailer');
+const https = require("https");
+const nodemailer = require("nodemailer");
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') { res.status(204).end(); return; }
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") { res.status(204).end(); return; }
+  if (req.method !== "POST") { res.status(405).json({ ok: false }); return; }
 
-  const { contact, channel = 'Telegram', source = 'unknown', timestamp } = req.body || {};
-  if (!contact) { res.status(400).json({ ok: false }); return; }
+  const body = req.body || {};
+  const { source = "unknown", timestamp, extra = {} } = body;
+  const { name, country, tg, wa, email, ref, notes, type } = extra;
 
-  const ts = timestamp ? new Date(timestamp).toUTCString() : new Date().toUTCString();
-  const tgOk = await sendTelegram(contact, channel, source, ts);
-  const emailOk = await sendEmail(contact, channel, source, ts);
-  res.status(200).json({ ok: true, telegram: tgOk, email: emailOk });
+  if (!name) { res.status(400).json({ ok: false }); return; }
+
+  const ts = new Date(timestamp || Date.now()).toLocaleString("ru-RU", { timeZone: "Europe/Moscow" });
+
+  const typeLabel = {
+    partner: "Партнерская программа",
+    franchise: "Франшиза",
+    both: "Партнерка + Франшиза"
+  }[type] || source;
+
+  const icons = { partner_page: "🤝", franchise_page: "🏢", main_page: "🏠", exchange_page: "💱" };
+  const ico = icons[Object.keys(icons).find(k => source.includes(k))] || "📋";
+
+  const [tgOk, emailOk, dbOk] = await Promise.all([
+    sendTg(ico, typeLabel, name, country, tg, wa, email, ref, notes, ts, source),
+    sendMail(ico, typeLabel, name, country, tg, wa, email, ref, notes, ts),
+    saveDb(name, country, tg, wa, email, ref, notes, type, source),
+  ]);
+
+  res.status(200).json({ ok: true, tg: tgOk, email: emailOk, db: dbOk });
 };
 
-function sendTelegram(contact, channel, source, ts) {
+function sendTg(ico, typeLabel, name, country, tg, wa, email, ref, notes, ts, source) {
   return new Promise((resolve) => {
-    const BOT_TOKEN = process.env.BOT_TOKEN;
-    const CHAT_ID   = process.env.LEADS_CHAT_ID;
-    if (!BOT_TOKEN || !CHAT_ID) { resolve(false); return; }
-    const emoji = { Telegram:'✈️', WhatsApp:'💬', 'Телефон':'📞' }[channel] || '📨';
-    const text = `🔔 *Новая заявка — расчёт курса*\n\n${emoji} *Канал:* ${channel}\n👤 *Контакт:* \`${contact}\`\n🌐 *Источник:* ${source}\n🕐 *Время:* ${ts}\n\n⚡️ _Ответьте в течение 5 минут!_`;
-    const body = JSON.stringify({ chat_id: CHAT_ID, text, parse_mode: 'Markdown', disable_web_page_preview: true });
-    const req = https.request({
-      hostname: 'api.telegram.org',
-      path: `/bot${BOT_TOKEN}/sendMessage`,
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
-    }, r => resolve(r.statusCode === 200));
-    req.on('error', () => resolve(false));
-    req.write(body); req.end();
+    const TOKEN = process.env.TG_TOKEN_CRM;
+    const CHAT = process.env.TG_CHAT_ID_CRM;
+    if (!TOKEN || !CHAT) { resolve(false); return; }
+
+    let t = ico + " <b>Новая заявка app2.cash</b>\n";
+    t += "📌 " + typeLabel + "\n";
+    t += "━━━━━━━━━━━━━━━━\n";
+    if (name) t += "👤 " + name + "\n";
+    if (country) t += "🌍 " + country + "\n";
+    if (tg) t += "✈️ " + tg + "\n";
+    if (wa) t += "📱 " + wa + "\n";
+    if (email) t += "📧 " + email + "\n";
+    if (ref) t += "🔗 " + ref + "\n";
+    if (notes) t += "💬 " + notes + "\n";
+    t += "🕐 " + ts + "\n";
+    t += "🌐 " + source + "\n";
+    t += "⚡️ Ответьте в течение 5 минут!";
+
+    const p = JSON.stringify({
+      chat_id: CHAT,
+      text: t,
+      parse_mode: "HTML",
+      disable_web_page_preview: true
+    });
+
+    const r = https.request({
+      hostname: "api.telegram.org",
+      path: "/bot" + TOKEN + "/sendMessage",
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Content-Length": Buffer.byteLength(p) }
+    }, res => resolve(res.statusCode === 200));
+
+    r.on("error", () => resolve(false));
+    r.write(p);
+    r.end();
   });
 }
 
-async function sendEmail(contact, channel, source, ts) {
-  const SMTP_USER = process.env.SMTP_USER;
-  const SMTP_PASS = process.env.SMTP_PASS;
-  if (!SMTP_USER || !SMTP_PASS) return false;
-  const emoji = { Telegram:'✈️', WhatsApp:'💬', 'Телефон':'📞' }[channel] || '📨';
+async function sendMail(ico, typeLabel, name, country, tg, wa, email, ref, notes, ts) {
+  const USER = process.env.SMTP_USER;
+  const PASS = process.env.SMTP_PASS;
+  if (!USER || !PASS) return false;
+
+  const row = (l, v) => v
+    ? "<tr><td style=\"padding:8px 12px;color:#888;font-size:13px\">" + l + "</td><td style=\"padding:8px 12px;color:#F0EAD6;font-size:14px\">" + v + "</td></tr>"
+    : "";
+
+  const html = "<body style=\"background:#0A0A0A;font-family:Arial\">"
+    + "<div style=\"max-width:520px;margin:32px auto;background:#111;border:1px solid rgba(201,168,76,.3);border-radius:12px;overflow:hidden\">"
+    + "<div style=\"background:linear-gradient(135deg,#C9A84C,#E8C96D);padding:20px 28px\">"
+    + "<div style=\"font-size:20px;font-weight:800;color:#0A0A0A\">" + ico + " Новая заявка</div>"
+    + "<div style=\"color:rgba(0,0,0,.6)\">" + typeLabel + "</div>"
+    + "</div>"
+    + "<div style=\"padding:28px\">"
+    + "<table style=\"width:100%;background:#171717;border-radius:8px\">"
+    + row("Имя", name)
+    + row("Страна", country)
+    + row("Telegram", tg)
+    + row("WhatsApp", wa)
+    + row("Email", email)
+    + row("Реф-код", ref)
+    + row("Время", ts)
+    + "</table>"
+    + (notes ? "<div style=\"margin-top:12px;padding:14px;background:#1F1F1F;border-radius:8px;border-left:3px solid #C9A84C;color:#F0EAD6\">" + notes + "</div>" : "")
+    + "<div style=\"margin-top:20px;text-align:center\">"
+    + (tg ? "<a href=\"https://t.me/" + tg.replace("@","") + "\" style=\"display:inline-block;background:#C9A84C;color:#0A0A0A;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none;margin:4px\">✈️ Telegram</a>" : "")
+    + (wa ? "<a href=\"https://wa.me/" + wa.replace(/\D/g,"") + "\" style=\"display:inline-block;background:#25D366;color:#fff;font-weight:700;padding:10px 20px;border-radius:8px;text-decoration:none;margin:4px\">📱 WhatsApp</a>" : "")
+    + "</div>"
+    + "</div></div></body>";
+
   try {
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com', port: 587, secure: false,
-      auth: { user: SMTP_USER, pass: SMTP_PASS }
+    const tr = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      auth: { user: USER, pass: PASS }
     });
-    await transporter.sendMail({
-      from: SMTP_USER,
-      to: 'maratyarkov@gmail.com',
-      subject: `[app2.cash] Новая заявка — расчёт курса (${channel})`,
-      html: `<div style="font-family:Arial;padding:20px;background:#f4f4f4">
-        <div style="max-width:480px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden">
-          <div style="background:#FFD700;padding:20px"><h2 style="margin:0;color:#000">🔔 Новая заявка</h2></div>
-          <div style="padding:20px">
-            <p>${emoji} <b>Канал:</b> ${channel}</p>
-            <p>👤 <b>Контакт:</b> <b style="font-size:16px">${contact}</b></p>
-            <p>🌐 <b>Источник:</b> ${source}</p>
-            <p>🕐 <b>Время:</b> ${ts}</p>
-            <div style="background:#fff8e1;border-left:4px solid #FFD700;padding:12px;margin-top:16px">
-              ⚡️ Свяжитесь с клиентом в течение <b>5 минут!</b>
-            </div>
-          </div>
-        </div>
-      </div>`
+    await tr.sendMail({
+      from: "app2.cash Leads <" + USER + ">",
+      to: "maratyarkov@gmail.com",
+      subject: "[app2.cash] " + ico + " " + (name || "Лид") + " — " + typeLabel,
+      html
     });
     return true;
-  } catch(e) { return false; }
+  } catch(e) {
+    console.error("Email:", e.message);
+    return false;
+  }
+}
+
+async function saveDb(name, country, tg, wa, email, ref, notes, type, source) {
+  const URL = process.env.SUPABASE_URL;
+  const KEY = process.env.SUPABASE_KEY;
+  if (!URL || !KEY) return false;
+  try {
+    const r = await fetch(URL + "/rest/v1/leads", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": KEY,
+        "Authorization": "Bearer " + KEY,
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify({
+        name, country, tg, wa, email,
+        ref_code: ref, notes, type, source,
+        status: "new",
+        created_at: new Date().toISOString()
+      })
+    });
+    return r.ok;
+  } catch(e) {
+    return false;
+  }
 }
