@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>app2.cash — Франшиза</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-l:#E8C96D;--gold-pale:#F5E4A8;
+  --gd:rgba(201,168,76,.10);--gb:rgba(201,168,76,.22);
+  --bg:#0A0A0A;--s1:#111;--s2:#171717;--s3:#1F1F1F;--s4:#272727;
+  --tx:#F0EAD6;--mu:rgba(240,234,214,.45);--di:rgba(240,234,214,.16);
+  --ln:rgba(255,255,255,.065);
+  --gr:#4CAF7D;--rd:#F05252;--bl:#60A5FA;--pp:#A78BFA;
+  --r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Golos Text',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;font-size:16px;line-height:1.6}
+
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.032'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(160px);pointer-events:none;z-index:0}
+.o1{width:700px;height:700px;background:rgba(201,168,76,.055);top:-200px;right:-200px}
+.o2{width:500px;height:500px;background:rgba(96,165,250,.035);bottom:0;left:-150px}
+.o3{width:400px;height:400px;background:rgba(167,139,250,.025);top:50%;left:50%;transform:translate(-50%,-50%)}
+
+.wrap{position:relative;z-index:1}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:18px 56px;background:rgba(10,10,10,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--ln)}
+.logo{font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px;color:var(--gold);letter-spacing:-0.5px;text-decoration:none}
+.logo span{color:var(--mu);font-weight:300}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-ctas{display:flex;gap:10px}
+.nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln);padding:9px 20px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+.nb-o:hover{border-color:var(--gb)}
+.nb-g{background:var(--gold);color:var(--bg);padding:9px 20px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:background .2s}
+.nb-g:hover{background:var(--gold-l)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 24px 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:900px;height:900px;background:radial-gradient(circle,rgba(201,168,76,.09) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-60%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gd);border:1px solid var(--gb);border-radius:100px;padding:6px 18px;font-size:12px;font-weight:600;color:var(--gold-l);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px;animation:fu .8s ease both}
+.hero-badge::before{content:'';width:7px;height:7px;background:var(--gr);border-radius:50%;box-shadow:0 0 8px var(--gr);animation:blink 2s infinite;flex-shrink:0}
+h1{font-family:'Unbounded',sans-serif;font-size:clamp(36px,6vw,80px);font-weight:900;line-height:1.0;letter-spacing:-2.5px;margin-bottom:24px;animation:fu .8s .1s ease both}
+h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 50%,var(--gold-pale) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(15px,1.8vw,19px);color:var(--mu);max-width:600px;margin-bottom:16px;line-height:1.7;animation:fu .8s .2s ease both}
+.hero-guarantee{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--gr);background:rgba(76,175,125,.08);border:1px solid rgba(76,175,125,.2);border-radius:8px;padding:8px 16px;margin-bottom:40px;animation:fu .8s .25s ease both}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fu .8s .3s ease both}
+
+.btn-primary{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 100%);color:var(--bg);font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;padding:16px 36px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 30px rgba(201,168,76,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(201,168,76,.4)}
+.btn-outline{background:transparent;color:var(--tx);font-family:'Unbounded',sans-serif;font-weight:600;font-size:13px;padding:16px 36px;border-radius:8px;text-decoration:none;border:1px solid rgba(240,234,214,.18);cursor:pointer;transition:all .2s}
+.btn-outline:hover{border-color:var(--gb);background:var(--gd)}
+
+/* STATS BAR */
+.stats-bar{display:flex;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);background:rgba(255,255,255,.015);animation:fu .8s .4s ease both}
+.stat-item{flex:1;min-width:160px;padding:36px 32px;text-align:center;border-right:1px solid var(--ln)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:34px;font-weight:900;color:var(--gold);letter-spacing:-1px;display:block}
+.stat-label{font-size:13px;color:var(--mu);margin-top:4px}
+
+/* SECTIONS */
+section{position:relative;padding:100px 24px;max-width:1140px;margin:0 auto}
+.section-tag{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h2{font-family:'Unbounded',sans-serif;font-size:clamp(26px,3.8vw,48px);font-weight:900;line-height:1.05;letter-spacing:-1.5px;margin-bottom:16px}
+h2 em{font-style:normal;color:var(--gold)}
+.section-lead{font-size:17px;color:var(--mu);max-width:560px;margin-bottom:60px;line-height:1.7}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.15),transparent);margin:0 auto}
+
+/* INCOME STREAMS */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden}
+.stream{background:var(--s1);padding:40px 32px;position:relative;overflow:hidden;transition:background .25s}
+.stream:hover{background:var(--s2)}
+.stream::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity .3s}
+.str1::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.str2::before{background:linear-gradient(90deg,var(--pp),transparent)}
+.str3::before{background:linear-gradient(90deg,var(--gr),transparent)}
+.stream-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--di);letter-spacing:.1em;margin-bottom:14px}
+.stream-icon{font-size:30px;margin-bottom:14px}
+.stream-t{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
+.stream-d{font-size:13px;color:var(--mu);line-height:1.7;margin-bottom:18px}
+.stream-formula{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--s3);border:1px solid var(--ln);border-radius:6px;padding:14px 16px;line-height:1.8}
+.sf-g{color:var(--gold)}.sf-gr{color:var(--gr)}.sf-mu{color:var(--mu)}
+
+/* WHAT'S INCLUDED */
+.included-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.inc-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:28px 24px;transition:border-color .2s}
+.inc-card:hover{border-color:rgba(201,168,76,.3)}
+.inc-icon{font-size:28px;margin-bottom:14px;display:block}
+.inc-card h3{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px}
+.inc-card p{font-size:13px;color:var(--mu)}
+
+/* PACKAGES */
+.packages{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(201,168,76,.06);border-radius:var(--r);overflow:hidden}
+.pkg-group{display:contents}
+
+.pkg{background:var(--s1);padding:40px 32px;position:relative;overflow:hidden;transition:background .25s;display:flex;flex-direction:column}
+.pkg:hover{background:var(--s2)}
+.pkg.featured{background:linear-gradient(160deg,rgba(201,168,76,.07) 0%,var(--s1) 100%);border:1px solid rgba(201,168,76,.2)}
+.pkg.top{background:linear-gradient(160deg,rgba(167,139,250,.06) 0%,var(--s1) 100%);border:1px solid rgba(167,139,250,.2)}
+.pkg.master{background:linear-gradient(160deg,rgba(96,165,250,.06) 0%,var(--s1) 100%);border:1px solid rgba(96,165,250,.15)}
+
+.pkg-tier-label{display:inline-block;font-family:'Unbounded',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:8px;width:fit-content}
+.tier-starter{background:rgba(240,234,214,.06);color:var(--mu);border:1px solid var(--ln)}
+.tier-popular{background:var(--gd);color:var(--gold);border:1px solid var(--gb)}
+.tier-pro{background:rgba(167,139,250,.08);color:var(--pp);border:1px solid rgba(167,139,250,.25)}
+.tier-elite{background:rgba(96,165,250,.08);color:var(--bl);border:1px solid rgba(96,165,250,.2)}
+
+.pkg-section-header{grid-column:1/-1;background:var(--s2);border:1px solid var(--ln);padding:20px 32px;display:flex;align-items:center;gap:12px}
+.psh-tag{font-family:'Unbounded',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.psh-poor{color:var(--mu)}
+.psh-rich{color:var(--gold)}
+.psh-desc{font-size:12px;color:var(--di);margin-left:auto}
+
+.pkg-name{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;margin-bottom:6px}
+.pkg-brand{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mu);margin-bottom:20px;padding:6px 10px;background:var(--s3);border-radius:6px;display:inline-block}
+.pkg-price{font-family:'Unbounded',sans-serif;font-size:46px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px}
+.pkg-price-note{font-size:11px;color:var(--di);margin-bottom:24px;letter-spacing:.03em}
+
+.pkg-earn{background:var(--s2);border-radius:8px;padding:16px;margin-bottom:20px}
+.pkg-earn-title{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-weight:600}
+.pkg-earn-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--mu);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.pkg-earn-row:last-child{border-bottom:none}
+.pkg-earn-val{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gr);font-weight:500}
+
+.pkg-perks{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;margin-top:auto}
+.pkg-perks li{font-size:13px;color:var(--mu);display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+.pkg-perks .ck{color:var(--gr);flex-shrink:0;font-weight:700}
+.pkg-perks .na{color:var(--di);flex-shrink:0}
+
+.pkg-cta{display:block;text-align:center;padding:13px;border-radius:8px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;margin-top:auto}
+.cta-gold{background:var(--gold);color:var(--bg)}
+.cta-gold:hover{background:var(--gold-l)}
+.cta-outline{background:transparent;color:var(--tx);border:1px solid var(--ln)}
+.cta-outline:hover{border-color:var(--gb)}
+.cta-pp{background:var(--pp);color:#fff}
+.cta-pp:hover{background:#b89ffc}
+.cta-bl{background:var(--bl);color:#fff}
+.cta-bl:hover{background:#7ab5fb}
+
+/* TRUST SECTION */
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.trust-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:32px 28px;transition:border-color .2s;position:relative;overflow:hidden}
+.trust-card:hover{border-color:rgba(201,168,76,.25)}
+.trust-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent)}
+.trust-icon{font-size:32px;margin-bottom:16px;display:block}
+.trust-card h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;margin-bottom:8px}
+.trust-card p{font-size:13px;color:var(--mu);line-height:1.6}
+
+/* GUARANTEE BLOCK */
+.guarantee-block{background:linear-gradient(135deg,rgba(76,175,125,.08) 0%,rgba(76,175,125,.03) 100%);border:1px solid rgba(76,175,125,.2);border-radius:16px;padding:48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start}
+.gb-icon{font-size:56px;line-height:1}
+.gb-title{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:800;color:var(--gr);margin-bottom:10px;letter-spacing:-.5px}
+.gb-text{font-size:15px;color:var(--mu);line-height:1.7;margin-bottom:16px}
+.gb-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--di);background:var(--s2);border:1px solid var(--ln);border-radius:6px;padding:10px 14px}
+
+/* COMPARE TABLE */
+.ctable-wrap{overflow-x:auto}
+.ctable{width:100%;border-collapse:collapse;border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;font-size:13px}
+.ctable th,.ctable td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--ln)}
+.ctable th{font-family:'Unbounded',sans-serif;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);background:var(--s2)}
+.ctable td:first-child{font-weight:500}
+.ctable tr:last-child td{border-bottom:none}
+.ctable tr:hover td{background:rgba(255,255,255,.02)}
+.ctable .yes{color:var(--gr);font-family:'JetBrains Mono',monospace;font-size:11px}
+.ctable .no{color:var(--di)}
+.ctable .pc{font-family:'JetBrains Mono',monospace;font-size:13px}
+.c1{color:var(--mu)}.c2{color:var(--gold)}.c3{color:var(--pp)}.c4{color:var(--bl)}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:rgba(201,168,76,.08);border-radius:var(--r);overflow:hidden}
+.step{background:var(--s1);padding:40px 32px;transition:background .2s}
+.step:hover{background:var(--s2)}
+.step-num{font-family:'Unbounded',sans-serif;font-size:56px;font-weight:900;color:rgba(201,168,76,.12);line-height:1;margin-bottom:16px}
+.step h3{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px}
+.step p{font-size:14px;color:var(--mu);line-height:1.6}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:2px;border-radius:var(--r);overflow:hidden}
+.faq-item{background:var(--s1)}
+.faq-q{width:100%;background:none;border:none;color:var(--tx);font-family:'Golos Text',sans-serif;font-size:15px;font-weight:600;text-align:left;padding:22px 28px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .2s}
+.faq-q:hover{background:var(--s2)}
+.faq-chevron{flex-shrink:0;width:26px;height:26px;border:1px solid var(--gb);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gold);transition:transform .3s}
+.faq-item.open .faq-chevron{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s;font-size:14px;color:var(--mu);padding:0 28px;line-height:1.75}
+.faq-item.open .faq-a{max-height:400px;padding:0 28px 22px}
+.faq-a code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);background:var(--gd);padding:1px 6px;border-radius:4px}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,rgba(201,168,76,.1) 0%,rgba(201,168,76,.04) 100%);border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:80px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.cta-banner h2{margin-bottom:12px}
+.cta-banner p{font-size:17px;color:var(--mu);margin-bottom:40px}
+
+/* PAYMENT METHODS */
+.pay-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.pay-tag{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--s2);border:1px solid var(--ln);border-radius:6px;padding:8px 14px;color:var(--mu)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--ln);padding:36px 56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--mu)}
+footer a{color:var(--mu);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--gold)}
+.fn{display:flex;gap:22px;list-style:none;flex-wrap:wrap}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:300;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--s1);border:1px solid rgba(201,168,76,.25);border-radius:16px;padding:48px 40px;width:100%;max-width:520px;position:relative;animation:fu .3s ease;max-height:90vh;overflow-y:auto}
+.modal-top{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-l),transparent);border-radius:16px 16px 0 0;position:absolute;top:0;left:0;right:0}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--mu);font-size:24px;cursor:pointer;line-height:1;transition:color .2s}
+.modal-close:hover{color:var(--tx)}
+.modal h3{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;letter-spacing:-.5px}
+.modal-sub{font-size:14px;color:var(--mu);margin-bottom:28px}
+.modal-pkg-sel{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:24px}
+.mpkg{padding:12px;border:1px solid var(--ln);border-radius:8px;background:var(--s2);cursor:pointer;text-align:center;transition:all .2s}
+.mpkg:hover{border-color:var(--gb)}.mpkg.on{border-color:var(--gold);background:var(--gd)}
+.mpkg-name{font-size:12px;font-weight:700;margin-bottom:2px}.mpkg.on .mpkg-name{color:var(--gold)}
+.mpkg-price{font-size:10px;color:var(--mu)}.mpkg.on .mpkg-price{color:var(--gold);opacity:.7}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--s2);border:1px solid var(--ln);border-radius:8px;padding:12px 16px;color:var(--tx);font-family:'Golos Text',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(201,168,76,.5)}
+.fg input::placeholder{color:var(--di)}
+.fg select option{background:var(--s2)}
+.fg textarea{min-height:80px;resize:vertical}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-submit{width:100%;margin-top:8px;padding:16px;font-size:14px}
+.modal-note{text-align:center;font-size:12px;color:var(--mu);margin-top:12px}
+.success-msg{display:none;text-align:center;padding:32px 0}
+.success-icon{font-size:56px;margin-bottom:16px}
+.success-title{font-family:'Unbounded',sans-serif;font-size:22px;color:var(--gr);margin-bottom:8px}
+.success-sub{font-size:14px;color:var(--mu)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--gr);color:#000;font-weight:700;font-size:13px;padding:12px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+/* ANIMATIONS */
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
+
+@media(max-width:1000px){
+  nav{padding:16px 20px}.nav-links{display:none}
+  section{padding:60px 20px}
+  .packages{grid-template-columns:1fr}
+  .guarantee-block{grid-template-columns:1fr;gap:16px}
+  .cta-banner{padding:48px 24px}
+  footer{padding:24px 20px;flex-direction:column;text-align:center}.fn{justify-content:center}
+}
+@media(max-width:640px){
+  .stats-bar{flex-direction:column}.stat-item{border-right:none;border-bottom:1px solid var(--ln)}.stat-item:last-child{border-bottom:none}
+  .modal-pkg-sel{grid-template-columns:1fr}
+  .fg2{grid-template-columns:1fr}
+  .modal{padding:32px 20px}
+  .hero-ctas{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb o1"></div>
+<div class="bg-orb o2"></div>
+<div class="bg-orb o3"></div>
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">app2<span>.cash</span></a>
+  <ul class="nav-links">
+    <li><a href="#income">Доход</a></li>
+    <li><a href="#packages">Пакеты</a></li>
+    <li><a href="#included">Что входит</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a href="/partner" class="nb-o">Партнёрка</a>
+    <a href="#" class="nb-g" onclick="openModal();return false">Получить франшизу</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Франшиза · 4 пакета · Без роялти</div>
+  <h1>Твой обменник<br>валют —<br><em>за 7 дней</em></h1>
+  <p class="hero-sub">Готовый бизнес под твоим брендом. 100% маржи с клиентов. Своя MLM-сеть. Без юрлица. Из любой страны. Один раз заплатил — зарабатываешь бессрочно.</p>
+  <div class="hero-guarantee">✓ Возврат средств гарантирован при выполнении условий оферты</div>
+  <div class="hero-ctas">
+    <a href="#" class="btn-primary" onclick="openModal();return false">Выбрать пакет →</a>
+    <a href="#income" class="btn-outline">Как зарабатывать</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar rv">
+  <div class="stat-item"><span class="stat-num">7</span><div class="stat-label">дней до запуска</div></div>
+  <div class="stat-item"><span class="stat-num">100%</span><div class="stat-label">маржи — твоя</div></div>
+  <div class="stat-item"><span class="stat-num">4</span><div class="stat-label">уровня MLM-сети</div></div>
+  <div class="stat-item"><span class="stat-num">0₽</span><div class="stat-label">ежемесячных взносов</div></div>
+  <div class="stat-item"><span class="stat-num">∞</span><div class="stat-label">стран · без юрлица</div></div>
+</div>
+
+<!-- INCOME STREAMS -->
+<section id="income" class="rv">
+  <div class="section-tag">2 источника дохода</div>
+  <h2>Весь заработок —<br><em>твой</em></h2>
+  <p class="section-lead">app2.cash даёт инфраструктуру и знания. Всё что ты зарабатываешь — остаётся у тебя.</p>
+  <div class="streams">
+    <div class="stream str1">
+      <div class="stream-num">// 01</div>
+      <div class="stream-icon">💱</div>
+      <div class="stream-t">100% маржи с обменника</div>
+      <div class="stream-d">Ты сам устанавливаешь спред на своём сайте. Клиент платит — деньги идут тебе напрямую. Платформа не берёт долю с твоих сделок.</div>
+      <div class="stream-formula">
+        <div>Клиент меняет: <span class="sf-g">$10 000</span></div>
+        <div>Твой спред 4%: <span class="sf-g">= $400</span></div>
+        <div>Твой доход: <span class="sf-gr">$400</span> — полностью</div>
+      </div>
+    </div>
+    <div class="stream str2">
+      <div class="stream-num">// 02</div>
+      <div class="stream-icon">🌐</div>
+      <div class="stream-t">MLM-сеть под твоим брендом</div>
+      <div class="stream-d">Та же 4-уровневая система как у app2.cash — но твоя. Привлекаешь партнёров, они приводят клиентов, ты получаешь % с каждого уровня.</div>
+      <div class="stream-formula">
+        <div>L1: <span class="sf-g">+10%</span> от спреда их клиентов</div>
+        <div>L2: <span class="sf-g">+5%</span> · L3: <span class="sf-g">+2%</span></div>
+        <div>Армия партнёров: <span class="sf-gr">работает 24/7</span></div>
+      </div>
+    </div>
+    <div class="stream str3">
+      <div class="stream-num">// 03</div>
+      <div class="stream-icon">🏦</div>
+      <div class="stream-t">Санкционные валюты без SWIFT</div>
+      <div class="stream-d">Обучение включает схемы работы с рублём, гривной, тенге, африканскими валютами — без классических банковских переводов. Закрытые схемы.</div>
+      <div class="stream-formula">
+        <div>Рубль, тенге, гривна</div>
+        <div>Африканские валюты</div>
+        <div>Без SWIFT · Без банков · <span class="sf-gr">Легально</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PACKAGES -->
+<section id="packages" class="rv">
+  <div class="section-tag">4 пакета франшизы</div>
+  <h2>Выбери свой<br><em>уровень входа</em></h2>
+  <p class="section-lead">Один раз заплатил — зарабатываешь бессрочно. Никаких роялти, никаких ежемесячных платежей.</p>
+
+  <div class="packages">
+
+    <!-- HEADER: ДЛЯ СТАРТА -->
+    <div style="grid-column:1/-1;background:var(--s2);border:1px solid var(--ln);padding:20px 32px;display:flex;align-items:center;gap:12px;border-radius:0">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--di)">01 — 02</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mu)">Для старта</span>
+      <span style="font-size:12px;color:var(--di);margin-left:auto">$900 – $1 500 · Суббренд или свой домен</span>
+    </div>
+
+    <!-- LITE -->
+    <div class="pkg">
+      <div class="pkg-tier-label tier-starter">Lite</div>
+      <div class="pkg-name">Lite</div>
+      <div class="pkg-brand">yourname.app2.cash</div>
+      <div class="pkg-price">$900</div>
+      <div class="pkg-price-note">Разово · Без роялти · Навсегда</div>
+      <div class="pkg-earn">
+        <div class="pkg-earn-title">Твой доход</div>
+        <div class="pkg-earn-row"><span>Маржа с клиентов</span><span class="pkg-earn-val">100%</span></div>
+        <div class="pkg-earn-row"><span>MLM L1</span><span class="pkg-earn-val">+10%</span></div>
+        <div class="pkg-earn-row"><span>MLM L2</span><span class="pkg-earn-val">+5%</span></div>
+        <div class="pkg-earn-row"><span>MLM L3</span><span class="pkg-earn-val">+2%</span></div>
+      </div>
+      <ul class="pkg-perks">
+        <li><span class="ck">✓</span>Сайт обменника на субдомене</li>
+        <li><span class="ck">✓</span>CRM + партнёрский кабинет</li>
+        <li><span class="ck">✓</span>Виджет расчёта курса</li>
+        <li><span class="ck">✓</span>Автоматизация заявок</li>
+        <li><span class="ck">✓</span>Базовое обучение</li>
+        <li><span class="ck">✓</span>MLM-система под суббрендом</li>
+        <li><span class="ck">✓</span>Поддержка в чате</li>
+        <li><span class="na">—</span>Свой домен и бренд</li>
+        <li><span class="na">—</span>White-label (без app2.cash)</li>
+      </ul>
+      <a href="#" class="pkg-cta cta-outline" onclick="openModal('lite');return false">Начать за $900 →</a>
+    </div>
+
+    <!-- START -->
+    <div class="pkg featured">
+      <div class="pkg-tier-label tier-popular">Популярный</div>
+      <div class="pkg-name">Start</div>
+      <div class="pkg-brand">yourdomain.com</div>
+      <div class="pkg-price">$1 500</div>
+      <div class="pkg-price-note">Разово · Без роялти · Навсегда</div>
+      <div class="pkg-earn">
+        <div class="pkg-earn-title">Твой доход</div>
+        <div class="pkg-earn-row"><span>Маржа с клиентов</span><span class="pkg-earn-val">100%</span></div>
+        <div class="pkg-earn-row"><span>MLM L1</span><span class="pkg-earn-val">+10%</span></div>
+        <div class="pkg-earn-row"><span>MLM L2</span><span class="pkg-earn-val">+5%</span></div>
+        <div class="pkg-earn-row"><span>MLM L3</span><span class="pkg-earn-val">+2%</span></div>
+      </div>
+      <ul class="pkg-perks">
+        <li><span class="ck">✓</span>Всё из Lite</li>
+        <li><span class="ck">✓</span>Установка на твой домен</li>
+        <li><span class="ck">✓</span>Расширенное обучение</li>
+        <li><span class="ck">✓</span>Схемы санкционных валют</li>
+        <li><span class="ck">✓</span>Персональный менеджер на старте</li>
+        <li><span class="ck">✓</span>MLM-система на твоём домене</li>
+        <li><span class="ck">✓</span>Приоритетная поддержка</li>
+        <li><span class="na">—</span>Полный white-label (без app2.cash)</li>
+      </ul>
+      <a href="#" class="pkg-cta cta-gold" onclick="openModal('start');return false">Подключить за $1 500 →</a>
+    </div>
+
+    <!-- HEADER: ДЛЯ МАСШТАБА -->
+    <div style="grid-column:1/-1;background:linear-gradient(90deg,rgba(201,168,76,.05),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.12);padding:20px 32px;display:flex;align-items:center;gap:12px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(201,168,76,.4)">03 — 04</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)">Для масштаба</span>
+      <span style="font-size:12px;color:var(--di);margin-left:auto">$6 800 – $8 000 · Полный white-label · Эксклюзив</span>
+    </div>
+
+    <!-- BUSINESS -->
+    <div class="pkg top">
+      <div class="pkg-tier-label tier-pro">Business</div>
+      <div class="pkg-name">Business</div>
+      <div class="pkg-brand">Полный White-Label</div>
+      <div class="pkg-price">$6 800</div>
+      <div class="pkg-price-note">Разово · Без роялти · Навсегда</div>
+      <div class="pkg-earn">
+        <div class="pkg-earn-title">Твой доход</div>
+        <div class="pkg-earn-row"><span>Маржа с клиентов</span><span class="pkg-earn-val">100%</span></div>
+        <div class="pkg-earn-row"><span>MLM L1</span><span class="pkg-earn-val">+10%</span></div>
+        <div class="pkg-earn-row"><span>MLM L2</span><span class="pkg-earn-val">+5%</span></div>
+        <div class="pkg-earn-row"><span>MLM L3</span><span class="pkg-earn-val">+2%</span></div>
+      </div>
+      <ul class="pkg-perks">
+        <li><span class="ck">✓</span>Всё из Start</li>
+        <li><span class="ck">✓</span>Полный white-label — без упоминания app2.cash</li>
+        <li><span class="ck">✓</span>Кастомный дизайн под твой стиль</li>
+        <li><span class="ck">✓</span>CRM с твоим лого</li>
+        <li><span class="ck">✓</span>MLM-система полностью под твоим брендом</li>
+        <li><span class="ck">✓</span>Дедикейтед менеджер</li>
+        <li><span class="ck">✓</span>Полное обучение + закрытые схемы</li>
+        <li><span class="na">—</span>Эксклюзив региона</li>
+      </ul>
+      <a href="#" class="pkg-cta cta-pp" onclick="openModal('business');return false">Подключить за $6 800 →</a>
+    </div>
+
+    <!-- MASTER -->
+    <div class="pkg master">
+      <div class="pkg-tier-label tier-elite">Master</div>
+      <div class="pkg-name">Master</div>
+      <div class="pkg-brand">White-Label + Эксклюзив</div>
+      <div class="pkg-price">$8 000</div>
+      <div class="pkg-price-note">Разово · Максимум · Эксклюзив региона</div>
+      <div class="pkg-earn">
+        <div class="pkg-earn-title">Твой доход</div>
+        <div class="pkg-earn-row"><span>Маржа с клиентов</span><span class="pkg-earn-val">100%</span></div>
+        <div class="pkg-earn-row"><span>MLM L1</span><span class="pkg-earn-val">+10%</span></div>
+        <div class="pkg-earn-row"><span>MLM L2</span><span class="pkg-earn-val">+5%</span></div>
+        <div class="pkg-earn-row"><span>MLM L3</span><span class="pkg-earn-val">+2%</span></div>
+      </div>
+      <ul class="pkg-perks">
+        <li><span class="ck">✓</span>Всё из Business</li>
+        <li><span class="ck">✓</span>Эксклюзив на город или страну</li>
+        <li><span class="ck">✓</span>Co-brand маркетинг от app2.cash</li>
+        <li><span class="ck">✓</span>Прямой контакт с командой</li>
+        <li><span class="ck">✓</span>API-доступ</li>
+        <li><span class="ck">✓</span>Индивидуальные условия</li>
+        <li><span class="ck">✓</span>Армия влиятельных партнёров</li>
+        <li><span class="ck">✓</span>Личное сопровождение запуска</li>
+      </ul>
+      <a href="#" class="pkg-cta cta-bl" onclick="openModal('master');return false">Подключить за $8 000 →</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT'S INCLUDED -->
+<section id="included" class="rv">
+  <div class="section-tag">Что входит</div>
+  <h2>Всё готово к<br><em>запуску</em></h2>
+  <p class="section-lead">Каждый пакет включает полный набор для старта. Тебе не нужны технари, юристы или офис.</p>
+  <div class="included-grid">
+    <div class="inc-card"><span class="inc-icon">🌐</span><h3>Готовый сайт</h3><p>Лендинг обменника с виджетом расчёта курса. Установка на твой домен или субдомен.</p></div>
+    <div class="inc-card"><span class="inc-icon">⚙️</span><h3>CRM + кабинет</h3><p>Управление заявками, клиентами, партнёрской сетью — всё в одном месте.</p></div>
+    <div class="inc-card"><span class="inc-icon">🤖</span><h3>Полная автоматизация</h3><p>Заявки, уведомления, расчёт курса — работает без тебя 24/7.</p></div>
+    <div class="inc-card"><span class="inc-icon">🎓</span><h3>Обучение</h3><p>Схемы обмена включая санкционные валюты без SWIFT. Закрытые знания.</p></div>
+    <div class="inc-card"><span class="inc-icon">🌍</span><h3>MLM под твоим брендом</h3><p>4-уровневая партнёрская система — твоя армия продавцов по всему миру.</p></div>
+    <div class="inc-card"><span class="inc-icon">🔒</span><h3>Без лицензий</h3><p>Работаешь под инфраструктурой app2.cash. Не нужно юрлицо и лицензии.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TRUST -->
+<section class="rv">
+  <div class="section-tag">Почему доверяют</div>
+  <h2>Честность —<br><em>главная ценность</em></h2>
+  <p class="section-lead">Никаких скрытых платежей, никаких сюрпризов. Ты видишь каждую транзакцию.</p>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <span class="trust-icon">🌍</span>
+      <h3>Любая страна</h3>
+      <p>Франчайзи из России, ОАЭ, Африки, Азии — без ограничений по географии. Не нужно юрлицо.</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">💳</span>
+      <h3>Любая валюта оплаты</h3>
+      <p>Оплата в любой валюте по курсу Google. Крипта, наличные, перевод — договоримся.</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">👁️</span>
+      <h3>Полная прозрачность</h3>
+      <p>Все транзакции в CRM. Ты видишь каждый обмен, каждое начисление партнёрской сети.</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">♾️</span>
+      <h3>Один раз — навсегда</h3>
+      <p>Никаких роялти. Никаких ежемесячных взносов. Заплатил один раз — бизнес работает бессрочно.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GUARANTEE -->
+<section class="rv">
+  <div class="section-tag">Гарантия</div>
+  <div class="guarantee-block">
+    <div class="gb-icon">🛡️</div>
+    <div>
+      <div class="gb-title">Возврат средств гарантирован</div>
+      <div class="gb-text">Если после запуска что-то пошло не так — возвращаем полную стоимость пакета за вычетом комиссии обменника 3.6%. Условия возврата прописаны в оферте — всё честно и прозрачно.</div>
+      <div class="gb-note">Возврат при выполнении условий публичной оферты · Комиссия 3.6% · Оферта доступна до оплаты</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="rv">
+  <div class="section-tag">Запуск</div>
+  <h2>От оплаты до<br><em>первого клиента</em></h2>
+  <p class="section-lead">7 рабочих дней — и твой обменник принимает заявки.</p>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><h3>Выбери пакет</h3><p>Заполни заявку. Менеджер свяжется в течение 5 минут и ответит на вопросы.</p></div>
+    <div class="step"><div class="step-num">02</div><h3>Оплати удобным способом</h3><p>Любая валюта по курсу Google. Крипта, наличные, перевод — без ограничений.</p></div>
+    <div class="step"><div class="step-num">03</div><h3>Получи доступ и обучение</h3><p>Сайт, CRM, кабинет, схемы работы — всё передаём за 7 рабочих дней.</p></div>
+    <div class="step"><div class="step-num">04</div><h3>Запускай и зарабатывай</h3><p>Первые клиенты, первые партнёры. Весь доход — твой.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPARE TABLE -->
+<section class="rv">
+  <div class="section-tag">Сравнение пакетов</div>
+  <h2>Детальная <em>таблица</em></h2>
+  <div class="ctable-wrap">
+    <table class="ctable">
+      <thead><tr>
+        <th>Параметр</th>
+        <th class="c1">Lite · $900</th>
+        <th class="c2">Start · $1 500</th>
+        <th class="c3">Business · $6 800</th>
+        <th class="c4">Master · $8 000</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Маржа с клиентов</td><td class="pc c1">100%</td><td class="pc c2">100%</td><td class="pc c3">100%</td><td class="pc c4">100%</td></tr>
+        <tr><td>MLM L1 / L2 / L3</td><td class="pc c1">10/5/2%</td><td class="pc c2">10/5/2%</td><td class="pc c3">10/5/2%</td><td class="pc c4">10/5/2%</td></tr>
+        <tr><td>Бренд сайта</td><td class="c1">name.app2.cash</td><td class="c2">Свой домен</td><td class="c3">Полный white-label</td><td class="c4">Полный white-label</td></tr>
+        <tr><td>Упоминание app2.cash</td><td class="yes c1">Да</td><td class="yes c2">Да</td><td class="no">Нет ✓</td><td class="no">Нет ✓</td></tr>
+        <tr><td>MLM под своим брендом</td><td class="no">—</td><td class="no">—</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td></tr>
+        <tr><td>Эксклюзив региона</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">Да ✓</td></tr>
+        <tr><td>Персональный менеджер</td><td class="no">—</td><td class="yes">На старте ✓</td><td class="yes">Дедикейтед ✓</td><td class="yes">Прямой контакт ✓</td></tr>
+        <tr><td>Обучение</td><td class="pc">Базовое</td><td class="pc">Расширенное</td><td class="pc">Полное</td><td class="pc">Полное + личное</td></tr>
+        <tr><td>API-доступ</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">Да ✓</td></tr>
+        <tr><td>Запуск</td><td class="pc">7 дней</td><td class="pc">7 дней</td><td class="pc">14 дней</td><td class="pc">14 дней</td></tr>
+        <tr><td>Ежемесячные взносы</td><td class="yes">Нет ✓</td><td class="yes">Нет ✓</td><td class="yes">Нет ✓</td><td class="yes">Нет ✓</td></tr>
+        <tr><td>Гарантия возврата</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq" class="rv">
+  <div class="section-tag">Вопросы</div>
+  <h2>Частые <em>вопросы</em></h2>
+  <p class="section-lead">Если не нашли ответ — напишите менеджеру напрямую.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Как я зарабатываю? Откуда берутся деньги?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">100% маржи с твоего обменника — твои. Ты сам устанавливаешь спред на своём сайте. Клиент заплатил — деньги идут тебе. Дополнительно: 4-уровневая MLM-сеть под твоим брендом — партнёры приводят клиентов, ты получаешь 10%/5%/2% с каждого уровня. App2.cash зарабатывает только на продаже пакетов — не на твоих сделках.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Нужно ли платить каждый месяц? Роялти?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Нет. Никаких ежемесячных взносов, никаких роялти, никаких скрытых платежей. Один раз оплатил пакет — работаешь бессрочно. Это принципиальная позиция: мы зарабатываем на продаже франшиз, а не на твоём обороте.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Нужно ли юрлицо или лицензия?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Нет. Ты работаешь под инфраструктурой app2.cash. Регистрация юрлица не требуется. Подходит для любой страны — Россия, ОАЭ, Африка, Азия, Европа. Достаточно заполнить заявку и оплатить пакет.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Что такое «санкционные валюты без SWIFT»?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Рубль, гривна, тенге, африканские и азиатские валюты — схемы работы без классических банковских переводов SWIFT. Это закрытые знания, которые передаются в рамках обучения. Работает легально через альтернативные пути движения денег.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Как оплатить? Принимаете крипту и наличные?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Да, принимаем оплату в любой валюте по курсу Google. USDT, BTC, наличные, банковский перевод — договоримся. Нет ограничений по стране и способу оплаты.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Как работает гарантия возврата?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Возвращаем полную стоимость пакета при выполнении условий публичной оферты — за вычетом комиссии обменника <code>3.6%</code>. Оферта доступна до оплаты. Условия честные и прозрачные — это наш принцип.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">В чём разница между суббрендом и white-label?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Суббренд (Lite, Start): сайт работает на домене <code>yourname.app2.cash</code> или твоём домене, но в футере/дизайне присутствует упоминание app2.cash. White-label (Business, Master): полностью твой бренд — клиенты не знают, что за сайтом стоит app2.cash. Твоё лого, твои цвета, твой CRM.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="rv">
+  <div class="cta-banner">
+    <div class="section-tag" style="margin-bottom:16px">Начни сегодня</div>
+    <h2>Твой обменник —<br><em>через 7 дней</em></h2>
+    <p>Заявка рассматривается в течение 5 минут. Оплата в любой валюте. Без юрлица. Из любой страны.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:28px">
+      <a href="#" class="btn-primary" onclick="openModal();return false">Выбрать пакет →</a>
+      <a href="https://wa.me/255756687444" target="_blank" class="btn-outline">💬 WhatsApp</a>
+      <a href="https://t.me/app2cas" target="_blank" class="btn-outline">✈️ Telegram</a>
+    </div>
+    <div style="font-size:12px;color:var(--di)">Оплата принимается в любой валюте по курсу Google:</div>
+    <div class="pay-row" style="justify-content:center">
+      <span class="pay-tag">USDT TRC20</span>
+      <span class="pay-tag">BTC</span>
+      <span class="pay-tag">Рубли</span>
+      <span class="pay-tag">Доллары</span>
+      <span class="pay-tag">Евро</span>
+      <span class="pay-tag">Дирхамы</span>
+      <span class="pay-tag">Наличные</span>
+      <span class="pay-tag">Любая валюта</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="/" class="logo">app2<span>.cash</span></a>
+  <ul class="fn">
+    <li><a href="#packages">Пакеты</a></li>
+    <li><a href="#included">Что входит</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="/partner">Партнёрка</a></li>
+    <li><a href="mailto:fran@app2.cash">fran@app2.cash</a></li>
+  </ul>
+  <span>© 2025 app2.cash</span>
+</footer>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-top"></div>
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="form-content">
+      <h3>Получить франшизу</h3>
+      <p class="modal-sub">Заполните форму — менеджер свяжется в течение 5 минут</p>
+      <div style="font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Выберите пакет</div>
+      <div class="modal-pkg-sel">
+        <div class="mpkg" id="mp0" onclick="selPkg(0)"><div class="mpkg-name">Lite</div><div class="mpkg-price">$900</div></div>
+        <div class="mpkg on" id="mp1" onclick="selPkg(1)"><div class="mpkg-name">Start</div><div class="mpkg-price">$1 500</div></div>
+        <div class="mpkg" id="mp2" onclick="selPkg(2)"><div class="mpkg-name">Business</div><div class="mpkg-price">$6 800</div></div>
+        <div class="mpkg" id="mp3" onclick="selPkg(3)"><div class="mpkg-name">Master</div><div class="mpkg-price">$8 000</div></div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label>Имя *</label><input type="text" id="f-name" placeholder="Ваше имя"></div>
+        <div class="fg"><label>Страна / регион *</label><input type="text" id="f-country" placeholder="Россия, ОАЭ, Африка..."></div>
+      </div>
+      <div class="fg"><label>Telegram</label><input type="text" id="f-tg" placeholder="@username"></div>
+      <div class="fg"><label>WhatsApp</label><input type="text" id="f-wa" placeholder="+7 или +255..."></div>
+      <div class="fg"><label>Email</label><input type="email" id="f-email" placeholder="you@example.com"></div>
+      <div class="fg"><label>О себе (опционально)</label><textarea id="f-notes" placeholder="Опыт, аудитория, вопросы..."></textarea></div>
+      <button class="btn-primary form-submit" id="f-submit" onclick="submitForm()">Отправить заявку →</button>
+      <div class="modal-note">Нажимая, вы соглашаетесь на обработку данных</div>
+    </div>
+    <div class="success-msg" id="success-msg">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Заявка принята!</div>
+      <div class="success-sub">Менеджер свяжется с вами в течение 5 минут через указанный канал связи.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PKGS = ['Lite','Start','Business','Master'];
+const PRICES = ['$900','$1 500','$6 800','$8 000'];
+let curPkg = 1;
+
+function selPkg(i){
+  document.querySelectorAll('.mpkg').forEach((m,idx)=>m.classList.toggle('on',idx===i));
+  curPkg=i;
+}
+
+function openModal(pkg){
+  const idx = pkg==='lite'?0:pkg==='start'?1:pkg==='business'?2:pkg==='master'?3:curPkg;
+  selPkg(idx);
+  document.getElementById('form-content').style.display='block';
+  document.getElementById('success-msg').style.display='none';
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+async function submitForm(){
+  const name=document.getElementById('f-name').value.trim();
+  const country=document.getElementById('f-country').value.trim();
+  const tg=document.getElementById('f-tg').value.trim();
+  const wa=document.getElementById('f-wa').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const notes=document.getElementById('f-notes').value.trim();
+  if(!name){showToast('Введите имя',false);return;}
+  if(!country){showToast('Укажите страну',false);return;}
+  if(!tg&&!wa&&!email){showToast('Укажите хотя бы один контакт',false);return;}
+  const btn=document.getElementById('f-submit');
+  btn.disabled=true;btn.textContent='Отправляем...';
+  try{
+    const res=await fetch('/api/index.js',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        contact:tg||wa||email,
+        channel:tg?'Telegram':wa?'WhatsApp':'Email',
+        source:`franchise_page · ${PKGS[curPkg]} · ${PRICES[curPkg]}`,
+        timestamp:new Date().toISOString(),
+        extra:{name,country,tg,wa,email,notes,package:PKGS[curPkg],price:PRICES[curPkg]}
+      })
+    });
+    const data=await res.json();
+    if(data.ok){
+      document.getElementById('form-content').style.display='none';
+      document.getElementById('success-msg').style.display='block';
+      setTimeout(closeModal,3000);
+    }else throw new Error();
+  }catch(e){
+    showToast('Ошибка. Напишите напрямую.',false);
+    btn.disabled=false;btn.textContent='Отправить заявку →';
+  }
+}
+
+function showToast(msg,ok=true){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=ok?'var(--gr)':'var(--rd)';t.style.color=ok?'#000':'#fff';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');const was=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!was)item.classList.add('open');
+}
+
+const ro=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}});
+},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
