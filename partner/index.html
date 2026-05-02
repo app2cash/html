@@ -38,6 +38,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--gold)}
+.nav-links a.nav-fran{color:var(--gold);opacity:.8}
+.nav-links a.nav-fran:hover{opacity:1}
 .nav-ctas{display:flex;gap:10px}
 .nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln);padding:9px 20px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
 .nb-o:hover{border-color:var(--gb)}
@@ -96,6 +98,8 @@ h2 em{font-style:normal;color:var(--gold)}
 .stream-d{font-size:13px;color:var(--mu);line-height:1.7;margin-bottom:18px}
 .stream-formula{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--s3);border:1px solid var(--ln);border-radius:6px;padding:14px 16px;line-height:1.8}
 .sf-g{color:var(--gold)}.sf-gr{color:var(--gr)}.sf-mu{color:var(--mu)}
+.stream-fran-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;color:var(--gold);text-decoration:none;border:1px solid var(--gb);border-radius:6px;padding:7px 14px;background:var(--gd);transition:background .2s,border-color .2s;font-weight:600}
+.stream-fran-link:hover{background:rgba(201,168,76,.18);border-color:rgba(201,168,76,.4)}
 
 /* ── PYRAMID SECTION ── */
 .pyramid-section{background:linear-gradient(180deg,transparent,rgba(201,168,76,.03) 50%,transparent);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);padding:100px 0}
@@ -229,6 +233,17 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(90de
 .cta-banner h2{margin-bottom:12px}
 .cta-banner p{font-size:17px;color:var(--mu);margin-bottom:40px}
 
+/* ── FRANCHISE PROMO STRIP ── */
+.fran-strip{background:linear-gradient(90deg,rgba(201,168,76,.06) 0%,rgba(201,168,76,.03) 50%,rgba(167,139,250,.04) 100%);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:60px}
+.fran-strip-text{display:flex;align-items:center;gap:14px}
+.fran-strip-icon{font-size:28px;flex-shrink:0}
+.fran-strip-label{font-size:11px;font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.fran-strip-desc{font-size:13px;color:var(--mu);line-height:1.5}
+.fran-strip-desc a{color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.fran-strip-desc a:hover{text-decoration-style:solid}
+.fran-strip-btn{background:var(--gold);color:var(--bg);font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;padding:11px 22px;border-radius:7px;text-decoration:none;white-space:nowrap;transition:background .2s,transform .2s;flex-shrink:0}
+.fran-strip-btn:hover{background:var(--gold-l);transform:translateY(-1px)}
+
 /* ── FOOTER ── */
 footer{border-top:1px solid var(--ln);padding:36px 56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--mu)}
 footer a{color:var(--mu);text-decoration:none;transition:color .2s}
@@ -270,7 +285,6 @@ footer a:hover{color:var(--gold)}
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .rv.in{opacity:1;transform:none}
 
-/* node hover pulse */
 .pyr-person{transition:transform .2s;cursor:pointer}
 .pyr-person:hover{transform:scale(1.07)}
 
@@ -286,6 +300,7 @@ footer a:hover{color:var(--gold)}
   footer{padding:24px 20px;flex-direction:column;text-align:center}.fn{justify-content:center}
   .pyramid-layout{grid-template-columns:1fr}
   .pyramid-text{padding-right:0}
+  .fran-strip{flex-direction:column;align-items:flex-start}
 }
 @media(max-width:640px){
   .stats-bar{flex-direction:column}.stat-item{border-right:none;border-bottom:1px solid var(--ln)}.stat-item:last-child{border-bottom:none}
@@ -314,6 +329,7 @@ footer a:hover{color:var(--gold)}
     <li><a href="#levels">Уровни</a></li>
     <li><a href="#calc">Калькулятор</a></li>
     <li><a href="#faq">FAQ</a></li>
+    <li><a href="/fran" class="nav-fran">🏢 Франшиза</a></li>
   </ul>
   <div class="nav-ctas">
     <a href="/cabinet" class="nb-o">Кабинет</a>
@@ -330,6 +346,7 @@ footer a:hover{color:var(--gold)}
   <div class="hero-ctas">
     <a href="#" class="btn-primary" onclick="openModal();return false">Подать заявку →</a>
     <a href="#how" class="btn-outline">Как это работает</a>
+    <a href="/fran" class="btn-outline" style="border-color:rgba(201,168,76,.3);color:var(--gold)">🏢 Хочу свой обменник</a>
   </div>
 </div>
 
@@ -362,6 +379,19 @@ footer a:hover{color:var(--gold)}
   <div class="section-tag">3 источника дохода</div>
   <h2>Откуда берутся <em>деньги</em></h2>
   <p class="section-lead">Партнёры зарабатывают из трёх независимых потоков, которые суммируются.</p>
+
+  <!-- FRANCHISE PROMO STRIP -->
+  <div class="fran-strip">
+    <div class="fran-strip-text">
+      <div class="fran-strip-icon">🏢</div>
+      <div>
+        <div class="fran-strip-label">Хотите большего?</div>
+        <div class="fran-strip-desc">Запустите <a href="/fran">собственный обменник</a> под своим брендом — 100% маржи ваша, своя MLM-сеть, без роялти. За 7 дней.</div>
+      </div>
+    </div>
+    <a href="/fran" class="fran-strip-btn">Смотреть франшизу →</a>
+  </div>
+
   <div class="streams">
     <div class="stream str1">
       <div class="stream-num">// 01</div>
@@ -389,26 +419,24 @@ footer a:hover{color:var(--gold)}
       <div class="stream-num">// 03</div>
       <div class="stream-icon">🏢</div>
       <div class="stream-t">Продажи франшиз</div>
-      <div class="stream-d">Подключаете нового франчайзи — получаете 10% от стоимости подключения. Доступно на уровне VIP Elite.</div>
+      <div class="stream-d">Подключаете нового франчайзи — получаете 10% от стоимости подключения. Доступно на уровне VIP Elite. <a href="/fran" style="color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">Узнать о франшизе →</a></div>
       <div class="stream-formula">
-        <div>Франшиза продана за <span class="sf-g">$800</span></div>
-        <div>Ваши 10%: <span class="sf-gr">= $80</span> вам</div>
-        <div>2 продажи в месяц: <span class="sf-gr">+$160</span></div>
+        <div>Франшиза продана за <span class="sf-g">$1 500</span></div>
+        <div>Ваши 10%: <span class="sf-gr">= $150</span> вам</div>
+        <div>2 продажи в месяц: <span class="sf-gr">+$300</span></div>
       </div>
+      <a href="/fran" class="stream-fran-link">🏢 Подробнее о франшизе →</a>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ══════════════════════════════════════════════
-     PYRAMID ILLUSTRATION SECTION
-═══════════════════════════════════════════════ -->
+<!-- PYRAMID SECTION -->
 <div class="pyramid-section" id="pyramid">
 <div class="pyramid-inner rv">
   <div class="pyramid-layout">
 
-    <!-- TEXT LEFT -->
     <div class="pyramid-text">
       <div class="section-tag">Сетевой доход</div>
       <h2>Ваша сеть<br>растёт <em>сама</em></h2>
@@ -422,11 +450,9 @@ footer a:hover{color:var(--gold)}
       </div>
     </div>
 
-    <!-- SVG PYRAMID RIGHT -->
     <div class="pyramid-svg-wrap">
       <svg viewBox="0 0 480 580" xmlns="http://www.w3.org/2000/svg" id="pyr-svg">
         <defs>
-          <!-- glow filters -->
           <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -435,71 +461,42 @@ footer a:hover{color:var(--gold)}
             <feGaussianBlur stdDeviation="2" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
-          <!-- connector gradient -->
           <linearGradient id="conn-grad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.6"/>
             <stop offset="100%" stop-color="#C9A84C" stop-opacity="0.1"/>
           </linearGradient>
         </defs>
-
-        <!-- ── BACKGROUND PYRAMID SHAPE ── -->
         <polygon points="240,20 460,560 20,560" fill="none" stroke="rgba(201,168,76,0.06)" stroke-width="1"/>
         <line x1="240" y1="20" x2="240" y2="560" stroke="rgba(201,168,76,0.04)" stroke-width="1" stroke-dasharray="4 6"/>
-
-        <!-- ── CONNECTOR LINES ── -->
-        <!-- YOU → L1 -->
         <line x1="240" y1="95" x2="140" y2="185" stroke="url(#conn-grad)" stroke-width="1" opacity="0.5"/>
         <line x1="240" y1="95" x2="240" y2="185" stroke="url(#conn-grad)" stroke-width="1" opacity="0.5"/>
         <line x1="240" y1="95" x2="340" y2="185" stroke="url(#conn-grad)" stroke-width="1" opacity="0.5"/>
-
-        <!-- L1 → L2 (left branch) -->
         <line x1="140" y1="240" x2="90" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
         <line x1="140" y1="240" x2="140" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
         <line x1="140" y1="240" x2="192" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
-        <!-- L1 → L2 (center) -->
         <line x1="240" y1="240" x2="218" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
         <line x1="240" y1="240" x2="258" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
-        <!-- L1 → L2 (right branch) -->
         <line x1="340" y1="240" x2="292" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
         <line x1="340" y1="240" x2="340" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
         <line x1="340" y1="240" x2="390" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
-
-        <!-- L2 → L3 dots (just suggestive lines, many) -->
         <g opacity="0.2" stroke="rgba(167,139,250,1)" stroke-width="0.6">
-          <line x1="90" y1="380" x2="62" y2="450"/>
-          <line x1="90" y1="380" x2="90" y2="450"/>
-          <line x1="140" y1="380" x2="120" y2="450"/>
-          <line x1="140" y1="380" x2="158" y2="450"/>
-          <line x1="192" y1="380" x2="178" y2="450"/>
-          <line x1="192" y1="380" x2="206" y2="450"/>
-          <line x1="218" y1="380" x2="210" y2="450"/>
-          <line x1="258" y1="380" x2="250" y2="450"/>
-          <line x1="258" y1="380" x2="266" y2="450"/>
-          <line x1="292" y1="380" x2="284" y2="450"/>
-          <line x1="340" y1="380" x2="322" y2="450"/>
-          <line x1="340" y1="380" x2="354" y2="450"/>
-          <line x1="390" y1="380" x2="374" y2="450"/>
-          <line x1="390" y1="380" x2="402" y2="450"/>
+          <line x1="90" y1="380" x2="62" y2="450"/><line x1="90" y1="380" x2="90" y2="450"/>
+          <line x1="140" y1="380" x2="120" y2="450"/><line x1="140" y1="380" x2="158" y2="450"/>
+          <line x1="192" y1="380" x2="178" y2="450"/><line x1="192" y1="380" x2="206" y2="450"/>
+          <line x1="218" y1="380" x2="210" y2="450"/><line x1="258" y1="380" x2="250" y2="450"/>
+          <line x1="258" y1="380" x2="266" y2="450"/><line x1="292" y1="380" x2="284" y2="450"/>
+          <line x1="340" y1="380" x2="322" y2="450"/><line x1="340" y1="380" x2="354" y2="450"/>
+          <line x1="390" y1="380" x2="374" y2="450"/><line x1="390" y1="380" x2="402" y2="450"/>
         </g>
-
-        <!-- ══ YOU ══ -->
         <g class="pyr-person" onclick="pyrClick('you')" filter="url(#glow-gold)">
-          <!-- halo -->
           <circle cx="240" cy="52" r="30" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
-          <!-- head -->
           <circle cx="240" cy="44" r="14" fill="#1a1500" stroke="#C9A84C" stroke-width="1.5"/>
-          <!-- crown highlight -->
           <circle cx="240" cy="38" r="4" fill="rgba(201,168,76,0.4)"/>
-          <!-- body -->
           <path d="M217,95 Q217,66 240,63 Q263,66 263,95 Z" fill="#1a1500" stroke="#C9A84C" stroke-width="1.5"/>
-          <!-- badge -->
           <rect x="184" y="98" width="112" height="38" rx="8" fill="#1a1500" stroke="#C9A84C" stroke-width="1.5"/>
           <text x="240" y="114" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="10" font-weight="700" fill="#C9A84C">VIP ELITE — ВЫ</text>
           <text x="240" y="128" text-anchor="middle" font-family="Golos Text,sans-serif" font-size="9" fill="rgba(201,168,76,0.6)">40% · 3 уровня сети</text>
         </g>
-
-        <!-- ══ L1 × 3 ══ -->
-        <!-- L1 left -->
         <g class="pyr-person" onclick="pyrClick('l1')" filter="url(#glow-soft)">
           <circle cx="140" cy="200" r="22" fill="rgba(96,165,250,0.06)" stroke="rgba(96,165,250,0.25)" stroke-width="0.8"/>
           <circle cx="140" cy="194" r="11" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
@@ -508,7 +505,6 @@ footer a:hover{color:var(--gold)}
           <text x="140" y="254" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="8" font-weight="600" fill="#60A5FA">Partner</text>
           <text x="140" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(76,175,125,0.9)">+10% для вас</text>
         </g>
-        <!-- L1 center -->
         <g class="pyr-person" onclick="pyrClick('l1')" filter="url(#glow-soft)">
           <circle cx="240" cy="200" r="22" fill="rgba(96,165,250,0.06)" stroke="rgba(96,165,250,0.25)" stroke-width="0.8"/>
           <circle cx="240" cy="194" r="11" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
@@ -517,7 +513,6 @@ footer a:hover{color:var(--gold)}
           <text x="240" y="254" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="8" font-weight="600" fill="#60A5FA">Partner</text>
           <text x="240" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(76,175,125,0.9)">+10% для вас</text>
         </g>
-        <!-- L1 right -->
         <g class="pyr-person" onclick="pyrClick('l1')" filter="url(#glow-soft)">
           <circle cx="340" cy="200" r="22" fill="rgba(96,165,250,0.06)" stroke="rgba(96,165,250,0.25)" stroke-width="0.8"/>
           <circle cx="340" cy="194" r="11" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
@@ -526,29 +521,19 @@ footer a:hover{color:var(--gold)}
           <text x="340" y="254" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="8" font-weight="600" fill="#60A5FA">Partner</text>
           <text x="340" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(76,175,125,0.9)">+10% для вас</text>
         </g>
-
-        <!-- ══ L2 × 9 (compact, 8px heads) ══ -->
-        <!-- positions: 3 per L1 node -->
         <g onclick="pyrClick('l2')" style="cursor:pointer">
-          <!-- under L1-left: 90,140,192 -->
           <g><circle cx="90" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M80,375 Q80,362 90,360 Q100,362 100,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
           <g><circle cx="140" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M130,375 Q130,362 140,360 Q150,362 150,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
           <g><circle cx="192" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M182,375 Q182,362 192,360 Q202,362 202,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
-          <!-- under L1-center: 218,238,258 -->
           <g><circle cx="218" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M208,375 Q208,362 218,360 Q228,362 228,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
           <g><circle cx="258" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M248,375 Q248,362 258,360 Q268,362 268,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
-          <!-- under L1-right: 292,340,390 -->
           <g><circle cx="292" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M282,375 Q282,362 292,360 Q302,362 302,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
           <g><circle cx="340" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M330,375 Q330,362 340,360 Q350,362 350,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
           <g><circle cx="390" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M380,375 Q380,362 390,360 Q400,362 400,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
-          <!-- row label -->
           <rect x="162" y="378" width="156" height="22" rx="6" fill="rgba(167,139,250,0.08)" stroke="rgba(167,139,250,0.3)" stroke-width="0.8"/>
           <text x="240" y="392" text-anchor="middle" font-family="Golos Text,sans-serif" font-size="9" fill="#A78BFA">8 партнёров L2 · +5% для вас</text>
         </g>
-
-        <!-- ══ L3 — dots row ══ -->
         <g onclick="pyrClick('l3')" style="cursor:pointer">
-          <!-- 18 small dots representing L3 -->
           <g opacity="0.7">
             <circle cx="52"  cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
             <circle cx="75"  cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
@@ -568,7 +553,6 @@ footer a:hover{color:var(--gold)}
             <circle cx="397" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
             <circle cx="420" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
           </g>
-          <!-- small person icons (L3 heads) -->
           <g opacity="0.5">
             <path d="M44,484 Q44,475 52,473 Q60,475 60,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
             <path d="M67,484 Q67,475 75,473 Q83,475 83,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
@@ -591,24 +575,16 @@ footer a:hover{color:var(--gold)}
           <rect x="142" y="488" width="196" height="22" rx="6" fill="rgba(76,175,125,0.07)" stroke="rgba(76,175,125,0.3)" stroke-width="0.8"/>
           <text x="240" y="502" text-anchor="middle" font-family="Golos Text,sans-serif" font-size="9" fill="#4CAF7D">27 партнёров L3 · +2% для вас</text>
         </g>
-
-        <!-- ══ LEVEL LABELS LEFT SIDE ══ -->
         <text x="22" y="58" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(201,168,76,0.5)">L0</text>
         <text x="22" y="212" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(96,165,250,0.5)">L1</text>
         <text x="22" y="358" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(167,139,250,0.5)">L2</text>
         <text x="22" y="466" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(76,175,125,0.5)">L3</text>
-
-        <!-- ══ TOTAL BADGE ══ -->
         <rect x="120" y="522" width="240" height="46" rx="10" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
         <text x="240" y="540" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="10" font-weight="700" fill="#C9A84C">ИТОГО С СЕТИ / МЕС</text>
         <text x="240" y="558" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" font-weight="500" fill="#4CAF7D">$1 526+</text>
-
       </svg>
-
-      <!-- Tooltip on click -->
       <div id="pyr-tooltip" style="display:none;position:absolute;bottom:80px;left:50%;transform:translateX(-50%);background:var(--s1);border:1px solid var(--gb);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--tx);white-space:nowrap;pointer-events:none;z-index:10"></div>
     </div>
-
   </div>
 </div>
 </div>
@@ -621,7 +597,6 @@ footer a:hover{color:var(--gold)}
   <h2>Оплати один раз —<br>зарабатывай <em>бессрочно</em></h2>
   <p class="section-lead">Каждый уровень открывает новые потоки дохода. Разовая оплата, без роялти и ежемесячных взносов.</p>
   <div class="levels">
-
     <div class="lc">
       <div class="lc-badge">Starter · FREE</div>
       <div class="lc-name">Старт</div>
@@ -643,7 +618,6 @@ footer a:hover{color:var(--gold)}
       </ul>
       <a href="#" class="lc-cta outline" onclick="openModal();return false">Начать бесплатно</a>
     </div>
-
     <div class="lc best">
       <div class="lc-badge">Partner · $199</div>
       <div class="lc-name">Партнёр</div>
@@ -665,7 +639,6 @@ footer a:hover{color:var(--gold)}
       </ul>
       <a href="#" class="lc-cta" onclick="openModal();return false">Подключить за $199 →</a>
     </div>
-
     <div class="lc">
       <div class="lc-badge">Pro · $499</div>
       <div class="lc-name">Про</div>
@@ -687,7 +660,6 @@ footer a:hover{color:var(--gold)}
       </ul>
       <a href="#" class="lc-cta" style="background:var(--bl)" onclick="openModal();return false">Подключить за $499 →</a>
     </div>
-
     <div class="lc">
       <div class="lc-badge">VIP Elite · $1 499</div>
       <div class="lc-name">VIP Elite</div>
@@ -703,13 +675,12 @@ footer a:hover{color:var(--gold)}
       <ul class="lc-perks">
         <li><span class="ck">✓</span>Всё из Pro</li>
         <li><span class="ck">✓</span>3 уровня глубины сети</li>
-        <li><span class="ck">✓</span>10% от продаж франшиз</li>
+        <li><span class="ck">✓</span>10% от продаж <a href="/fran" style="color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">франшиз</a></li>
         <li><span class="ck">✓</span>API-доступ</li>
         <li><span class="ck">✓</span>Совместный маркетинг</li>
       </ul>
       <a href="#" class="lc-cta" style="background:var(--pp)" onclick="openModal();return false">Подключить за $1 499 →</a>
     </div>
-
   </div>
 </section>
 
@@ -719,12 +690,10 @@ footer a:hover{color:var(--gold)}
   <div class="section-tag">Калькулятор дохода</div>
   <h2>Настройте параметры —<br>увидите <em>реальные цифры</em></h2>
   <p class="section-lead">Спред зафиксирован: 3.6%. Меняйте параметры — результат обновляется моментально.</p>
-
   <div class="calc-wrap">
     <div class="pyramid-box">
       <div class="pyramid-title">Ваша сеть в деньгах</div>
       <div class="pyramid-sub">Пример дохода при текущих параметрах</div>
-
       <div class="pyr-node you">
         <div class="pn-icon">👤</div>
         <div><div class="pn-label" id="pn-you-l">ВЫ (VIP · 40%)</div><div class="pn-detail" id="pn-you-d">20 клиентов · $1 000/мес</div></div>
@@ -751,15 +720,13 @@ footer a:hover{color:var(--gold)}
       <div class="pyr-connector" id="cn-fr"></div>
       <div class="pyr-node" id="pn-fr" style="border-color:rgba(76,175,125,.25)">
         <div class="pn-icon">🏢</div>
-        <div><div class="pn-label">Продажи франшиз</div><div class="pn-detail" id="pn-fr-d">2 франшизы / мес · $800</div></div>
+        <div><div class="pn-label">Продажи <a href="/fran" style="color:var(--gold);text-decoration:none">франшиз</a></div><div class="pn-detail" id="pn-fr-d">2 франшизы / мес · $800</div></div>
         <div><div class="pn-earn-val" id="pn-fr-v">+$160</div><div class="pn-earn-label">10% от каждой</div></div>
       </div>
-
       <div class="pyr-total">
         <div><div class="pyt-label">Итого в месяц</div><div class="pyt-period">в год: <span id="pyt-y">$21 768</span></div></div>
         <div class="pyt-val" id="pyt-t">$1 814</div>
       </div>
-
       <div class="income-bars">
         <div class="ib-row"><div class="ib-label">Свои клиенты</div><div class="ib-bw"><div class="ib-b b0" id="b0"><span class="bv" id="bv0">$288</span></div></div></div>
         <div class="ib-row"><div class="ib-label">L1 сеть</div><div class="ib-bw"><div class="ib-b b1" id="b1"><span class="bv" id="bv1">$360</span></div></div></div>
@@ -768,13 +735,10 @@ footer a:hover{color:var(--gold)}
         <div class="ib-row" id="br-fr"><div class="ib-label">Франшизы</div><div class="ib-bw"><div class="ib-b b4" id="b4"><span class="bv" id="bv4">$160</span></div></div></div>
       </div>
     </div>
-
     <div class="calc-box">
       <div class="calc-h">Параметры расчёта</div>
       <div class="calc-sub">Всё обновляется в реальном времени</div>
-
       <div class="spread-info">📊 Спред платформы фиксирован: <strong>3.6%</strong> — вы получаете % от этих <strong>3.6%</strong>, не от суммы обмена.</div>
-
       <div style="font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Ваш уровень</div>
       <div class="lv-pick">
         <div class="lvp" onclick="setLv(this,0)"><div class="lvp-name">Starter</div><div class="lvp-price">FREE</div></div>
@@ -782,12 +746,10 @@ footer a:hover{color:var(--gold)}
         <div class="lvp" onclick="setLv(this,2)"><div class="lvp-name">Pro</div><div class="lvp-price">$499</div></div>
         <div class="lvp on" onclick="setLv(this,3)"><div class="lvp-name">VIP Elite</div><div class="lvp-price">$1 499</div></div>
       </div>
-
       <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
       <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Ваши клиенты</div>
       <div class="sl-block"><div class="sl-row"><span class="sl-name">Кол-во клиентов</span><span class="sl-val" id="sv-c">20</span></div><input type="range" id="sl-c" min="1" max="200" value="20" oninput="calc()"></div>
       <div class="sl-block"><div class="sl-row"><span class="sl-name">Объём / клиент / мес</span><span class="sl-val" id="sv-a">$1 000</span></div><input type="range" id="sl-a" min="100" max="20000" step="100" value="1000" oninput="calc()"></div>
-
       <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
       <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">L1 — Ваши прямые партнёры</div>
       <div id="g-l1">
@@ -795,24 +757,21 @@ footer a:hover{color:var(--gold)}
         <div class="sl-block"><div class="sl-row"><span class="sl-name">Клиентов у каждого</span><span class="sl-val" id="sv-l1c">10</span></div><input type="range" id="sl-l1c" min="0" max="100" value="10" oninput="calc()"></div>
         <div class="sl-block"><div class="sl-row"><span class="sl-name">Объём клиента L1 / мес</span><span class="sl-val" id="sv-l1a">$800</span></div><input type="range" id="sl-l1a" min="100" max="10000" step="100" value="800" oninput="calc()"></div>
       </div>
-
       <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0" id="hr-l2">
       <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px" id="lbl-l2">L2 — Партнёры ваших партнёров</div>
       <div id="g-l2">
         <div class="sl-block"><div class="sl-row"><span class="sl-name">Партнёров у каждого L1</span><span class="sl-val" id="sv-l2">5</span></div><input type="range" id="sl-l2" min="0" max="30" value="5" oninput="calc()"></div>
         <div class="sl-block"><div class="sl-row"><span class="sl-name">Клиентов у каждого L2</span><span class="sl-val" id="sv-l2c">8</span></div><input type="range" id="sl-l2c" min="0" max="50" value="8" oninput="calc()"></div>
       </div>
-
       <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0" id="hr-l3">
       <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px" id="lbl-l3">L3 — Третий уровень</div>
       <div id="g-l3">
         <div class="sl-block"><div class="sl-row"><span class="sl-name">Партнёров у каждого L2</span><span class="sl-val" id="sv-l3">3</span></div><input type="range" id="sl-l3" min="0" max="20" value="3" oninput="calc()"></div>
         <div class="sl-block"><div class="sl-row"><span class="sl-name">Клиентов у каждого L3</span><span class="sl-val" id="sv-l3c">5</span></div><input type="range" id="sl-l3c" min="0" max="30" value="5" oninput="calc()"></div>
       </div>
-
       <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0" id="hr-fr">
       <div id="g-fr">
-        <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Продажи франшиз (VIP)</div>
+        <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Продажи <a href="/fran" style="color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">франшиз</a> (VIP)</div>
         <div class="sl-block"><div class="sl-row"><span class="sl-name">Франшиз в месяц</span><span class="sl-val" id="sv-fr">2</span></div><input type="range" id="sl-fr" min="0" max="20" value="2" oninput="calc()"></div>
         <div class="sl-block"><div class="sl-row"><span class="sl-name">Ср. стоимость франшизы</span><span class="sl-val" id="sv-frp">$800</span></div><input type="range" id="sl-frp" min="500" max="3000" step="100" value="800" oninput="calc()"></div>
       </div>
@@ -839,7 +798,7 @@ footer a:hover{color:var(--gold)}
         <tr><td>% от заработка L1</td><td class="no">—</td><td class="pc c2">+5%</td><td class="pc c3">+7%</td><td class="pc c4">+10%</td></tr>
         <tr><td>% от заработка L2</td><td class="no">—</td><td class="no">—</td><td class="pc c3">+3%</td><td class="pc c4">+5%</td></tr>
         <tr><td>% от заработка L3</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="pc c4">+2%</td></tr>
-        <tr><td>% от продаж франшиз</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="pc" style="color:var(--gr)">+10%</td></tr>
+        <tr><td>% от продаж <a href="/fran" style="color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">франшиз</a></td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="pc" style="color:var(--gr)">+10%</td></tr>
         <tr><td>Пример: 50 кл × $1 000/мес</td><td class="pc c1">$720/мес</td><td class="pc c2">$900/мес</td><td class="pc c3">$1 080/мес</td><td class="pc c4">$1 440/мес</td></tr>
         <tr><td>Cookie-window</td><td class="yes">90 дней ✓</td><td class="yes">90 дней ✓</td><td class="yes">90 дней ✓</td><td class="yes">90 дней ✓</td></tr>
         <tr><td>Lifetime клиентов</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td></tr>
@@ -901,6 +860,10 @@ footer a:hover{color:var(--gold)}
       <button class="faq-q" onclick="toggleFaq(this)">Кто может стать партнёром? Нужна ли регистрация юрлица?<span class="faq-chevron">+</span></button>
       <div class="faq-a">Любой человек — блогер, администратор чата, финансовый консультант, экспат, или просто тот, кто активно общается с аудиторией из России, Турции, Узбекистана, Африки и других стран. Регистрация юрлица не требуется. Достаточно заполнить заявку.</div>
     </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Хочу запустить собственный обменник, а не просто рекомендовать. Это возможно?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Да — это <a href="/fran" style="color:var(--gold)">франшиза app2.cash</a>. Вы получаете готовый сайт обменника под своим брендом, CRM, MLM-систему и обучение. 100% маржи с клиентов — ваша. Без роялти. За 7 дней. Доступно любому человеку из любой страны без юрлица.</div>
+    </div>
   </div>
 </section>
 
@@ -912,6 +875,7 @@ footer a:hover{color:var(--gold)}
     <p>Заявка рассматривается в течение 24 часов. Starter доступен сразу. Уровень повышается в любой момент.</p>
     <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
       <a href="#" class="btn-primary" onclick="openModal();return false">Стать партнёром →</a>
+      <a href="/fran" class="btn-outline" style="border-color:rgba(201,168,76,.3);color:var(--gold)">🏢 Франшиза — свой обменник</a>
       <a href="https://wa.me/255756687444" target="_blank" class="btn-outline">💬 WhatsApp</a>
       <a href="https://t.me/app2cas" target="_blank" class="btn-outline">✈️ Telegram</a>
     </div>
@@ -924,6 +888,7 @@ footer a:hover{color:var(--gold)}
     <li><a href="#how">Как работает</a></li>
     <li><a href="#levels">Уровни</a></li>
     <li><a href="#faq">FAQ</a></li>
+    <li><a href="/fran">🏢 Франшиза</a></li>
     <li><a href="mailto:partner@app2.cash">partner@app2.cash</a></li>
   </ul>
   <span>© 2025 app2.cash</span>
@@ -976,7 +941,6 @@ const LVL = [
 ];
 let curLv = 3;
 
-// Pyramid tooltip
 const pyrData = {
   you:  'ВЫ · VIP Elite · 40% от спреда + 3 уровня сети',
   l1:   'L1 партнёры · +10% от спреда их клиентов',
@@ -990,7 +954,6 @@ function pyrClick(key){
   setTimeout(()=>tt.style.display='none', 2500);
 }
 
-// Modal
 function openModal(){
   const ref=new URLSearchParams(window.location.search).get('ref');
   if(ref) document.getElementById('f-ref').value=ref;
@@ -1084,7 +1047,6 @@ function updateLvUI(){
   document.getElementById('pn-l3-p').textContent=hasL3?`${Math.round(lv.l3*100)}% от спреда их клиентов`:'Только VIP Elite';
 }
 
-function fmt(n){return n===0?'—':'$'+Math.round(n).toLocaleString('en-US')}
 function fmtp(n){return '$'+Math.round(n).toLocaleString('en-US')}
 
 function fill(id){
@@ -1149,13 +1111,11 @@ function calc(){
   setBar('b0','bv0',ownEarn);setBar('b1','bv1',l1Earn);setBar('b2','bv2',l2Earn);setBar('b3','bv3',l3Earn);setBar('b4','bv4',frEarn);
 }
 
-// Scroll animations
 const ro=new IntersectionObserver(es=>{
   es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}});
 },{threshold:.06,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
 
-// Init
 updateLvUI();calc();
 ['sl-c','sl-a','sl-l1','sl-l1c','sl-l1a','sl-l2','sl-l2c','sl-l3','sl-l3c','sl-fr','sl-frp'].forEach(id=>{
   fill(id);document.getElementById(id).addEventListener('input',()=>fill(id));
