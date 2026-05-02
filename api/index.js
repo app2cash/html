@@ -1,3 +1,4 @@
+const https = require('https');
 const nodemailer = require('nodemailer');
 
 module.exports = async (req, res) => {
@@ -21,7 +22,6 @@ module.exports = async (req, res) => {
 
   // Telegram
   let telegramOk = false;
-  let tgError = null;
   try {
     const text = `🔔 *Новая заявка*\n\n${channelEmoji} *Канал:* ${channel}\n📱 *Контакт:* ${contact}\n🌐 *Источник:* ${source || '—'}\n🕐 *Время:* ${time}\n\n⚡️ Ответьте в течение 5 минут!`;
     const body = JSON.stringify({ chat_id: CHAT_ID, text, parse_mode: 'Markdown' });
@@ -36,8 +36,7 @@ module.exports = async (req, res) => {
       r.write(body); r.end();
     });
     telegramOk = tgRes.ok === true;
-    if (!telegramOk) tgError = tgRes;
-  } catch(e) { tgError = e.message; }
+  } catch(e) { console.error('Telegram error:', e.message); }
 
   // Email
   let emailOk = false;
@@ -63,5 +62,5 @@ module.exports = async (req, res) => {
     emailOk = true;
   } catch(e) { console.error('Email error:', e.message); }
 
-  res.status(200).json({ ok: true, tg: telegramOk, email: emailOk, db: false, tgError, chatId: CHAT_ID, hasBotToken: !!BOT_TOKEN });
+  res.status(200).json({ ok: true, tg: telegramOk, email: emailOk, db: false });
 };
