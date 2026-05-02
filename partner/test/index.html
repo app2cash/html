@@ -3,440 +3,1150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Партнёрская программа — app2.cash</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>app2.cash — Партнёрская программа · MLM · до 40% от спреда</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
 :root{
-  --gold:#FFD700;--gold2:#FFA500;--bg:#08080d;--surface:#0f0f18;
-  --surface2:#16161f;--border:#1e1e2e;--text:#f0f0f0;--muted:#666;--green:#00d084;
+  --g:#C9A84C;--g2:#E8C96D;--gd:rgba(201,168,76,.10);--gb:rgba(201,168,76,.22);
+  --bg:#060606;--b1:#0B0B0B;--b2:#111;--b3:#191919;--b4:#222;
+  --tx:#EDEAE0;--mu:rgba(237,234,224,.44);--di:rgba(237,234,224,.16);--ln:rgba(255,255,255,.065);
+  --gr:#3DD68C;--rd:#F05252;--bl:#60A5FA;--pp:#A78BFA;--or:#FB923C;
+  --lv1-c:rgba(255,255,255,.15);--lv2-c:#C9A84C;--lv3-c:#60A5FA;--lv4-c:#A78BFA;
 }
-body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;min-height:100vh;overflow-x:hidden;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;min-height:100vh}
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.032'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(160px);pointer-events:none;z-index:0}
+.o1{width:700px;height:700px;background:rgba(201,168,76,.05);top:-200px;right:-200px}
+.o2{width:500px;height:500px;background:rgba(96,165,250,.038);bottom:0;left:-150px}
+.wrap{position:relative;z-index:1}
 
-/* NOISE */
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
+/* ── NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(6,6,6,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--ln)}
+.logo{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;color:var(--g);text-decoration:none}
+.logo sub{font-size:9px;color:var(--mu);font-weight:300;letter-spacing:.1em;text-transform:uppercase;margin-left:8px;vertical-align:middle}
+.navl{display:flex;gap:28px;list-style:none}
+.navl a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s}
+.navl a:hover{color:var(--g)}
+.nav-btn{font-family:'Manrope',sans-serif;font-size:12px;font-weight:600;padding:7px 18px;border-radius:3px;cursor:pointer;text-decoration:none;border:none;transition:all .2s}
+.nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln)}.nb-o:hover{border-color:var(--gb)}
+.nb-g{background:var(--g);color:var(--bg)}.nb-g:hover{background:var(--g2)}
+.nav-d{display:flex;gap:8px}
 
-/* GLOW */
-.glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,0,.07) 0%,transparent 70%);pointer-events:none;top:-200px;left:50%;transform:translateX(-50%);z-index:0;}
+/* ── HERO */
+.hero{min-height:100vh;padding-top:58px;display:grid;grid-template-columns:56% 44%;align-items:stretch}
+.hero-l{padding:72px 48px 72px 72px;display:flex;flex-direction:column;justify-content:center;animation:fu .7s ease both}
+.hero-r{border-left:1px solid var(--ln);display:flex;flex-direction:column;justify-content:center;padding:48px;animation:fu .7s .1s ease both}
+.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gb);background:var(--gd);border-radius:2px;padding:5px 14px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--g);margin-bottom:32px;width:fit-content}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--gr);animation:blink 2s ease infinite}
+h1{font-family:'Unbounded',sans-serif;font-size:clamp(36px,4.8vw,68px);font-weight:900;line-height:.92;letter-spacing:-.035em;margin-bottom:10px}
+.h1-hl{color:var(--g)}
+.h1-sub{display:block;font-size:.42em;font-weight:300;color:var(--mu);margin-top:14px;letter-spacing:-.01em;line-height:1.4}
+.hero-desc{font-size:15px;color:var(--mu);line-height:1.8;max-width:480px;margin:24px 0 36px}
+.kpis{display:flex;gap:0;border:1px solid var(--ln);border-radius:3px;overflow:hidden}
+.kpi{flex:1;padding:16px 18px;border-right:1px solid var(--ln)}.kpi:last-child{border-right:none}
+.kpi-v{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;color:var(--g);line-height:1}
+.kpi-l{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
 
-.wrap{max-width:880px;margin:auto;padding:0 20px;position:relative;z-index:1;}
+/* auth */
+.auth-box{background:var(--b2);border:1px solid var(--ln);border-radius:6px;overflow:hidden}
+.auth-top{height:2px;background:linear-gradient(90deg,var(--g),transparent)}
+.auth-in{padding:32px}
+.atabs{display:flex;background:var(--b1);border-radius:3px;padding:3px;margin-bottom:24px}
+.at{flex:1;padding:8px;text-align:center;font-size:12px;font-weight:500;background:transparent;border:none;color:var(--mu);cursor:pointer;border-radius:2px;transition:all .2s;font-family:'Manrope',sans-serif}
+.at.on{background:var(--b3);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.auth-h{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
+.auth-s{font-size:12px;color:var(--mu);margin-bottom:22px}
+.f{margin-bottom:11px}
+.f label{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--di);margin-bottom:6px}
+.f input,.f select{width:100%;background:var(--b1);border:1px solid var(--ln);border-radius:3px;padding:10px 12px;font-family:'Manrope',sans-serif;font-size:13px;color:var(--tx);outline:none;transition:border-color .2s;-webkit-appearance:none}
+.f input:focus,.f select:focus{border-color:var(--gb)}
+.f input::placeholder{color:var(--di)}
+.f select option{background:#111}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sbtn{width:100%;padding:12px;background:var(--g);color:var(--bg);border:none;border-radius:3px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s;margin-top:4px}
+.sbtn:hover{background:var(--g2)}
+.af{text-align:center;font-size:11px;color:var(--mu);margin-top:12px}
+.af a{color:var(--g);text-decoration:none}
+.fp{display:none}.fp.on{display:block}
+.rpick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.rp{padding:8px 4px;border:1px solid var(--ln);border-radius:3px;background:var(--b1);cursor:pointer;text-align:center;font-family:'Manrope',sans-serif;transition:all .2s}
+.rp:hover{border-color:var(--gb)}.rp.on{border-color:var(--g);background:var(--gd)}
+.rp-i{font-size:15px;margin-bottom:3px}
+.rp-n{font-size:9px;color:var(--mu);letter-spacing:.04em}.rp.on .rp-n{color:var(--g)}
 
-/* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid var(--border);}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--gold);letter-spacing:2px;text-decoration:none;}
-.nav-links{display:flex;gap:20px;align-items:center;}
-.nav-links a{color:var(--muted);font-size:13px;text-decoration:none;transition:.2s;}
-.nav-links a:hover{color:var(--text);}
-.nav-btn{background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);color:var(--gold);padding:8px 18px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;transition:.2s;}
-.nav-btn:hover{background:rgba(255,215,0,.2);}
+/* ── SECTIONS */
+section{padding:80px 72px;position:relative;border-top:1px solid var(--ln)}
+.stag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:10px}
+h2{font-family:'Unbounded',sans-serif;font-size:clamp(24px,2.8vw,42px);font-weight:700;line-height:1.05;letter-spacing:-.025em;margin-bottom:12px}
+.sdesc{font-size:15px;color:var(--mu);line-height:1.8;max-width:580px;margin-bottom:52px}
 
-/* HERO */
-.hero{text-align:center;padding:80px 0 60px;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);padding:6px 16px;border-radius:100px;font-size:12px;color:var(--gold);margin-bottom:28px;font-weight:600;letter-spacing:.5px;}
-.hero-badge span{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,96px);line-height:.95;letter-spacing:2px;margin-bottom:20px;}
-h1 span{background:linear-gradient(90deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.hero-sub{font-size:17px;color:#aaa;max-width:560px;margin:0 auto 40px;line-height:1.6;}
+/* ── INCOME STREAMS */
+.streams-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:4px;overflow:hidden}
+.stream-card{background:var(--b1);padding:36px 28px;position:relative;overflow:hidden;transition:background .25s}
+.stream-card:hover{background:var(--b2)}
+.stream-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity .3s}
+.s1::before{background:linear-gradient(90deg,var(--g),transparent)}
+.s2::before{background:linear-gradient(90deg,var(--pp),transparent)}
+.s3::before{background:linear-gradient(90deg,var(--gr),transparent)}
+.stream-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--di);letter-spacing:.1em;margin-bottom:14px}
+.stream-icon{font-size:28px;margin-bottom:14px}
+.stream-t{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
+.stream-d{font-size:12px;color:var(--mu);line-height:1.75;margin-bottom:18px}
+.stream-formula{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--b3);border:1px solid var(--ln);border-radius:3px;padding:12px 14px;line-height:1.8}
+.sf-hi{color:var(--g)}.sf-gr{color:var(--gr)}.sf-mu{color:var(--mu)}
+.stream-who{margin-top:12px;font-size:10px;color:var(--di);letter-spacing:.06em;text-transform:uppercase}
+.stream-who span{color:var(--g)}
 
-/* STATS ROW */
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:16px;overflow:hidden;margin-bottom:70px;}
-.stat-box{background:var(--surface);padding:24px;text-align:center;}
-.stat-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);line-height:1;}
-.stat-label{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.5px;}
+/* ── LEVELS */
+.levels-section{background:var(--b1)}
+.levels-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:4px;overflow:hidden}
+.lc{background:var(--b1);padding:32px 24px;position:relative;transition:background .25s;display:flex;flex-direction:column}
+.lc:hover{background:var(--b2)}
+.lc.best{background:rgba(201,168,76,.06);border:none;box-shadow:inset 0 0 0 1px rgba(201,168,76,.25)}
+.lc-badge{display:inline-block;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:16px;font-weight:600;width:fit-content}
+.lv1 .lc-badge{background:rgba(255,255,255,.07);color:var(--mu);border:1px solid var(--ln)}
+.lv2 .lc-badge{background:rgba(201,168,76,.12);color:var(--g);border:1px solid var(--gb)}
+.lv3 .lc-badge{background:rgba(96,165,250,.1);color:var(--bl);border:1px solid rgba(96,165,250,.2)}
+.lv4 .lc-badge{background:rgba(167,139,250,.1);color:var(--pp);border:1px solid rgba(167,139,250,.2)}
+.lc-name{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;margin-bottom:4px}
+.lc-price{margin-bottom:20px}
+.lc-price-main{font-family:'Unbounded',sans-serif;font-size:32px;font-weight:900;line-height:1}
+.lv1 .lc-price-main{color:var(--mu)}
+.lv2 .lc-price-main{color:var(--g)}
+.lv3 .lc-price-main{color:var(--bl)}
+.lv4 .lc-price-main{color:var(--pp)}
+.lc-price-note{font-size:10px;color:var(--di);margin-top:4px;letter-spacing:.04em}
+.lc-own{background:var(--b3);border-radius:3px;padding:14px 16px;margin-bottom:16px;text-align:center}
+.lc-own-pct{font-family:'Unbounded',sans-serif;font-size:36px;font-weight:900;color:var(--g);line-height:1}
+.lc-own-label{font-size:10px;color:var(--mu);margin-top:4px;line-height:1.5}
+.lc-net{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;min-height:80px}
+.lc-net-row{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--mu);padding:5px 8px;border-radius:2px;background:rgba(255,255,255,.025)}
+.lc-net-row .pct{font-family:'JetBrains Mono',monospace;font-size:12px}
+.lc-net-row.active .pct{color:var(--g)}
+.lc-net-row.inactive{opacity:.3}
+.lc-perks{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:auto}
+.lc-perks li{font-size:11px;color:var(--mu);display:flex;gap:6px;line-height:1.5}
+.lc-perks .ck{color:var(--gr);flex-shrink:0}
+.lc-perks .na{color:var(--di);flex-shrink:0}
+.lc-cta{margin-top:20px;padding:11px;background:var(--g);color:var(--bg);border:none;border-radius:3px;font-family:'Manrope',sans-serif;font-size:12px;font-weight:600;cursor:pointer;text-align:center;text-decoration:none;display:block;transition:background .2s}
+.lc-cta:hover{background:var(--g2)}
+.lv1 .lc-cta{background:transparent;color:var(--tx);border:1px solid var(--ln)}
+.lv1 .lc-cta:hover{border-color:var(--gb)}
+.franchise-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--pp);background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.18);border-radius:2px;padding:3px 8px;margin-top:10px}
 
-/* SECTION */
-.section{margin-bottom:60px;}
-.section-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);font-weight:700;margin-bottom:16px;}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,5vw,48px);letter-spacing:1px;margin-bottom:24px;line-height:1.1;}
+/* ── NETWORK VISUALIZATION */
+.viz-section{}
+.viz-wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
 
-/* LEVELS */
-.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px;}
-.level-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 16px;position:relative;overflow:hidden;transition:.3s;}
-.level-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,215,0,.05),transparent);opacity:0;transition:.3s;}
-.level-card:hover::before{opacity:1;}
-.level-card:hover{border-color:rgba(255,215,0,.3);transform:translateY(-2px);}
-.level-name{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;}
-.level-pct{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--gold);line-height:1;}
-.level-pct span{font-size:18px;}
-.level-tag{font-size:11px;color:var(--muted);margin-top:6px;}
-.level-price{display:inline-block;margin-top:10px;font-size:11px;background:rgba(255,215,0,.1);color:var(--gold);padding:3px 10px;border-radius:100px;font-weight:700;}
-.level-free{display:inline-block;margin-top:10px;font-size:11px;background:rgba(0,208,132,.1);color:var(--green);padding:3px 10px;border-radius:100px;font-weight:700;}
+/* Pyramid */
+.pyramid-box{background:var(--b2);border:1px solid var(--ln);border-radius:6px;padding:36px 28px;position:sticky;top:70px}
+.pyr-title{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;margin-bottom:6px}
+.pyr-sub{font-size:11px;color:var(--mu);margin-bottom:28px}
 
-/* REFERRAL LINES */
-.ref-lines{display:grid;gap:10px;}
-.ref-line{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 20px;}
-.ref-line-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--border);width:32px;flex-shrink:0;}
-.ref-line-info{flex:1;}
-.ref-line-name{font-size:13px;font-weight:700;margin-bottom:2px;}
-.ref-line-desc{font-size:12px;color:var(--muted);}
-.ref-line-pct{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold);}
+.pyramid{display:flex;flex-direction:column;align-items:stretch;gap:0;position:relative}
 
-/* FRANCHISE */
-.franchise-card{background:linear-gradient(135deg,var(--surface) 0%,rgba(255,215,0,.05) 100%);border:1px solid rgba(255,215,0,.2);border-radius:20px;padding:40px;position:relative;overflow:hidden;}
-.franchise-card::after{content:'FRANCHISE';position:absolute;right:-20px;top:20px;font-family:'Bebas Neue',sans-serif;font-size:80px;color:rgba(255,215,0,.04);letter-spacing:4px;pointer-events:none;}
-.franchise-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:28px;}
-.franchise-item{display:flex;align-items:flex-start;gap:12px;}
-.franchise-icon{width:36px;height:36px;background:rgba(255,215,0,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
-.franchise-item-title{font-size:14px;font-weight:700;margin-bottom:4px;}
-.franchise-item-desc{font-size:12px;color:var(--muted);line-height:1.5;}
-.franchise-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,208,132,.1);border:1px solid rgba(0,208,132,.2);padding:8px 18px;border-radius:100px;font-size:13px;color:var(--green);font-weight:700;margin-top:20px;}
+.pyr-node{border:1px solid var(--ln);border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:var(--b1);transition:background .2s;margin-bottom:2px;position:relative}
+.pyr-node:hover{background:var(--b3)}
+.pyr-node.you{border-color:var(--gb);background:var(--gd);margin-bottom:0}
+.pyr-node.you .pn-label{color:var(--g)}
 
-/* FORM */
-.form-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px;}
-.form-title{font-family:'Bebas Neue',sans-serif;font-size:36px;margin-bottom:8px;}
-.form-sub{font-size:14px;color:var(--muted);margin-bottom:30px;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:4px;}
-.field label{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:600;}
-.field input,.field select,.field textarea{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--text);font-family:'Manrope',sans-serif;font-size:14px;outline:none;transition:.2s;width:100%;}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(255,215,0,.4);background:#0f0f1a;}
-.field textarea{min-height:90px;resize:vertical;}
-.field-full{grid-column:1/-1;}
-.btn-submit{width:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));color:#000;border:none;border-radius:12px;padding:16px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-top:20px;transition:.2s;letter-spacing:.3px;}
-.btn-submit:hover{box-shadow:0 8px 24px rgba(255,215,0,.3);transform:translateY(-1px);}
-.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-.form-note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;}
-.success-msg{display:none;text-align:center;padding:40px 20px;}
-.success-icon{font-size:56px;margin-bottom:16px;}
-.success-title{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--green);margin-bottom:8px;}
-.success-sub{font-size:14px;color:var(--muted);}
+.pyr-connector{display:flex;justify-content:center;height:28px;position:relative;margin-bottom:0}
+.pyr-connector::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:linear-gradient(180deg,var(--g),rgba(201,168,76,.2));opacity:.5}
+.pyr-connector-arrow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;color:var(--g);background:var(--bg);padding:0 4px}
 
-/* CONTACTS */
-.contacts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:40px;}
-.contact-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;transition:.2s;}
-.contact-wa{background:#25D366;color:#000;}
-.contact-wa:hover{box-shadow:0 6px 20px rgba(37,211,102,.3);}
-.contact-tg{background:#229ED9;color:#fff;}
-.contact-tg:hover{box-shadow:0 6px 20px rgba(34,158,217,.3);}
+.pn-icon{font-size:18px;width:32px;text-align:center}
+.pn-info{}
+.pn-label{font-size:12px;font-weight:600;margin-bottom:2px}
+.pn-detail{font-size:10px;color:var(--mu)}
+.pn-earn{text-align:right}
+.pn-earn-val{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--gr);font-weight:500;white-space:nowrap}
+.pn-earn-label{font-size:9px;color:var(--mu);text-align:right;margin-top:2px}
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:30px 0;text-align:center;color:var(--muted);font-size:13px;margin-top:60px;}
-footer a{color:var(--muted);text-decoration:none;}
+.pyr-total{margin-top:16px;border:1px solid var(--gb);border-radius:4px;padding:18px 20px;background:var(--gd);display:flex;justify-content:space-between;align-items:center}
+.pyt-label{font-size:12px;color:var(--mu)}
+.pyt-val{font-family:'Unbounded',sans-serif;font-size:28px;font-weight:900;color:var(--g)}
+.pyt-period{font-size:10px;color:var(--mu);margin-top:2px}
 
-/* TOAST */
-.toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#000;font-weight:700;font-size:13px;padding:12px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999;}
-.toast.show{opacity:1;}
+/* income bar chart */
+.income-bars{margin-top:16px;display:flex;flex-direction:column;gap:6px}
+.ib-row{display:flex;align-items:center;gap:10px}
+.ib-label{font-size:10px;color:var(--mu);width:88px;flex-shrink:0;text-align:right;letter-spacing:.02em}
+.ib-bar-wrap{flex:1;height:20px;background:var(--b3);border-radius:2px;overflow:hidden}
+.ib-bar{height:100%;border-radius:2px;transition:width .5s ease;display:flex;align-items:center;padding-left:8px;min-width:4px}
+.ib-bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;white-space:nowrap}
+.ib-b0{background:linear-gradient(90deg,var(--g),var(--g2))}.ib-b0 .ib-bar-val{color:var(--bg)}
+.ib-b1{background:linear-gradient(90deg,rgba(201,168,76,.5),rgba(201,168,76,.3))}.ib-b1 .ib-bar-val{color:var(--g2)}
+.ib-b2{background:linear-gradient(90deg,rgba(201,168,76,.3),rgba(201,168,76,.15))}.ib-b2 .ib-bar-val{color:var(--g)}
+.ib-b3{background:linear-gradient(90deg,rgba(167,139,250,.4),rgba(167,139,250,.2))}.ib-b3 .ib-bar-val{color:var(--pp)}
+.ib-b4{background:linear-gradient(90deg,rgba(61,214,140,.3),rgba(61,214,140,.15))}.ib-b4 .ib-bar-val{color:var(--gr)}
 
-/* ANIMATIONS */
-.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
-.fade-up.visible{opacity:1;transform:none;}
+/* Calculator */
+.calc-box{background:var(--b2);border:1px solid var(--ln);border-radius:6px;padding:36px}
+.calc-h{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px}
+.calc-sub{font-size:12px;color:var(--mu);margin-bottom:28px}
 
-@media(max-width:640px){
-  .form-grid{grid-template-columns:1fr;}
-  .franchise-grid{grid-template-columns:1fr;}
-  .stats-row{grid-template-columns:1fr;}
-  .contacts{grid-template-columns:1fr;}
-  .levels{grid-template-columns:repeat(2,1fr);}
-  nav{flex-direction:column;gap:14px;}
+/* level picker */
+.lv-pick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:28px}
+.lvp{padding:10px 6px;border:1px solid var(--ln);border-radius:3px;background:var(--b1);cursor:pointer;text-align:center;font-family:'Manrope',sans-serif;transition:all .2s}
+.lvp:hover{border-color:var(--gb)}
+.lvp.on{border-color:var(--g);background:var(--gd)}
+.lvp-name{font-size:11px;font-weight:600;margin-bottom:2px}
+.lvp.on .lvp-name{color:var(--g)}
+.lvp-price{font-size:9px;color:var(--mu)}
+.lvp.on .lvp-price{color:var(--g);opacity:.7}
+
+.sl-block{margin-bottom:22px}
+.sl-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.sl-name{font-size:12px;font-weight:500}
+.sl-val{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--g)}
+input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:var(--ln);border-radius:1px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--g);border:2px solid var(--b2);cursor:pointer;box-shadow:0 0 0 1px var(--gb)}
+input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(90deg,var(--g) var(--p,30%),var(--ln) var(--p,30%));height:2px;border-radius:1px}
+.sl-note{font-size:10px;color:var(--di);margin-top:7px;line-height:1.6}
+.sl-disabled{opacity:.35;pointer-events:none}
+
+.divider{height:1px;background:var(--ln);margin:20px 0}
+
+.spread-badge{display:flex;align-items:center;gap:10px;background:var(--b3);border:1px solid var(--ln);border-radius:3px;padding:12px 16px;margin-bottom:24px}
+.sb-icon{font-size:16px}
+.sb-text{font-size:11px;color:var(--mu);line-height:1.5}
+.sb-text strong{color:var(--g);font-family:'JetBrains Mono',monospace}
+
+/* ── COMPARE TABLE */
+.compare-section{background:var(--b1)}
+.ctable{width:100%;border-collapse:collapse;border:1px solid var(--ln);border-radius:4px;overflow:hidden}
+.ctable th,.ctable td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--ln);font-size:12px}
+.ctable th{font-family:'Unbounded',sans-serif;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);background:var(--b2)}
+.ctable td:first-child{font-weight:500;color:var(--tx)}
+.ctable tr:last-child td{border-bottom:none}
+.ctable tr:hover td{background:rgba(255,255,255,.02)}
+.ctable .yes{color:var(--gr);font-family:'JetBrains Mono',monospace;font-size:11px}
+.ctable .no{color:var(--di);font-size:14px}
+.ctable .pct-cell{font-family:'JetBrains Mono',monospace;font-size:13px}
+.col-lv1{color:var(--mu)}.col-lv2{color:var(--g)}.col-lv3{color:var(--bl)}.col-lv4{color:var(--pp)}
+
+/* ── EXAMPLE SCENARIO */
+.scenario-section{}
+.scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:4px;overflow:hidden;margin-bottom:28px}
+.sc{background:var(--bg);padding:28px 24px;transition:background .25s}
+.sc:hover{background:var(--b2)}
+.sc-title{font-size:13px;font-weight:600;margin-bottom:6px}
+.sc-desc{font-size:11px;color:var(--mu);line-height:1.6;margin-bottom:18px}
+.sc-math{font-family:'JetBrains Mono',monospace;font-size:11px;display:flex;flex-direction:column;gap:4px;background:var(--b2);border-radius:3px;padding:12px}
+.sc-math .row{display:flex;justify-content:space-between;color:var(--mu)}
+.sc-math .row.total{color:var(--g);font-weight:500;border-top:1px solid var(--ln);padding-top:6px;margin-top:2px}
+.sc-month{margin-top:16px;text-align:center;font-family:'Unbounded',sans-serif;font-size:26px;font-weight:900;color:var(--g)}
+.sc-month-label{font-size:10px;color:var(--mu);text-align:center;margin-top:4px}
+
+/* ── FAQ */
+.faq-list{border:1px solid var(--ln);border-radius:4px;overflow:hidden;max-width:820px}
+.fq{border-bottom:1px solid var(--ln)}
+.fq:last-child{border-bottom:none}
+.fq-q{width:100%;padding:18px 22px;background:transparent;border:none;display:flex;justify-content:space-between;align-items:center;font-family:'Manrope',sans-serif;font-size:13px;font-weight:500;color:var(--tx);cursor:pointer;text-align:left;transition:background .2s}
+.fq-q:hover{background:rgba(255,255,255,.02)}
+.fq-ico{color:var(--g);font-size:16px;transition:transform .25s;flex-shrink:0;margin-left:14px}
+.fq.op .fq-ico{transform:rotate(45deg)}
+.fq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.fq.op .fq-a{max-height:300px}
+.fq-ai{padding:0 22px 18px;font-size:12px;color:var(--mu);line-height:1.8}
+.fq-ai code{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--g);background:var(--gd);padding:1px 6px;border-radius:2px}
+
+/* ── CTA */
+.cta-s{border-top:1px solid var(--ln);padding:72px}
+.cta-in{display:flex;align-items:center;justify-content:space-between;gap:48px}
+.cta-l h2{margin-bottom:12px}
+.cta-l p{font-size:14px;color:var(--mu);line-height:1.8;max-width:500px}
+.cta-btns{display:flex;gap:10px;flex-shrink:0}
+.btn-g{padding:13px 28px;background:var(--g);color:var(--bg);border:none;border-radius:3px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Manrope',sans-serif;text-decoration:none;transition:background .2s;white-space:nowrap}
+.btn-g:hover{background:var(--g2)}
+.btn-o{padding:13px 28px;background:transparent;color:var(--tx);border:1px solid var(--ln);border-radius:3px;font-size:13px;cursor:pointer;font-family:'Manrope',sans-serif;text-decoration:none;transition:border-color .2s;white-space:nowrap}
+.btn-o:hover{border-color:var(--gb)}
+
+/* footer */
+footer{border-top:1px solid var(--ln);padding:28px 72px;display:flex;align-items:center;justify-content:space-between}
+.fl{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;color:var(--g);text-decoration:none}
+.fn{display:flex;gap:22px;list-style:none}
+.fn a{font-size:10px;color:var(--mu);text-decoration:none;letter-spacing:.07em;text-transform:uppercase}.fn a:hover{color:var(--g)}
+.fc{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--di)}
+
+/* animations */
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
+
+/* responsive */
+@media(max-width:1100px){
+  nav{padding:0 20px}.navl{display:none}
+  .hero{grid-template-columns:1fr}.hero-l{padding:90px 24px 32px}.hero-r{border-left:none;border-top:1px solid var(--ln);padding:32px 24px 56px}
+  section,.cta-s{padding:56px 24px}
+  .streams-grid,.levels-grid{grid-template-columns:1fr}
+  .viz-wrap{grid-template-columns:1fr}
+  .pyramid-box{position:static}
+  .scenario-grid{grid-template-columns:1fr}
+  .cta-in{flex-direction:column;gap:28px}.cta-btns{flex-wrap:wrap}
+  footer{flex-direction:column;gap:16px;padding:24px;text-align:center}.fn{flex-wrap:wrap;justify-content:center}
+  .lv-pick{grid-template-columns:repeat(2,1fr)}
+  .ctable{font-size:11px}.ctable th,.ctable td{padding:10px 12px}
 }
+@media(max-width:640px){.streams-grid,.levels-grid,.scenario-grid{grid-template-columns:1fr}.f2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="glow"></div>
-<div class="toast" id="toast"></div>
-
+<div class="bg-grid"></div>
+<div class="bg-orb o1"></div>
+<div class="bg-orb o2"></div>
 <div class="wrap">
 
-  <nav>
-    <a href="/" class="nav-logo">APP2.CASH</a>
-    <div class="nav-links">
-      <a href="/">Обменник</a>
-      <a href="/cabinet" class="nav-btn">Кабинет</a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <div class="hero fade-up">
-    <div class="hero-badge"><span></span> Программа активна · 24/7</div>
-    <h1>ЗАРАБАТЫВАЙ<br>С <span>APP2.CASH</span></h1>
-    <p class="hero-sub">Реферальная система + франшиза без паушального взноса. Привлекай клиентов в валютный обмен — получай до 60% от комиссии в USDT.</p>
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">app2.cash <sub>Партнёры</sub></a>
+  <ul class="navl">
+    <li><a href="#streams">Доходы</a></li>
+    <li><a href="#levels">Уровни</a></li>
+    <li><a href="#viz">Калькулятор</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="franchise.html" style="color:var(--g)">Франшиза →</a></li>
+  </ul>
+  <div class="nav-d">
+    <a href="#auth" class="nav-btn nb-o" onclick="sw('login')">Войти</a>
+    <a href="#auth" class="nav-btn nb-g" onclick="sw('reg')">Стать партнёром</a>
   </div>
+</nav>
 
-  <!-- STATS -->
-  <div class="stats-row fade-up">
-    <div class="stat-box">
-      <div class="stat-num">60%</div>
-      <div class="stat-label">Макс. комиссия</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num">4</div>
-      <div class="stat-label">Реферальные линии</div>
-    </div>
-    <div class="stat-box">
-      <div class="stat-num">USDT</div>
-      <div class="stat-label">Выплаты</div>
-    </div>
-  </div>
-
-  <!-- LEVELS -->
-  <div class="section fade-up">
-    <div class="section-label">Партнёрская программа</div>
-    <div class="section-title">УРОВНИ И КОМИССИИ</div>
-    <div class="levels">
-      <div class="level-card">
-        <div class="level-name">LVL 0 · Start</div>
-        <div class="level-pct">20<span>%</span></div>
-        <div class="level-tag">от комиссии обмена</div>
-        <div class="level-free">Бесплатно</div>
-      </div>
-      <div class="level-card">
-        <div class="level-name">LVL 1 · Basic</div>
-        <div class="level-pct">30<span>%</span></div>
-        <div class="level-tag">от комиссии обмена</div>
-        <div class="level-price">от $80</div>
-      </div>
-      <div class="level-card">
-        <div class="level-name">LVL 2 · Pro</div>
-        <div class="level-pct">40<span>%</span></div>
-        <div class="level-tag">от комиссии обмена</div>
-        <div class="level-price">$500 оборот</div>
-      </div>
-      <div class="level-card">
-        <div class="level-name">LVL 3 · VIP</div>
-        <div class="level-pct">50<span>%</span></div>
-        <div class="level-tag">+ личный менеджер</div>
-        <div class="level-price">$5K оборот</div>
-      </div>
-      <div class="level-card">
-        <div class="level-name">LVL 4 · Elite</div>
-        <div class="level-pct">60<span>%</span></div>
-        <div class="level-tag">+ white label</div>
-        <div class="level-price">$10K оборот</div>
-      </div>
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-l">
+    <div class="badge"><span class="bdot"></span>Партнёрская сеть открыта · MLM · 4 уровня</div>
+    <h1>
+      Зарабатывай<br>на <span class="h1-hl">сети</span><br>партнёров
+      <span class="h1-sub">до 40% от спреда платформы + доход с каждого<br>партнёра в вашей сети — бессрочно</span>
+    </h1>
+    <p class="hero-desc">Спред app2.cash — 3.6% с каждого обмена. Вы получаете долю от этого спреда со своих клиентов, плюс процент от заработка партнёров, которых вы привлекаете.</p>
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-v">3.6%</div><div class="kpi-l">Спред платформы</div></div>
+      <div class="kpi"><div class="kpi-v">до 40%</div><div class="kpi-l">Ваша доля</div></div>
+      <div class="kpi"><div class="kpi-v">3 уровня</div><div class="kpi-l">Глубина сети</div></div>
+      <div class="kpi"><div class="kpi-v">∞</div><div class="kpi-l">Lifetime</div></div>
     </div>
   </div>
 
-  <!-- REF LINES -->
-  <div class="section fade-up">
-    <div class="section-label">Многоуровневая система</div>
-    <div class="section-title">РЕФЕРАЛЬНЫЕ ЛИНИИ</div>
-    <div class="ref-lines">
-      <div class="ref-line">
-        <div class="ref-line-num">01</div>
-        <div class="ref-line-info">
-          <div class="ref-line-name">Прямые клиенты</div>
-          <div class="ref-line-desc">Клиенты которых вы привели напрямую</div>
+  <div class="hero-r" id="auth">
+    <div class="auth-box">
+      <div class="auth-top"></div>
+      <div class="auth-in">
+        <div class="atabs">
+          <button class="at on" onclick="sw('login')">Войти в кабинет</button>
+          <button class="at" onclick="sw('reg')">Регистрация</button>
         </div>
-        <div class="ref-line-pct">10%</div>
-      </div>
-      <div class="ref-line">
-        <div class="ref-line-num">02</div>
-        <div class="ref-line-info">
-          <div class="ref-line-name">Партнёры партнёров</div>
-          <div class="ref-line-desc">Клиенты рефералов которых вы пригласили</div>
+        <!-- LOGIN -->
+        <div class="fp on" id="fp-login">
+          <div class="auth-h">Добро пожаловать</div>
+          <div class="auth-s">Партнёрский кабинет app2.cash</div>
+          <div class="f"><label>Telegram или Email</label><input type="text" placeholder="@username или email"></div>
+          <div class="f"><label>Пароль</label><input type="password" placeholder="••••••••••"></div>
+          <button class="sbtn">Войти →</button>
+          <div class="af">Нет аккаунта? <a href="#" onclick="sw('reg');return false">Зарегистрироваться</a> · <a href="#">Восстановить</a></div>
         </div>
-        <div class="ref-line-pct">5%</div>
-      </div>
-      <div class="ref-line">
-        <div class="ref-line-num">03</div>
-        <div class="ref-line-info">
-          <div class="ref-line-name">Третья линия</div>
-          <div class="ref-line-desc">Пассивный доход с глубины сети</div>
-        </div>
-        <div class="ref-line-pct">3%</div>
-      </div>
-      <div class="ref-line">
-        <div class="ref-line-num">04</div>
-        <div class="ref-line-info">
-          <div class="ref-line-name">Четвёртая линия</div>
-          <div class="ref-line-desc">Максимальная глубина реферальной сети</div>
-        </div>
-        <div class="ref-line-pct">2%</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FRANCHISE -->
-  <div class="section fade-up">
-    <div class="section-label">Масштабирование</div>
-    <div class="section-title">ФРАНШИЗА БЕЗ ВЗНОСА</div>
-    <div class="franchise-card">
-      <p style="font-size:15px;color:#bbb;line-height:1.7;max-width:560px;">Никакого паушального взноса. Вы получаете готовую инфраструктуру обменника под своим брендом — платите только % с оборота.</p>
-      <div class="franchise-badge">✓ Revenue Share модель — платишь только с дохода</div>
-      <div class="franchise-grid">
-        <div class="franchise-item">
-          <div class="franchise-icon">🌍</div>
-          <div>
-            <div class="franchise-item-title">Управление регионом</div>
-            <div class="franchise-item-desc">Россия, ОАЭ, Танзания, Кения, Азия — выбирайте свой рынок</div>
+        <!-- REG -->
+        <div class="fp" id="fp-reg">
+          <div class="auth-h">Регистрация</div>
+          <div class="auth-s">Выберите вашу роль</div>
+          <div class="rpick">
+            <div class="rp" onclick="rp(this)"><div class="rp-i">⚙️</div><div class="rp-n">Технарь</div></div>
+            <div class="rp" onclick="rp(this)"><div class="rp-i">📱</div><div class="rp-n">Инфлюенсер</div></div>
+            <div class="rp" onclick="rp(this)"><div class="rp-i">🔗</div><div class="rp-n">Агрегатор</div></div>
+            <div class="rp" onclick="rp(this)"><div class="rp-i">🎬</div><div class="rp-n">Контент</div></div>
           </div>
-        </div>
-        <div class="franchise-item">
-          <div class="franchise-icon">🏷️</div>
-          <div>
-            <div class="franchise-item-title">White Label</div>
-            <div class="franchise-item-desc">Обменник под вашим брендом с вашим доменом</div>
+          <div class="f2">
+            <div class="f"><label>Имя / Ник</label><input type="text" placeholder="Ваше имя"></div>
+            <div class="f"><label>Страна</label>
+              <select>
+                <option>Выберите...</option>
+                <option>🇳🇱 Нидерланды / ЕС</option>
+                <option>🇦🇪 ОАЭ</option>
+                <option>🇿🇦 ЮАР / Африка</option>
+                <option>🇷🇺 Россия / СНГ</option>
+                <option>🌎 Латинская Америка</option>
+                <option>🌏 Азия</option>
+                <option>🇺🇸 США</option>
+                <option>🌍 Другое</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="franchise-item">
-          <div class="franchise-icon">🤖</div>
-          <div>
-            <div class="franchise-item-title">Telegram + WhatsApp бот</div>
-            <div class="franchise-item-desc">Готовые боты для приёма заявок и автоответов</div>
-          </div>
-        </div>
-        <div class="franchise-item">
-          <div class="franchise-icon">📊</div>
-          <div>
-            <div class="franchise-item-title">CRM система</div>
-            <div class="franchise-item-desc">Управление клиентами, партнёрами, обменами и выплатами</div>
-          </div>
-        </div>
-        <div class="franchise-item">
-          <div class="franchise-icon">💰</div>
-          <div>
-            <div class="franchise-item-title">Поток заявок</div>
-            <div class="franchise-item-desc">Подключение к общему трафику платформы app2.cash</div>
-          </div>
-        </div>
-        <div class="franchise-item">
-          <div class="franchise-icon">🛡️</div>
-          <div>
-            <div class="franchise-item-title">Поддержка 24/7</div>
-            <div class="franchise-item-desc">Личный менеджер, обучение, техподдержка</div>
-          </div>
+          <div class="f"><label>Telegram</label><input type="text" placeholder="@username"></div>
+          <div class="f"><label>Email</label><input type="email" placeholder="you@example.com"></div>
+          <div class="f"><label>Ваш ресурс (сайт, канал, бот)</label><input type="text" placeholder="t.me/channel · сайт · API-проект"></div>
+          <button class="sbtn">Отправить заявку →</button>
+          <div class="af">Уже есть аккаунт? <a href="#" onclick="sw('login');return false">Войти</a></div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- FORM -->
-  <div class="section fade-up" id="register">
-    <div class="section-label">Начать</div>
-    <div class="section-title">РЕГИСТРАЦИЯ ПАРТНЁРА</div>
-    <div class="form-card">
-      <div id="form-wrap">
-        <div class="form-sub">Заполните форму — менеджер свяжется в течение 30 минут</div>
-        <div class="form-grid">
-          <div class="field">
-            <label>Имя *</label>
-            <input type="text" id="f-name" placeholder="Ваше имя">
-          </div>
-          <div class="field">
-            <label>Страна / регион *</label>
-            <input type="text" id="f-country" placeholder="Россия, ОАЭ, Танзания...">
-          </div>
-          <div class="field">
-            <label>Telegram</label>
-            <input type="text" id="f-telegram" placeholder="@username">
-          </div>
-          <div class="field">
-            <label>WhatsApp</label>
-            <input type="text" id="f-whatsapp" placeholder="+255756687444">
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input type="email" id="f-email" placeholder="email@example.com">
-          </div>
-          <div class="field">
-            <label>Интерес</label>
-            <select id="f-type">
-              <option value="partner">Партнёрская программа</option>
-              <option value="franchise">Франшиза / White Label</option>
-              <option value="both">Партнёрка + Франшиза</option>
-            </select>
-          </div>
-          <div class="field field-full">
-            <label>Реферальный код (если есть)</label>
-            <input type="text" id="f-ref" placeholder="Код того кто вас пригласил">
-          </div>
-          <div class="field field-full">
-            <label>О себе / вопросы</label>
-            <textarea id="f-notes" placeholder="Расскажите о себе, опыте, планах..."></textarea>
-          </div>
-        </div>
-        <button class="btn-submit" id="f-submit" onclick="submitForm()">Отправить заявку →</button>
-        <div class="form-note">Нажимая кнопку, вы соглашаетесь на обработку данных</div>
-      </div>
-      <div class="success-msg" id="success-msg">
-        <div class="success-icon">✅</div>
-        <div class="success-title">ЗАЯВКА ПРИНЯТА!</div>
-        <div class="success-sub">Менеджер свяжется с вами в течение 30 минут через указанный канал связи</div>
-      </div>
-    </div>
-
-    <div class="contacts">
-      <a href="https://wa.me/+255756687444?text=Здравствуйте,%20интересуюсь%20партнёрской%20программой%20app2.cash" class="contact-btn contact-wa" target="_blank">
-        💬 WhatsApp
-      </a>
-      <a href="https://t.me/app2cash" class="contact-btn contact-tg" target="_blank">
-        ✈️ Telegram
-      </a>
-    </div>
-  </div>
-
 </div>
 
-<footer>
-  <div class="wrap">
-    <a href="/">app2.cash</a> · Международный обмен валют и USDT · 2025
+<!-- 3 INCOME STREAMS -->
+<section class="rv" id="streams">
+  <div class="stag">3 источника дохода</div>
+  <h2>Откуда берутся деньги</h2>
+  <p class="sdesc">Партнёры зарабатывают из трёх независимых потоков. Они суммируются и выплачиваются еженедельно.</p>
+
+  <div class="streams-grid">
+    <div class="stream-card s1">
+      <div class="stream-num">// 01</div>
+      <div class="stream-icon">💱</div>
+      <div class="stream-t">Ваши клиенты</div>
+      <div class="stream-d">С каждого обмена вашего клиента вы получаете процент от спреда платформы. Бессрочно — пока клиент пользуется app2.cash.</div>
+      <div class="stream-formula">
+        <div>Обмен: <span class="sf-hi">$1 000</span></div>
+        <div>Спред 3.6%: <span class="sf-hi">= $36</span> (платформа)</div>
+        <div>Ваши 30%: <span class="sf-gr">= $10.80</span> вам</div>
+      </div>
+      <div class="stream-who">Все уровни: <span>Старт → VIP</span></div>
+    </div>
+    <div class="stream-card s2">
+      <div class="stream-num">// 02</div>
+      <div class="stream-icon">🌐</div>
+      <div class="stream-t">Ваша сеть партнёров</div>
+      <div class="stream-d">Вы привлекаете партнёров — и получаете процент от платформенного заработка на ИХ клиентах. До 3 уровней глубины.</div>
+      <div class="stream-formula">
+        <div>L1 партнёр привлёк клиента</div>
+        <div>Спред с его клиента: <span class="sf-hi">$36</span></div>
+        <div>Ваши 7% от L1: <span class="sf-gr">= $2.52</span> вам</div>
+        <div>+ L2 и L3 (Про, VIP)</div>
+      </div>
+      <div class="stream-who">Уровень: <span>Партнёр, Про, VIP</span></div>
+    </div>
+    <div class="stream-card s3">
+      <div class="stream-num">// 03</div>
+      <div class="stream-icon">🏢</div>
+      <div class="stream-t">Продажи франшиз</div>
+      <div class="stream-d">Подключаете нового франчайзи — получаете 10% от стоимости подключения. Одна продажа = разовый доход $50–$300+.</div>
+      <div class="stream-formula">
+        <div>Франшиза продана за <span class="sf-hi">$800</span></div>
+        <div>Ваши 10%: <span class="sf-gr">= $80</span> вам</div>
+        <div>2 продажи в месяц: <span class="sf-gr">+$160</span></div>
+      </div>
+      <div class="stream-who">Только уровень: <span>VIP Elite</span></div>
+    </div>
   </div>
+</section>
+
+<!-- LEVELS -->
+<section class="levels-section rv" id="levels">
+  <div class="stag">Уровни партнёрства</div>
+  <h2>Оплати уровень один раз —<br>зарабатывай бессрочно</h2>
+  <p class="sdesc">Каждый уровень открывает новые потоки дохода. Оплата разовая, без ежемесячных взносов. Вы инвестируете один раз — ROI растёт каждый месяц.</p>
+
+  <div class="levels-grid">
+
+    <!-- L1 FREE -->
+    <div class="lc lv1">
+      <div class="lc-badge">Старт</div>
+      <div class="lc-name">Starter</div>
+      <div class="lc-price">
+        <div class="lc-price-main">FREE</div>
+        <div class="lc-price-note">Без оплаты · Сразу после одобрения</div>
+      </div>
+      <div class="lc-own">
+        <div class="lc-own-pct">20%</div>
+        <div class="lc-own-label">от спреда платформы<br>с ваших клиентов</div>
+      </div>
+      <div class="lc-net">
+        <div class="lc-net-row inactive"><span>Сеть L1</span><span class="pct">—</span></div>
+        <div class="lc-net-row inactive"><span>Сеть L2</span><span class="pct">—</span></div>
+        <div class="lc-net-row inactive"><span>Сеть L3</span><span class="pct">—</span></div>
+        <div class="lc-net-row inactive"><span>Франшизы</span><span class="pct">—</span></div>
+      </div>
+      <ul class="lc-perks">
+        <li><span class="ck">✓</span>Реферальная ссылка + QR</li>
+        <li><span class="ck">✓</span>Личный кабинет с аналитикой</li>
+        <li><span class="ck">✓</span>Рекламные материалы 11 языков</li>
+        <li><span class="ck">✓</span>Cookie 90 дней</li>
+        <li><span class="ck">✓</span>Выплата USDT / EUR</li>
+        <li><span class="na">—</span>Сетевой доход</li>
+        <li><span class="na">—</span>Доход от франшиз</li>
+      </ul>
+      <a href="#auth" class="lc-cta" onclick="sw('reg')">Начать бесплатно</a>
+    </div>
+
+    <!-- L2 $199 -->
+    <div class="lc lv2">
+      <div class="lc-badge">Партнёр</div>
+      <div class="lc-name">Partner</div>
+      <div class="lc-price">
+        <div class="lc-price-main">$199</div>
+        <div class="lc-price-note">Разово · Без роялти · Навсегда</div>
+      </div>
+      <div class="lc-own">
+        <div class="lc-own-pct">25%</div>
+        <div class="lc-own-label">от спреда платформы<br>с ваших клиентов</div>
+      </div>
+      <div class="lc-net">
+        <div class="lc-net-row active"><span>Сеть L1</span><span class="pct">+5%</span></div>
+        <div class="lc-net-row inactive"><span>Сеть L2</span><span class="pct">—</span></div>
+        <div class="lc-net-row inactive"><span>Сеть L3</span><span class="pct">—</span></div>
+        <div class="lc-net-row inactive"><span>Франшизы</span><span class="pct">—</span></div>
+      </div>
+      <ul class="lc-perks">
+        <li><span class="ck">✓</span>Всё из Starter</li>
+        <li><span class="ck">✓</span>+5% с заработка L1-партнёров</li>
+        <li><span class="ck">✓</span>CPA-бонус за активацию</li>
+        <li><span class="ck">✓</span>Приоритетный саппорт</li>
+        <li><span class="ck">✓</span>Выплата от $20</li>
+        <li><span class="na">—</span>L2/L3 сеть</li>
+        <li><span class="na">—</span>Доход от франшиз</li>
+      </ul>
+      <a href="#auth" class="lc-cta" onclick="sw('reg')">Подключить за $199 →</a>
+    </div>
+
+    <!-- L3 $499 -->
+    <div class="lc lv3">
+      <div class="lc-badge">Про Партнёр</div>
+      <div class="lc-name">Pro</div>
+      <div class="lc-price">
+        <div class="lc-price-main">$499</div>
+        <div class="lc-price-note">Разово · Без роялти · Навсегда</div>
+      </div>
+      <div class="lc-own">
+        <div class="lc-own-pct">30%</div>
+        <div class="lc-own-label">от спреда платформы<br>с ваших клиентов</div>
+      </div>
+      <div class="lc-net">
+        <div class="lc-net-row active"><span>Сеть L1</span><span class="pct" style="color:var(--bl)">+7%</span></div>
+        <div class="lc-net-row active"><span>Сеть L2</span><span class="pct" style="color:var(--bl)">+3%</span></div>
+        <div class="lc-net-row inactive"><span>Сеть L3</span><span class="pct">—</span></div>
+        <div class="lc-net-row inactive"><span>Франшизы</span><span class="pct">—</span></div>
+      </div>
+      <ul class="lc-perks">
+        <li><span class="ck">✓</span>Всё из Partner</li>
+        <li><span class="ck">✓</span>2 уровня глубины сети</li>
+        <li><span class="ck">✓</span>Персональный менеджер</li>
+        <li><span class="ck">✓</span>White-label рекламные материалы</li>
+        <li><span class="ck">✓</span>Еженедельная авто-выплата</li>
+        <li><span class="na">—</span>L3 сеть</li>
+        <li><span class="na">—</span>Доход от франшиз</li>
+      </ul>
+      <a href="#auth" class="lc-cta" style="background:var(--bl)" onclick="sw('reg')">Подключить за $499 →</a>
+    </div>
+
+    <!-- L4 VIP $1499 -->
+    <div class="lc lv4 best">
+      <div class="lc-badge">VIP Elite ✦</div>
+      <div class="lc-name">VIP Elite</div>
+      <div class="lc-price">
+        <div class="lc-price-main">$1 499</div>
+        <div class="lc-price-note">Разово · Без роялти · Максимум возможностей</div>
+      </div>
+      <div class="lc-own">
+        <div class="lc-own-pct">40%</div>
+        <div class="lc-own-label">от спреда платформы<br>с ваших клиентов</div>
+      </div>
+      <div class="lc-net">
+        <div class="lc-net-row active"><span>Сеть L1</span><span class="pct" style="color:var(--pp)">+10%</span></div>
+        <div class="lc-net-row active"><span>Сеть L2</span><span class="pct" style="color:var(--pp)">+5%</span></div>
+        <div class="lc-net-row active"><span>Сеть L3</span><span class="pct" style="color:var(--pp)">+2%</span></div>
+        <div class="lc-net-row active"><span>Франшизы</span><span class="pct" style="color:var(--gr)">+10%</span></div>
+      </div>
+      <ul class="lc-perks">
+        <li><span class="ck">✓</span>Всё из Pro</li>
+        <li><span class="ck">✓</span>3 уровня глубины сети</li>
+        <li><span class="ck">✓</span>10% от продаж франшиз</li>
+        <li><span class="ck">✓</span>Прямой API-доступ</li>
+        <li><span class="ck">✓</span>Совместный маркетинг</li>
+        <li><span class="ck">✓</span>Ежеквартальный топ-бонус</li>
+      </ul>
+      <div class="franchise-tag">🏢 Доход с франшиз · +10% от каждой продажи</div>
+      <a href="#auth" class="lc-cta" style="background:var(--pp)" onclick="sw('reg')">Подключить за $1 499 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIZ + CALCULATOR -->
+<section class="rv" id="viz">
+  <div class="stag">Калькулятор дохода · Визуализация сети</div>
+  <h2>Настройте параметры —<br>увидите реальные цифры</h2>
+  <p class="sdesc">Спред зафиксирован: 3.6%. Меняйте параметры — пирамида обновляется в реальном времени.</p>
+
+  <div class="viz-wrap">
+
+    <!-- PYRAMID -->
+    <div class="pyramid-box">
+      <div class="pyr-title">Ваша сеть в деньгах</div>
+      <div class="pyr-sub">Пример дохода при текущих параметрах калькулятора</div>
+
+      <div class="pyramid">
+
+        <!-- YOU -->
+        <div class="pyr-node you">
+          <div class="pn-icon">👤</div>
+          <div class="pn-info">
+            <div class="pn-label" id="pn-you-label">ВЫ (VIP Elite · 40%)</div>
+            <div class="pn-detail" id="pn-you-detail">20 клиентов · $1 000/мес каждый</div>
+          </div>
+          <div class="pn-earn">
+            <div class="pn-earn-val" id="pn-you-earn">$288</div>
+            <div class="pn-earn-label">от своих клиентов</div>
+          </div>
+        </div>
+
+        <div class="pyr-connector"><span class="pyr-connector-arrow">▲</span></div>
+
+        <!-- L1 -->
+        <div class="pyr-node" id="pn-l1" style="border-color:rgba(201,168,76,.3)">
+          <div class="pn-icon">👥</div>
+          <div class="pn-info">
+            <div class="pn-label">L1 · Прямые партнёры</div>
+            <div class="pn-detail" id="pn-l1-detail">10 партнёров · 10 клиентов каждый</div>
+          </div>
+          <div class="pn-earn">
+            <div class="pn-earn-val" id="pn-l1-earn">+$360</div>
+            <div class="pn-earn-label" id="pn-l1-pct">10% от их клиентов → вам</div>
+          </div>
+        </div>
+
+        <div class="pyr-connector" id="conn-l2"><span class="pyr-connector-arrow">▲</span></div>
+
+        <!-- L2 -->
+        <div class="pyr-node" id="pn-l2" style="border-color:rgba(96,165,250,.25)">
+          <div class="pn-icon">👥</div>
+          <div class="pn-info">
+            <div class="pn-label">L2 · Партнёры партнёров</div>
+            <div class="pn-detail" id="pn-l2-detail">50 партнёров · 8 клиентов каждый</div>
+          </div>
+          <div class="pn-earn">
+            <div class="pn-earn-val" id="pn-l2-earn">+$864</div>
+            <div class="pn-earn-label" id="pn-l2-pct">5% от их клиентов → вам</div>
+          </div>
+        </div>
+
+        <div class="pyr-connector" id="conn-l3"><span class="pyr-connector-arrow">▲</span></div>
+
+        <!-- L3 -->
+        <div class="pyr-node" id="pn-l3" style="border-color:rgba(167,139,250,.25)">
+          <div class="pn-icon">👥</div>
+          <div class="pn-info">
+            <div class="pn-label">L3 · Сеть третьего уровня</div>
+            <div class="pn-detail" id="pn-l3-detail">150 партнёров · 5 клиентов каждый</div>
+          </div>
+          <div class="pn-earn">
+            <div class="pn-earn-val" id="pn-l3-earn">+$162</div>
+            <div class="pn-earn-label" id="pn-l3-pct">2% от их клиентов → вам</div>
+          </div>
+        </div>
+
+        <div class="pyr-connector" id="conn-fr"><span class="pyr-connector-arrow">▲</span></div>
+
+        <!-- Franchise -->
+        <div class="pyr-node" id="pn-fr" style="border-color:rgba(61,214,140,.25)">
+          <div class="pn-icon">🏢</div>
+          <div class="pn-info">
+            <div class="pn-label">Продажи франшиз</div>
+            <div class="pn-detail" id="pn-fr-detail">2 франшизы / мес · ср. $800</div>
+          </div>
+          <div class="pn-earn">
+            <div class="pn-earn-val" id="pn-fr-earn">+$160</div>
+            <div class="pn-earn-label">10% от каждой продажи</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TOTAL -->
+      <div class="pyr-total">
+        <div>
+          <div class="pyt-label">Итого в месяц</div>
+          <div class="pyt-period" id="pyt-period">при данных параметрах · в год: <span id="pyt-year">$21 768</span></div>
+        </div>
+        <div>
+          <div class="pyt-val" id="pyt-total">$1 814</div>
+        </div>
+      </div>
+
+      <!-- BAR CHART -->
+      <div class="income-bars" style="margin-top:20px">
+        <div class="ib-row">
+          <div class="ib-label">Свои клиенты</div>
+          <div class="ib-bar-wrap"><div class="ib-bar ib-b0" id="bar0"><span class="ib-bar-val" id="barv0">$288</span></div></div>
+        </div>
+        <div class="ib-row">
+          <div class="ib-label">L1 сеть</div>
+          <div class="ib-bar-wrap"><div class="ib-bar ib-b1" id="bar1"><span class="ib-bar-val" id="barv1">$360</span></div></div>
+        </div>
+        <div class="ib-row" id="bar-row-l2">
+          <div class="ib-label">L2 сеть</div>
+          <div class="ib-bar-wrap"><div class="ib-bar ib-b2" id="bar2"><span class="ib-bar-val" id="barv2">$864</span></div></div>
+        </div>
+        <div class="ib-row" id="bar-row-l3">
+          <div class="ib-label">L3 сеть</div>
+          <div class="ib-bar-wrap"><div class="ib-bar ib-b3" id="bar3"><span class="ib-bar-val" id="barv3">$162</span></div></div>
+        </div>
+        <div class="ib-row" id="bar-row-fr">
+          <div class="ib-label">Франшизы</div>
+          <div class="ib-bar-wrap"><div class="ib-bar ib-b4" id="bar4"><span class="ib-bar-val" id="barv4">$160</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALC SLIDERS -->
+    <div class="calc-box">
+      <div class="calc-h">Параметры расчёта</div>
+      <div class="calc-sub">Всё обновляется в реальном времени</div>
+
+      <div class="spread-badge">
+        <div class="sb-icon">📊</div>
+        <div class="sb-text">Спред платформы фиксирован: <strong>3.6%</strong> с каждого обмена.<br>Вы получаете % от этих <strong>3.6%</strong> — не от суммы обмена.</div>
+      </div>
+
+      <!-- Level picker -->
+      <div style="font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.09em;margin-bottom:10px">Ваш уровень</div>
+      <div class="lv-pick">
+        <div class="lvp" onclick="setLv(this,0)" data-lv="0">
+          <div class="lvp-name">Starter</div>
+          <div class="lvp-price">FREE</div>
+        </div>
+        <div class="lvp" onclick="setLv(this,1)" data-lv="1">
+          <div class="lvp-name">Partner</div>
+          <div class="lvp-price">$199</div>
+        </div>
+        <div class="lvp" onclick="setLv(this,2)" data-lv="2">
+          <div class="lvp-name">Pro</div>
+          <div class="lvp-price">$499</div>
+        </div>
+        <div class="lvp on" onclick="setLv(this,3)" data-lv="3">
+          <div class="lvp-name">VIP Elite</div>
+          <div class="lvp-price">$1 499</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div style="font-size:11px;font-weight:600;margin-bottom:16px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em">Ваши клиенты</div>
+
+      <div class="sl-block">
+        <div class="sl-row"><span class="sl-name">Количество клиентов</span><span class="sl-val" id="sv-c">20</span></div>
+        <input type="range" id="sl-c" min="1" max="200" value="20" oninput="calc()">
+      </div>
+      <div class="sl-block">
+        <div class="sl-row"><span class="sl-name">Объём обменов / клиент / мес</span><span class="sl-val" id="sv-a">$1 000</span></div>
+        <input type="range" id="sl-a" min="100" max="20000" step="100" value="1000" oninput="calc()">
+      </div>
+
+      <div class="divider"></div>
+      <div style="font-size:11px;font-weight:600;margin-bottom:16px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em">L1 — Ваши прямые партнёры</div>
+
+      <div class="sl-block" id="sl-l1-block">
+        <div class="sl-row"><span class="sl-name">Партнёров L1 в сети</span><span class="sl-val" id="sv-l1">10</span></div>
+        <input type="range" id="sl-l1" min="0" max="100" value="10" oninput="calc()">
+      </div>
+      <div class="sl-block" id="sl-l1c-block">
+        <div class="sl-row"><span class="sl-name">Клиентов у каждого L1</span><span class="sl-val" id="sv-l1c">10</span></div>
+        <input type="range" id="sl-l1c" min="0" max="100" value="10" oninput="calc()">
+      </div>
+      <div class="sl-block" id="sl-l1a-block">
+        <div class="sl-row"><span class="sl-name">Объём клиента L1 / мес</span><span class="sl-val" id="sv-l1a">$800</span></div>
+        <input type="range" id="sl-l1a" min="100" max="10000" step="100" value="800" oninput="calc()">
+        <div class="sl-note" id="note-l1">Доступно с уровня Partner ($199)</div>
+      </div>
+
+      <div class="divider" id="div-l2"></div>
+      <div style="font-size:11px;font-weight:600;margin-bottom:16px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em" id="lbl-l2">L2 — Партнёры ваших партнёров</div>
+
+      <div class="sl-block" id="sl-l2-block">
+        <div class="sl-row"><span class="sl-name">Партнёров у каждого L1</span><span class="sl-val" id="sv-l2">5</span></div>
+        <input type="range" id="sl-l2" min="0" max="30" value="5" oninput="calc()">
+      </div>
+      <div class="sl-block" id="sl-l2c-block">
+        <div class="sl-row"><span class="sl-name">Клиентов у каждого L2</span><span class="sl-val" id="sv-l2c">8</span></div>
+        <input type="range" id="sl-l2c" min="0" max="50" value="8" oninput="calc()">
+        <div class="sl-note" id="note-l2">Доступно с уровня Pro ($499)</div>
+      </div>
+
+      <div class="divider" id="div-l3"></div>
+      <div style="font-size:11px;font-weight:600;margin-bottom:16px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em" id="lbl-l3">L3 — Третий уровень</div>
+
+      <div class="sl-block" id="sl-l3-block">
+        <div class="sl-row"><span class="sl-name">Партнёров у каждого L2</span><span class="sl-val" id="sv-l3">3</span></div>
+        <input type="range" id="sl-l3" min="0" max="20" value="3" oninput="calc()">
+      </div>
+      <div class="sl-block" id="sl-l3c-block">
+        <div class="sl-row"><span class="sl-name">Клиентов у каждого L3</span><span class="sl-val" id="sv-l3c">5</span></div>
+        <input type="range" id="sl-l3c" min="0" max="30" value="5" oninput="calc()">
+        <div class="sl-note" id="note-l3">Только VIP Elite ($1 499)</div>
+      </div>
+
+      <div class="divider" id="div-fr"></div>
+      <div id="fr-block">
+        <div style="font-size:11px;font-weight:600;margin-bottom:16px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em">Продажи франшиз (VIP)</div>
+        <div class="sl-block">
+          <div class="sl-row"><span class="sl-name">Франшиз в месяц</span><span class="sl-val" id="sv-fr">2</span></div>
+          <input type="range" id="sl-fr" min="0" max="20" value="2" oninput="calc()">
+        </div>
+        <div class="sl-block">
+          <div class="sl-row"><span class="sl-name">Средняя стоимость франшизы</span><span class="sl-val" id="sv-frp">$800</span></div>
+          <input type="range" id="sl-frp" min="500" max="3000" step="100" value="800" oninput="calc()">
+          <div class="sl-note" id="note-fr">Только VIP Elite · 10% от стоимости каждой проданной франшизы</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="compare-section rv">
+  <div class="stag">Сравнение уровней</div>
+  <h2>Детальная таблица<br>доходов по уровням</h2>
+  <div style="overflow-x:auto">
+  <table class="ctable">
+    <thead>
+      <tr>
+        <th>Параметр</th>
+        <th class="col-lv1">Starter · FREE</th>
+        <th class="col-lv2">Partner · $199</th>
+        <th class="col-lv3">Pro · $499</th>
+        <th class="col-lv4">VIP Elite · $1 499</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>% от своих клиентов</td><td class="pct-cell col-lv1">20%</td><td class="pct-cell col-lv2">25%</td><td class="pct-cell col-lv3">30%</td><td class="pct-cell col-lv4">40%</td></tr>
+      <tr><td>% от заработка L1 партнёров</td><td class="no">—</td><td class="pct-cell col-lv2">+5%</td><td class="pct-cell col-lv3">+7%</td><td class="pct-cell col-lv4">+10%</td></tr>
+      <tr><td>% от заработка L2 партнёров</td><td class="no">—</td><td class="no">—</td><td class="pct-cell col-lv3">+3%</td><td class="pct-cell col-lv4">+5%</td></tr>
+      <tr><td>% от заработка L3 партнёров</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="pct-cell col-lv4">+2%</td></tr>
+      <tr><td>% от продаж франшиз</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="pct-cell col-lv4" style="color:var(--gr)">+10%</td></tr>
+      <tr><td>Пример: 50 клиентов × $1 000/мес</td><td class="pct-cell col-lv1">$36/мес</td><td class="pct-cell col-lv2">$45/мес</td><td class="pct-cell col-lv3">$54/мес</td><td class="pct-cell col-lv4">$72/мес</td></tr>
+      <tr><td>Cookie-window</td><td class="yes">90 дней</td><td class="yes">90 дней</td><td class="yes">90 дней</td><td class="yes">90 дней</td></tr>
+      <tr><td>Lifetime клиентов</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td></tr>
+      <tr><td>Персональный менеджер</td><td class="no">—</td><td class="no">—</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td></tr>
+      <tr><td>White-label материалы</td><td class="no">—</td><td class="no">—</td><td class="yes">Да ✓</td><td class="yes">Да ✓</td></tr>
+      <tr><td>Прямой API-доступ</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">Да ✓</td></tr>
+      <tr><td>Выплата от</td><td class="pct-cell">$30</td><td class="pct-cell">$20</td><td class="pct-cell">$10</td><td class="pct-cell">$10</td></tr>
+      <tr><td>ROI за 12 мес (50 кл. × $1k)</td><td class="pct-cell col-lv1">∞ (бесплатно)</td><td class="pct-cell col-lv2">~2.7× за год</td><td class="pct-cell col-lv3">~1.3× за год</td><td class="pct-cell col-lv4">Зависит от сети</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- SCENARIOS -->
+<section class="scenario-section rv">
+  <div class="stag">Реальные сценарии</div>
+  <h2>Примеры дохода<br>при разных стратегиях</h2>
+  <p class="sdesc">Спред 3.6%. Все цифры — без учёта бонусов и CPA. Только базовый Rev Share.</p>
+
+  <div class="scenario-grid">
+    <div class="sc">
+      <div class="sc-title">⚙️ Технарь · Partner $199</div>
+      <div class="sc-desc">Встроил API, 80 клиентов приходят через интеграцию. Привлёк 5 партнёров-стартеров с 15 клиентами каждый.</div>
+      <div class="sc-math">
+        <div class="row"><span>80 клиентов × $500 × 3.6%</span><span>$1 440/мес</span></div>
+        <div class="row"><span>Его доля 25%</span><span>= $360</span></div>
+        <div class="row"><span>5 L1 × 15 кл × $300 × 3.6%</span><span>$810 платформа</span></div>
+        <div class="row"><span>Его 5% от L1</span><span>= +$40</span></div>
+        <div class="row total"><span>ИТОГО / МЕС</span><span>$400</span></div>
+      </div>
+      <div class="sc-month">$400</div>
+      <div class="sc-month-label">в месяц · ROI за 6 мес</div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-title">📱 Инфлюенсер · Pro $499</div>
+      <div class="sc-desc">30 000 подписчиков TG-канала, 40 клиентов через реф-ссылку. Привлёк 8 мини-инфлюенсеров (L1) с 20 клиентами каждый.</div>
+      <div class="sc-math">
+        <div class="row"><span>40 кл × $800 × 3.6%</span><span>$1 152/мес</span></div>
+        <div class="row"><span>Его доля 30%</span><span>= $346</span></div>
+        <div class="row"><span>8 L1 × 20 кл × $500 × 3.6%</span><span>$2 880 платформа</span></div>
+        <div class="row"><span>Его 7% от L1</span><span>= +$202</span></div>
+        <div class="row"><span>L2: 3 парт × 10 кл × 3% </span><span>= +$32</span></div>
+        <div class="row total"><span>ИТОГО / МЕС</span><span>$580</span></div>
+      </div>
+      <div class="sc-month">$580</div>
+      <div class="sc-month-label">в месяц · ROI за 10 мес</div>
+    </div>
+
+    <div class="sc">
+      <div class="sc-title">💎 Сетевой VIP · $1 499</div>
+      <div class="sc-desc">Активно строит сеть. Своих 50 клиентов, 15 L1-партнёров, у каждого по 10 L2, у каждого по 5 L3. Продаёт франшизы.</div>
+      <div class="sc-math">
+        <div class="row"><span>50 кл × $1 000 × 3.6% × 40%</span><span>= $720</span></div>
+        <div class="row"><span>15 L1 × 10 кл × $700 × 10%</span><span>= +$378</span></div>
+        <div class="row"><span>150 L2 × 8 кл × $500 × 5%</span><span>= +$1 080</span></div>
+        <div class="row"><span>750 L3 × 5 кл × $400 × 2%</span><span>= +$1 080</span></div>
+        <div class="row"><span>3 франшизы × $800 × 10%</span><span>= +$240</span></div>
+        <div class="row total"><span>ИТОГО / МЕС</span><span>$3 498</span></div>
+      </div>
+      <div class="sc-month">$3 498</div>
+      <div class="sc-month-label">в месяц · ~$42 000 в год</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section rv" style="background:var(--b1)" id="faq">
+  <div class="stag">FAQ</div>
+  <h2>Частые вопросы</h2>
+  <div class="faq-list">
+    <div class="fq">
+      <button class="fq-q" onclick="fq(this)">Что значит «% от спреда платформы»? Как считать?<span class="fq-ico">+</span></button>
+      <div class="fq-a"><div class="fq-ai">Спред — 3.6% с каждого обмена. Это заработок платформы. Вы получаете свой % от этих 3.6%. Пример: обмен $1 000 → платформа зарабатывает $36 → вы на VIP (40%) получаете $14.40. Если проще: умножьте сумму обмена на <code>3.6% × ваш_%</code>. VIP: $1 000 × 3.6% × 40% = $14.40 с одной сделки.</div></div>
+    </div>
+    <div class="fq">
+      <button class="fq-q" onclick="fq(this)">«Lifetime» — это навсегда? Что если я перестану быть партнёром?<span class="fq-ico">+</span></button>
+      <div class="fq-a"><div class="fq-ai">Пока ваш аккаунт активен, все привлечённые клиенты приносят вам доход. Lifetime означает, что нет ограничения по времени — клиент привязан к вашему ID бессрочно, и каждый его обмен генерирует начисление. Партнёрский аккаунт остаётся активным без ежемесячных взносов.</div></div>
+    </div>
+    <div class="fq">
+      <button class="fq-q" onclick="fq(this)">Как работает сетевой доход? Мои % берутся от их заработка или от объёма?<span class="fq-ico">+</span></button>
+      <div class="fq-a"><div class="fq-ai">От объёма комиссии платформы на клиентах вашей сети. То есть: L1-партнёр привёл клиента, тот обменял $500. Платформа заработала $18. Вы получаете <code>10% × $18 = $1.80</code> с этой сделки. L1-партнёр при этом получает свои 25% = $4.50. Платформа оставляет оставшиеся 65% = $11.70. Все выплаты идут из спреда — партнёры не платят друг другу.</div></div>
+    </div>
+    <div class="fq">
+      <button class="fq-q" onclick="fq(this)">Почему уровни платные? Я покупаю право зарабатывать?<span class="fq-ico">+</span></button>
+      <div class="fq-a"><div class="fq-ai">Вы покупаете доступ к расширенным возможностям: более высокий %, доступ к сети, персональному менеджеру, API и т.д. Базовый уровень Starter — бесплатно и навсегда. Оплата уровня — разовая, без ежемесячных взносов. Это инвестиция: VIP за $1 499 окупается при обороте сети ~$40 000/мес за несколько месяцев.</div></div>
+    </div>
+    <div class="fq">
+      <button class="fq-q" onclick="fq(this)">Чем партнёрка отличается от франшизы?<span class="fq-ico">+</span></button>
+      <div class="fq-a"><div class="fq-ai">Партнёрка — вы зарабатываете % от сделок привлечённых клиентов и сети. Это реферальная и сетевая модель. Франшиза — вы получаете готовый бизнес: свой бот, свой сайт, свой бренд, своя точка обмена. Одноразовый платёж за подключение, никаких роялти. Подробнее — <a href="franchise.html">на странице франшизы →</a></div></div>
+    </div>
+    <div class="fq">
+      <button class="fq-q" onclick="fq(this)">Когда и как приходят выплаты?<span class="fq-ico">+</span></button>
+      <div class="fq-a"><div class="fq-ai">Каждую пятницу автоматически при достижении порога. Starter — от <code>$30</code>, Partner — от <code>$20</code>, Pro/VIP — от <code>$10</code>. Ручная выплата по запросу в любой день. Форматы: USDT TRC20/ERC20, SEPA (EUR), SWIFT. Все начисления видны в кабинете в реальном времени по каждой сделке.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-s rv">
+  <div class="cta-in">
+    <div class="cta-l">
+      <h2>Начните сейчас —<br>первый уровень бесплатно</h2>
+      <p>Заявка рассматривается в течение 24 часов. Starter доступен сразу и бесплатно. Уровень можно повысить в любой момент из кабинета.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="#auth" class="btn-g" onclick="sw('reg')">Зарегистрироваться →</a>
+      <a href="https://t.me/app2c_partner_bot" target="_blank" class="btn-o">Telegram-бот</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="fl">app2.cash</a>
+  <ul class="fn">
+    <li><a href="franchise.html">Франшиза</a></li>
+    <li><a href="/en/">English</a></li>
+    <li><a href="https://t.me/app2cbot">Клиентский бот</a></li>
+    <li><a href="mailto:partner@app2.cash">partner@app2.cash</a></li>
+  </ul>
+  <div class="fc">© 2025 app2.cash</div>
 </footer>
 
+</div><!-- /wrap -->
+
 <script>
-// Fade-up observer
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+const SPREAD = 0.036;
 
-// Read ?ref= from URL and prefill
-const urlRef = new URLSearchParams(window.location.search).get('ref');
-if (urlRef) document.getElementById('f-ref').value = urlRef;
+// Commission rates by level
+// own%, L1%, L2%, L3%, franchise%
+const LVL = [
+  {name:'Starter',  price:'FREE', own:.20, l1:0,   l2:0,   l3:0,   fr:0},
+  {name:'Partner',  price:'$199', own:.25, l1:.05,  l2:0,   l3:0,   fr:0},
+  {name:'Pro',      price:'$499', own:.30, l1:.07,  l2:.03, l3:0,   fr:0},
+  {name:'VIP Elite',price:'$1 499',own:.40,l1:.10, l2:.05, l3:.02,  fr:.10},
+];
 
-function showToast(msg, ok=true) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = ok ? 'var(--green)' : '#e55353';
-  t.style.color = ok ? '#000' : '#fff';
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+let curLv = 3;
+
+// ── AUTH ──
+function sw(tab){
+  document.querySelectorAll('.at').forEach((t,i)=>t.classList.toggle('on',(i===0&&tab==='login')||(i===1&&tab==='reg')));
+  document.getElementById('fp-login').classList.toggle('on',tab==='login');
+  document.getElementById('fp-reg').classList.toggle('on',tab==='reg');
+  document.getElementById('auth').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function showLogin(){sw('login')}function showReg(){sw('reg')}
+function rp(el){document.querySelectorAll('.rpick .rp').forEach(b=>b.classList.remove('on'));el.classList.add('on')}
+
+// ── LEVEL PICKER ──
+function setLv(el, lv){
+  document.querySelectorAll('.lvp').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  curLv = lv;
+  updateLvUI();
+  calc();
 }
 
-async function submitForm() {
-  const name     = document.getElementById('f-name').value.trim();
-  const country  = document.getElementById('f-country').value.trim();
-  const telegram = document.getElementById('f-telegram').value.trim();
-  const whatsapp = document.getElementById('f-whatsapp').value.trim();
-  const email    = document.getElementById('f-email').value.trim();
-  const type     = document.getElementById('f-type').value;
-  const ref      = document.getElementById('f-ref').value.trim();
-  const notes    = document.getElementById('f-notes').value.trim();
+function updateLvUI(){
+  const lv = LVL[curLv];
+  // Show/hide L1 sliders
+  const hasL1 = lv.l1 > 0;
+  const hasL2 = lv.l2 > 0;
+  const hasL3 = lv.l3 > 0;
+  const hasFr = lv.fr > 0;
 
-  if (!name) { showToast('Введите имя', false); return; }
-  if (!country) { showToast('Укажите страну / регион', false); return; }
-  if (!telegram && !whatsapp && !email) { showToast('Укажите хотя бы один контакт', false); return; }
+  ['sl-l1-block','sl-l1c-block','sl-l1a-block'].forEach(id=>{
+    document.getElementById(id).classList.toggle('sl-disabled',!hasL1);
+  });
+  ['div-l2','lbl-l2','sl-l2-block','sl-l2c-block'].forEach(id=>{
+    document.getElementById(id).classList.toggle('sl-disabled',!hasL2);
+  });
+  ['div-l3','lbl-l3','sl-l3-block','sl-l3c-block'].forEach(id=>{
+    document.getElementById(id).classList.toggle('sl-disabled',!hasL3);
+  });
+  document.getElementById('div-fr').classList.toggle('sl-disabled',!hasFr);
+  document.getElementById('fr-block').classList.toggle('sl-disabled',!hasFr);
 
-  const btn = document.getElementById('f-submit');
-  btn.disabled = true;
-  btn.textContent = 'Отправляем...';
+  // note updates
+  document.getElementById('pn-you-label').textContent = `ВЫ (${lv.name} · ${Math.round(lv.own*100)}%)`;
+  document.getElementById('pn-l1-pct').textContent = hasL1 ? `${Math.round(lv.l1*100)}% от спреда их клиентов → вам` : 'Недоступно на вашем уровне';
+  document.getElementById('pn-l2-pct').textContent = hasL2 ? `${Math.round(lv.l2*100)}% от спреда их клиентов → вам` : 'Недоступно на вашем уровне';
+  document.getElementById('pn-l3-pct').textContent = hasL3 ? `${Math.round(lv.l3*100)}% от спреда их клиентов → вам` : 'Только VIP Elite';
 
-  try {
-    const res = await fetch('/api/index.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contact: telegram || whatsapp || email,
-        channel: telegram ? 'Telegram' : whatsapp ? 'WhatsApp' : 'Email',
-        source: 'partner_page · ' + (type === 'franchise' ? 'Франшиза' : type === 'both' ? 'Партнёрка+Франшиза' : 'Партнёрка'),
-        timestamp: new Date().toISOString(),
-        extra: { name, country, telegram, whatsapp, email, ref, notes }
-      })
-    });
-    const data = await res.json();
-    if (data.ok) {
-      document.getElementById('form-wrap').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-    } else {
-      throw new Error('Server error');
-    }
-  } catch(e) {
-    showToast('Ошибка отправки. Напишите нам напрямую.', false);
-    btn.disabled = false;
-    btn.textContent = 'Отправить заявку →';
+  // dim pyramid nodes
+  document.getElementById('pn-l1').style.opacity = hasL1 ? '1' : '.3';
+  document.getElementById('conn-l2').style.opacity = hasL2 ? '1' : '.2';
+  document.getElementById('pn-l2').style.opacity = hasL2 ? '1' : '.3';
+  document.getElementById('conn-l3').style.opacity = hasL3 ? '1' : '.2';
+  document.getElementById('pn-l3').style.opacity = hasL3 ? '1' : '.3';
+  document.getElementById('conn-fr').style.opacity = hasFr ? '1' : '.2';
+  document.getElementById('pn-fr').style.opacity = hasFr ? '1' : '.3';
+  document.getElementById('bar-row-l2').style.opacity = hasL2 ? '1' : '.3';
+  document.getElementById('bar-row-l3').style.opacity = hasL3 ? '1' : '.3';
+  document.getElementById('bar-row-fr').style.opacity = hasFr ? '1' : '.3';
+}
+
+// ── FORMAT ──
+function fmtd(n){
+  if(n===0) return '—';
+  return '$'+Math.round(n).toLocaleString('en-US');
+}
+function fmts(n){return '$'+Math.round(n).toLocaleString('en-US')}
+
+// ── SLIDER FILL ──
+function fill(id){
+  const sl=document.getElementById(id);
+  const p=((+sl.value - +sl.min)/(+sl.max - +sl.min)*100).toFixed(1)+'%';
+  sl.style.setProperty('--p',p);
+}
+
+// ── CALC ──
+function calc(){
+  const lv = LVL[curLv];
+
+  const c   = +document.getElementById('sl-c').value;
+  const a   = +document.getElementById('sl-a').value;
+  const l1  = +document.getElementById('sl-l1').value;
+  const l1c = +document.getElementById('sl-l1c').value;
+  const l1a = +document.getElementById('sl-l1a').value;
+  const l2  = +document.getElementById('sl-l2').value;
+  const l2c = +document.getElementById('sl-l2c').value;
+  const l3  = +document.getElementById('sl-l3').value;
+  const l3c = +document.getElementById('sl-l3c').value;
+  const fr  = +document.getElementById('sl-fr').value;
+  const frp = +document.getElementById('sl-frp').value;
+
+  // Display slider values
+  document.getElementById('sv-c').textContent  = c;
+  document.getElementById('sv-a').textContent  = '$'+a.toLocaleString('en-US');
+  document.getElementById('sv-l1').textContent = l1;
+  document.getElementById('sv-l1c').textContent= l1c;
+  document.getElementById('sv-l1a').textContent= '$'+l1a.toLocaleString('en-US');
+  document.getElementById('sv-l2').textContent = l2;
+  document.getElementById('sv-l2c').textContent= l2c;
+  document.getElementById('sv-l3').textContent = l3;
+  document.getElementById('sv-l3c').textContent= l3c;
+  document.getElementById('sv-fr').textContent = fr;
+  document.getElementById('sv-frp').textContent= '$'+frp.toLocaleString('en-US');
+
+  // Fill sliders
+  ['sl-c','sl-a','sl-l1','sl-l1c','sl-l1a','sl-l2','sl-l2c','sl-l3','sl-l3c','sl-fr','sl-frp'].forEach(fill);
+
+  // ── MATH ──
+  // Own clients
+  const ownPlatEarn = c * a * SPREAD;         // platform earns from YOUR clients
+  const ownEarn     = ownPlatEarn * lv.own;   // your share
+
+  // L1 network
+  const l1TotalClients = l1 * l1c;
+  const l1PlatEarn     = l1TotalClients * l1a * SPREAD;
+  const l1Earn         = lv.l1 > 0 ? l1PlatEarn * lv.l1 : 0;
+
+  // L2 network (l2 partners per L1, so total L2 = l1 * l2)
+  const l2TotalPartners = l1 * l2;
+  const l2TotalClients  = l2TotalPartners * l2c;
+  const l2AvgVol        = l1a * 0.85; // assume L2 slightly smaller avg
+  const l2PlatEarn      = l2TotalClients * l2AvgVol * SPREAD;
+  const l2Earn          = lv.l2 > 0 ? l2PlatEarn * lv.l2 : 0;
+
+  // L3 network (l3 partners per L2)
+  const l3TotalPartners = l2TotalPartners * l3;
+  const l3TotalClients  = l3TotalPartners * l3c;
+  const l3AvgVol        = l1a * 0.70;
+  const l3PlatEarn      = l3TotalClients * l3AvgVol * SPREAD;
+  const l3Earn          = lv.l3 > 0 ? l3PlatEarn * lv.l3 : 0;
+
+  // Franchise
+  const frEarn = lv.fr > 0 ? fr * frp * lv.fr : 0;
+
+  const total = ownEarn + l1Earn + l2Earn + l3Earn + frEarn;
+  const year  = total * 12;
+
+  // ── UPDATE PYRAMID ──
+  document.getElementById('pn-you-detail').textContent = `${c} клиентов · $${a.toLocaleString('en-US')}/мес каждый`;
+  document.getElementById('pn-you-earn').textContent   = fmts(ownEarn);
+
+  document.getElementById('pn-l1-detail').textContent  = `${l1} партнёров · ${l1c} клиентов каждый`;
+  document.getElementById('pn-l1-earn').textContent    = lv.l1 > 0 ? '+'+fmts(l1Earn) : '—';
+
+  document.getElementById('pn-l2-detail').textContent  = `${l2TotalPartners} партнёров · ${l2c} клиентов каждый`;
+  document.getElementById('pn-l2-earn').textContent    = lv.l2 > 0 ? '+'+fmts(l2Earn) : '—';
+
+  document.getElementById('pn-l3-detail').textContent  = `${l3TotalPartners} партнёров · ${l3c} клиентов каждый`;
+  document.getElementById('pn-l3-earn').textContent    = lv.l3 > 0 ? '+'+fmts(l3Earn) : '—';
+
+  document.getElementById('pn-fr-detail').textContent  = `${fr} франшиз / мес · ср. $${frp.toLocaleString('en-US')}`;
+  document.getElementById('pn-fr-earn').textContent    = lv.fr > 0 ? '+'+fmts(frEarn) : '—';
+
+  document.getElementById('pyt-total').textContent = fmts(total);
+  document.getElementById('pyt-year').textContent  = fmts(year);
+
+  // ── BAR CHART ──
+  const maxVal = Math.max(ownEarn, l1Earn, l2Earn, l3Earn, frEarn, 1);
+  function setBar(barId, valId, val){
+    const pct = Math.max((val/maxVal)*100,val>0?2:0).toFixed(1)+'%';
+    document.getElementById(barId).style.width = pct;
+    document.getElementById(valId).textContent = val>0 ? fmts(val) : '';
   }
+  setBar('bar0','barv0',ownEarn);
+  setBar('bar1','barv1',l1Earn);
+  setBar('bar2','barv2',l2Earn);
+  setBar('bar3','barv3',l3Earn);
+  setBar('bar4','barv4',frEarn);
 }
+
+// ── FAQ ──
+function fq(btn){
+  const it=btn.parentElement;
+  const was=it.classList.contains('op');
+  document.querySelectorAll('.fq').forEach(q=>q.classList.remove('op'));
+  if(!was)it.classList.add('op');
+}
+
+// ── REVEAL ──
+const ro=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}});
+},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+// ── INIT ──
+updateLvUI();
+calc();
+['sl-c','sl-a','sl-l1','sl-l1c','sl-l1a','sl-l2','sl-l2c','sl-l3','sl-l3c','sl-fr','sl-frp'].forEach(id=>{
+  const sl=document.getElementById(id);
+  fill(id);
+  sl.addEventListener('input',()=>fill(id));
+});
 </script>
 </body>
 </html>
