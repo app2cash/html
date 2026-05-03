@@ -295,7 +295,8 @@ footer a:hover{color:var(--gold)}
   /* Языки: только флаги, без RU */
   .nav-lang{gap:2px}
   .lang-btn{font-size:12px;padding:4px 6px;border:none;background:none}
-  .lang-btn.active{display:none} /* скрываем RU */
+  .lang-btn{font-size:14px;padding:4px 8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06)}
+.lang-btn:hover{border-color:var(--gb);background:var(--gd)}
 
   /* Партнёрка и Франшиза — стопкой, мелкие */
   .nav-partner-stack{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
@@ -344,7 +345,6 @@ footer a:hover{color:var(--gold)}
   </ul>
   <div class="nav-right">
     <div class="nav-lang">
-      <a href="/" class="lang-btn active">🇷🇺 RU</a>
       <a href="/en/" class="lang-btn">🇬🇧</a>
       <a href="/cn/" class="lang-btn">🇨🇳</a>
     </div>
