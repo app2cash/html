@@ -1,1 +1,767 @@
-1
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>app2.cash — 特许经营</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-l:#E8C96D;--gold-pale:#F5E4A8;
+  --gd:rgba(201,168,76,.10);--gb:rgba(201,168,76,.22);
+  --bg:#0A0A0A;--s1:#111;--s2:#171717;--s3:#1F1F1F;--s4:#272727;
+  --tx:#F0EAD6;--mu:rgba(240,234,214,.45);--di:rgba(240,234,214,.16);
+  --ln:rgba(255,255,255,.065);
+  --gr:#4CAF7D;--rd:#F05252;--bl:#60A5FA;--pp:#A78BFA;
+  --r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;font-size:16px;line-height:1.6}
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.032'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(160px);pointer-events:none;z-index:0}
+.o1{width:700px;height:700px;background:rgba(201,168,76,.055);top:-200px;right:-200px}
+.o2{width:500px;height:500px;background:rgba(96,165,250,.035);bottom:0;left:-150px}
+.o3{width:400px;height:400px;background:rgba(167,139,250,.025);top:50%;left:50%;transform:translate(-50%,-50%)}
+.wrap{position:relative;z-index:1}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:18px 56px;background:rgba(10,10,10,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--ln)}
+.logo{font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px;color:var(--gold);letter-spacing:-0.5px;text-decoration:none}
+.logo span{color:var(--mu);font-weight:300}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:.04em;color:var(--mu);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-ctas{display:flex;gap:10px}
+.nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln);padding:9px 20px;border-radius:6px;font-family:'Noto Sans SC',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+.nb-o:hover{border-color:var(--gb)}
+.nb-g{background:var(--gold);color:var(--bg);padding:9px 20px;border-radius:6px;font-family:'Noto Sans SC',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:background .2s}
+.nb-g:hover{background:var(--gold-l)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 24px 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:900px;height:900px;background:radial-gradient(circle,rgba(201,168,76,.09) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-60%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gd);border:1px solid var(--gb);border-radius:100px;padding:6px 18px;font-size:12px;font-weight:600;color:var(--gold-l);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px;animation:fu .8s ease both}
+.hero-badge::before{content:'';width:7px;height:7px;background:var(--gr);border-radius:50%;box-shadow:0 0 8px var(--gr);animation:blink 2s infinite;flex-shrink:0}
+h1{font-family:'Unbounded',sans-serif;font-size:clamp(32px,5.5vw,72px);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:24px;animation:fu .8s .1s ease both}
+h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 50%,var(--gold-pale) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(14px,1.7vw,18px);color:var(--mu);max-width:620px;margin-bottom:16px;line-height:1.8;animation:fu .8s .2s ease both}
+.hero-guarantee{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--gr);background:rgba(76,175,125,.08);border:1px solid rgba(76,175,125,.2);border-radius:8px;padding:8px 16px;margin-bottom:40px;animation:fu .8s .25s ease both}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fu .8s .3s ease both}
+.btn-primary{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 100%);color:var(--bg);font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;padding:16px 36px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 30px rgba(201,168,76,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(201,168,76,.4)}
+.btn-outline{background:transparent;color:var(--tx);font-family:'Unbounded',sans-serif;font-weight:600;font-size:13px;padding:16px 36px;border-radius:8px;text-decoration:none;border:1px solid rgba(240,234,214,.18);cursor:pointer;transition:all .2s}
+.btn-outline:hover{border-color:var(--gb);background:var(--gd)}
+
+/* STATS BAR */
+.stats-bar{display:flex;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);background:rgba(255,255,255,.015);animation:fu .8s .4s ease both}
+.stat-item{flex:1;min-width:160px;padding:36px 32px;text-align:center;border-right:1px solid var(--ln)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:34px;font-weight:900;color:var(--gold);letter-spacing:-1px;display:block}
+.stat-label{font-size:13px;color:var(--mu);margin-top:4px}
+
+/* SECTIONS */
+section{position:relative;padding:100px 24px;max-width:1140px;margin:0 auto}
+.section-tag{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h2{font-family:'Unbounded',sans-serif;font-size:clamp(24px,3.5vw,46px);font-weight:900;line-height:1.08;letter-spacing:-1px;margin-bottom:16px}
+h2 em{font-style:normal;color:var(--gold)}
+.section-lead{font-size:16px;color:var(--mu);max-width:580px;margin-bottom:60px;line-height:1.8}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.15),transparent);margin:0 auto}
+
+/* INCOME STREAMS */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden}
+.stream{background:var(--s1);padding:40px 32px;position:relative;overflow:hidden;transition:background .25s}
+.stream:hover{background:var(--s2)}
+.stream::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity .3s}
+.str1::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.str2::before{background:linear-gradient(90deg,var(--pp),transparent)}
+.str3::before{background:linear-gradient(90deg,var(--gr),transparent)}
+.stream-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--di);letter-spacing:.1em;margin-bottom:14px}
+.stream-icon{font-size:30px;margin-bottom:14px}
+.stream-t{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px}
+.stream-d{font-size:13px;color:var(--mu);line-height:1.75;margin-bottom:18px}
+.stream-formula{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--s3);border:1px solid var(--ln);border-radius:6px;padding:14px 16px;line-height:1.8}
+.sf-g{color:var(--gold)}.sf-gr{color:var(--gr)}.sf-mu{color:var(--mu)}
+
+/* WHAT'S INCLUDED */
+.included-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.inc-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:28px 24px;transition:border-color .2s}
+.inc-card:hover{border-color:rgba(201,168,76,.3)}
+.inc-icon{font-size:28px;margin-bottom:14px;display:block}
+.inc-card h3{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px}
+.inc-card p{font-size:13px;color:var(--mu)}
+
+/* PACKAGES */
+.packages{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(201,168,76,.06);border-radius:var(--r);overflow:hidden}
+.pkg{background:var(--s1);padding:40px 32px;position:relative;overflow:hidden;transition:background .25s;display:flex;flex-direction:column}
+.pkg:hover{background:var(--s2)}
+.pkg.featured{background:linear-gradient(160deg,rgba(201,168,76,.07) 0%,var(--s1) 100%);border:1px solid rgba(201,168,76,.2)}
+.pkg.top{background:linear-gradient(160deg,rgba(167,139,250,.06) 0%,var(--s1) 100%);border:1px solid rgba(167,139,250,.2)}
+.pkg.master{background:linear-gradient(160deg,rgba(96,165,250,.06) 0%,var(--s1) 100%);border:1px solid rgba(96,165,250,.15)}
+.pkg-tier-label{display:inline-block;font-family:'Unbounded',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:8px;width:fit-content}
+.tier-starter{background:rgba(240,234,214,.06);color:var(--mu);border:1px solid var(--ln)}
+.tier-popular{background:var(--gd);color:var(--gold);border:1px solid var(--gb)}
+.tier-pro{background:rgba(167,139,250,.08);color:var(--pp);border:1px solid rgba(167,139,250,.25)}
+.tier-elite{background:rgba(96,165,250,.08);color:var(--bl);border:1px solid rgba(96,165,250,.2)}
+.pkg-name{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:700;margin-bottom:6px}
+.pkg-brand{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--mu);margin-bottom:20px;padding:6px 10px;background:var(--s3);border-radius:6px;display:inline-block}
+.pkg-price{font-family:'Unbounded',sans-serif;font-size:46px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px}
+.pkg-price-note{font-size:11px;color:var(--di);margin-bottom:24px;letter-spacing:.03em}
+.pkg-earn{background:var(--s2);border-radius:8px;padding:16px;margin-bottom:20px}
+.pkg-earn-title{font-size:10px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;font-weight:600}
+.pkg-earn-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--mu);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.pkg-earn-row:last-child{border-bottom:none}
+.pkg-earn-val{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--gr);font-weight:500}
+.pkg-perks{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;margin-top:auto}
+.pkg-perks li{font-size:13px;color:var(--mu);display:flex;gap:8px;align-items:flex-start;line-height:1.6}
+.pkg-perks .ck{color:var(--gr);flex-shrink:0;font-weight:700}
+.pkg-perks .na{color:var(--di);flex-shrink:0}
+.pkg-cta{display:block;text-align:center;padding:13px;border-radius:8px;font-family:'Noto Sans SC',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;margin-top:auto}
+.cta-gold{background:var(--gold);color:var(--bg)}.cta-gold:hover{background:var(--gold-l)}
+.cta-outline{background:transparent;color:var(--tx);border:1px solid var(--ln)}.cta-outline:hover{border-color:var(--gb)}
+.cta-pp{background:var(--pp);color:#fff}.cta-pp:hover{background:#b89ffc}
+.cta-bl{background:var(--bl);color:#fff}.cta-bl:hover{background:#7ab5fb}
+
+/* TRUST */
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.trust-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:32px 28px;transition:border-color .2s;position:relative;overflow:hidden}
+.trust-card:hover{border-color:rgba(201,168,76,.25)}
+.trust-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent)}
+.trust-icon{font-size:32px;margin-bottom:16px;display:block}
+.trust-card h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;margin-bottom:8px}
+.trust-card p{font-size:13px;color:var(--mu);line-height:1.7}
+
+/* GUARANTEE */
+.guarantee-block{background:linear-gradient(135deg,rgba(76,175,125,.08) 0%,rgba(76,175,125,.03) 100%);border:1px solid rgba(76,175,125,.2);border-radius:16px;padding:48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start}
+.gb-icon{font-size:56px;line-height:1}
+.gb-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;color:var(--gr);margin-bottom:10px;letter-spacing:-.5px}
+.gb-text{font-size:15px;color:var(--mu);line-height:1.8;margin-bottom:16px}
+.gb-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--di);background:var(--s2);border:1px solid var(--ln);border-radius:6px;padding:10px 14px}
+
+/* COMPARE TABLE */
+.ctable-wrap{overflow-x:auto}
+.ctable{width:100%;border-collapse:collapse;border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;font-size:13px}
+.ctable th,.ctable td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--ln)}
+.ctable th{font-family:'Unbounded',sans-serif;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);background:var(--s2)}
+.ctable td:first-child{font-weight:500}
+.ctable tr:last-child td{border-bottom:none}
+.ctable tr:hover td{background:rgba(255,255,255,.02)}
+.ctable .yes{color:var(--gr);font-family:'JetBrains Mono',monospace;font-size:11px}
+.ctable .no{color:var(--di)}
+.ctable .pc{font-family:'JetBrains Mono',monospace;font-size:13px}
+.c1{color:var(--mu)}.c2{color:var(--gold)}.c3{color:var(--pp)}.c4{color:var(--bl)}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:rgba(201,168,76,.08);border-radius:var(--r);overflow:hidden}
+.step{background:var(--s1);padding:40px 32px;transition:background .2s}
+.step:hover{background:var(--s2)}
+.step-num{font-family:'Unbounded',sans-serif;font-size:56px;font-weight:900;color:rgba(201,168,76,.12);line-height:1;margin-bottom:16px}
+.step h3{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px}
+.step p{font-size:14px;color:var(--mu);line-height:1.7}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:2px;border-radius:var(--r);overflow:hidden}
+.faq-item{background:var(--s1)}
+.faq-q{width:100%;background:none;border:none;color:var(--tx);font-family:'Noto Sans SC',sans-serif;font-size:15px;font-weight:600;text-align:left;padding:22px 28px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .2s}
+.faq-q:hover{background:var(--s2)}
+.faq-chevron{flex-shrink:0;width:26px;height:26px;border:1px solid var(--gb);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gold);transition:transform .3s}
+.faq-item.open .faq-chevron{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s;font-size:14px;color:var(--mu);padding:0 28px;line-height:1.8}
+.faq-item.open .faq-a{max-height:400px;padding:0 28px 22px}
+.faq-a code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);background:var(--gd);padding:1px 6px;border-radius:4px}
+
+/* CTA BANNER */
+.cta-banner{background:linear-gradient(135deg,rgba(201,168,76,.1) 0%,rgba(201,168,76,.04) 100%);border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:80px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.cta-banner h2{margin-bottom:12px}
+.cta-banner p{font-size:17px;color:var(--mu);margin-bottom:40px}
+.pay-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.pay-tag{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--s2);border:1px solid var(--ln);border-radius:6px;padding:8px 14px;color:var(--mu)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--ln);padding:36px 56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--mu)}
+footer a{color:var(--mu);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--gold)}
+.fn{display:flex;gap:22px;list-style:none;flex-wrap:wrap}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:300;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--s1);border:1px solid rgba(201,168,76,.25);border-radius:16px;padding:48px 40px;width:100%;max-width:520px;position:relative;animation:fu .3s ease;max-height:90vh;overflow-y:auto}
+.modal-top{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-l),transparent);border-radius:16px 16px 0 0;position:absolute;top:0;left:0;right:0}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--mu);font-size:24px;cursor:pointer;line-height:1;transition:color .2s}
+.modal-close:hover{color:var(--tx)}
+.modal h3{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;margin-bottom:6px;letter-spacing:-.5px}
+.modal-sub{font-size:14px;color:var(--mu);margin-bottom:28px}
+.modal-pkg-sel{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:24px}
+.mpkg{padding:12px;border:1px solid var(--ln);border-radius:8px;background:var(--s2);cursor:pointer;text-align:center;transition:all .2s}
+.mpkg:hover{border-color:var(--gb)}.mpkg.on{border-color:var(--gold);background:var(--gd)}
+.mpkg-name{font-size:12px;font-weight:700;margin-bottom:2px}.mpkg.on .mpkg-name{color:var(--gold)}
+.mpkg-price{font-size:10px;color:var(--mu)}.mpkg.on .mpkg-price{color:var(--gold);opacity:.7}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mu);letter-spacing:.5px;margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--s2);border:1px solid var(--ln);border-radius:8px;padding:12px 16px;color:var(--tx);font-family:'Noto Sans SC',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(201,168,76,.5)}
+.fg input::placeholder{color:var(--di)}
+.fg select option{background:var(--s2)}
+.fg textarea{min-height:80px;resize:vertical}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-submit{width:100%;margin-top:8px;padding:16px;font-size:14px}
+.modal-note{text-align:center;font-size:12px;color:var(--mu);margin-top:12px}
+.success-msg{display:none;text-align:center;padding:32px 0}
+.success-icon{font-size:56px;margin-bottom:16px}
+.success-title{font-family:'Unbounded',sans-serif;font-size:22px;color:var(--gr);margin-bottom:8px}
+.success-sub{font-size:14px;color:var(--mu)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--gr);color:#000;font-weight:700;font-size:13px;padding:12px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+/* ANIMATIONS */
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
+
+@media(max-width:1000px){
+  nav{padding:16px 20px}.nav-links{display:none}
+  section{padding:60px 20px}
+  .packages{grid-template-columns:1fr}
+  .guarantee-block{grid-template-columns:1fr;gap:16px}
+  .cta-banner{padding:48px 24px}
+  footer{padding:24px 20px;flex-direction:column;text-align:center}.fn{justify-content:center}
+}
+@media(max-width:640px){
+  .stats-bar{flex-direction:column}.stat-item{border-right:none;border-bottom:1px solid var(--ln)}.stat-item:last-child{border-bottom:none}
+  .modal-pkg-sel{grid-template-columns:1fr}
+  .fg2{grid-template-columns:1fr}
+  .modal{padding:32px 20px}
+  .hero-ctas{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb o1"></div>
+<div class="bg-orb o2"></div>
+<div class="bg-orb o3"></div>
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+
+<!-- NAV -->
+<nav>
+  <a href="/cn/" class="logo">app2<span>.cash</span></a>
+  <ul class="nav-links">
+    <li><a href="#income">收入来源</a></li>
+    <li><a href="#packages">套餐</a></li>
+    <li><a href="#included">包含内容</a></li>
+    <li><a href="#faq">常见问题</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a href="/partner_cn/" class="nb-o">合作伙伴</a>
+    <a href="#" class="nb-g" onclick="openModal();return false">获取特许经营权</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">特许经营 · 4个套餐 · 无版税</div>
+  <h1>您自己的货币<br>兑换业务 —<br><em>7天上线</em></h1>
+  <p class="hero-sub">以您的品牌运营的现成业务。保留100%的利润。拥有自己的MLM网络。无需法人实体。可在任何国家运营。一次付款，永久收益。</p>
+  <div class="hero-guarantee">✓ 根据要约条款提供全额退款保证</div>
+  <div class="hero-ctas">
+    <a href="#" class="btn-primary" onclick="openModal();return false">选择套餐 →</a>
+    <a href="#income" class="btn-outline">了解收益模式</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar rv">
+  <div class="stat-item"><span class="stat-num">7</span><div class="stat-label">天内上线</div></div>
+  <div class="stat-item"><span class="stat-num">100%</span><div class="stat-label">利润归您所有</div></div>
+  <div class="stat-item"><span class="stat-num">4</span><div class="stat-label">MLM层级</div></div>
+  <div class="stat-item"><span class="stat-num">$0</span><div class="stat-label">每月费用</div></div>
+  <div class="stat-item"><span class="stat-num">∞</span><div class="stat-label">国家 · 无需实体</div></div>
+</div>
+
+<!-- INCOME STREAMS -->
+<section id="income" class="rv">
+  <div class="section-tag">2种收入来源</div>
+  <h2>您赚取的每一分钱<br><em>都归您所有</em></h2>
+  <p class="section-lead">app2.cash提供基础设施和知识。您所有的收益都归您保留。</p>
+  <div class="streams">
+    <div class="stream str1">
+      <div class="stream-num">// 01</div>
+      <div class="stream-icon">💱</div>
+      <div class="stream-t">来自您兑换业务的100%利润</div>
+      <div class="stream-d">您在自己的网站上设定差价。客户付款后，资金直接流入您的账户。平台不从您的交易中抽取任何佣金。</div>
+      <div class="stream-formula">
+        <div>客户兑换：<span class="sf-g">$10,000</span></div>
+        <div>您的4%差价：<span class="sf-g">= $400</span></div>
+        <div>您的收入：<span class="sf-gr">$400</span> — 全部归您</div>
+      </div>
+    </div>
+    <div class="stream str2">
+      <div class="stream-num">// 02</div>
+      <div class="stream-icon">🌐</div>
+      <div class="stream-t">您品牌下的MLM网络</div>
+      <div class="stream-d">与app2.cash相同的4级系统——但完全属于您。招募合作伙伴，他们带来客户，您从每个层级赚取百分比。</div>
+      <div class="stream-formula">
+        <div>L1：<span class="sf-g">+10%</span> 合作伙伴客户的差价</div>
+        <div>L2：<span class="sf-g">+5%</span> · L3：<span class="sf-g">+2%</span></div>
+        <div>合作伙伴网络：<span class="sf-gr">全天候运转</span></div>
+      </div>
+    </div>
+    <div class="stream str3">
+      <div class="stream-num">// 03</div>
+      <div class="stream-icon">🏦</div>
+      <div class="stream-t">无SWIFT制裁货币业务</div>
+      <div class="stream-d">培训涵盖卢布、格里夫纳、坚戈、非洲货币等方案——无需传统银行电汇。独家封闭式知识体系。</div>
+      <div class="stream-formula">
+        <div>RUB、KZT、UAH</div>
+        <div>非洲货币</div>
+        <div>无SWIFT · 无银行 · <span class="sf-gr">合法合规</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PACKAGES -->
+<section id="packages" class="rv">
+  <div class="section-tag">4个特许经营套餐</div>
+  <h2>选择您的<br><em>入门级别</em></h2>
+  <p class="section-lead">一次付款，永久收益。无版税，无月费，永远如此。</p>
+
+  <div class="packages">
+
+    <div style="grid-column:1/-1;background:var(--s2);border:1px solid var(--ln);padding:20px 32px;display:flex;align-items:center;gap:12px;border-radius:0">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--di)">01 — 02</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mu)">入门启动</span>
+      <span style="font-size:12px;color:var(--di);margin-left:auto">$900 – $1,500 · 子品牌或您自己的域名</span>
+    </div>
+
+    <!-- LITE -->
+    <div class="pkg">
+      <div class="pkg-tier-label tier-starter">精简版</div>
+      <div class="pkg-name">Lite</div>
+      <div class="pkg-brand">yourname.app2.cash</div>
+      <div class="pkg-price">$900</div>
+      <div class="pkg-price-note">一次性付款 · 无版税 · 永久有效</div>
+      <div class="pkg-earn">
+        <div class="pkg-earn-title">您的收益</div>
+        <div class="pkg-earn-row"><span>来自客户的利润</span><span class="pkg-earn-val">100%</span></div>
+        <div class="pkg-earn-row"><span>MLM L1</span><span class="pkg-earn-val">+10%</span></div>
+        <div class="pkg-earn-row"><span>MLM L2</span><span class="pkg-earn-val">+5%</span></div>
+        <div class="pkg-earn-row"><span>MLM L3</span><span class="pkg-earn-val">+2%</span></div>
+      </div>
+      <ul class="pkg-perks">
+        <li><span class="ck">✓</span>子域名上的兑换网站</li>
+        <li><span class="ck">✓</span>CRM + 合作伙伴控制台</li>
+        <li><span class="ck">✓</span>汇率计算器小部件</li>
+        <li><span class="ck">✓</span>自动化线索流程</li>
+        <li><span class="ck">✓</span>基础培训</li>
+        <li><span class="ck">✓</span>子品牌下的MLM系统</li>
+        <li><span class="ck">✓</span>在线聊天支持</li>
+        <li><span class="na">—</span>您自己的域名和品牌</li>
+        <li><span class="na">—</span>白标（无app2.cash品牌标识）</li>
+      </ul>
+      <a href="#" class="pkg-cta cta-outline" onclick="openModal('lite');return false">以$900开始 →</a>
+    </div>
+
+    <!-- START -->
+    <div class="pkg featured">
+      <div class="pkg-tier-label tier-popular">最受欢迎</div>
+      <div class="pkg-name">Start</div>
+      <div class="pkg-brand">yourdomain.com</div>
+      <div class="pkg-price">$1,500</div>
+      <div class="pkg-price-note">一次性付款 · 无版税 · 永久有效</div>
+      <div class="pkg-earn">
+        <div class="pkg-earn-title">您的收益</div>
+        <div class="pkg-earn-row"><span>来自客户的利润</span><span class="pkg-earn-val">100%</span></div>
+        <div class="pkg-earn-row"><span>MLM L1</span><span class="pkg-earn-val">+10%</span></div>
+        <div class="pkg-earn-row"><span>MLM L2</span><span class="pkg-earn-val">+5%</span></div>
+        <div class="pkg-earn-row"><span>MLM L3</span><span class="pkg-earn-val">+2%</span></div>
+      </div>
+      <ul class="pkg-perks">
+        <li><span class="ck">✓</span>Lite套餐的全部内容</li>
+        <li><span class="ck">✓</span>部署在您自己的域名上</li>
+        <li><span class="ck">✓</span>高级培训</li>
+        <li><span class="ck">✓</span>制裁货币兑换方案</li>
+        <li><span class="ck">✓</span>上线时的专属经理</li>
+        <li><span class="ck">✓</span>您域名下的MLM系统</li>
+        <li><span class="ck">✓</span>优先支持</li>
+        <li><span class="na">—</span>完整白标（无app2.cash）</li>
+      </ul>
+      <a href="#" class="pkg-cta cta-gold" onclick="openModal('start');return false">以$1,500开始 →</a>
+    </div>
+
+    <div style="grid-column:1/-1;background:linear-gradient(90deg,rgba(201,168,76,.05),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.12);padding:20px 32px;display:flex;align-items:center;gap:12px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(201,168,76,.4)">03 — 04</span>
+      <span style="font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)">规模扩张</span>
+      <span style="font-size:12px;color:var(--di);margin-left:auto">$6,800 – $8,000 · 完整白标 · 独家授权</span>
+    </div>
+
+    <!-- BUSINESS -->
+    <div class="pkg top">
+      <div class="pkg-tier-label tier-pro">商业版</div>
+      <div class="pkg-name">Business</div>
+      <div class="pkg-brand">完整白标方案</div>
+      <div class="pkg-price">$6,800</div>
+      <div class="pkg-price-note">一次性付款 · 无版税 · 永久有效</div>
+      <div class="pkg-earn">
+        <div class="pkg-earn-title">您的收益</div>
+        <div class="pkg-earn-row"><span>来自客户的利润</span><span class="pkg-earn-val">100%</span></div>
+        <div class="pkg-earn-row"><span>MLM L1</span><span class="pkg-earn-val">+10%</span></div>
+        <div class="pkg-earn-row"><span>MLM L2</span><span class="pkg-earn-val">+5%</span></div>
+        <div class="pkg-earn-row"><span>MLM L3</span><span class="pkg-earn-val">+2%</span></div>
+      </div>
+      <ul class="pkg-perks">
+        <li><span class="ck">✓</span>Start套餐的全部内容</li>
+        <li><span class="ck">✓</span>完整白标——零app2.cash痕迹</li>
+        <li><span class="ck">✓</span>符合您风格的定制设计</li>
+        <li><span class="ck">✓</span>带您logo的CRM系统</li>
+        <li><span class="ck">✓</span>完全在您品牌下的MLM系统</li>
+        <li><span class="ck">✓</span>专属客户经理</li>
+        <li><span class="ck">✓</span>完整培训 + 独家方案</li>
+        <li><span class="na">—</span>区域独家授权</li>
+      </ul>
+      <a href="#" class="pkg-cta cta-pp" onclick="openModal('business');return false">以$6,800开始 →</a>
+    </div>
+
+    <!-- MASTER -->
+    <div class="pkg master">
+      <div class="pkg-tier-label tier-elite">旗舰版</div>
+      <div class="pkg-name">Master</div>
+      <div class="pkg-brand">白标 + 区域独家授权</div>
+      <div class="pkg-price">$8,000</div>
+      <div class="pkg-price-note">一次性付款 · 最高级别 · 区域独家</div>
+      <div class="pkg-earn">
+        <div class="pkg-earn-title">您的收益</div>
+        <div class="pkg-earn-row"><span>来自客户的利润</span><span class="pkg-earn-val">100%</span></div>
+        <div class="pkg-earn-row"><span>MLM L1</span><span class="pkg-earn-val">+10%</span></div>
+        <div class="pkg-earn-row"><span>MLM L2</span><span class="pkg-earn-val">+5%</span></div>
+        <div class="pkg-earn-row"><span>MLM L3</span><span class="pkg-earn-val">+2%</span></div>
+      </div>
+      <ul class="pkg-perks">
+        <li><span class="ck">✓</span>Business套餐的全部内容</li>
+        <li><span class="ck">✓</span>城市或国家的独家经营权</li>
+        <li><span class="ck">✓</span>app2.cash联合品牌营销</li>
+        <li><span class="ck">✓</span>直接接触核心团队</li>
+        <li><span class="ck">✓</span>API访问权限</li>
+        <li><span class="ck">✓</span>定制合作条款</li>
+        <li><span class="ck">✓</span>接触影响力合作伙伴网络</li>
+        <li><span class="ck">✓</span>个人全程上线支持</li>
+      </ul>
+      <a href="#" class="pkg-cta cta-bl" onclick="openModal('master');return false">以$8,000开始 →</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT'S INCLUDED -->
+<section id="included" class="rv">
+  <div class="section-tag">包含内容</div>
+  <h2>一切准备就绪<br><em>立即上线</em></h2>
+  <p class="section-lead">每个套餐都配备完整的上线工具包。无需开发者、律师或办公室。</p>
+  <div class="included-grid">
+    <div class="inc-card"><span class="inc-icon">🌐</span><h3>现成网站</h3><p>带汇率计算器小部件的兑换落地页。部署在您的域名或子域名上。</p></div>
+    <div class="inc-card"><span class="inc-icon">⚙️</span><h3>CRM + 控制台</h3><p>在同一平台管理线索、客户和您的合作伙伴网络。</p></div>
+    <div class="inc-card"><span class="inc-icon">🤖</span><h3>完全自动化</h3><p>线索、通知、汇率计算——全天候自动运行，无需人工干预。</p></div>
+    <div class="inc-card"><span class="inc-icon">🎓</span><h3>培训体系</h3><p>涵盖无SWIFT制裁货币的兑换方案。独家内部知识体系。</p></div>
+    <div class="inc-card"><span class="inc-icon">🌍</span><h3>您品牌下的MLM</h3><p>4级合作伙伴系统——您在全球的专属销售军团。</p></div>
+    <div class="inc-card"><span class="inc-icon">🔒</span><h3>无需许可证</h3><p>您在app2.cash基础设施下运营。无需法人实体或经营许可证。</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TRUST -->
+<section class="rv">
+  <div class="section-tag">为什么信任我们</div>
+  <h2>诚信是我们的<br><em>核心价值</em></h2>
+  <p class="section-lead">无隐藏费用，无意外惊喜。您可查看每一笔交易。</p>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <span class="trust-icon">🌍</span>
+      <h3>任何国家</h3>
+      <p>来自俄罗斯、阿联酋、非洲、亚洲的特许经营商——无地理限制。无需法人实体。</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">💳</span>
+      <h3>任何支付货币</h3>
+      <p>按谷歌汇率以任何货币支付。加密货币、现金、银行转账——我们都能解决。</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">👁️</span>
+      <h3>完全透明</h3>
+      <p>所有交易均在CRM中可查。您可看到每一笔兑换及每一笔合作伙伴网络分红。</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">♾️</span>
+      <h3>一次付款，永久拥有</h3>
+      <p>无版税。无月费。一次付款，业务永久持续运营。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GUARANTEE -->
+<section class="rv">
+  <div class="section-tag">退款保证</div>
+  <div class="guarantee-block">
+    <div class="gb-icon">🛡️</div>
+    <div>
+      <div class="gb-title">退款有保障</div>
+      <div class="gb-text">如果上线后出现问题——我们退还全额套餐费用，扣除3.6%的兑换手续费。退款条款载于公开要约中——公平且透明。</div>
+      <div class="gb-note">按公开要约条款退款 · 收取3.6%手续费 · 要约在付款前可查阅</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="rv">
+  <div class="section-tag">上线流程</div>
+  <h2>从付款到<br><em>第一个客户</em></h2>
+  <p class="section-lead">7个工作日——您的兑换平台即可上线并接受订单。</p>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><h3>选择套餐</h3><p>填写表格。经理将在5分钟内与您联系并解答所有问题。</p></div>
+    <div class="step"><div class="step-num">02</div><h3>按您的方式付款</h3><p>按谷歌汇率以任何货币支付。加密货币、现金、银行转账——无任何限制。</p></div>
+    <div class="step"><div class="step-num">03</div><h3>获取访问权限和培训</h3><p>网站、CRM、控制台、兑换方案——7个工作日内全部交付。</p></div>
+    <div class="step"><div class="step-num">04</div><h3>上线盈利</h3><p>迎接您的第一批客户和合作伙伴。每一分收入都属于您。</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMPARE TABLE -->
+<section class="rv">
+  <div class="section-tag">套餐对比</div>
+  <h2>完整<em>功能清单</em></h2>
+  <div class="ctable-wrap">
+    <table class="ctable">
+      <thead><tr>
+        <th>功能</th>
+        <th class="c1">Lite · $900</th>
+        <th class="c2">Start · $1,500</th>
+        <th class="c3">Business · $6,800</th>
+        <th class="c4">Master · $8,000</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>来自客户的利润</td><td class="pc c1">100%</td><td class="pc c2">100%</td><td class="pc c3">100%</td><td class="pc c4">100%</td></tr>
+        <tr><td>MLM L1 / L2 / L3</td><td class="pc c1">10/5/2%</td><td class="pc c2">10/5/2%</td><td class="pc c3">10/5/2%</td><td class="pc c4">10/5/2%</td></tr>
+        <tr><td>网站品牌</td><td class="c1">name.app2.cash</td><td class="c2">您的域名</td><td class="c3">完整白标</td><td class="c4">完整白标</td></tr>
+        <tr><td>app2.cash标识</td><td class="yes c1">有</td><td class="yes c2">有</td><td class="no">无 ✓</td><td class="no">无 ✓</td></tr>
+        <tr><td>您品牌下的MLM</td><td class="no">—</td><td class="no">—</td><td class="yes">有 ✓</td><td class="yes">有 ✓</td></tr>
+        <tr><td>区域独家授权</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">有 ✓</td></tr>
+        <tr><td>专属经理</td><td class="no">—</td><td class="yes">上线时配备 ✓</td><td class="yes">专属 ✓</td><td class="yes">直接联系 ✓</td></tr>
+        <tr><td>培训</td><td class="pc">基础</td><td class="pc">高级</td><td class="pc">完整</td><td class="pc">完整 + 个人辅导</td></tr>
+        <tr><td>API访问</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">有 ✓</td></tr>
+        <tr><td>上线时间</td><td class="pc">7天</td><td class="pc">7天</td><td class="pc">14天</td><td class="pc">14天</td></tr>
+        <tr><td>月费</td><td class="yes">无 ✓</td><td class="yes">无 ✓</td><td class="yes">无 ✓</td><td class="yes">无 ✓</td></tr>
+        <tr><td>退款保证</td><td class="yes">有 ✓</td><td class="yes">有 ✓</td><td class="yes">有 ✓</td><td class="yes">有 ✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq" class="rv">
+  <div class="section-tag">常见问题</div>
+  <h2>常见<em>问题解答</em></h2>
+  <p class="section-lead">没有找到您的问题？直接联系经理咨询。</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">我实际上如何赚钱？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">您保留来自兑换业务100%的利润。您在自己的网站上设定差价——客户付款，资金直接流入您的账户。此外，您的4级MLM网络让您从每个层级的合作伙伴那里分别赚取10%/5%/2%。app2.cash仅通过销售特许经营套餐盈利——从不从您的交易中抽成。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">是否有月费或版税？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">没有。无月费、无版税、无隐藏收费。套餐一次付款，永久拥有。这是我们的核心原则——我们通过销售特许经营获利，而非从您的营业额中抽成。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">我需要注册公司或申请许可证吗？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">不需要。您在app2.cash基础设施下运营。无需法人实体。适用于任何国家——俄罗斯、阿联酋、非洲、亚洲、欧洲。只需填写表格并为套餐付款即可。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">什么是"无SWIFT制裁货币"业务？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">卢布、格里夫纳、坚戈、非洲和亚洲货币——无需传统SWIFT银行电汇的运营方案。这些是通过培训传授的独家方法，通过替代性资金流转渠道合法运营。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">如何付款？接受加密货币和现金吗？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">接受。我们按谷歌汇率接受任何货币支付。USDT、BTC、现金、银行转账——我们都能找到解决方案。无国家或支付方式限制。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">退款保证如何运作？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">当公开要约条件满足时，我们退还全额套餐费用——扣除<code>3.6%</code>的兑换手续费。要约在付款前可查阅。条款诚实透明——这是我们的经营之道。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">子品牌和白标有什么区别？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">子品牌（Lite、Start）：您的网站运行在<code>yourname.app2.cash</code>或您自己的域名上，但页脚/设计中会提及app2.cash。白标（Business、Master）：完全是您的品牌——客户永远不会知道背后是app2.cash。您的logo，您的配色，您的CRM。</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="rv">
+  <div class="cta-banner">
+    <div class="section-tag" style="margin-bottom:16px">立即开始</div>
+    <h2>您的兑换平台<br><em>7天内上线</em></h2>
+    <p>申请5分钟内审核。以任何货币付款。无需法人实体。可在全球任何地方运营。</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:28px">
+      <a href="#" class="btn-primary" onclick="openModal();return false">选择套餐 →</a>
+      <a href="https://wa.me/255756687444" target="_blank" class="btn-outline">💬 WhatsApp</a>
+      <a href="https://t.me/app2cas" target="_blank" class="btn-outline">✈️ Telegram</a>
+    </div>
+    <div style="font-size:12px;color:var(--di)">我们按谷歌汇率接受任何货币付款：</div>
+    <div class="pay-row" style="justify-content:center">
+      <span class="pay-tag">USDT TRC20</span>
+      <span class="pay-tag">BTC</span>
+      <span class="pay-tag">卢布</span>
+      <span class="pay-tag">美元</span>
+      <span class="pay-tag">欧元</span>
+      <span class="pay-tag">迪拉姆</span>
+      <span class="pay-tag">现金</span>
+      <span class="pay-tag">任意货币</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="/cn/" class="logo">app2<span>.cash</span></a>
+  <ul class="fn">
+    <li><a href="#packages">套餐</a></li>
+    <li><a href="#included">包含内容</a></li>
+    <li><a href="#faq">常见问题</a></li>
+    <li><a href="/partner_cn/">合作伙伴</a></li>
+    <li><a href="mailto:fran@app2.cash">fran@app2.cash</a></li>
+  </ul>
+  <span>© 2026 app2.cash</span>
+</footer>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-top"></div>
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="form-content">
+      <h3>申请特许经营</h3>
+      <p class="modal-sub">填写表格——经理将在5分钟内与您联系</p>
+      <div style="font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">选择套餐</div>
+      <div class="modal-pkg-sel">
+        <div class="mpkg" id="mp0" onclick="selPkg(0)"><div class="mpkg-name">Lite</div><div class="mpkg-price">$900</div></div>
+        <div class="mpkg on" id="mp1" onclick="selPkg(1)"><div class="mpkg-name">Start</div><div class="mpkg-price">$1,500</div></div>
+        <div class="mpkg" id="mp2" onclick="selPkg(2)"><div class="mpkg-name">Business</div><div class="mpkg-price">$6,800</div></div>
+        <div class="mpkg" id="mp3" onclick="selPkg(3)"><div class="mpkg-name">Master</div><div class="mpkg-price">$8,000</div></div>
+      </div>
+      <div class="fg2">
+        <div class="fg"><label>姓名 *</label><input type="text" id="f-name" placeholder="您的姓名"></div>
+        <div class="fg"><label>国家 / 地区 *</label><input type="text" id="f-country" placeholder="阿联酋、非洲、欧洲..."></div>
+      </div>
+      <div class="fg"><label>Telegram</label><input type="text" id="f-tg" placeholder="@username"></div>
+      <div class="fg"><label>WhatsApp</label><input type="text" id="f-wa" placeholder="+86 或国际格式"></div>
+      <div class="fg"><label>电子邮件</label><input type="email" id="f-email" placeholder="you@example.com"></div>
+      <div class="fg"><label>关于您（选填）</label><textarea id="f-notes" placeholder="经验、受众、问题..."></textarea></div>
+      <button class="btn-primary form-submit" id="f-submit" onclick="submitForm()">发送申请 →</button>
+      <div class="modal-note">点击即表示您同意数据处理条款</div>
+    </div>
+    <div class="success-msg" id="success-msg">
+      <div class="success-icon">✅</div>
+      <div class="success-title">申请已收到！</div>
+      <div class="success-sub">经理将在5分钟内通过您选择的渠道与您联系。</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PKGS = ['Lite','Start','Business','Master'];
+const PRICES = ['$900','$1,500','$6,800','$8,000'];
+let curPkg = 1;
+
+function selPkg(i){
+  document.querySelectorAll('.mpkg').forEach((m,idx)=>m.classList.toggle('on',idx===i));
+  curPkg=i;
+}
+
+function openModal(pkg){
+  const idx = pkg==='lite'?0:pkg==='start'?1:pkg==='business'?2:pkg==='master'?3:curPkg;
+  selPkg(idx);
+  document.getElementById('form-content').style.display='block';
+  document.getElementById('success-msg').style.display='none';
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+async function submitForm(){
+  const name=document.getElementById('f-name').value.trim();
+  const country=document.getElementById('f-country').value.trim();
+  const tg=document.getElementById('f-tg').value.trim();
+  const wa=document.getElementById('f-wa').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const notes=document.getElementById('f-notes').value.trim();
+  if(!name){showToast('请输入您的姓名',false);return;}
+  if(!country){showToast('请输入您的国家/地区',false);return;}
+  if(!tg&&!wa&&!email){showToast('请至少提供一种联系方式',false);return;}
+  const btn=document.getElementById('f-submit');
+  btn.disabled=true;btn.textContent='发送中...';
+  try{
+    const res=await fetch('/api/index.js',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        contact:tg||wa||email,
+        channel:tg?'Telegram':wa?'WhatsApp':'Email',
+        source:`franchise_page_cn · ${PKGS[curPkg]} · ${PRICES[curPkg]}`,
+        timestamp:new Date().toISOString(),
+        extra:{name,country,tg,wa,email,notes,package:PKGS[curPkg],price:PRICES[curPkg]}
+      })
+    });
+    const data=await res.json();
+    if(data.ok){
+      document.getElementById('form-content').style.display='none';
+      document.getElementById('success-msg').style.display='block';
+      setTimeout(closeModal,3000);
+    }else throw new Error();
+  }catch(e){
+    showToast('发送失败，请直接联系我们。',false);
+    btn.disabled=false;btn.textContent='发送申请 →';
+  }
+}
+
+function showToast(msg,ok=true){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=ok?'var(--gr)':'var(--rd)';t.style.color=ok?'#000':'#fff';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');const was=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!was)item.classList.add('open');
+}
+
+const ro=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}});
+},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
