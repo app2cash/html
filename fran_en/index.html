@@ -227,7 +227,13 @@ footer a:hover{color:var(--gold)}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
 
 @media(max-width:1000px){
-  nav{padding:16px 20px}.nav-links{display:none}
+  nav{padding:10px 12px;gap:8px}.nav-links{display:none}
+  .nav-ctas{display:flex;align-items:center;gap:6px}
+  .nav-lang{display:flex;gap:2px}
+  .lang-btn{font-size:12px;padding:4px 6px;border-radius:6px;text-decoration:none;color:rgba(240,234,214,.45);border:1px solid rgba(255,255,255,.065);transition:all .2s}
+  .nav-partner-stack{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+  .nav-partner-stack .nb-o{padding:3px 7px;font-size:9px;border-radius:5px;white-space:nowrap}
+  .nb-g{padding:7px 10px;font-size:11px;white-space:nowrap}
   section{padding:60px 20px}
   .packages{grid-template-columns:1fr}
   .guarantee-block{grid-template-columns:1fr;gap:16px}
@@ -262,8 +268,15 @@ footer a:hover{color:var(--gold)}
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <div class="nav-ctas">
-    <a href="/partner_en/" class="nb-o">Partners</a>
-    <a href="#" class="nb-g" onclick="openModal();return false">Get franchise</a>
+    <div class="nav-lang">
+      <a href="/fran/" class="lang-btn">🇷🇺</a>
+      <a href="/fran_cn/" class="lang-btn">🇨🇳</a>
+    </div>
+    <div class="nav-partner-stack">
+      <a href="/cabinet" class="nb-o">Dashboard</a>
+      <a href="/partner_en/" class="nb-o">Partners</a>
+    </div>
+    <a href="#" class="nb-g" onclick="openModal();return false">Get franchise →</a>
   </div>
 </nav>
 
