@@ -39,9 +39,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .lang-btn{font-size:11px;padding:4px 9px;border-radius:6px;text-decoration:none;color:var(--mu);border:1px solid var(--ln);transition:all .2s}
 .lang-btn.active{background:var(--gd);color:var(--gold);border-color:var(--gb)}
 .lang-btn:hover:not(.active){color:var(--gold)}
+.nav-partner-stack{display:flex;flex-direction:row;gap:8px}
 .nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln);padding:8px 16px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
 .nb-o:hover{border-color:var(--gb);color:var(--gold)}
-.nb-g{background:var(--gold);color:var(--bg);padding:8px 18px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:background .2s;white-space:nowrap}
+.nb-g{background:var(--gold);color:var(--bg);padding:8px 18px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:background .2s;white-space:nowrap;border:none;cursor:pointer}
 .nb-g:hover{background:var(--gold-l)}
 
 /* ── HERO ── */
@@ -52,12 +53,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 h1{font-family:'Unbounded',sans-serif;font-size:clamp(36px,6vw,78px);font-weight:900;line-height:1.02;letter-spacing:-2.5px;margin-bottom:20px;animation:fu .8s .1s ease both}
 h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 50%,var(--gold-pale) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-sub{font-size:clamp(16px,1.8vw,20px);color:var(--mu);max-width:600px;margin-bottom:20px;line-height:1.65;animation:fu .8s .18s ease both}
-/* Pain points strip */
 .pain-strip{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px;animation:fu .8s .24s ease both}
 .pain-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--mu);background:var(--s2);border:1px solid var(--ln);border-radius:100px;padding:6px 14px}
 .pain-item .xi{color:var(--rd);font-size:11px}
 .pain-item .ci{color:var(--gr);font-size:11px}
-/* CTAs */
 .hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fu .8s .3s ease both;margin-bottom:24px}
 .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--bg);font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;letter-spacing:.4px;padding:16px 34px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 28px rgba(201,168,76,.3);display:inline-block}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(201,168,76,.45)}
@@ -67,12 +66,10 @@ h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold) 0%,var(--g
 .btn-tg:hover{background:#1a8ec4;transform:translateY(-2px)}
 .btn-outline{background:transparent;color:var(--tx);font-family:'Unbounded',sans-serif;font-weight:600;font-size:13px;padding:16px 28px;border-radius:8px;text-decoration:none;border:1px solid rgba(240,234,214,.18);cursor:pointer;transition:all .2s;display:inline-block}
 .btn-outline:hover{border-color:var(--gb);background:var(--gd)}
-/* FOMO */
 .fomo-wrap{animation:fu .8s .4s ease both}
 .fomo{display:inline-flex;align-items:center;gap:10px;background:var(--s2);border:1px solid var(--ln);border-radius:100px;padding:8px 18px;font-size:13px;color:var(--mu);transition:opacity .4s}
 .fomo img{width:26px;height:26px;border-radius:50%;object-fit:cover}
 .fomo b{color:var(--tx)}
-/* Commission badge hero */
 .commission-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:10px 20px;font-size:14px;color:var(--mu);margin-bottom:28px;animation:fu .8s .22s ease both}
 .commission-badge strong{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:16px}
 
@@ -282,9 +279,31 @@ footer a:hover{color:var(--gold)}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE > 1000px (десктоп) ── */
+@media(min-width:1001px){
+  .nav-partner-stack{flex-direction:row;gap:8px}
+}
+
+/* ── RESPONSIVE ≤ 1000px ── */
 @media(max-width:1000px){
-  nav{padding:14px 18px}.nav-links{display:none}
+  nav{padding:10px 12px;gap:8px}
+  .nav-links{display:none}
+
+  /* Логотип чуть меньше */
+  .logo{font-size:15px}
+
+  /* Языки: только флаги, без RU */
+  .nav-lang{gap:2px}
+  .lang-btn{font-size:12px;padding:4px 6px;border:none;background:none}
+  .lang-btn.active{display:none} /* скрываем RU */
+
+  /* Партнёрка и Франшиза — стопкой, мелкие */
+  .nav-partner-stack{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+  .nav-partner-stack .nb-o{padding:3px 7px;font-size:9px;border-radius:5px;white-space:nowrap}
+
+  /* Обменять — компактная */
+  .nb-g{padding:7px 10px;font-size:11px;white-space:nowrap}
+
   section{padding:60px 18px}
   .compare{grid-template-columns:1fr}
   .partner-strip{grid-template-columns:1fr}
@@ -292,6 +311,7 @@ footer a:hover{color:var(--gold)}
   .cta-banner{padding:48px 24px}
   footer{padding:24px 18px;flex-direction:column;text-align:center}.fn{justify-content:center}
 }
+
 @media(max-width:700px){
   h1{letter-spacing:-1px}
   .calc-grid{grid-template-columns:1fr;gap:8px}.calc-arrow{display:none}
@@ -325,11 +345,13 @@ footer a:hover{color:var(--gold)}
   <div class="nav-right">
     <div class="nav-lang">
       <a href="/" class="lang-btn active">🇷🇺 RU</a>
-      <a href="/en/" class="lang-btn">🇬🇧 EN</a>
-      <a href="/cn/" class="lang-btn">🇨🇳 CN</a>
+      <a href="/en/" class="lang-btn">🇬🇧</a>
+      <a href="/cn/" class="lang-btn">🇨🇳</a>
     </div>
-    <a href="/partner/" class="nb-o">Партнёрка</a>
-    <a href="/fran/" class="nb-o">Франшиза</a>
+    <div class="nav-partner-stack">
+      <a href="/partner/" class="nb-o">Партнёрка</a>
+      <a href="/fran/" class="nb-o">Франшиза</a>
+    </div>
     <button onclick="openWidget()" class="nb-g">Обменять →</button>
   </div>
 </nav>
