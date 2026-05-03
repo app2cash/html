@@ -1,424 +1,975 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-Hans">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>货币兑换和汇款 – app2.cash</title>
+<title>app2.cash — 无KYC、无SWIFT限制的货币兑换服务</title>
+<meta name="description" content="无需身份验证的货币兑换与转账服务。卢布、USDT、迪拉姆、非洲货币。手续费3.6%。经理1分钟内响应。">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-body{
-  margin:0;
-  background:#0b0b0f;
-  color:#fff;
-  font-family:'Montserrat', Arial, sans-serif;
-  line-height:1.5;
-  padding-bottom:100px;
+:root{
+  --gold:#C9A84C;--gold-l:#E8C96D;--gold-pale:#F5E4A8;
+  --gd:rgba(201,168,76,.10);--gb:rgba(201,168,76,.22);
+  --bg:#0A0A0A;--s1:#111;--s2:#171717;--s3:#1F1F1F;
+  --tx:#F0EAD6;--mu:rgba(240,234,214,.45);--di:rgba(240,234,214,.16);
+  --ln:rgba(255,255,255,.065);
+  --gr:#4CAF7D;--rd:#F05252;--bl:#60A5FA;--pp:#A78BFA;
+  --r:12px;
 }
-.container{
-  max-width:540px;
-  margin:0 auto;
-  padding:20px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Golos Text','PingFang SC','Noto Sans SC',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;line-height:1.6;padding-bottom:60px}
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.032'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(160px);pointer-events:none;z-index:0}
+.o1{width:700px;height:700px;background:rgba(201,168,76,.055);top:-200px;right:-200px}
+.o2{width:500px;height:500px;background:rgba(96,165,250,.035);bottom:0;left:-150px}
+.o3{width:400px;height:400px;background:rgba(167,139,250,.025);top:50%;left:50%;transform:translate(-50%,-50%)}
+.wrap{position:relative;z-index:1}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:rgba(10,10,10,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--ln);gap:16px}
+.logo{font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px;color:var(--gold);letter-spacing:-.5px;text-decoration:none;flex-shrink:0}
+.logo span{color:var(--mu);font-weight:300}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav-lang{display:flex;gap:4px}
+.lang-btn{font-size:11px;padding:4px 9px;border-radius:6px;text-decoration:none;color:var(--mu);border:1px solid var(--ln);transition:all .2s}
+.lang-btn.active{background:var(--gd);color:var(--gold);border-color:var(--gb)}
+.lang-btn:hover:not(.active){color:var(--gold)}
+.nav-partner-stack{display:flex;flex-direction:row;gap:8px}
+.nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln);padding:8px 16px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nb-o:hover{border-color:var(--gb);color:var(--gold)}
+.nb-g{background:var(--gold);color:var(--bg);padding:8px 18px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:background .2s;white-space:nowrap;border:none;cursor:pointer}
+.nb-g:hover{background:var(--gold-l)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:140px 24px 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:1000px;height:1000px;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-58%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gd);border:1px solid var(--gb);border-radius:100px;padding:6px 18px;font-size:12px;font-weight:600;color:var(--gold-l);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px;animation:fu .8s ease both}
+.hero-badge::before{content:'';width:7px;height:7px;background:var(--gr);border-radius:50%;box-shadow:0 0 8px var(--gr);animation:blink 2s infinite;flex-shrink:0}
+h1{font-family:'Unbounded',sans-serif;font-size:clamp(36px,6vw,78px);font-weight:900;line-height:1.02;letter-spacing:-2.5px;margin-bottom:20px;animation:fu .8s .1s ease both}
+h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 50%,var(--gold-pale) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(16px,1.8vw,20px);color:var(--mu);max-width:600px;margin-bottom:20px;line-height:1.65;animation:fu .8s .18s ease both}
+.pain-strip{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px;animation:fu .8s .24s ease both}
+.pain-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--mu);background:var(--s2);border:1px solid var(--ln);border-radius:100px;padding:6px 14px}
+.pain-item .xi{color:var(--rd);font-size:11px}
+.pain-item .ci{color:var(--gr);font-size:11px}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fu .8s .3s ease both;margin-bottom:24px}
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--bg);font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;letter-spacing:.4px;padding:16px 34px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 28px rgba(201,168,76,.3);display:inline-block}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(201,168,76,.45)}
+.btn-wa{background:#25D366;color:#fff;font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;padding:16px 28px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-block;box-shadow:0 4px 20px rgba(37,211,102,.25)}
+.btn-wa:hover{background:#20bd5a;transform:translateY(-2px)}
+.btn-tg{background:#229ED9;color:#fff;font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;padding:16px 28px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:all .2s;display:inline-block;box-shadow:0 4px 20px rgba(34,158,217,.2)}
+.btn-tg:hover{background:#1a8ec4;transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--tx);font-family:'Unbounded',sans-serif;font-weight:600;font-size:13px;padding:16px 28px;border-radius:8px;text-decoration:none;border:1px solid rgba(240,234,214,.18);cursor:pointer;transition:all .2s;display:inline-block}
+.btn-outline:hover{border-color:var(--gb);background:var(--gd)}
+.fomo-wrap{animation:fu .8s .4s ease both}
+.fomo{display:inline-flex;align-items:center;gap:10px;background:var(--s2);border:1px solid var(--ln);border-radius:100px;padding:8px 18px;font-size:13px;color:var(--mu);transition:opacity .4s}
+.fomo img{width:26px;height:26px;border-radius:50%;object-fit:cover}
+.fomo b{color:var(--tx)}
+.commission-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:10px 20px;font-size:14px;color:var(--mu);margin-bottom:28px;animation:fu .8s .22s ease both}
+.commission-badge strong{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:16px}
+
+/* ── STATS ── */
+.stats-bar{display:flex;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);background:rgba(255,255,255,.012)}
+.stat-item{flex:1;min-width:140px;padding:32px 20px;text-align:center;border-right:1px solid var(--ln);position:relative}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:32px;font-weight:900;color:var(--gold);letter-spacing:-1px;display:block}
+.stat-label{font-size:12px;color:var(--mu);margin-top:4px}
+
+/* ── SHARED LAYOUT ── */
+section{position:relative;padding:96px 24px;max-width:1140px;margin:0 auto}
+.section-tag{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+h2{font-family:'Unbounded',sans-serif;font-size:clamp(26px,3.8vw,48px);font-weight:900;line-height:1.05;letter-spacing:-1.5px;margin-bottom:14px}
+h2 em{font-style:normal;color:var(--gold)}
+.section-lead{font-size:17px;color:var(--mu);max-width:560px;margin-bottom:52px;line-height:1.7}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.15),transparent)}
+
+/* ── URGENCY BAR ── */
+.urgency-bar{background:linear-gradient(90deg,rgba(201,168,76,.08),rgba(201,168,76,.04),rgba(201,168,76,.08));border-top:1px solid rgba(201,168,76,.15);border-bottom:1px solid rgba(201,168,76,.15);padding:14px 24px;text-align:center;font-size:13px;color:var(--mu)}
+.urgency-bar strong{color:var(--gold)}
+
+/* ── HOW IT WORKS ── */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:rgba(201,168,76,.08);border-radius:var(--r);overflow:hidden}
+.step{background:var(--s1);padding:40px 32px;transition:background .2s;position:relative}
+.step:hover{background:var(--s2)}
+.step-num{font-family:'Unbounded',sans-serif;font-size:52px;font-weight:900;color:rgba(201,168,76,.12);line-height:1;margin-bottom:14px}
+.step h3{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px}
+.step p{font-size:14px;color:var(--mu);line-height:1.6}
+.step-time{display:inline-block;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--gr);background:rgba(76,175,125,.1);border:1px solid rgba(76,175,125,.2);border-radius:100px;padding:3px 10px}
+
+/* ── CALCULATOR ── */
+.calc-wrap{background:var(--s1);border:1px solid rgba(201,168,76,.22);border-radius:16px;padding:40px;position:relative;overflow:hidden}
+.calc-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-l),transparent)}
+.calc-grid{display:grid;grid-template-columns:1fr 36px 1fr;gap:12px;align-items:end;margin-bottom:20px}
+.calc-field label{display:block;font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.calc-input{width:100%;background:var(--s2);border:1px solid var(--ln);border-radius:8px;padding:14px 16px;color:var(--tx);font-family:'Golos Text',sans-serif;font-size:16px;outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none}
+.calc-input:focus{border-color:rgba(201,168,76,.5)}
+.calc-arrow{display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px;font-size:18px;color:var(--gold)}
+.calc-result-wrap{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.calc-result-label{font-size:13px;color:var(--mu)}
+.calc-result-val{font-family:'Unbounded',sans-serif;font-size:24px;font-weight:900;color:var(--gold)}
+.calc-cta{width:100%;padding:15px;background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--bg);font-family:'Unbounded',sans-serif;font-weight:700;font-size:14px;border:none;border-radius:8px;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.calc-cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,168,76,.35)}
+.calc-note{font-size:11px;color:var(--di);margin-top:10px;text-align:center}
+
+/* ── CURRENCIES ── */
+.curr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.curr-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:26px 22px;transition:border-color .25s,background .25s;position:relative;overflow:hidden}
+.curr-card:hover{border-color:rgba(201,168,76,.3);background:var(--s2)}
+.curr-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.25),transparent)}
+.curr-flag{font-size:26px;margin-bottom:10px;display:block}
+.curr-card h3{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;margin-bottom:7px}
+.curr-card p{font-size:12px;color:var(--mu);line-height:1.55;margin-bottom:10px}
+.curr-tags{display:flex;flex-wrap:wrap;gap:4px}
+.curr-tag{font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 7px;border-radius:4px;background:var(--s3);color:var(--mu);border:1px solid var(--ln)}
+
+/* ── PROOF ── */
+.screens-wrap{overflow-x:auto;padding-bottom:8px;margin-bottom:28px;-webkit-overflow-scrolling:touch}
+.screens-wrap::-webkit-scrollbar{display:none}
+.screens{display:flex;gap:10px;width:max-content}
+.screens img{height:190px;width:auto;border-radius:10px;border:1px solid var(--ln);cursor:pointer;transition:border-color .3s,transform .3s;object-fit:cover}
+.screens img:hover{border-color:var(--gb);transform:scale(1.03)}
+.video-slider{display:flex;overflow-x:auto;gap:12px;padding:4px 0 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.video-slider::-webkit-scrollbar{display:none}
+.video-item{flex:0 0 auto;width:150px;position:relative;border-radius:10px;overflow:hidden;scroll-snap-align:start;border:1px solid var(--ln);cursor:pointer;transition:border-color .2s,transform .2s}
+.video-item:hover{border-color:var(--gb);transform:scale(1.02)}
+.video-item img{width:100%;height:267px;object-fit:cover;display:block}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;background:rgba(201,168,76,.92);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--bg);box-shadow:0 4px 16px rgba(0,0,0,.5)}
+.proof-all{text-align:center;margin-top:32px}
+
+/* ── WHY NOT BANK ── */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--ln);border-radius:var(--r);overflow:hidden}
+.compare-side{background:var(--s1);padding:36px 32px}
+.compare-side.good{border-top:2px solid var(--gr)}
+.compare-side.bad{border-top:2px solid var(--rd)}
+.compare-title{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;margin-bottom:20px}
+.c-item{display:flex;gap:10px;font-size:14px;margin-bottom:11px;align-items:flex-start;line-height:1.5}
+.ck{color:var(--gr);font-weight:700;flex-shrink:0}
+.xk{color:var(--rd);flex-shrink:0}
+.c-item span{color:var(--mu)}
+
+/* ── TRUST CARDS ── */
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.trust-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:28px 24px;transition:border-color .2s;position:relative;overflow:hidden}
+.trust-card:hover{border-color:rgba(201,168,76,.25)}
+.trust-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent)}
+.trust-icon{font-size:28px;margin-bottom:14px;display:block}
+.trust-card h3{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px}
+.trust-card p{font-size:13px;color:var(--mu);line-height:1.6}
+
+/* ── GUARANTEE ── */
+.guarantee-block{background:linear-gradient(135deg,rgba(76,175,125,.08),rgba(76,175,125,.03));border:1px solid rgba(76,175,125,.2);border-radius:16px;padding:44px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start}
+.gb-icon{font-size:52px;line-height:1}
+.gb-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;color:var(--gr);margin-bottom:10px;letter-spacing:-.5px}
+.gb-text{font-size:15px;color:var(--mu);line-height:1.7;margin-bottom:14px}
+.gb-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--di);background:var(--s2);border:1px solid var(--ln);border-radius:6px;padding:10px 14px}
+
+/* ── PARTNER STRIP ── */
+.partner-strip{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.partner-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s;text-decoration:none;color:var(--tx)}
+.partner-card:hover{border-color:rgba(201,168,76,.3)}
+.partner-tag{font-family:'Unbounded',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gd);border:1px solid var(--gb);border-radius:100px;padding:3px 10px;width:fit-content}
+.partner-card h3{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700}
+.partner-card p{font-size:13px;color:var(--mu);line-height:1.6;flex:1}
+.partner-arrow{font-size:13px;color:var(--gold);font-weight:600}
+
+/* ── FAQ ── */
+.faq-list{display:flex;flex-direction:column;gap:2px;border-radius:var(--r);overflow:hidden}
+.faq-item{background:var(--s1)}
+.faq-q{width:100%;background:none;border:none;color:var(--tx);font-family:'Golos Text',sans-serif;font-size:15px;font-weight:600;text-align:left;padding:22px 28px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .2s}
+.faq-q:hover{background:var(--s2)}
+.faq-chevron{flex-shrink:0;width:26px;height:26px;border:1px solid var(--gb);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gold);transition:transform .3s}
+.faq-item.open .faq-chevron{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s;font-size:14px;color:var(--mu);padding:0 28px;line-height:1.75}
+.faq-item.open .faq-a{max-height:300px;padding:0 28px 22px}
+.faq-a code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);background:var(--gd);padding:1px 6px;border-radius:4px}
+
+/* ── CTA BANNER ── */
+.cta-banner{background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(201,168,76,.04));border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:72px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,.1),transparent 70%);top:-150px;right:-100px;pointer-events:none}
+.cta-banner p{font-size:17px;color:var(--mu);margin:12px 0 36px;line-height:1.6}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.pay-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.pay-tag{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--s2);border:1px solid var(--ln);border-radius:6px;padding:6px 12px;color:var(--mu)}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--ln);padding:32px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--mu)}
+footer a{color:var(--mu);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--gold)}
+.fn{display:flex;gap:20px;list-style:none;flex-wrap:wrap}
+
+/* ── FIXED BOTTOM ── */
+.contact-fixed{position:fixed;bottom:0;left:0;width:100%;display:flex;z-index:100;border-top:1px solid var(--ln)}
+.cf-btn{flex:1;text-align:center;padding:14px 6px;font-family:'Golos Text',sans-serif;font-weight:700;font-size:13px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--s1);color:var(--mu);border-right:1px solid var(--ln);transition:all .2s;cursor:pointer;border-top:none;border-bottom:none;border-left:none}
+.cf-btn:last-child{border-right:none}
+.cf-btn:hover{background:var(--s2)}
+.cf-wa{color:#25D366 !important}
+.cf-tg{color:#229ED9 !important}
+.cf-ph{color:var(--gold) !important}
+.cf-calc{background:var(--gold) !important;color:var(--bg) !important;font-weight:700}
+.cf-calc:hover{background:var(--gold-l) !important}
+
+/* ── LIGHTBOX ── */
+#lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);backdrop-filter:blur(10px);display:none;justify-content:center;align-items:center;z-index:500;cursor:zoom-out}
+#lightbox img{max-width:92%;max-height:92%;border-radius:12px}
+
+/* ── LEAD MAGNET MODAL ── */
+.lm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);z-index:400;align-items:center;justify-content:center;padding:20px}
+.lm-overlay.open{display:flex}
+.lm-modal{background:var(--s1);border:1px solid rgba(201,168,76,.3);border-radius:20px;width:100%;max-width:520px;position:relative;animation:fu .35s ease;overflow:hidden;max-height:92vh;overflow-y:auto}
+.lm-top{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-l),transparent)}
+.lm-body{padding:32px 36px 36px}
+.lm-close{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--mu);font-size:24px;cursor:pointer;z-index:1;line-height:1;transition:color .2s}
+.lm-close:hover{color:var(--tx)}
+.book-card{display:grid;grid-template-columns:100px 1fr;gap:18px;align-items:start;background:var(--s2);border:1px solid var(--ln);border-radius:12px;padding:18px;margin-bottom:22px}
+.book-cover{width:100px;border-radius:8px;display:block;box-shadow:0 8px 32px rgba(0,0,0,.6)}
+.book-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--rd);background:rgba(240,82,82,.1);border:1px solid rgba(240,82,82,.25);border-radius:100px;padding:3px 10px;margin-bottom:7px}
+.book-title{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:800;line-height:1.2;margin-bottom:4px}
+.book-author{font-size:11px;color:var(--mu);margin-bottom:7px;font-family:'JetBrains Mono',monospace}
+.book-desc{font-size:11px;color:var(--mu);line-height:1.55}
+.lm-headline{font-family:'Unbounded',sans-serif;font-size:19px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.lm-sub{font-size:13px;color:var(--mu);margin-bottom:18px;line-height:1.6}
+.fg{margin-bottom:11px}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.fg input{width:100%;background:var(--s2);border:1px solid var(--ln);border-radius:8px;padding:12px 14px;color:var(--tx);font-family:'Golos Text',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+.fg input:focus{border-color:rgba(201,168,76,.5)}
+.fg input::placeholder{color:var(--di)}
+.lm-submit{width:100%;padding:15px;background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--bg);font-family:'Unbounded',sans-serif;font-weight:700;font-size:14px;border:none;border-radius:8px;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:6px}
+.lm-submit:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,168,76,.35)}
+.lm-note{text-align:center;font-size:11px;color:var(--di);margin-top:10px}
+.lm-success{display:none;text-align:center;padding:40px 20px}
+.lm-success-icon{font-size:56px;margin-bottom:16px}
+.lm-success-title{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:800;color:var(--gr);margin-bottom:8px}
+.lm-success-sub{font-size:14px;color:var(--mu);line-height:1.6}
+
+/* ── WIDGET MODAL ── */
+.wg-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);z-index:300;align-items:center;justify-content:center;padding:20px}
+.wg-overlay.open{display:flex}
+.wg-inner{background:var(--s1);border:1px solid rgba(201,168,76,.25);border-radius:16px;padding:36px;width:100%;max-width:400px;position:relative;animation:fu .3s ease}
+.wg-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-l),transparent);border-radius:16px 16px 0 0}
+.wg-close{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--mu);font-size:22px;cursor:pointer;transition:color .2s;line-height:1}
+.wg-close:hover{color:var(--tx)}
+.wg-title{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:800;margin-bottom:4px;letter-spacing:-.5px}
+.wg-sub{font-size:13px;color:var(--mu);margin-bottom:20px;line-height:1.5}
+.ch-row{display:flex;gap:8px;margin-bottom:14px}
+.ch-btn{flex:1;padding:10px 4px;border-radius:8px;border:1px solid var(--ln);background:var(--s2);color:var(--mu);cursor:pointer;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:600;transition:all .2s}
+.ch-btn.on{border-color:var(--gold);color:var(--gold);background:var(--gd)}
+.wg-input{width:100%;background:var(--s2);border:1px solid var(--ln);border-radius:8px;padding:12px 16px;color:var(--tx);font-family:'Golos Text',sans-serif;font-size:14px;outline:none;transition:border-color .2s;margin-bottom:12px;display:block}
+.wg-input:focus{border-color:rgba(201,168,76,.5)}
+.wg-input::placeholder{color:var(--di)}
+.wg-submit{width:100%;padding:14px;background:var(--gold);color:var(--bg);border:none;border-radius:8px;font-family:'Golos Text',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:background .2s}
+.wg-submit:hover{background:var(--gold-l)}
+.wg-ok{display:none;text-align:center;color:var(--gr);font-weight:600;margin-top:14px;font-size:14px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:72px;right:24px;font-weight:700;font-size:13px;padding:12px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+/* ── ANIMATIONS ── */
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.35)}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
+
+/* ── RESPONSIVE > 1000px ── */
+@media(min-width:1001px){
+  .nav-partner-stack{flex-direction:row;gap:8px}
 }
-.lang {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  gap:6px;
-  margin-bottom:10px;
+
+/* ── RESPONSIVE ≤ 1000px ── */
+@media(max-width:1000px){
+  nav{padding:10px 12px;gap:8px}
+  .nav-links{display:none}
+  .logo{font-size:15px}
+  .nav-lang{gap:2px}
+  .lang-btn{font-size:12px;padding:4px 6px;border:none;background:none}
+  .lang-btn.active{display:none}
+  .nav-partner-stack{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+  .nav-partner-stack .nb-o{padding:3px 7px;font-size:9px;border-radius:5px;white-space:nowrap}
+  .nb-g{padding:7px 10px;font-size:11px;white-space:nowrap}
+  section{padding:60px 18px}
+  .compare{grid-template-columns:1fr}
+  .partner-strip{grid-template-columns:1fr}
+  .guarantee-block{grid-template-columns:1fr;gap:16px}
+  .cta-banner{padding:48px 24px}
+  footer{padding:24px 18px;flex-direction:column;text-align:center}.fn{justify-content:center}
 }
-.lang a{
-  text-decoration:none;
-  font-weight:bold;
-  padding:2px 6px;
-  border-radius:6px;
-  color:#FFD700;
-  transition:0.3s;
+
+@media(max-width:700px){
+  h1{letter-spacing:-1px}
+  .calc-grid{grid-template-columns:1fr;gap:8px}.calc-arrow{display:none}
+  .stats-bar{flex-direction:column}.stat-item{border-right:none;border-bottom:1px solid var(--ln)}.stat-item:last-child{border-bottom:none}
+  .hero-ctas{flex-direction:column;align-items:center}
+  .book-card{grid-template-columns:1fr;text-align:center}.book-cover{margin:0 auto}
+  .lm-body{padding:24px 18px 28px}
+  .cf-btn{font-size:11px;padding:12px 4px}
 }
-.lang a:hover{color:#fff;}
-.lang a.active{
-  background:#FFD700;
-  color:#000;
-}
-h1{text-align:center;font-size:28px;margin-bottom:5px;}
-h2{margin-top:35px;font-size:22px;border-bottom:1px solid #333;padding-bottom:8px;}
-h3{font-weight:400;color:#ccc;text-align:center;margin-bottom:5px;}
-h4{margin-top:10px;font-weight:500;color:#FFD700;}
-.cta{
-  display:block;
-  text-align:center;
-  background:linear-gradient(90deg,#FFD700,#FFA500);
-  color:#000;
-  padding:14px;
-  border-radius:16px;
-  font-weight:bold;
-  margin:20px 0;
-  text-decoration:none;
-  transition:0.3s;
-}
-.cta:hover{
-  transform:translateY(-2px);
-  box-shadow:0 4px 12px rgba(255,215,0,0.4);
-}
-.card{
-  background:#111;
-  padding:18px;
-  border-radius:16px;
-  margin-top:15px;
-  box-shadow:0 4px 15px rgba(255,255,255,0.05);
-}
-.fomo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:#111;
-  border:1px solid #FFD700;
-  padding:12px;
-  border-radius:12px;
-  margin:15px 0;
-  font-size:14px;
-  transition:opacity 0.5s;
-  box-shadow:0 4px 12px rgba(255,215,0,0.2);
-}
-.fomo img{
-  width:36px;
-  border-radius:50%;
-}
-.screens{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  margin-top:10px;
-  padding-bottom:10px;
-}
-.screens img{
-  width:140px;
-  border-radius:12px;
-  border:2px solid gold;
-  transition: transform 0.3s;
-  cursor:pointer;
-}
-.screens img:hover{ transform:scale(1.05); }
-#lightbox{
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
-}
-#lightbox img{
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-}
-.video-slider{
-  display:flex;
-  overflow-x:auto;
-  gap:10px;
-  padding:10px 0;
-  scroll-snap-type: x mandatory;
-}
-.video-slider::-webkit-scrollbar{display:none;}
-.video-item{
-  flex:0 0 auto;
-  width:200px;
-  position:relative;
-  border-radius:12px;
-  overflow:hidden;
-  scroll-snap-align:start;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-  cursor:pointer;
-}
-.video-item img{
-  width:100%;
-  display:block;
-  transition:transform 0.3s;
-}
-.video-item:hover img{transform:scale(1.05);}
-.play{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:40px;
-  color:#FFD700;
-  opacity:0.9;
-}
-.contact-fixed{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  display:flex;
-  z-index:99;
-}
-.cf-btn{
-  flex:1;
-  text-align:center;
-  padding:14px;
-  font-weight:bold;
-  color:#fff;
-  border-top:2px solid #222;
-  transition:0.3s;
-}
-.cf-btn:hover{filter:brightness(1.1);}
-.whatsapp{background:#25D366;}
-.telegram{background:#229ED9;}
-.imo{background:#00AEEF;}
-@keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
-  70%{ box-shadow:0 0 0 10px rgba(37,211,102,0); }
-  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
-}
-#amount{
-  width:100%;
-  padding:10px;
-  border-radius:12px;
-  border:none;
-  font-size:16px;
-  margin-top:10px;
-}
-.checks{ color:#ccc; padding-left:10px; }
 </style>
 </head>
 <body>
+<div class="bg-grid"></div>
+<div class="bg-orb o1"></div>
+<div class="bg-orb o2"></div>
+<div class="bg-orb o3"></div>
+<div class="toast" id="toast"></div>
+<div id="lightbox"><img src="" alt=""></div>
 
-<div class="container">
-<div class="lang">
-  <a href="/">🇷🇺 Русский</a>
-  <a href="/en">🇬🇧 English</a>
-  <a href="/cn" class="active">🇨🇳 中文</a>
-</div>
+<div class="wrap">
 
-<section style="text-align:center; padding:20px;">
-  <img src="/logo-bull.png" alt="app2.cash" style="width:120px;margin-bottom:12px;">
-  <br>
-  <img src="/en/печать анг.png" alt="Stamp" style="width:120px;margin-top:12px;">
-</section>
-
-<h1>无需 KYC 即可进行货币兑换和转账</h1>
-<h3>游客，学生，移民，<br>企业，私人客户</h3>
-<h4 style="text-align:center;">手续费从0.5%到3.6%</h4>
-
-<div id="fomo" class="fomo"></div>
-
-<h2>操作步骤</h2>
-<div class="card checks">
-✔ 写信给经理<br>
-✔ 用您的货币进行转账<br>
-✔ 您或您的联系人收到目标货币
-</div>
-
-<div style="margin:20px 0; padding:10px; border:1.5px solid gold; border-radius:12px; text-align:center;">
-  <div class="card">
-    <h4>热门国家:</h4>
-    俄罗斯，土耳其，乌兹别克斯坦<br>
-    坦桑尼亚，印度尼西亚，中国<br>
-    <h4>支付方式:</h4>
-    MIR/VISA/Mastercard<br>
-    手机钱包，Alipay，USDT，800+方式<br>
-    美元、卢布、人民币……115+种货币<br>
-  </div>
-  <h4>在私人聊天中确认您的国家和支付方式</h4>
-</div>
-
-<section style="background:#0b0b0b;color:white;padding:30px 20px;text-align:left;">
-  <p style="color:#ccc;">
-    ✔ 自2022年运营<br>
-    ✔ 转账15-50分钟<br>
-    ✔ 提供本地语言支持<br>
-    ✔ 保密并投保
-  </p>
-</section>
-
-<h2>您将收到多少？</h2>
-<input id="amount" placeholder="输入金额">
-<div id="result" style="margin-top:10px;font-size:18px;color:#FFD700;">≈ —</div>
-<a href="https://wa.me/255756687444" class="cta">兑换</a>
-
-<h2>查看确认记录</h2>
-<div class="screens">
-  <img src="/en/IMG_en/1.jpg">
-  <img src="/en/IMG_en/2.jpg">
-  <img src="/en/IMG_en/3.jpg">
-  <img src="/en/IMG_en/4.jpg">
-  <img src="/en/IMG_en/5.jpg">
-  <img src="/en/IMG_en/6.jpg">
-  <img src="/en/IMG_en/7.jpg">
-  <img src="/en/IMG_en/8.jpg">
-  <img src="/en/IMG_en/9.jpg">
-  <img src="/en/IMG_en/10.jpg">
-</div>
-
-<h2>观看视频评价 ➔</h2>
-<div class="video-slider" id="videos"></div>
-<a href="https://wa.me/255756687444" class="cta">联系马拉特 WhatsApp</a>
-
-<h2>为什么不选银行</h2>
-<div class="card">
-✔ 免税<br>✔ 无封锁<br>✔ 无SWIFT
-</div>
-<div class="card">
-✖ 慢<br>✖ 限制<br>✖ 风险
-</div>
-
-<h2>常见问题</h2>
-<div class="card checks">
-安全吗？- 是，您直接沟通。<br>
-有保障吗？- 声誉、双重加密和智能合约。
-</div>
-
-<h2>信赖者</h2>
-<section style="text-align:center; padding:20px;">
-  <img src="/en/печать анг.png" alt="app2.cash" style="width:120px;margin-bottom:22px;">
-</section>
-<div class="card checks" style="text-align:center;">
-自2022年以来的数千次兑换<br>
-俄罗斯侨民验证
-</div>
-
-<div style="margin-top:10px;font-size:13px;color:#aaa;text-align:center;">
-🔒 保密. 已投保
-</div>
-<a href="https://wa.me/255756687444" class="cta">快速响应，无需注册即可兑换</a>
-
-</div>
-
-<div class="contact-fixed">
-  <a href="https://taplink.cc/app2cash" target="_blank" class="cf-btn whatsapp">即时通讯</a>
-  <a href="#" onclick="document.getElementById('widget-modal').style.display='flex';return false;" class="cf-btn telegram">📊 汇率报价</a>
-</div>
-
-<div id="lightbox"><img src="" alt="Screenshot"></div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function(){
-
-  const list=[
-    {name:'Alexander', text:'兑换了2300美元'},
-    {name:'Maria', text:'兑换了1500欧元'},
-    {name:'Lee', text:'兑换了53,000卢布'},
-    {name:'Anonymous', text:'兑换了22,000 USDT'}
-  ];
-  let i=0;
-  const f=document.getElementById('fomo');
-  function update(){
-    f.style.opacity=0;
-    setTimeout(()=>{
-      let d=list[i];
-      f.innerHTML=`<img src="https://i.pravatar.cc/50?img=${Math.floor(Math.random()*70)}">
-                     <div><b>${d.name}</b> ${d.text}</div>`;
-      f.style.opacity=1;
-      i=(i+1)%list.length;
-    },300);
-  }
-  update();
-  setInterval(update,4000);
-
-  const container=document.getElementById('videos');
-  for(let i=1;i<=16;i++){
-    const div=document.createElement('div');
-    div.className='video-item';
-    div.innerHTML=`<img src="/en/POS_en/${i}.jpg"><div class="play">▶</div>`;
-    div.dataset.src=`/en/REW_en/${i}.mp4`;
-    container.appendChild(div);
-  }
-
-  document.getElementById("amount").oninput = function(){
-    let v = this.value;
-    document.getElementById("result").innerText = "≈ " + (v * 0.97).toFixed(2);
-  }
-
-  document.querySelectorAll('.video-item').forEach(item=>{
-    item.addEventListener('click', function(){
-      if(this.querySelector('video')){
-        let v=this.querySelector('video');
-        v.muted=false;
-        v.playbackRate = v.playbackRate === 1 ? 2 : 1;
-        return;
-      }
-      const v=document.createElement('video');
-      v.src=this.dataset.src;
-      v.controls=true;
-      v.autoplay=true;
-      v.playsInline=true;
-      v.style.width='100%';
-      v.style.height='auto';
-      this.innerHTML='';
-      this.appendChild(v);
-    });
-  });
-
-  const lightbox=document.getElementById('lightbox');
-  const lightImg=lightbox.querySelector('img');
-  document.querySelectorAll('.screens img').forEach(img=>{
-    img.addEventListener('click', ()=>{
-      lightImg.src=img.src;
-      lightbox.style.display='flex';
-    });
-  });
-  lightbox.addEventListener('click', ()=>lightbox.style.display='none');
-
-});
-</script>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108736903', 'ym');
- 
-    ym(108736903, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/108736903" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-
-<!-- 小部件 app2cash -->
-<div id="widget-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center">
-  <div style="background:#1a1a1a;border-radius:16px;padding:32px;width:360px;max-width:90vw;border:1px solid #333;position:relative">
-    <h3 style="color:#fff;margin:0 0 4px;font-size:20px">申请汇率报价</h3>
-    <p style="color:#888;margin:0 0 20px;font-size:14px">经理将在5分钟内与您联系</p>
-    <div style="display:flex;gap:8px;margin-bottom:16px">
-      <button onclick="selectChannel('Telegram')" id="ch-Telegram" style="flex:1;padding:8px;border-radius:8px;border:2px solid #FFD700;background:#222;color:#FFD700;cursor:pointer;font-size:13px">✈️ Telegram</button>
-      <button onclick="selectChannel('WeChat')" id="ch-WeChat" style="flex:1;padding:8px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;cursor:pointer;font-size:13px">💬 WeChat</button>
-      <button onclick="selectChannel('电话')" id="ch-电话" style="flex:1;padding:8px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;cursor:pointer;font-size:13px">📞 电话</button>
+<!-- NAV -->
+<nav>
+  <a href="/cn/" class="logo">app2<span>.cash</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">如何运作</a></li>
+    <li><a href="#proof">客户评价</a></li>
+    <li><a href="#calc">汇率计算器</a></li>
+    <li><a href="#faq">常见问题</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-lang">
+      <a href="/" class="lang-btn">🇷🇺 RU</a>
+      <a href="/en/" class="lang-btn">🇬🇧</a>
+      <a href="/cn/" class="lang-btn active">🇨🇳</a>
     </div>
-    <input id="widget-contact" placeholder="@用户名或电话号码" style="width:100%;padding:12px;border-radius:8px;border:1px solid #444;background:#222;color:#fff;font-size:14px;box-sizing:border-box;margin-bottom:12px" />
-    <button onclick="submitWidget()" id="widget-submit" style="width:100%;padding:14px;background:#FFD700;color:#000;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer">获取汇率报价 →</button>
-    <div id="widget-result" style="display:none;text-align:center;color:#00c853;margin-top:16px;font-weight:600">✅ 申请已收到！经理将在5分钟内联系您。</div>
-    <button onclick="document.getElementById('widget-modal').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#666;font-size:22px;cursor:pointer">✕</button>
+    <div class="nav-partner-stack">
+      <a href="/partner_cn/" class="nb-o">合伙人计划</a>
+      <a href="/fran_cn/" class="nb-o">特许经营</a>
+    </div>
+    <button onclick="openWidget()" class="nb-g">立即兑换 →</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">自2022年起运营 · 数千名客户 · 无KYC</div>
+  <h1>资金到达<br>银行<em>触达不到</em><br>的地方</h1>
+  <p class="hero-sub">快速、保密地兑换卢布、USDT、迪拉姆和非洲货币，无需身份验证。经理1分钟内响应。</p>
+
+  <div class="commission-badge">
+    服务手续费：<strong>3.6%</strong> &nbsp;·&nbsp; 无隐藏费用
+  </div>
+
+  <div class="pain-strip">
+    <div class="pain-item"><span class="xi">✗</span> SWIFT被封锁</div>
+    <div class="pain-item"><span class="xi">✗</span> 银行要求文件</div>
+    <div class="pain-item"><span class="xi">✗</span> 制裁货币</div>
+    <div class="pain-item"><span class="ci">✓</span> 我们解决这一切</div>
+  </div>
+
+  <div class="hero-ctas">
+    <button onclick="openWidget('WhatsApp')" class="btn-wa">💬 WhatsApp</button>
+    <button onclick="openWidget('Telegram')" class="btn-tg">✈️ Telegram</button>
+    <button onclick="openWidget('Phone')" class="btn-outline">📞 电话咨询</button>
+    <button onclick="openBook()" class="btn-outline">📖 免费获取电子书</button>
+  </div>
+
+  <div class="fomo-wrap">
+    <div class="fomo" id="fomo">
+      <img src="https://i.pravatar.cc/50?img=12" alt="">
+      <div><b>Alexander</b> 兑换了 2,300 USD · 23 分钟前</div>
+    </div>
   </div>
 </div>
-<style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}</style>
-<script>
-var selectedChannel='Telegram';
-function selectChannel(ch){
-  selectedChannel=ch;
-  ['Telegram','WeChat','电话'].forEach(function(c){
-    document.getElementById('ch-'+c).style.borderColor=c===ch?'#FFD700':'#444';
-    document.getElementById('ch-'+c).style.color=c===ch?'#FFD700':'#fff';
-    document.getElementById('ch-'+c).style.borderWidth=c===ch?'2px':'1px';
-  });
-}
-function submitWidget(){
-  var contact=document.getElementById('widget-contact').value.trim();
-  if(!contact){alert('请输入您的联系方式');return;}
-  var btn=document.getElementById('widget-submit');
-  btn.textContent='发送中...';btn.disabled=true;
-  fetch('/api/index.js',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({contact:contact,channel:selectedChannel,source:location.href,timestamp:new Date().toISOString()})
-  }).then(function(r){return r.json()}).then(function(){
-    document.getElementById('widget-result').style.display='block';
-    btn.style.display='none';
-  }).catch(function(){
-    btn.textContent='获取汇率报价 →';btn.disabled=false;
-    alert('错误，请重试。');
-  });
-}
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar rv">
+  ⚡ 经理现在在线 — <strong>1分钟内响应</strong> · 平均转账时间 <strong>15–50分钟</strong>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar rv">
+  <div class="stat-item"><span class="stat-num">2022</span><div class="stat-label">成立年份</div></div>
+  <div class="stat-item"><span class="stat-num">115+</span><div class="stat-label">支持货币</div></div>
+  <div class="stat-item"><span class="stat-num">800+</span><div class="stat-label">支付方式</div></div>
+  <div class="stat-item"><span class="stat-num">3.6%</span><div class="stat-label">服务手续费</div></div>
+  <div class="stat-item"><span class="stat-num">0</span><div class="stat-label">KYC要求</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="rv">
+  <div class="section-tag">操作流程</div>
+  <h2>三步完成——<br><em>收款方收到资金</em></h2>
+  <p class="section-lead">无需填写表格，无需排队，无需解释。发消息—兑换—到账。</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>联系经理</h3>
+      <p>通过WhatsApp、Telegram或电话联系。告知金额和货币对——我们立即给出精确汇率。</p>
+      <span class="step-time">⚡ 1分钟内响应</span>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>转入您的货币</h3>
+      <p>任意方式均可——USDT、卢布、现金、移动钱包、M-Pesa及800+其他方式。</p>
+      <span class="step-time">🔒 即时确认</span>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>对方收到款项</h3>
+      <p>您或您在另一国的联系人收到资金。聊天中实时发送转账截图确认。</p>
+      <span class="step-time">⏱ 15–50分钟</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CALCULATOR -->
+<section id="calc" class="rv">
+  <div class="section-tag">汇率计算器</div>
+  <h2>您将<br><em>收到多少？</em></h2>
+  <p class="section-lead">预估计算结果。经理1分钟内给出精确数字——无任何义务。</p>
+  <div class="calc-wrap">
+    <div class="calc-grid">
+      <div class="calc-field">
+        <label>您支付</label>
+        <input class="calc-input" type="number" id="calc-amount" placeholder="10 000" oninput="calcUpdate()">
+      </div>
+      <div class="calc-arrow">⇄</div>
+      <div class="calc-field">
+        <label>兑换方向</label>
+        <select class="calc-input" id="calc-cur" onchange="calcUpdate()">
+          <option value="0.964" data-label="USDT">USD → USDT (−3.6%)</option>
+          <option value="0.964" data-label="USD">USDT → USD (−3.6%)</option>
+          <option value="0.964" data-label="RUB">USD → 卢布 (−3.6%)</option>
+          <option value="0.964" data-label="AED">USD → 迪拉姆 (−3.6%)</option>
+          <option value="0.964" data-label="TZS">USD → 坦桑尼亚先令 (−3.6%)</option>
+          <option value="0.964" data-label="CNY">USD → 人民币 (−3.6%)</option>
+        </select>
+      </div>
+    </div>
+    <div class="calc-result-wrap">
+      <span class="calc-result-label">您将收到（扣除3.6%手续费）：</span>
+      <span class="calc-result-val" id="calc-result">≈ —</span>
+    </div>
+    <button class="calc-cta" onclick="openWidget()">向经理获取精确汇率 →</button>
+    <div class="calc-note">精确汇率取决于金额、方向和支付方式。服务手续费固定为3.6%。</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CURRENCIES -->
+<section class="rv">
+  <div class="section-tag">兑换方向</div>
+  <h2>我们在<br><em>银行拒绝的地方</em>运营</h2>
+  <p class="section-lead">制裁货币、非常规路线、移动钱包——这正是我们的专长。</p>
+  <div class="curr-grid">
+    <div class="curr-card">
+      <span class="curr-flag">🇷🇺</span>
+      <h3>俄罗斯</h3>
+      <p>无需SWIFT的卢布转账。俄罗斯进出转账，无封锁无追问。</p>
+      <div class="curr-tags"><span class="curr-tag">RUB</span><span class="curr-tag">МИР</span><span class="curr-tag">СБП</span></div>
+    </div>
+    <div class="curr-card">
+      <span class="curr-flag">🇦🇪</span>
+      <h3>阿联酋</h3>
+      <p>迪拉姆兑换。俄罗斯 ↔ 阿联酋双向转账，无银行限制。</p>
+      <div class="curr-tags"><span class="curr-tag">AED</span><span class="curr-tag">USDT</span><span class="curr-tag">Cash</span></div>
+    </div>
+    <div class="curr-card">
+      <span class="curr-flag">🌍</span>
+      <h3>非洲</h3>
+      <p>坦桑尼亚、肯尼亚、南非。M-Pesa及移动钱包。</p>
+      <div class="curr-tags"><span class="curr-tag">TZS</span><span class="curr-tag">KES</span><span class="curr-tag">M-Pesa</span></div>
+    </div>
+    <div class="curr-card">
+      <span class="curr-flag">🌏</span>
+      <h3>亚洲</h3>
+      <p>中国、印度尼西亚、土耳其、乌兹别克斯坦。人民币、里拉、苏姆。</p>
+      <div class="curr-tags"><span class="curr-tag">CNY</span><span class="curr-tag">TRY</span><span class="curr-tag">IDR</span></div>
+    </div>
+    <div class="curr-card">
+      <span class="curr-flag">₿</span>
+      <h3>加密货币</h3>
+      <p>USDT TRC20/ERC20、BTC、ETH——与任何法币互兑。</p>
+      <div class="curr-tags"><span class="curr-tag">USDT</span><span class="curr-tag">BTC</span><span class="curr-tag">ETH</span></div>
+    </div>
+    <div class="curr-card">
+      <span class="curr-flag">💵</span>
+      <h3>现金</h3>
+      <p>在阿联酋、坦桑尼亚、土耳其及其他业务点可进行现金交割。</p>
+      <div class="curr-tags"><span class="curr-tag">USD</span><span class="curr-tag">EUR</span><span class="curr-tag">Cash</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROOF -->
+<section id="proof" class="rv">
+  <div class="section-tag">真实评价</div>
+  <h2>来自海外华人<br><em>社区的评价</em></h2>
+  <p class="section-lead">真实的WhatsApp聊天截图。自2022年起完成数千笔兑换——从莫斯科到坦桑尼亚。</p>
+
+  <div style="font-family:'Unbounded',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-bottom:12px">💬 WhatsApp 评价截图</div>
+  <div class="screens-wrap">
+    <div class="screens" id="screens-list"></div>
+  </div>
+
+  <div style="font-family:'Unbounded',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin:24px 0 12px">🎥 视频评价</div>
+  <div class="video-slider" id="video-slider"></div>
+
+  <div class="proof-all">
+    <a href="/rev" class="btn-outline">查看全部评价 →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY NOT BANK -->
+<section class="rv">
+  <div class="section-tag">对比分析</div>
+  <h2>app2.cash vs<br><em>传统银行</em></h2>
+  <p class="section-lead">当银行说"不"或"需要3–5个工作日"时——我们1分钟内响应。</p>
+  <div class="compare">
+    <div class="compare-side good">
+      <div class="compare-title">✦ app2.cash</div>
+      <div class="c-item"><span class="ck">✓</span><span>无需SWIFT——支持制裁货币兑换</span></div>
+      <div class="c-item"><span class="ck">✓</span><span>无KYC——无需提供文件和身份验证</span></div>
+      <div class="c-item"><span class="ck">✓</span><span>15–50分钟——资金已到收款方账户</span></div>
+      <div class="c-item"><span class="ck">✓</span><span>115+种货币，包括卢布、坚戈、格里夫纳</span></div>
+      <div class="c-item"><span class="ck">✓</span><span>手续费3.6%——固定收费，无惊喜</span></div>
+      <div class="c-item"><span class="ck">✓</span><span>保密运营。有保障。自2022年起运营</span></div>
+    </div>
+    <div class="compare-side bad">
+      <div class="compare-title">✗ 传统银行</div>
+      <div class="c-item"><span class="xk">✗</span><span>俄罗斯、白俄罗斯及多国的SWIFT已被封锁</span></div>
+      <div class="c-item"><span class="xk">✗</span><span>护照、税号、资金来源证明——缺一不可</span></div>
+      <div class="c-item"><span class="xk">✗</span><span>1–5个工作日，通常更长</span></div>
+      <div class="c-item"><span class="xk">✗</span><span>制裁货币——自动拒绝</span></div>
+      <div class="c-item"><span class="xk">✗</span><span>3–8%加隐性换汇费和SWIFT手续费</span></div>
+      <div class="c-item"><span class="xk">✗</span><span>账户随时可能被无故冻结</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TRUST -->
+<section class="rv">
+  <div class="section-tag">为何选择我们</div>
+  <h2>自<em>2022年</em><br>积累的口碑</h2>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <span class="trust-icon">⚡</span>
+      <h3>经理1分钟响应</h3>
+      <p>发消息——我们立即回复。确认汇率、时间和结算方式。无需等待，无需填表。</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">🌍</span>
+      <h3>覆盖任何国家</h3>
+      <p>俄罗斯、阿联酋、非洲、亚洲、欧洲——无地理限制。海外侨民社区信赖之选。</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">🔒</span>
+      <h3>完全保密</h3>
+      <p>无KYC。无数据库记录。直接与经理在私人聊天中沟通——仅此而已。</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">🛡️</span>
+      <h3>资金有保障</h3>
+      <p>双重加密与智能合约保护。每个环节均在聊天中发送截图确认。</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">💳</span>
+      <h3>800+种支付方式</h3>
+      <p>USDT、卢布、现金、M-Pesa、移动钱包、银行转账——我们总能找到方案。</p>
+    </div>
+    <div class="trust-card">
+      <span class="trust-icon">💬</span>
+      <h3>中文服务支持</h3>
+      <p>经理支持多语言沟通。深刻理解海外华人汇款的特殊需求。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- GUARANTEE -->
+<section class="rv">
+  <div class="section-tag">服务保障</div>
+  <div class="guarantee-block">
+    <div class="gb-icon">🛡️</div>
+    <div>
+      <div class="gb-title">退款有保障</div>
+      <div class="gb-text">如有任何问题——在符合公开要约条款的情况下，我们退还全额费用。条款公平透明——请在付款前阅读。绝无惊喜。</div>
+      <div class="gb-note">服务手续费3.6% · 按公开要约条款退款 · 要约在兑换开始前提供</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PARTNER STRIP -->
+<section class="rv">
+  <div class="section-tag">与我们共同盈利</div>
+  <h2>合伙人计划<br><em>与特许经营</em></h2>
+  <p class="section-lead">推荐客户赚取佣金，或以自己的品牌开设兑换业务。</p>
+  <div class="partner-strip">
+    <a href="/partner_cn/" class="partner-card">
+      <div class="partner-tag">合伙人计划</div>
+      <h3>带来客户——赚取佣金</h3>
+      <p>四级MLM体系。从您的客户及其合作伙伴的每笔兑换中永久获得佣金。</p>
+      <div class="partner-arrow">了解详情 →</div>
+    </a>
+    <a href="/fran_cn/" class="partner-card">
+      <div class="partner-tag">特许经营</div>
+      <h3>7天开设自己的兑换所</h3>
+      <p>以您的品牌开展成熟业务。100%利润归您。无特许权使用费。任何国家均可。一次性费用仅$900起。</p>
+      <div class="partner-arrow">查看套餐 →</div>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq" class="rv">
+  <div class="section-tag">常见问题</div>
+  <h2>常见<em>问题解答</em></h2>
+  <p class="section-lead">如未找到答案——请直接联系经理。</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">兑换费用是多少？手续费是多少？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">服务手续费固定为 <code>3.6%</code>。无隐藏费用，无SWIFT附加费，无额外换汇费。经理在私人聊天中1分钟内计算出您的精确到账金额。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">需要身份验证（KYC）吗？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">不需要。无需任何身份验证，无需提供任何文件。直接在WhatsApp、Telegram发消息或打电话即可。保密性是我们工作的核心原则之一。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">资金多快到账？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">大多数转账在15–50分钟内完成。极少数情况下根据方向和支付方式可能需要2–4小时。每个环节您都会在聊天中收到确认通知。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">这安全吗？如何信任你们？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">我们自2022年起运营。数千笔来自全球海外侨民客户的兑换记录——评价和视频在/rev页面。双重加密与智能合约保护。每笔交易均在聊天中发送截图确认。退款保障已载入公开要约。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">如何付款？接受加密货币和现金吗？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">接受。USDT TRC20/ERC20、BTC、ETH、卢布、美元、欧元、迪拉姆、M-Pesa、移动钱包、业务点现金。800+种方式。请向经理咨询——我们总能达成一致。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">最低兑换金额是多少？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">最低100美元或等值其他货币。无最高限额——我们承接大额资金。金额越大，条件越优惠：请向经理咨询。</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">《Mungu Pesa》这本书是什么？为什么要免费提供？<span class="faq-chevron">+</span></button>
+      <div class="faq-a">《Mungu Pesa》是Marat Yarkov所著的一本关于金钱作为神圣能量的书。精神、财富与激情的交汇。关于现金、USDT和黄金这些货币炼金士工具的深层知识。<code>18+</code>。免费获取——留下联系方式即可。</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="rv">
+  <div class="cta-banner">
+    <div class="section-tag" style="margin-bottom:14px">立即开始</div>
+    <h2>经理将在<br><em>1分钟内响应</em></h2>
+    <p>任意货币。任意国家。无需注册。<br>手续费 <strong style="color:var(--gold)">3.6%</strong> ——固定收费，无惊喜。</p>
+    <div class="cta-btns">
+      <button onclick="openWidget('WhatsApp')" class="btn-wa">💬 WhatsApp</button>
+      <button onclick="openWidget('Telegram')" class="btn-tg">✈️ Telegram</button>
+      <button onclick="openWidget('Phone')" class="btn-outline">📞 电话</button>
+      <button onclick="openBook()" class="btn-outline">📖 免费获取电子书</button>
+    </div>
+    <div style="font-size:12px;color:var(--di);margin-bottom:10px">支持以下方式：</div>
+    <div class="pay-row">
+      <span class="pay-tag">USDT TRC20</span>
+      <span class="pay-tag">BTC</span>
+      <span class="pay-tag">ETH</span>
+      <span class="pay-tag">卢布</span>
+      <span class="pay-tag">美元</span>
+      <span class="pay-tag">欧元</span>
+      <span class="pay-tag">迪拉姆</span>
+      <span class="pay-tag">M-Pesa</span>
+      <span class="pay-tag">现金</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="/cn/" class="logo">app2<span>.cash</span></a>
+  <ul class="fn">
+    <li><a href="#how">如何运作</a></li>
+    <li><a href="/rev">客户评价</a></li>
+    <li><a href="/partner_cn/">合伙人计划</a></li>
+    <li><a href="/fran_cn/">特许经营</a></li>
+    <li><a href="#faq">常见问题</a></li>
+  </ul>
+  <span>© 2026 app2.cash</span>
+</footer>
+
+</div><!-- /wrap -->
+
+<!-- FIXED BOTTOM -->
+<div class="contact-fixed">
+  <button onclick="openWidget('WhatsApp')" class="cf-btn cf-wa">💬 WhatsApp</button>
+  <button onclick="openWidget('Telegram')" class="cf-btn cf-tg">✈️ Telegram</button>
+  <button onclick="openWidget('Phone')" class="cf-btn cf-ph">📞 电话</button>
+  <button onclick="openWidget()" class="cf-btn cf-calc">📊 汇率计算</button>
+</div>
+
+<!-- LEAD MAGNET MODAL -->
+<div class="lm-overlay" id="lm-modal" onclick="if(event.target===this)closeLM()">
+  <div class="lm-modal">
+    <div class="lm-top"></div>
+    <button class="lm-close" onclick="closeLM()">×</button>
+    <div class="lm-body">
+      <div id="lm-form-content">
+        <div class="book-card">
+          <img src="/ОБЛОЖКА_МУНГУ_ПЕСА.png" alt="Мунгу Песа" class="book-cover"
+               onerror="this.style.display='none'">
+          <div>
+            <div class="book-badge">18+ · 非公开内容</div>
+            <div class="book-title">Mungu Pesa</div>
+            <div class="book-author">© Marat Yarkov, 2026</div>
+            <div class="book-desc">金钱作为神圣能量。精神、财富与激情的交汇。关于现金、USDT和黄金——货币炼金士工具的深层真相。</div>
+          </div>
+        </div>
+        <div class="lm-headline">免费获取<br>这本书</div>
+        <div class="lm-sub">留下联系方式——我们立即通过Telegram和邮件发送epub格式电子书。</div>
+        <div class="fg"><label>姓名 *</label><input type="text" id="lm-name" placeholder="您的姓名"></div>
+        <div class="fg"><label>Telegram</label><input type="text" id="lm-tg" placeholder="@用户名"></div>
+        <div class="fg"><label>WhatsApp</label><input type="text" id="lm-wa" placeholder="国际格式电话号码"></div>
+        <div class="fg"><label>电子邮件</label><input type="email" id="lm-email" placeholder="you@example.com"></div>
+        <button class="lm-submit" id="lm-submit" onclick="submitBook()">获取电子书 →</button>
+        <div class="lm-note">点击即表示您同意接收电子书及数据处理</div>
+      </div>
+      <div class="lm-success" id="lm-success">
+        <div class="lm-success-icon">📖</div>
+        <div class="lm-success-title">电子书已发送！</div>
+        <div class="lm-success-sub">请查看Telegram和邮箱。如5分钟内未收到——请联系经理。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WIDGET MODAL -->
+<div class="wg-overlay" id="wg-modal" onclick="if(event.target===this)closeWidget()">
+  <div class="wg-inner">
+    <button class="wg-close" onclick="closeWidget()">×</button>
+    <div class="wg-title">联系经理</div>
+    <div class="wg-sub">1分钟内响应。请选择您偏好的联系方式：</div>
+    <div class="ch-row">
+      <button class="ch-btn on" id="ch-WhatsApp" onclick="selCh('WhatsApp')">💬 WhatsApp</button>
+      <button class="ch-btn" id="ch-Telegram" onclick="selCh('Telegram')">✈️ Telegram</button>
+      <button class="ch-btn" id="ch-Phone" onclick="selCh('Phone')">📞 电话</button>
+    </div>
+    <input class="wg-input" id="wg-contact" placeholder="@用户名或电话号码">
+    <button class="wg-submit" id="wg-submit" onclick="submitWidget()">获取汇率报价 →</button>
+    <div class="wg-ok" id="wg-ok">✅ 申请已提交！经理将在1分钟内与您联系。</div>
+  </div>
+</div>
+
+<!-- Yandex.Metrika -->
+<script type="text/javascript">
+(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=108736903','ym');
+ym(108736903,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",accurateTrackBounce:true,trackLinks:true});
 </script>
-<!-- /小部件 app2cash -->
+<noscript><div><img src="https://mc.yandex.ru/watch/108736903" style="position:absolute;left:-9999px;" alt=""></div></noscript>
+
+<script>
+/* ── FOMO ── */
+const fomoData=[
+  {name:'Alexander',text:'兑换了 2,300 USD',img:12,mins:23},
+  {name:'Maria',text:'将 1,500 EUR 兑换为迪拉姆',img:23,mins:41},
+  {name:'Ilya',text:'将 53,000 卢布 兑换为 USDT',img:34,mins:7},
+  {name:'匿名用户',text:'兑换了 22,000 USDT',img:45,mins:15},
+  {name:'Natalia',text:'向阿联酋转账',img:56,mins:58},
+  {name:'Dmitry',text:'兑换了 8,000 迪拉姆',img:7,mins:3},
+  {name:'匿名用户',text:'将卢布转入坦桑尼亚',img:18,mins:32},
+];
+let fi=0;
+const fomoEl=document.getElementById('fomo');
+function fomoNext(){
+  fomoEl.style.opacity=0;
+  setTimeout(()=>{
+    const d=fomoData[fi];
+    fomoEl.innerHTML=`<img src="https://i.pravatar.cc/50?img=${d.img}" alt=""><div><b>${d.name}</b> ${d.text} · ${d.mins} 分钟前</div>`;
+    fomoEl.style.opacity=1;
+    fi=(fi+1)%fomoData.length;
+  },400);
+}
+setInterval(fomoNext,4500);
+
+/* ── SCREENS ── */
+const screensList=document.getElementById('screens-list');
+for(let i=1;i<=10;i++){
+  const img=document.createElement('img');
+  img.src=`/IMG_en/${i}.jpg`;
+  img.alt=`WhatsApp评价 ${i}`;
+  img.loading='lazy';
+  img.onclick=()=>{
+    document.querySelector('#lightbox img').src=img.src;
+    document.getElementById('lightbox').style.display='flex';
+  };
+  screensList.appendChild(img);
+}
+document.getElementById('lightbox').onclick=()=>{
+  document.getElementById('lightbox').style.display='none';
+};
+
+/* ── VIDEO SLIDER ── */
+const videoSlider=document.getElementById('video-slider');
+for(let i=1;i<=14;i++){
+  const div=document.createElement('div');
+  div.className='video-item';
+  div.innerHTML=`<img src="/POS_en/${i}.jpg" alt="视频评价 ${i}" loading="lazy"><div class="play-btn">▶</div>`;
+  div.dataset.src=`/REW_en/${i}.mp4`;
+  div.onclick=function(){
+    if(this.querySelector('video')){
+      const v=this.querySelector('video');
+      v.paused?v.play():v.pause();return;
+    }
+    const v=document.createElement('video');
+    v.src=this.dataset.src;
+    v.controls=true;v.autoplay=true;v.playsInline=true;
+    v.style.cssText='width:100%;height:267px;object-fit:cover;display:block';
+    this.innerHTML='';this.appendChild(v);
+  };
+  videoSlider.appendChild(div);
+}
+
+/* ── CALCULATOR ── */
+function calcUpdate(){
+  const amt=parseFloat(document.getElementById('calc-amount').value)||0;
+  const rate=parseFloat(document.getElementById('calc-cur').value)||0.964;
+  document.getElementById('calc-result').textContent=amt?`≈ ${(amt*rate).toLocaleString('zh-CN',{maximumFractionDigits:2})}`:'≈ —';
+}
+
+/* ── FAQ ── */
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const was=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!was)item.classList.add('open');
+}
+
+/* ── WIDGET MODAL ── */
+let wgChannel='WhatsApp';
+function openWidget(ch){
+  if(ch)selCh(ch);
+  document.getElementById('wg-ok').style.display='none';
+  document.getElementById('wg-submit').style.display='block';
+  document.getElementById('wg-submit').disabled=false;
+  document.getElementById('wg-submit').textContent='获取汇率报价 →';
+  document.getElementById('wg-contact').value='';
+  document.getElementById('wg-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.getElementById('wg-contact').focus(),200);
+}
+function closeWidget(){
+  document.getElementById('wg-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function selCh(ch){
+  wgChannel=ch;
+  ['WhatsApp','Telegram','Phone'].forEach(c=>{
+    const btn=document.getElementById('ch-'+c);
+    if(btn)btn.classList.toggle('on',c===ch);
+  });
+  const ph={'WhatsApp':'@用户名或电话号码','Telegram':'Telegram @用户名','Phone':'您的电话号码'};
+  document.getElementById('wg-contact').placeholder=ph[ch]||'您的联系方式';
+}
+async function submitWidget(){
+  const contact=document.getElementById('wg-contact').value.trim();
+  if(!contact){showToast('请输入联系方式',false);return;}
+  const btn=document.getElementById('wg-submit');
+  btn.disabled=true;btn.textContent='提交中...';
+  try{
+    const res=await fetch('/api/index.js',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contact,channel:wgChannel,source:location.href,timestamp:new Date().toISOString()})
+    });
+    const data=await res.json();
+    if(data.ok){
+      btn.style.display='none';
+      document.getElementById('wg-ok').style.display='block';
+      setTimeout(closeWidget,3500);
+    }else throw new Error();
+  }catch(e){
+    showToast('出错了。请直接通过WhatsApp联系我们。',false);
+    btn.disabled=false;btn.textContent='获取汇率报价 →';
+  }
+}
+
+/* ── LEAD MAGNET ── */
+let lmShown=false;
+function openBook(){
+  document.getElementById('lm-form-content').style.display='block';
+  document.getElementById('lm-success').style.display='none';
+  document.getElementById('lm-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLM(){
+  document.getElementById('lm-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+async function submitBook(){
+  const name=document.getElementById('lm-name').value.trim();
+  const tg=document.getElementById('lm-tg').value.trim();
+  const wa=document.getElementById('lm-wa').value.trim();
+  const email=document.getElementById('lm-email').value.trim();
+  if(!name){showToast('请输入姓名',false);return;}
+  if(!tg&&!wa&&!email){showToast('请至少提供一种联系方式',false);return;}
+  const btn=document.getElementById('lm-submit');
+  btn.disabled=true;btn.textContent='提交中...';
+  try{
+    const res=await fetch('/api/index.js',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        contact:tg||wa||email,
+        channel:tg?'Telegram':wa?'WhatsApp':'Email',
+        source:'lead_magnet · Мунгу Песа CN',
+        timestamp:new Date().toISOString(),
+        extra:{name,tg,wa,email,
+               book:'Мунгу Песа CN',
+               book_url:'https://vpeqbsctlysjkuceejxp.supabase.co/storage/v1/object/public/books/book-ru.epub'}
+      })
+    });
+    const data=await res.json();
+    if(data.ok){
+      document.getElementById('lm-form-content').style.display='none';
+      document.getElementById('lm-success').style.display='block';
+      setTimeout(closeLM,4500);
+    }else throw new Error();
+  }catch(e){
+    showToast('出错了。请直接联系经理。',false);
+    btn.disabled=false;btn.textContent='获取电子书 →';
+  }
+}
+
+/* ── TOAST ── */
+function showToast(msg,ok=true){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.background=ok?'var(--gr)':'var(--rd)';
+  t.style.color=ok?'#000':'#fff';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+/* ── SCROLL REVEAL ── */
+const ro=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}});
+},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+/* ── EXIT INTENT (desktop) + timer (mobile) ── */
+document.addEventListener('mouseleave',e=>{
+  if(e.clientY<20&&!lmShown){lmShown=true;setTimeout(openBook,400);}
+});
+setTimeout(()=>{if(!lmShown){lmShown=true;openBook();}},14000);
+</script>
 </body>
 </html>
