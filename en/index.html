@@ -39,7 +39,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .lang-btn{font-size:11px;padding:4px 9px;border-radius:6px;text-decoration:none;color:var(--mu);border:1px solid var(--ln);transition:all .2s}
 .lang-btn.active{background:var(--gd);color:var(--gold);border-color:var(--gb)}
 .lang-btn:hover:not(.active){color:var(--gold)}
-.nav-partner-stack{display:flex;flex-direction:row;gap:8px}
+.nav-partner_en-stack{display:flex;flex-direction:row;gap:8px}
 .nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln);padding:8px 16px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
 .nb-o:hover{border-color:var(--gb);color:var(--gold)}
 .nb-g{background:var(--gold);color:var(--bg);padding:8px 18px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:12px;font-weight:700;text-decoration:none;transition:background .2s;white-space:nowrap;border:none;cursor:pointer}
@@ -168,14 +168,14 @@ h2 em{font-style:normal;color:var(--gold)}
 .gb-text{font-size:15px;color:var(--mu);line-height:1.7;margin-bottom:14px}
 .gb-note{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--di);background:var(--s2);border:1px solid var(--ln);border-radius:6px;padding:10px 14px}
 
-/* ── PARTNER STRIP ── */
-.partner-strip{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.partner-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s;text-decoration:none;color:var(--tx)}
-.partner-card:hover{border-color:rgba(201,168,76,.3)}
-.partner-tag{font-family:'Unbounded',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gd);border:1px solid var(--gb);border-radius:100px;padding:3px 10px;width:fit-content}
-.partner-card h3{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700}
-.partner-card p{font-size:13px;color:var(--mu);line-height:1.6;flex:1}
-.partner-arrow{font-size:13px;color:var(--gold);font-weight:600}
+/* ── partner_en STRIP ── */
+.partner_en-strip{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.partner_en-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s;text-decoration:none;color:var(--tx)}
+.partner_en-card:hover{border-color:rgba(201,168,76,.3)}
+.partner_en-tag{font-family:'Unbounded',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gd);border:1px solid var(--gb);border-radius:100px;padding:3px 10px;width:fit-content}
+.partner_en-card h3{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700}
+.partner_en-card p{font-size:13px;color:var(--mu);line-height:1.6;flex:1}
+.partner_en-arrow{font-size:13px;color:var(--gold);font-weight:600}
 
 /* ── FAQ ── */
 .faq-list{display:flex;flex-direction:column;gap:2px;border-radius:var(--r);overflow:hidden}
@@ -281,7 +281,7 @@ footer a:hover{color:var(--gold)}
 
 /* ── RESPONSIVE > 1000px ── */
 @media(min-width:1001px){
-  .nav-partner-stack{flex-direction:row;gap:8px}
+  .nav-partner_en-stack{flex-direction:row;gap:8px}
 }
 
 /* ── RESPONSIVE ≤ 1000px ── */
@@ -292,12 +292,12 @@ footer a:hover{color:var(--gold)}
   .nav-lang{gap:2px}
   .lang-btn{font-size:12px;padding:4px 6px;border:none;background:none}
   .lang-btn.active{display:none}
-  .nav-partner-stack{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
-  .nav-partner-stack .nb-o{padding:3px 7px;font-size:9px;border-radius:5px;white-space:nowrap}
+  .nav-partner_en-stack{display:flex;flex-direction:column;gap:3px;flex-shrink:0}
+  .nav-partner_en-stack .nb-o{padding:3px 7px;font-size:9px;border-radius:5px;white-space:nowrap}
   .nb-g{padding:7px 10px;font-size:11px;white-space:nowrap}
   section{padding:60px 18px}
   .compare{grid-template-columns:1fr}
-  .partner-strip{grid-template-columns:1fr}
+  .partner_en-strip{grid-template-columns:1fr}
   .guarantee-block{grid-template-columns:1fr;gap:16px}
   .cta-banner{padding:48px 24px}
   footer{padding:24px 18px;flex-direction:column;text-align:center}.fn{justify-content:center}
@@ -339,8 +339,8 @@ footer a:hover{color:var(--gold)}
       <a href="/en/" class="lang-btn active">🇬🇧 EN</a>
       <a href="/cn/" class="lang-btn">🇨🇳</a>
     </div>
-    <div class="nav-partner-stack">
-      <a href="/partner/" class="nb-o">Partner</a>
+    <div class="nav-partner_en-stack">
+      <a href="/partner_en/" class="nb-o">partner_en</a>
       <a href="/fran/" class="nb-o">Franchise</a>
     </div>
     <button onclick="openWidget()" class="nb-g">Exchange →</button>
@@ -610,23 +610,23 @@ footer a:hover{color:var(--gold)}
 
 <div class="divider"></div>
 
-<!-- PARTNER STRIP -->
+<!-- partner_en STRIP -->
 <section class="rv">
   <div class="section-tag">Earn with us</div>
-  <h2>Partner program<br><em>&amp; franchise</em></h2>
+  <h2>partner_en program<br><em>&amp; franchise</em></h2>
   <p class="section-lead">Refer clients or launch your own exchange under your brand.</p>
-  <div class="partner-strip">
-    <a href="/partner/" class="partner-card">
-      <div class="partner-tag">Partner</div>
+  <div class="partner_en-strip">
+    <a href="/partner_en/" class="partner_en-card">
+      <div class="partner_en-tag">partner_en</div>
       <h3>Refer clients — earn %</h3>
-      <p>4-level MLM system. Earn from every exchange of your clients and their partners — forever.</p>
-      <div class="partner-arrow">Learn more →</div>
+      <p>4-level MLM system. Earn from every exchange of your clients and their partner_ens — forever.</p>
+      <div class="partner_en-arrow">Learn more →</div>
     </a>
-    <a href="/franchise/" class="partner-card">
-      <div class="partner-tag">Franchise</div>
+    <a href="/franchise/" class="partner_en-card">
+      <div class="partner_en-tag">Franchise</div>
       <h3>Your exchange in 7 days</h3>
       <p>Ready-made business under your brand. 100% margin. No royalties. From any country. From $900 one-time.</p>
-      <div class="partner-arrow">View packages →</div>
+      <div class="partner_en-arrow">View packages →</div>
     </a>
   </div>
 </section>
@@ -702,7 +702,7 @@ footer a:hover{color:var(--gold)}
   <ul class="fn">
     <li><a href="#how">How it works</a></li>
     <li><a href="/rev">Reviews</a></li>
-    <li><a href="/partner/">Partner</a></li>
+    <li><a href="/partner_en/">partner_en</a></li>
     <li><a href="/franchise/">Franchise</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
