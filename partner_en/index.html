@@ -1,1 +1,1102 @@
-1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>app2.cash — Partner Program</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-l:#E8C96D;--gold-pale:#F5E4A8;
+  --gd:rgba(201,168,76,.10);--gb:rgba(201,168,76,.22);
+  --bg:#0A0A0A;--s1:#111;--s2:#171717;--s3:#1F1F1F;--s4:#272727;
+  --tx:#F0EAD6;--mu:rgba(240,234,214,.45);--di:rgba(240,234,214,.16);
+  --ln:rgba(255,255,255,.065);
+  --gr:#4CAF7D;--rd:#F05252;--bl:#60A5FA;--pp:#A78BFA;
+  --r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Golos Text',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;font-size:16px;line-height:1.6}
+
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='.032'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(160px);pointer-events:none;z-index:0}
+.o1{width:700px;height:700px;background:rgba(201,168,76,.055);top:-200px;right:-200px}
+.o2{width:500px;height:500px;background:rgba(96,165,250,.035);bottom:0;left:-150px}
+.o3{width:400px;height:400px;background:rgba(167,139,250,.025);top:50%;left:50%;transform:translate(-50%,-50%)}
+
+.wrap{position:relative;z-index:1}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:18px 56px;background:rgba(10,10,10,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--ln)}
+.logo{font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px;color:var(--gold);letter-spacing:-0.5px;text-decoration:none}
+.logo span{color:var(--mu);font-weight:300}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a.nav-fran{color:var(--gold);opacity:.8}
+.nav-links a.nav-fran:hover{opacity:1}
+.nav-ctas{display:flex;gap:10px}
+.nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln);padding:9px 20px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+.nb-o:hover{border-color:var(--gb)}
+.nb-g{background:var(--gold);color:var(--bg);padding:9px 20px;border-radius:6px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:background .2s}
+.nb-g:hover{background:var(--gold-l)}
+
+.hero{min-height:100vh;padding-top:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(201,168,76,.1) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-60%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gd);border:1px solid var(--gb);border-radius:100px;padding:6px 18px;font-size:12px;font-weight:600;color:var(--gold-l);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px;animation:fu .8s ease both}
+.hero-badge::before{content:'';width:7px;height:7px;background:var(--gr);border-radius:50%;box-shadow:0 0 8px var(--gr);animation:blink 2s infinite;flex-shrink:0}
+h1{font-family:'Unbounded',sans-serif;font-size:clamp(38px,6.5vw,84px);font-weight:900;line-height:1.0;letter-spacing:-2.5px;margin-bottom:24px;animation:fu .8s .1s ease both}
+h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 50%,var(--gold-pale) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--mu);max-width:580px;margin-bottom:48px;line-height:1.7;animation:fu .8s .2s ease both}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fu .8s .3s ease both}
+
+.btn-primary{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-l) 100%);color:var(--bg);font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;padding:16px 36px;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 30px rgba(201,168,76,.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(201,168,76,.4)}
+.btn-outline{background:transparent;color:var(--tx);font-family:'Unbounded',sans-serif;font-weight:600;font-size:13px;padding:16px 36px;border-radius:8px;text-decoration:none;border:1px solid rgba(240,234,214,.18);cursor:pointer;transition:all .2s}
+.btn-outline:hover{border-color:var(--gb);background:var(--gd)}
+
+.stats-bar{display:flex;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);background:rgba(255,255,255,.015);animation:fu .8s .4s ease both}
+.stat-item{flex:1;min-width:160px;padding:36px 32px;text-align:center;border-right:1px solid var(--ln)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Unbounded',sans-serif;font-size:36px;font-weight:900;color:var(--gold);letter-spacing:-1px;display:block}
+.stat-label{font-size:13px;color:var(--mu);margin-top:4px}
+
+section{position:relative;padding:100px 24px;max-width:1140px;margin:0 auto}
+.section-tag{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h2{font-family:'Unbounded',sans-serif;font-size:clamp(28px,4vw,50px);font-weight:900;line-height:1.05;letter-spacing:-1.5px;margin-bottom:16px}
+h2 em{font-style:normal;color:var(--gold)}
+.section-lead{font-size:17px;color:var(--mu);max-width:560px;margin-bottom:60px;line-height:1.7}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.15),transparent);margin:0 auto}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:rgba(201,168,76,.08);border-radius:var(--r);overflow:hidden}
+.step{background:var(--s1);padding:40px 32px;transition:background .2s}
+.step:hover{background:var(--s2)}
+.step-num{font-family:'Unbounded',sans-serif;font-size:56px;font-weight:900;color:rgba(201,168,76,.12);line-height:1;margin-bottom:16px}
+.step h3{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:10px}
+.step p{font-size:14px;color:var(--mu);line-height:1.6}
+
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden}
+.stream{background:var(--s1);padding:40px 32px;position:relative;overflow:hidden;transition:background .25s}
+.stream:hover{background:var(--s2)}
+.stream::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity .3s}
+.str1::before{background:linear-gradient(90deg,var(--gold),transparent)}
+.str2::before{background:linear-gradient(90deg,var(--pp),transparent)}
+.str3::before{background:linear-gradient(90deg,var(--gr),transparent)}
+.stream-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--di);letter-spacing:.1em;margin-bottom:14px}
+.stream-icon{font-size:30px;margin-bottom:14px}
+.stream-t{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;margin-bottom:10px}
+.stream-d{font-size:13px;color:var(--mu);line-height:1.7;margin-bottom:18px}
+.stream-formula{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--s3);border:1px solid var(--ln);border-radius:6px;padding:14px 16px;line-height:1.8}
+.sf-g{color:var(--gold)}.sf-gr{color:var(--gr)}.sf-mu{color:var(--mu)}
+.stream-fran-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;color:var(--gold);text-decoration:none;border:1px solid var(--gb);border-radius:6px;padding:7px 14px;background:var(--gd);transition:background .2s,border-color .2s;font-weight:600}
+.stream-fran-link:hover{background:rgba(201,168,76,.18);border-color:rgba(201,168,76,.4)}
+
+.pyramid-section{background:linear-gradient(180deg,transparent,rgba(201,168,76,.03) 50%,transparent);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);padding:100px 0}
+.pyramid-inner{max-width:1140px;margin:0 auto;padding:0 24px}
+.pyramid-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.pyramid-text{padding-right:20px}
+.pyramid-text .section-tag{margin-bottom:16px}
+.pyramid-text h2{margin-bottom:20px}
+.pyramid-text p{font-size:15px;color:var(--mu);line-height:1.8;margin-bottom:16px}
+.pyr-stat-row{display:flex;gap:24px;margin-top:32px;flex-wrap:wrap}
+.pyr-stat{text-align:center}
+.pyr-stat-n{font-family:'Unbounded',sans-serif;font-size:28px;font-weight:900;color:var(--gold);display:block;line-height:1}
+.pyr-stat-l{font-size:12px;color:var(--mu);margin-top:4px}
+
+.pyramid-svg-wrap{position:relative}
+.pyramid-svg-wrap svg{width:100%;height:auto;overflow:visible}
+
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.lc{background:var(--s1);border:1px solid rgba(201,168,76,.12);border-radius:var(--r);padding:36px 28px;position:relative;overflow:hidden;transition:all .25s;display:flex;flex-direction:column}
+.lc:hover{border-color:rgba(201,168,76,.35);transform:translateY(-4px)}
+.lc.best{border-color:var(--gold);background:linear-gradient(160deg,rgba(201,168,76,.08) 0%,var(--s1) 100%)}
+.lc.best::after{content:'POPULAR';position:absolute;top:16px;right:16px;background:var(--gold);color:var(--bg);font-family:'Unbounded',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;padding:4px 10px;border-radius:4px}
+.lc-badge{display:inline-block;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:16px;font-weight:700;width:fit-content;background:var(--gd);color:var(--gold);border:1px solid var(--gb)}
+.lc-name{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px}
+.lc-price-main{font-family:'Unbounded',sans-serif;font-size:38px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px}
+.lc-price-note{font-size:11px;color:var(--di);margin-bottom:20px;letter-spacing:.03em}
+.lc-own{background:var(--s2);border-radius:8px;padding:16px;margin-bottom:16px;text-align:center}
+.lc-own-pct{font-family:'Unbounded',sans-serif;font-size:40px;font-weight:900;color:var(--gold);line-height:1}
+.lc-own-label{font-size:11px;color:var(--mu);margin-top:4px;line-height:1.4}
+.lc-net{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.lc-net-row{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--mu);padding:6px 10px;border-radius:6px;background:rgba(255,255,255,.025)}
+.lc-net-row .pct{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold)}
+.lc-net-row.off{opacity:.3}
+.lc-net-row.off .pct{color:var(--di)}
+.lc-perks{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:auto;margin-bottom:20px}
+.lc-perks li{font-size:13px;color:var(--mu);display:flex;gap:8px;align-items:flex-start;line-height:1.5}
+.lc-perks .ck{color:var(--gr);flex-shrink:0;font-weight:700}
+.lc-perks .na{color:var(--di);flex-shrink:0}
+.lc-cta{display:block;text-align:center;padding:12px;background:var(--gold);color:var(--bg);border:none;border-radius:8px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;transition:background .2s;margin-top:auto}
+.lc-cta:hover{background:var(--gold-l)}
+.lc-cta.outline{background:transparent;color:var(--tx);border:1px solid var(--ln)}
+.lc-cta.outline:hover{border-color:var(--gb)}
+
+.calc-section{background:var(--s1);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln)}
+.calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.pyramid-box,.calc-box{background:var(--s2);border:1px solid var(--ln);border-radius:16px;padding:36px}
+.pyramid-title{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px}
+.pyramid-sub{font-size:12px;color:var(--mu);margin-bottom:28px}
+.pyr-node{border:1px solid var(--ln);border-radius:var(--r);padding:16px 20px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;background:var(--s1);margin-bottom:2px;transition:background .2s}
+.pyr-node:hover{background:var(--s3)}
+.pyr-node.you{border-color:var(--gb);background:var(--gd)}
+.pyr-node.you .pn-label{color:var(--gold)}
+.pyr-connector{display:flex;justify-content:center;height:24px;position:relative;margin:0}
+.pyr-connector::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:linear-gradient(180deg,var(--gold),rgba(201,168,76,.2));opacity:.4}
+.pn-icon{font-size:18px;width:32px;text-align:center}
+.pn-label{font-size:12px;font-weight:600;margin-bottom:2px}
+.pn-detail{font-size:10px;color:var(--mu)}
+.pn-earn-val{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--gr);font-weight:500;white-space:nowrap;text-align:right}
+.pn-earn-label{font-size:9px;color:var(--mu);text-align:right;margin-top:2px}
+.pyr-total{margin-top:16px;border:1px solid var(--gb);border-radius:var(--r);padding:18px 20px;background:var(--gd);display:flex;justify-content:space-between;align-items:center}
+.pyt-label{font-size:12px;color:var(--mu)}
+.pyt-val{font-family:'Unbounded',sans-serif;font-size:30px;font-weight:900;color:var(--gold)}
+.pyt-period{font-size:10px;color:var(--mu);margin-top:2px}
+.income-bars{margin-top:16px;display:flex;flex-direction:column;gap:6px}
+.ib-row{display:flex;align-items:center;gap:10px}
+.ib-label{font-size:10px;color:var(--mu);width:90px;flex-shrink:0;text-align:right}
+.ib-bw{flex:1;height:20px;background:var(--s3);border-radius:3px;overflow:hidden}
+.ib-b{height:100%;border-radius:3px;transition:width .5s ease;display:flex;align-items:center;padding-left:8px;min-width:4px}
+.b0{background:linear-gradient(90deg,var(--gold),var(--gold-l))}.b0 .bv{color:var(--bg)}
+.b1{background:rgba(201,168,76,.45)}.b1 .bv{color:var(--gold-l)}
+.b2{background:rgba(201,168,76,.28)}.b2 .bv{color:var(--gold)}
+.b3{background:rgba(167,139,250,.4)}.b3 .bv{color:var(--pp)}
+.b4{background:rgba(76,175,125,.35)}.b4 .bv{color:var(--gr)}
+.bv{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;white-space:nowrap}
+.calc-h{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:700;margin-bottom:6px}
+.calc-sub{font-size:12px;color:var(--mu);margin-bottom:28px}
+.lv-pick{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:24px}
+.lvp{padding:10px 6px;border:1px solid var(--ln);border-radius:8px;background:var(--s1);cursor:pointer;text-align:center;transition:all .2s}
+.lvp:hover{border-color:var(--gb)}.lvp.on{border-color:var(--gold);background:var(--gd)}
+.lvp-name{font-size:11px;font-weight:600;margin-bottom:2px}.lvp.on .lvp-name{color:var(--gold)}
+.lvp-price{font-size:9px;color:var(--mu)}.lvp.on .lvp-price{color:var(--gold);opacity:.7}
+.sl-block{margin-bottom:20px}
+.sl-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.sl-name{font-size:12px;font-weight:500}
+.sl-val{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--gold)}
+input[type=range]{-webkit-appearance:none;width:100%;height:2px;background:var(--ln);border-radius:1px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gold);border:2px solid var(--s2);cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(90deg,var(--gold) var(--p,30%),var(--ln) var(--p,30%));height:2px;border-radius:1px}
+.sl-dis{opacity:.35;pointer-events:none}
+.spread-info{display:flex;align-items:center;gap:12px;background:var(--s3);border:1px solid var(--ln);border-radius:8px;padding:12px 16px;margin-bottom:24px;font-size:12px;color:var(--mu);line-height:1.5}
+.spread-info strong{color:var(--gold);font-family:'JetBrains Mono',monospace}
+
+.ctable-wrap{overflow-x:auto}
+.ctable{width:100%;border-collapse:collapse;border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;font-size:13px}
+.ctable th,.ctable td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--ln)}
+.ctable th{font-family:'Unbounded',sans-serif;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);background:var(--s2)}
+.ctable td:first-child{font-weight:500}
+.ctable tr:last-child td{border-bottom:none}
+.ctable tr:hover td{background:rgba(255,255,255,.02)}
+.ctable .yes{color:var(--gr);font-family:'JetBrains Mono',monospace;font-size:11px}
+.ctable .no{color:var(--di)}
+.ctable .pc{font-family:'JetBrains Mono',monospace;font-size:13px}
+.c1{color:var(--mu)}.c2{color:var(--gold)}.c3{color:var(--bl)}.c4{color:var(--pp)}
+
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.tool-card{background:var(--s1);border:1px solid rgba(255,255,255,.05);border-radius:var(--r);padding:28px 24px;transition:border-color .2s}
+.tool-card:hover{border-color:rgba(201,168,76,.3)}
+.tool-icon{font-size:32px;margin-bottom:16px;display:block}
+.tool-card h3{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px}
+.tool-card p{font-size:13px;color:var(--mu)}
+
+.faq-list{display:flex;flex-direction:column;gap:2px;border-radius:var(--r);overflow:hidden}
+.faq-item{background:var(--s1)}
+.faq-q{width:100%;background:none;border:none;color:var(--tx);font-family:'Golos Text',sans-serif;font-size:15px;font-weight:600;text-align:left;padding:22px 28px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .2s}
+.faq-q:hover{background:var(--s2)}
+.faq-chevron{flex-shrink:0;width:26px;height:26px;border:1px solid var(--gb);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gold);transition:transform .3s}
+.faq-item.open .faq-chevron{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s;font-size:14px;color:var(--mu);padding:0 28px;line-height:1.75}
+.faq-item.open .faq-a{max-height:400px;padding:0 28px 22px}
+.faq-a code{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);background:var(--gd);padding:1px 6px;border-radius:4px}
+
+.cta-banner{background:linear-gradient(135deg,rgba(201,168,76,.1) 0%,rgba(201,168,76,.04) 100%);border:1px solid rgba(201,168,76,.25);border-radius:20px;padding:80px 48px;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);top:-100px;right:-100px;pointer-events:none}
+.cta-banner h2{margin-bottom:12px}
+.cta-banner p{font-size:17px;color:var(--mu);margin-bottom:40px}
+
+.fran-strip{background:linear-gradient(90deg,rgba(201,168,76,.06) 0%,rgba(201,168,76,.03) 50%,rgba(167,139,250,.04) 100%);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:60px}
+.fran-strip-text{display:flex;align-items:center;gap:14px}
+.fran-strip-icon{font-size:28px;flex-shrink:0}
+.fran-strip-label{font-size:11px;font-family:'Unbounded',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.fran-strip-desc{font-size:13px;color:var(--mu);line-height:1.5}
+.fran-strip-desc a{color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.fran-strip-desc a:hover{text-decoration-style:solid}
+.fran-strip-btn{background:var(--gold);color:var(--bg);font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;padding:11px 22px;border-radius:7px;text-decoration:none;white-space:nowrap;transition:background .2s,transform .2s;flex-shrink:0}
+.fran-strip-btn:hover{background:var(--gold-l);transform:translateY(-1px)}
+
+footer{border-top:1px solid var(--ln);padding:36px 56px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--mu)}
+footer a{color:var(--mu);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--gold)}
+.fn{display:flex;gap:22px;list-style:none;flex-wrap:wrap}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);z-index:300;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--s1);border:1px solid rgba(201,168,76,.25);border-radius:16px;padding:48px 40px;width:100%;max-width:500px;position:relative;animation:fu .3s ease;max-height:90vh;overflow-y:auto}
+.modal-top{height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-l),transparent);border-radius:16px 16px 0 0;position:absolute;top:0;left:0;right:0}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--mu);font-size:24px;cursor:pointer;line-height:1;transition:color .2s}
+.modal-close:hover{color:var(--tx)}
+.modal h3{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px}
+.modal-sub{font-size:14px;color:var(--mu);margin-bottom:28px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:12px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--s2);border:1px solid var(--ln);border-radius:8px;padding:12px 16px;color:var(--tx);font-family:'Golos Text',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:rgba(201,168,76,.5)}
+.fg input::placeholder{color:var(--di)}
+.fg select option{background:var(--s2)}
+.fg textarea{min-height:80px;resize:vertical}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-submit{width:100%;margin-top:8px;padding:16px;font-size:14px}
+.modal-note{text-align:center;font-size:12px;color:var(--mu);margin-top:12px}
+.success-msg{display:none;text-align:center;padding:32px 0}
+.success-icon{font-size:56px;margin-bottom:16px}
+.success-title{font-family:'Unbounded',sans-serif;font-size:22px;color:var(--gr);margin-bottom:8px}
+.success-sub{font-size:14px;color:var(--mu)}
+
+.toast{position:fixed;bottom:24px;right:24px;background:var(--gr);color:#000;font-weight:700;font-size:13px;padding:12px 20px;border-radius:10px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:999}
+.toast.show{opacity:1}
+
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+
+.pyr-person{transition:transform .2s;cursor:pointer}
+.pyr-person:hover{transform:scale(1.07)}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
+
+@media(max-width:1000px){
+  nav{padding:16px 20px}.nav-links{display:none}
+  section{padding:60px 20px}
+  .calc-wrap{grid-template-columns:1fr}
+  .cta-banner{padding:48px 24px}
+  footer{padding:24px 20px;flex-direction:column;text-align:center}.fn{justify-content:center}
+  .pyramid-layout{grid-template-columns:1fr}
+  .pyramid-text{padding-right:0}
+  .fran-strip{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:640px){
+  .stats-bar{flex-direction:column}.stat-item{border-right:none;border-bottom:1px solid var(--ln)}.stat-item:last-child{border-bottom:none}
+  .lv-pick{grid-template-columns:repeat(2,1fr)}
+  .fg2{grid-template-columns:1fr}
+  .modal{padding:32px 20px}
+  .hero-ctas{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb o1"></div>
+<div class="bg-orb o2"></div>
+<div class="bg-orb o3"></div>
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+
+<!-- NAV -->
+<nav>
+  <a href="/en/" class="logo">app2<span>.cash</span></a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#pyramid">Network</a></li>
+    <li><a href="#levels">Levels</a></li>
+    <li><a href="#calc">Calculator</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="/fran_en/" class="nav-fran">🏢 Franchise</a></li>
+  </ul>
+  <div class="nav-ctas">
+    <a href="/cabinet" class="nb-o">Dashboard</a>
+    <a href="#" class="nb-g" onclick="openModal();return false">Become a Partner</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Partner Program · MLM · 4 Levels</div>
+  <h1>Earn on every<br><em>currency</em><br>exchange</h1>
+  <p class="hero-sub">Refer clients to app2.cash — earn up to <strong style="color:var(--gold)">40% of the spread</strong> on every exchange. For life. Plus passive income from your entire partner network.</p>
+  <div class="hero-ctas">
+    <a href="#" class="btn-primary" onclick="openModal();return false">Apply Now →</a>
+    <a href="#how" class="btn-outline">How It Works</a>
+    <a href="/fran_en/" class="btn-outline" style="border-color:rgba(201,168,76,.3);color:var(--gold)">🏢 Want Your Own Exchange?</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar rv">
+  <div class="stat-item"><span class="stat-num">3.6%</span><div class="stat-label">Platform spread</div></div>
+  <div class="stat-item"><span class="stat-num">up to 40%</span><div class="stat-label">Your cut</div></div>
+  <div class="stat-item"><span class="stat-num">4 levels</span><div class="stat-label">Network depth</div></div>
+  <div class="stat-item"><span class="stat-num">USDT</span><div class="stat-label">Payouts</div></div>
+  <div class="stat-item"><span class="stat-num">∞</span><div class="stat-label">Lifetime clients</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="rv">
+  <div class="section-tag">How It Works</div>
+  <h2>From signup to<br>first <em>payout</em></h2>
+  <p class="section-lead">Four steps — from application to your first payment.</p>
+  <div class="steps">
+    <div class="step"><div class="step-num">01</div><h3>Apply</h3><p>Fill out the form. A manager will reach out within 5 minutes and set up your partner dashboard.</p></div>
+    <div class="step"><div class="step-num">02</div><h3>Get Your Referral Link</h3><p>Unique tracking link, QR code, and promo materials — ready to use immediately.</p></div>
+    <div class="step"><div class="step-num">03</div><h3>Bring Clients</h3><p>Share on social media, Telegram groups, your blog — or refer people directly. No limits.</p></div>
+    <div class="step"><div class="step-num">04</div><h3>Get Paid</h3><p>Commissions are calculated automatically. USDT payouts every week — or on demand.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INCOME STREAMS -->
+<section class="rv">
+  <div class="section-tag">3 Income Streams</div>
+  <h2>Where the <em>money</em> comes from</h2>
+  <p class="section-lead">Partners earn from three independent streams that stack on top of each other.</p>
+
+  <!-- FRANCHISE PROMO STRIP -->
+  <div class="fran-strip">
+    <div class="fran-strip-text">
+      <div class="fran-strip-icon">🏢</div>
+      <div>
+        <div class="fran-strip-label">Want More?</div>
+        <div class="fran-strip-desc">Launch <a href="/fran_en/">your own exchange</a> under your own brand — 100% of the margin is yours, your own MLM network, zero royalties. Up and running in 7 days.</div>
+      </div>
+    </div>
+    <a href="/fran_en/" class="fran-strip-btn">View Franchise →</a>
+  </div>
+
+  <div class="streams">
+    <div class="stream str1">
+      <div class="stream-num">// 01</div>
+      <div class="stream-icon">💱</div>
+      <div class="stream-t">Your Clients</div>
+      <div class="stream-d">You earn a % of the platform spread on every exchange your client makes. Forever — for as long as they use app2.cash.</div>
+      <div class="stream-formula">
+        <div>Exchange: <span class="sf-g">$1,000</span></div>
+        <div>Spread 3.6% = <span class="sf-g">$36</span> (platform)</div>
+        <div>Your 30%: <span class="sf-gr">= $10.80</span> to you</div>
+      </div>
+    </div>
+    <div class="stream str2">
+      <div class="stream-num">// 02</div>
+      <div class="stream-icon">🌐</div>
+      <div class="stream-t">Your Partner Network</div>
+      <div class="stream-d">Recruit partners — and earn % on spreads generated by their clients. Up to 3 levels deep.</div>
+      <div class="stream-formula">
+        <div>L1 partner → client exchanged <span class="sf-g">$1,000</span></div>
+        <div>Platform spread: <span class="sf-g">$36</span></div>
+        <div>Your 7% from L1: <span class="sf-gr">= $2.52</span> to you</div>
+      </div>
+    </div>
+    <div class="stream str3">
+      <div class="stream-num">// 03</div>
+      <div class="stream-icon">🏢</div>
+      <div class="stream-t">Franchise Sales</div>
+      <div class="stream-d">Refer a new franchisee — earn 10% of their onboarding fee. Available at VIP Elite level. <a href="/fran_en/" style="color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">Learn about the franchise →</a></div>
+      <div class="stream-formula">
+        <div>Franchise sold for <span class="sf-g">$1,500</span></div>
+        <div>Your 10%: <span class="sf-gr">= $150</span> to you</div>
+        <div>2 sales/month: <span class="sf-gr">+$300</span></div>
+      </div>
+      <a href="/fran_en/" class="stream-fran-link">🏢 Learn About the Franchise →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PYRAMID SECTION -->
+<div class="pyramid-section" id="pyramid">
+<div class="pyramid-inner rv">
+  <div class="pyramid-layout">
+
+    <div class="pyramid-text">
+      <div class="section-tag">Network Income</div>
+      <h2>Your network<br>grows <em>on its own</em></h2>
+      <p>Every partner you recruit recruits more partners. You earn a % from every level of depth — automatically, 24/7.</p>
+      <p>With a 3× branching factor at VIP Elite: 3 L1 partners → 9 at L2 → 27 at L3. Every transaction in your network earns you a cut.</p>
+      <div class="pyr-stat-row">
+        <div class="pyr-stat"><span class="pyr-stat-n">×3</span><div class="pyr-stat-l">branching factor</div></div>
+        <div class="pyr-stat"><span class="pyr-stat-n" style="color:var(--bl)">10%</span><div class="pyr-stat-l">from L1 partners</div></div>
+        <div class="pyr-stat"><span class="pyr-stat-n" style="color:var(--pp)">5%</span><div class="pyr-stat-l">from L2 partners</div></div>
+        <div class="pyr-stat"><span class="pyr-stat-n" style="color:var(--gr)">2%</span><div class="pyr-stat-l">from L3 partners</div></div>
+      </div>
+    </div>
+
+    <div class="pyramid-svg-wrap">
+      <svg viewBox="0 0 480 580" xmlns="http://www.w3.org/2000/svg" id="pyr-svg">
+        <defs>
+          <filter id="glow-gold" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="glow-soft" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="conn-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#C9A84C" stop-opacity="0.1"/>
+          </linearGradient>
+        </defs>
+        <polygon points="240,20 460,560 20,560" fill="none" stroke="rgba(201,168,76,0.06)" stroke-width="1"/>
+        <line x1="240" y1="20" x2="240" y2="560" stroke="rgba(201,168,76,0.04)" stroke-width="1" stroke-dasharray="4 6"/>
+        <line x1="240" y1="95" x2="140" y2="185" stroke="url(#conn-grad)" stroke-width="1" opacity="0.5"/>
+        <line x1="240" y1="95" x2="240" y2="185" stroke="url(#conn-grad)" stroke-width="1" opacity="0.5"/>
+        <line x1="240" y1="95" x2="340" y2="185" stroke="url(#conn-grad)" stroke-width="1" opacity="0.5"/>
+        <line x1="140" y1="240" x2="90" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
+        <line x1="140" y1="240" x2="140" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
+        <line x1="140" y1="240" x2="192" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
+        <line x1="240" y1="240" x2="218" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
+        <line x1="240" y1="240" x2="258" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
+        <line x1="340" y1="240" x2="292" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
+        <line x1="340" y1="240" x2="340" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
+        <line x1="340" y1="240" x2="390" y2="330" stroke="rgba(96,165,250,0.3)" stroke-width="0.8"/>
+        <g opacity="0.2" stroke="rgba(167,139,250,1)" stroke-width="0.6">
+          <line x1="90" y1="380" x2="62" y2="450"/><line x1="90" y1="380" x2="90" y2="450"/>
+          <line x1="140" y1="380" x2="120" y2="450"/><line x1="140" y1="380" x2="158" y2="450"/>
+          <line x1="192" y1="380" x2="178" y2="450"/><line x1="192" y1="380" x2="206" y2="450"/>
+          <line x1="218" y1="380" x2="210" y2="450"/><line x1="258" y1="380" x2="250" y2="450"/>
+          <line x1="258" y1="380" x2="266" y2="450"/><line x1="292" y1="380" x2="284" y2="450"/>
+          <line x1="340" y1="380" x2="322" y2="450"/><line x1="340" y1="380" x2="354" y2="450"/>
+          <line x1="390" y1="380" x2="374" y2="450"/><line x1="390" y1="380" x2="402" y2="450"/>
+        </g>
+        <g class="pyr-person" onclick="pyrClick('you')" filter="url(#glow-gold)">
+          <circle cx="240" cy="52" r="30" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+          <circle cx="240" cy="44" r="14" fill="#1a1500" stroke="#C9A84C" stroke-width="1.5"/>
+          <circle cx="240" cy="38" r="4" fill="rgba(201,168,76,0.4)"/>
+          <path d="M217,95 Q217,66 240,63 Q263,66 263,95 Z" fill="#1a1500" stroke="#C9A84C" stroke-width="1.5"/>
+          <rect x="184" y="98" width="112" height="38" rx="8" fill="#1a1500" stroke="#C9A84C" stroke-width="1.5"/>
+          <text x="240" y="114" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="10" font-weight="700" fill="#C9A84C">VIP ELITE — YOU</text>
+          <text x="240" y="128" text-anchor="middle" font-family="Golos Text,sans-serif" font-size="9" fill="rgba(201,168,76,0.6)">40% · 3 network levels</text>
+        </g>
+        <g class="pyr-person" onclick="pyrClick('l1')" filter="url(#glow-soft)">
+          <circle cx="140" cy="200" r="22" fill="rgba(96,165,250,0.06)" stroke="rgba(96,165,250,0.25)" stroke-width="0.8"/>
+          <circle cx="140" cy="194" r="11" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
+          <path d="M122,240 Q122,218 140,215 Q158,218 158,240 Z" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
+          <rect x="103" y="242" width="74" height="28" rx="6" fill="#0d1520" stroke="rgba(96,165,250,0.5)" stroke-width="0.8"/>
+          <text x="140" y="254" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="8" font-weight="600" fill="#60A5FA">Partner</text>
+          <text x="140" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(76,175,125,0.9)">+10% for you</text>
+        </g>
+        <g class="pyr-person" onclick="pyrClick('l1')" filter="url(#glow-soft)">
+          <circle cx="240" cy="200" r="22" fill="rgba(96,165,250,0.06)" stroke="rgba(96,165,250,0.25)" stroke-width="0.8"/>
+          <circle cx="240" cy="194" r="11" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
+          <path d="M222,240 Q222,218 240,215 Q258,218 258,240 Z" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
+          <rect x="203" y="242" width="74" height="28" rx="6" fill="#0d1520" stroke="rgba(96,165,250,0.5)" stroke-width="0.8"/>
+          <text x="240" y="254" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="8" font-weight="600" fill="#60A5FA">Partner</text>
+          <text x="240" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(76,175,125,0.9)">+10% for you</text>
+        </g>
+        <g class="pyr-person" onclick="pyrClick('l1')" filter="url(#glow-soft)">
+          <circle cx="340" cy="200" r="22" fill="rgba(96,165,250,0.06)" stroke="rgba(96,165,250,0.25)" stroke-width="0.8"/>
+          <circle cx="340" cy="194" r="11" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
+          <path d="M322,240 Q322,218 340,215 Q358,218 358,240 Z" fill="#0d1520" stroke="#60A5FA" stroke-width="1.2"/>
+          <rect x="303" y="242" width="74" height="28" rx="6" fill="#0d1520" stroke="rgba(96,165,250,0.5)" stroke-width="0.8"/>
+          <text x="340" y="254" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="8" font-weight="600" fill="#60A5FA">Partner</text>
+          <text x="340" y="265" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="rgba(76,175,125,0.9)">+10% for you</text>
+        </g>
+        <g onclick="pyrClick('l2')" style="cursor:pointer">
+          <g><circle cx="90" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M80,375 Q80,362 90,360 Q100,362 100,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
+          <g><circle cx="140" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M130,375 Q130,362 140,360 Q150,362 150,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
+          <g><circle cx="192" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M182,375 Q182,362 192,360 Q202,362 202,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
+          <g><circle cx="218" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M208,375 Q208,362 218,360 Q228,362 228,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
+          <g><circle cx="258" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M248,375 Q248,362 258,360 Q268,362 268,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
+          <g><circle cx="292" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M282,375 Q282,362 292,360 Q302,362 302,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
+          <g><circle cx="340" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M330,375 Q330,362 340,360 Q350,362 350,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
+          <g><circle cx="390" cy="342" r="8" fill="#0f1218" stroke="#A78BFA" stroke-width="1"/><path d="M380,375 Q380,362 390,360 Q400,362 400,375 Z" fill="#0f1218aa" stroke="#A78BFA" stroke-width="0.8"/></g>
+          <rect x="162" y="378" width="156" height="22" rx="6" fill="rgba(167,139,250,0.08)" stroke="rgba(167,139,250,0.3)" stroke-width="0.8"/>
+          <text x="240" y="392" text-anchor="middle" font-family="Golos Text,sans-serif" font-size="9" fill="#A78BFA">8 L2 partners · +5% for you</text>
+        </g>
+        <g onclick="pyrClick('l3')" style="cursor:pointer">
+          <g opacity="0.7">
+            <circle cx="52"  cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="75"  cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="98"  cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="121" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="144" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="167" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="190" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="213" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="236" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="259" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="282" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="305" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="328" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="351" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="374" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="397" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+            <circle cx="420" cy="462" r="5" fill="#0d1410" stroke="#4CAF7D" stroke-width="0.8"/>
+          </g>
+          <g opacity="0.5">
+            <path d="M44,484 Q44,475 52,473 Q60,475 60,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M67,484 Q67,475 75,473 Q83,475 83,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M90,484 Q90,475 98,473 Q106,475 106,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M113,484 Q113,475 121,473 Q129,475 129,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M136,484 Q136,475 144,473 Q152,475 152,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M159,484 Q159,475 167,473 Q175,475 175,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M182,484 Q182,475 190,473 Q198,475 198,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M205,484 Q205,475 213,473 Q221,475 221,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M228,484 Q228,475 236,473 Q244,475 244,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M251,484 Q251,475 259,473 Q267,475 267,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M274,484 Q274,475 282,473 Q290,475 290,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M297,484 Q297,475 305,473 Q313,475 313,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M320,484 Q320,475 328,473 Q336,475 336,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M343,484 Q343,475 351,473 Q359,475 359,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M366,484 Q366,475 374,473 Q382,475 382,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M389,484 Q389,475 397,473 Q405,475 405,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+            <path d="M412,484 Q412,475 420,473 Q428,475 428,484 Z" fill="#0d1410aa" stroke="#4CAF7D" stroke-width="0.5"/>
+          </g>
+          <rect x="142" y="488" width="196" height="22" rx="6" fill="rgba(76,175,125,0.07)" stroke="rgba(76,175,125,0.3)" stroke-width="0.8"/>
+          <text x="240" y="502" text-anchor="middle" font-family="Golos Text,sans-serif" font-size="9" fill="#4CAF7D">27 L3 partners · +2% for you</text>
+        </g>
+        <text x="22" y="58" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(201,168,76,0.5)">L0</text>
+        <text x="22" y="212" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(96,165,250,0.5)">L1</text>
+        <text x="22" y="358" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(167,139,250,0.5)">L2</text>
+        <text x="22" y="466" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(76,175,125,0.5)">L3</text>
+        <rect x="120" y="522" width="240" height="46" rx="10" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.4)" stroke-width="1.5"/>
+        <text x="240" y="540" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="10" font-weight="700" fill="#C9A84C">TOTAL FROM NETWORK / MO</text>
+        <text x="240" y="558" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" font-weight="500" fill="#4CAF7D">$1,526+</text>
+      </svg>
+      <div id="pyr-tooltip" style="display:none;position:absolute;bottom:80px;left:50%;transform:translateX(-50%);background:var(--s1);border:1px solid var(--gb);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--tx);white-space:nowrap;pointer-events:none;z-index:10"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- LEVELS -->
+<section id="levels" class="rv">
+  <div class="section-tag">Partner Levels</div>
+  <h2>Pay once —<br>earn <em>forever</em></h2>
+  <p class="section-lead">Each level unlocks new income streams. One-time payment, no royalties, no monthly fees.</p>
+  <div class="levels">
+    <div class="lc">
+      <div class="lc-badge">Starter · FREE</div>
+      <div class="lc-name">Starter</div>
+      <div class="lc-price-main">FREE</div>
+      <div class="lc-price-note">No payment · Instant after approval</div>
+      <div class="lc-own"><div class="lc-own-pct">20%</div><div class="lc-own-label">of platform spread<br>from your clients</div></div>
+      <div class="lc-net">
+        <div class="lc-net-row off"><span>L1 Network</span><span class="pct">—</span></div>
+        <div class="lc-net-row off"><span>L2 Network</span><span class="pct">—</span></div>
+        <div class="lc-net-row off"><span>L3 Network</span><span class="pct">—</span></div>
+        <div class="lc-net-row off"><span>Franchises</span><span class="pct">—</span></div>
+      </div>
+      <ul class="lc-perks">
+        <li><span class="ck">✓</span>Referral link + QR code</li>
+        <li><span class="ck">✓</span>Personal dashboard</li>
+        <li><span class="ck">✓</span>Promo materials</li>
+        <li><span class="ck">✓</span>USDT / Cash payouts</li>
+        <li><span class="na">—</span>Network income</li>
+      </ul>
+      <a href="#" class="lc-cta outline" onclick="openModal();return false">Start for Free</a>
+    </div>
+    <div class="lc best">
+      <div class="lc-badge">Partner · $199</div>
+      <div class="lc-name">Partner</div>
+      <div class="lc-price-main">$199</div>
+      <div class="lc-price-note">One-time · No royalties · Forever</div>
+      <div class="lc-own"><div class="lc-own-pct">25%</div><div class="lc-own-label">of platform spread<br>from your clients</div></div>
+      <div class="lc-net">
+        <div class="lc-net-row"><span>L1 Network</span><span class="pct">+5%</span></div>
+        <div class="lc-net-row off"><span>L2 Network</span><span class="pct">—</span></div>
+        <div class="lc-net-row off"><span>L3 Network</span><span class="pct">—</span></div>
+        <div class="lc-net-row off"><span>Franchises</span><span class="pct">—</span></div>
+      </div>
+      <ul class="lc-perks">
+        <li><span class="ck">✓</span>Everything in Starter</li>
+        <li><span class="ck">✓</span>+5% from L1 partner earnings</li>
+        <li><span class="ck">✓</span>Priority support</li>
+        <li><span class="ck">✓</span>Payout from $20</li>
+        <li><span class="na">—</span>L2/L3 network</li>
+      </ul>
+      <a href="#" class="lc-cta" onclick="openModal();return false">Join for $199 →</a>
+    </div>
+    <div class="lc">
+      <div class="lc-badge">Pro · $499</div>
+      <div class="lc-name">Pro</div>
+      <div class="lc-price-main">$499</div>
+      <div class="lc-price-note">One-time · No royalties · Forever</div>
+      <div class="lc-own"><div class="lc-own-pct">30%</div><div class="lc-own-label">of platform spread<br>from your clients</div></div>
+      <div class="lc-net">
+        <div class="lc-net-row"><span>L1 Network</span><span class="pct">+7%</span></div>
+        <div class="lc-net-row"><span>L2 Network</span><span class="pct" style="color:var(--bl)">+3%</span></div>
+        <div class="lc-net-row off"><span>L3 Network</span><span class="pct">—</span></div>
+        <div class="lc-net-row off"><span>Franchises</span><span class="pct">—</span></div>
+      </div>
+      <ul class="lc-perks">
+        <li><span class="ck">✓</span>Everything in Partner</li>
+        <li><span class="ck">✓</span>2-level network depth</li>
+        <li><span class="ck">✓</span>Personal manager</li>
+        <li><span class="ck">✓</span>White-label materials</li>
+        <li><span class="na">—</span>L3 network & franchises</li>
+      </ul>
+      <a href="#" class="lc-cta" style="background:var(--bl)" onclick="openModal();return false">Join for $499 →</a>
+    </div>
+    <div class="lc">
+      <div class="lc-badge">VIP Elite · $1,499</div>
+      <div class="lc-name">VIP Elite</div>
+      <div class="lc-price-main">$1,499</div>
+      <div class="lc-price-note">One-time · Maximum capabilities</div>
+      <div class="lc-own"><div class="lc-own-pct">40%</div><div class="lc-own-label">of platform spread<br>from your clients</div></div>
+      <div class="lc-net">
+        <div class="lc-net-row"><span>L1 Network</span><span class="pct" style="color:var(--pp)">+10%</span></div>
+        <div class="lc-net-row"><span>L2 Network</span><span class="pct" style="color:var(--pp)">+5%</span></div>
+        <div class="lc-net-row"><span>L3 Network</span><span class="pct" style="color:var(--pp)">+2%</span></div>
+        <div class="lc-net-row"><span>Franchises</span><span class="pct" style="color:var(--gr)">+10%</span></div>
+      </div>
+      <ul class="lc-perks">
+        <li><span class="ck">✓</span>Everything in Pro</li>
+        <li><span class="ck">✓</span>3-level network depth</li>
+        <li><span class="ck">✓</span>10% from <a href="/fran_en/" style="color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">franchise</a> sales</li>
+        <li><span class="ck">✓</span>API access</li>
+        <li><span class="ck">✓</span>Co-marketing</li>
+      </ul>
+      <a href="#" class="lc-cta" style="background:var(--pp)" onclick="openModal();return false">Join for $1,499 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<div class="calc-section" id="calc">
+<section class="rv" style="max-width:1140px">
+  <div class="section-tag">Income Calculator</div>
+  <h2>Set the parameters —<br>see <em>real numbers</em></h2>
+  <p class="section-lead">The spread is fixed at 3.6%. Adjust the sliders — results update in real time.</p>
+  <div class="calc-wrap">
+    <div class="pyramid-box">
+      <div class="pyramid-title">Your Network in Dollars</div>
+      <div class="pyramid-sub">Estimated monthly income at current settings</div>
+      <div class="pyr-node you">
+        <div class="pn-icon">👤</div>
+        <div><div class="pn-label" id="pn-you-l">YOU (VIP · 40%)</div><div class="pn-detail" id="pn-you-d">20 clients · $1,000/mo</div></div>
+        <div><div class="pn-earn-val" id="pn-you-v">$288</div><div class="pn-earn-label">from your clients</div></div>
+      </div>
+      <div class="pyr-connector"></div>
+      <div class="pyr-node" id="pn-l1" style="border-color:rgba(201,168,76,.3)">
+        <div class="pn-icon">👥</div>
+        <div><div class="pn-label">L1 · Direct Partners</div><div class="pn-detail" id="pn-l1-d">10 partners · 10 clients each</div></div>
+        <div><div class="pn-earn-val" id="pn-l1-v">+$360</div><div class="pn-earn-label" id="pn-l1-p">10% of their clients</div></div>
+      </div>
+      <div class="pyr-connector" id="cn-l2"></div>
+      <div class="pyr-node" id="pn-l2" style="border-color:rgba(96,165,250,.25)">
+        <div class="pn-icon">👥</div>
+        <div><div class="pn-label">L2 · Partners of Partners</div><div class="pn-detail" id="pn-l2-d">50 partners · 8 clients each</div></div>
+        <div><div class="pn-earn-val" id="pn-l2-v">+$864</div><div class="pn-earn-label" id="pn-l2-p">5% of their clients</div></div>
+      </div>
+      <div class="pyr-connector" id="cn-l3"></div>
+      <div class="pyr-node" id="pn-l3" style="border-color:rgba(167,139,250,.25)">
+        <div class="pn-icon">👥</div>
+        <div><div class="pn-label">L3 · Third Level</div><div class="pn-detail" id="pn-l3-d">150 partners · 5 clients each</div></div>
+        <div><div class="pn-earn-val" id="pn-l3-v">+$162</div><div class="pn-earn-label" id="pn-l3-p">2% of their clients</div></div>
+      </div>
+      <div class="pyr-connector" id="cn-fr"></div>
+      <div class="pyr-node" id="pn-fr" style="border-color:rgba(76,175,125,.25)">
+        <div class="pn-icon">🏢</div>
+        <div><div class="pn-label"><a href="/fran_en/" style="color:var(--gold);text-decoration:none">Franchise</a> Sales</div><div class="pn-detail" id="pn-fr-d">2 franchises / mo · $800</div></div>
+        <div><div class="pn-earn-val" id="pn-fr-v">+$160</div><div class="pn-earn-label">10% of each</div></div>
+      </div>
+      <div class="pyr-total">
+        <div><div class="pyt-label">Total per month</div><div class="pyt-period">per year: <span id="pyt-y">$21,768</span></div></div>
+        <div class="pyt-val" id="pyt-t">$1,814</div>
+      </div>
+      <div class="income-bars">
+        <div class="ib-row"><div class="ib-label">Own clients</div><div class="ib-bw"><div class="ib-b b0" id="b0"><span class="bv" id="bv0">$288</span></div></div></div>
+        <div class="ib-row"><div class="ib-label">L1 network</div><div class="ib-bw"><div class="ib-b b1" id="b1"><span class="bv" id="bv1">$360</span></div></div></div>
+        <div class="ib-row" id="br-l2"><div class="ib-label">L2 network</div><div class="ib-bw"><div class="ib-b b2" id="b2"><span class="bv" id="bv2">$864</span></div></div></div>
+        <div class="ib-row" id="br-l3"><div class="ib-label">L3 network</div><div class="ib-bw"><div class="ib-b b3" id="b3"><span class="bv" id="bv3">$162</span></div></div></div>
+        <div class="ib-row" id="br-fr"><div class="ib-label">Franchises</div><div class="ib-bw"><div class="ib-b b4" id="b4"><span class="bv" id="bv4">$160</span></div></div></div>
+      </div>
+    </div>
+    <div class="calc-box">
+      <div class="calc-h">Calculator Settings</div>
+      <div class="calc-sub">Everything updates in real time</div>
+      <div class="spread-info">📊 Platform spread is fixed at <strong>3.6%</strong> — you earn a % of that <strong>3.6%</strong>, not of the exchange amount.</div>
+      <div style="font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Your Level</div>
+      <div class="lv-pick">
+        <div class="lvp" onclick="setLv(this,0)"><div class="lvp-name">Starter</div><div class="lvp-price">FREE</div></div>
+        <div class="lvp" onclick="setLv(this,1)"><div class="lvp-name">Partner</div><div class="lvp-price">$199</div></div>
+        <div class="lvp" onclick="setLv(this,2)"><div class="lvp-name">Pro</div><div class="lvp-price">$499</div></div>
+        <div class="lvp on" onclick="setLv(this,3)"><div class="lvp-name">VIP Elite</div><div class="lvp-price">$1,499</div></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
+      <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">Your Clients</div>
+      <div class="sl-block"><div class="sl-row"><span class="sl-name">Number of clients</span><span class="sl-val" id="sv-c">20</span></div><input type="range" id="sl-c" min="1" max="200" value="20" oninput="calc()"></div>
+      <div class="sl-block"><div class="sl-row"><span class="sl-name">Volume / client / mo</span><span class="sl-val" id="sv-a">$1,000</span></div><input type="range" id="sl-a" min="100" max="20000" step="100" value="1000" oninput="calc()"></div>
+      <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0">
+      <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px">L1 — Your Direct Partners</div>
+      <div id="g-l1">
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">L1 partners</span><span class="sl-val" id="sv-l1">10</span></div><input type="range" id="sl-l1" min="0" max="100" value="10" oninput="calc()"></div>
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">Clients per partner</span><span class="sl-val" id="sv-l1c">10</span></div><input type="range" id="sl-l1c" min="0" max="100" value="10" oninput="calc()"></div>
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">L1 client volume / mo</span><span class="sl-val" id="sv-l1a">$800</span></div><input type="range" id="sl-l1a" min="100" max="10000" step="100" value="800" oninput="calc()"></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0" id="hr-l2">
+      <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px" id="lbl-l2">L2 — Partners of Your Partners</div>
+      <div id="g-l2">
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">Partners per L1</span><span class="sl-val" id="sv-l2">5</span></div><input type="range" id="sl-l2" min="0" max="30" value="5" oninput="calc()"></div>
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">Clients per L2 partner</span><span class="sl-val" id="sv-l2c">8</span></div><input type="range" id="sl-l2c" min="0" max="50" value="8" oninput="calc()"></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0" id="hr-l3">
+      <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px" id="lbl-l3">L3 — Third Level</div>
+      <div id="g-l3">
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">Partners per L2</span><span class="sl-val" id="sv-l3">3</span></div><input type="range" id="sl-l3" min="0" max="20" value="3" oninput="calc()"></div>
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">Clients per L3 partner</span><span class="sl-val" id="sv-l3c">5</span></div><input type="range" id="sl-l3c" min="0" max="30" value="5" oninput="calc()"></div>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--ln);margin:20px 0" id="hr-fr">
+      <div id="g-fr">
+        <div style="font-size:11px;font-weight:600;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px"><a href="/fran_en/" style="color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">Franchise</a> Sales (VIP)</div>
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">Franchises per month</span><span class="sl-val" id="sv-fr">2</span></div><input type="range" id="sl-fr" min="0" max="20" value="2" oninput="calc()"></div>
+        <div class="sl-block"><div class="sl-row"><span class="sl-name">Avg. franchise price</span><span class="sl-val" id="sv-frp">$800</span></div><input type="range" id="sl-frp" min="500" max="3000" step="100" value="800" oninput="calc()"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- COMPARE TABLE -->
+<section class="rv">
+  <div class="section-tag">Level Comparison</div>
+  <h2>Full <em>breakdown</em></h2>
+  <div class="ctable-wrap">
+    <table class="ctable">
+      <thead><tr>
+        <th>Feature</th>
+        <th class="c1">Starter · FREE</th>
+        <th class="c2">Partner · $199</th>
+        <th class="c3">Pro · $499</th>
+        <th class="c4">VIP Elite · $1,499</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>% from own clients</td><td class="pc c1">20%</td><td class="pc c2">25%</td><td class="pc c3">30%</td><td class="pc c4">40%</td></tr>
+        <tr><td>% from L1 earnings</td><td class="no">—</td><td class="pc c2">+5%</td><td class="pc c3">+7%</td><td class="pc c4">+10%</td></tr>
+        <tr><td>% from L2 earnings</td><td class="no">—</td><td class="no">—</td><td class="pc c3">+3%</td><td class="pc c4">+5%</td></tr>
+        <tr><td>% from L3 earnings</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="pc c4">+2%</td></tr>
+        <tr><td>% from <a href="/fran_en/" style="color:var(--gold);text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">franchise</a> sales</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="pc" style="color:var(--gr)">+10%</td></tr>
+        <tr><td>Example: 50 clients × $1,000/mo</td><td class="pc c1">$720/mo</td><td class="pc c2">$900/mo</td><td class="pc c3">$1,080/mo</td><td class="pc c4">$1,440/mo</td></tr>
+        <tr><td>Cookie window</td><td class="yes">90 days ✓</td><td class="yes">90 days ✓</td><td class="yes">90 days ✓</td><td class="yes">90 days ✓</td></tr>
+        <tr><td>Lifetime clients</td><td class="yes">Yes ✓</td><td class="yes">Yes ✓</td><td class="yes">Yes ✓</td><td class="yes">Yes ✓</td></tr>
+        <tr><td>Personal manager</td><td class="no">—</td><td class="no">—</td><td class="yes">Yes ✓</td><td class="yes">Yes ✓</td></tr>
+        <tr><td>White-label materials</td><td class="no">—</td><td class="no">—</td><td class="yes">Yes ✓</td><td class="yes">Yes ✓</td></tr>
+        <tr><td>API access</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">Yes ✓</td></tr>
+        <tr><td>Minimum payout</td><td class="pc">$30</td><td class="pc">$20</td><td class="pc">$10</td><td class="pc">$10</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TOOLS -->
+<section id="tools" class="rv">
+  <div class="section-tag">Tools</div>
+  <h2>Everything ready<br>to <em>launch</em></h2>
+  <p class="section-lead">We give you everything you need to bring in clients — without extra effort.</p>
+  <div class="tools-grid">
+    <div class="tool-card"><span class="tool-icon">🔗</span><h3>Referral Link + QR</h3><p>Unique tracking for every click and conversion.</p></div>
+    <div class="tool-card"><span class="tool-icon">🖼️</span><h3>Banners & Posts</h3><p>Ready-made templates for Telegram, Instagram, and more.</p></div>
+    <div class="tool-card"><span class="tool-icon">📊</span><h3>Dashboard</h3><p>Live stats on clicks, clients, and earnings.</p></div>
+    <div class="tool-card"><span class="tool-icon">💬</span><h3>Sales Scripts</h3><p>Copy-paste messages for DMs, chats, and groups.</p></div>
+    <div class="tool-card"><span class="tool-icon">🎁</span><h3>Promo Codes</h3><p>Exclusive discounts for your clients — boosts conversion.</p></div>
+    <div class="tool-card"><span class="tool-icon">📞</span><h3>24/7 Support</h3><p>WhatsApp and Telegram — your manager is always available.</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section id="faq" class="rv">
+  <div class="section-tag">FAQ</div>
+  <h2>Common <em>questions</em></h2>
+  <p class="section-lead">Didn't find your answer? Message the manager directly.</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What does "% of platform spread" mean? How is it calculated?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">The spread is 3.6% charged on every exchange — that's the platform's revenue. You earn your % of that 3.6%. Example: a $1,000 exchange → platform earns $36 → you at VIP (40%) receive $14.40. Formula: <code>amount × 3.6% × your_%</code>. VIP: <code>$1,000 × 0.036 × 0.40 = $14.40</code> per transaction.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">"Lifetime" — does that really mean forever? What if a client stops using the service?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">As long as your account is active, all clients you referred generate income for you. Lifetime means there's no time limit — the client is linked to your ID permanently, and every exchange they make triggers a commission. If they stop exchanging, no earnings — but the link remains.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How does network income work? Is my % taken from their earnings or their volume?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">From the platform's spread on your network's client transactions. Your L1 partner brings a client who exchanges $500. Platform earns $18. You receive <code>10% × $18 = $1.80</code> from that transaction. The L1 partner receives their own 25% = $4.50. All payouts come from the spread — partners don't pay each other.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Why are the paid levels worth it? Am I just buying the right to earn?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">You're buying access to expanded capabilities: a higher %, network access, a personal manager, and API. The Starter level is free. Paid levels are one-time — no monthly fees. It's an investment: VIP at $1,499 with 50 clients exchanging $1,000/mo pays back in under 2 months.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How and when do payouts happen?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Every Friday automatically once the threshold is reached. Starter — from <code>$30</code>, Partner — from <code>$20</code>, Pro/VIP — from <code>$10</code>. Manual withdrawal on request any day. Formats: USDT TRC20/ERC20, Cash, SWIFT. All accruals are visible in your dashboard in real time.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Who can become a partner? Is a registered company required?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Anyone — a blogger, chat admin, financial consultant, expat, or simply someone with an active audience in Russia, Turkey, Uzbekistan, Africa, or elsewhere. No company registration required. Just fill out the application.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">I want to run my own exchange — not just refer people. Is that possible?<span class="faq-chevron">+</span></button>
+      <div class="faq-a">Yes — that's the <a href="/fran_en/" style="color:var(--gold)">app2.cash franchise</a>. You get a fully built exchange under your own brand, CRM, MLM system, and training. 100% of the margin from your clients is yours. No royalties. Live in 7 days. Available to anyone, anywhere, without a registered company.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="rv">
+  <div class="cta-banner">
+    <div class="section-tag" style="margin-bottom:16px">Start Today</div>
+    <h2>First level —<br><em>free</em></h2>
+    <p>Applications are reviewed within 24 hours. Starter is available immediately. Upgrade your level at any time.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="#" class="btn-primary" onclick="openModal();return false">Become a Partner →</a>
+      <a href="/fran_en/" class="btn-outline" style="border-color:rgba(201,168,76,.3);color:var(--gold)">🏢 Franchise — Your Own Exchange</a>
+      <a href="https://wa.me/255756687444" target="_blank" class="btn-outline">💬 WhatsApp</a>
+      <a href="https://t.me/app2cas" target="_blank" class="btn-outline">✈️ Telegram</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="/en/" class="logo">app2<span>.cash</span></a>
+  <ul class="fn">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#levels">Levels</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="/fran_en/">🏢 Franchise</a></li>
+    <li><a href="mailto:partner@app2.cash">partner@app2.cash</a></li>
+  </ul>
+  <span>© 2025 app2.cash</span>
+</footer>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-top"></div>
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="form-content">
+      <h3>Become a Partner</h3>
+      <p class="modal-sub">Fill out the form — a manager will contact you within 5 minutes</p>
+      <div class="fg2">
+        <div class="fg"><label>Name *</label><input type="text" id="f-name" placeholder="Your name"></div>
+        <div class="fg"><label>Country / Region *</label><input type="text" id="f-country" placeholder="UAE, Africa, Europe..."></div>
+      </div>
+      <div class="fg"><label>Telegram</label><input type="text" id="f-tg" placeholder="@username"></div>
+      <div class="fg"><label>WhatsApp</label><input type="text" id="f-wa" placeholder="+1, +44, +255..."></div>
+      <div class="fg"><label>Email</label><input type="email" id="f-email" placeholder="you@example.com"></div>
+      <div class="fg"><label>I'm interested in</label>
+        <select id="f-type">
+          <option value="partner">Partner Program</option>
+          <option value="franchise">Franchise / White Label</option>
+          <option value="both">Partner Program + Franchise</option>
+        </select>
+      </div>
+      <div class="fg"><label>Referral Code (if any)</label><input type="text" id="f-ref" placeholder="Code from the person who referred you"></div>
+      <div class="fg"><label>About You (optional)</label><textarea id="f-notes" placeholder="Your audience, experience, plans..."></textarea></div>
+      <button class="btn-primary form-submit" id="f-submit" onclick="submitForm()">Submit Application →</button>
+      <div class="modal-note">By submitting, you agree to data processing</div>
+    </div>
+    <div class="success-msg" id="success-msg">
+      <div class="success-icon">✅</div>
+      <div class="success-title">Application received!</div>
+      <div class="success-sub">A manager will contact you within 5 minutes via your chosen channel.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SPREAD = 0.036;
+const LVL = [
+  {name:'Starter',  own:.20, l1:0,    l2:0,   l3:0,  fr:0},
+  {name:'Partner',  own:.25, l1:.05,  l2:0,   l3:0,  fr:0},
+  {name:'Pro',      own:.30, l1:.07,  l2:.03, l3:0,  fr:0},
+  {name:'VIP Elite',own:.40, l1:.10,  l2:.05, l3:.02,fr:.10},
+];
+let curLv = 3;
+
+const pyrData = {
+  you:  'YOU · VIP Elite · 40% of spread + 3 network levels',
+  l1:   'L1 partners · +10% of spread from their clients',
+  l2:   'L2 partners · +5% of spread from their clients',
+  l3:   'L3 partners · +2% of spread from their clients',
+};
+function pyrClick(key){
+  const tt = document.getElementById('pyr-tooltip');
+  tt.textContent = pyrData[key];
+  tt.style.display = 'block';
+  setTimeout(()=>tt.style.display='none', 2500);
+}
+
+function openModal(){
+  const ref=new URLSearchParams(window.location.search).get('ref');
+  if(ref) document.getElementById('f-ref').value=ref;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+async function submitForm(){
+  const name=document.getElementById('f-name').value.trim();
+  const country=document.getElementById('f-country').value.trim();
+  const tg=document.getElementById('f-tg').value.trim();
+  const wa=document.getElementById('f-wa').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  const type=document.getElementById('f-type').value;
+  const ref=document.getElementById('f-ref').value.trim();
+  const notes=document.getElementById('f-notes').value.trim();
+  if(!name){showToast('Please enter your name',false);return;}
+  if(!country){showToast('Please enter your country',false);return;}
+  if(!tg&&!wa&&!email){showToast('Please provide at least one contact',false);return;}
+  const btn=document.getElementById('f-submit');
+  btn.disabled=true;btn.textContent='Sending...';
+  try{
+    const res=await fetch('/api/index.js',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        contact:tg||wa||email,
+        channel:tg?'Telegram':wa?'WhatsApp':'Email',
+        source:'partner_en · '+(type==='franchise'?'Franchise':type==='both'?'Partner+Franchise':'Partner'),
+        timestamp:new Date().toISOString(),
+        extra:{name,country,tg,wa,email,ref,notes}
+      })
+    });
+    const data=await res.json();
+    if(data.ok){
+      document.getElementById('form-content').style.display='none';
+      document.getElementById('success-msg').style.display='block';
+      setTimeout(closeModal,3000);
+    }else throw new Error();
+  }catch(e){
+    showToast('Error. Please write to us directly.',false);
+    btn.disabled=false;btn.textContent='Submit Application →';
+  }
+}
+
+function showToast(msg,ok=true){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.background=ok?'var(--gr)':'var(--rd)';t.style.color=ok?'#000':'#fff';
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');const was=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+  if(!was)item.classList.add('open');
+}
+
+function setLv(el,lv){
+  document.querySelectorAll('.lvp').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');curLv=lv;updateLvUI();calc();
+}
+
+function updateLvUI(){
+  const lv=LVL[curLv];
+  const hasL1=lv.l1>0,hasL2=lv.l2>0,hasL3=lv.l3>0,hasFr=lv.fr>0;
+  document.getElementById('g-l1').classList.toggle('sl-dis',!hasL1);
+  document.getElementById('g-l2').classList.toggle('sl-dis',!hasL2);
+  document.getElementById('hr-l2').classList.toggle('sl-dis',!hasL2);
+  document.getElementById('lbl-l2').classList.toggle('sl-dis',!hasL2);
+  document.getElementById('g-l3').classList.toggle('sl-dis',!hasL3);
+  document.getElementById('hr-l3').classList.toggle('sl-dis',!hasL3);
+  document.getElementById('lbl-l3').classList.toggle('sl-dis',!hasL3);
+  document.getElementById('g-fr').classList.toggle('sl-dis',!hasFr);
+  document.getElementById('hr-fr').classList.toggle('sl-dis',!hasFr);
+  document.getElementById('pn-you-l').textContent=`YOU (${lv.name} · ${Math.round(lv.own*100)}%)`;
+  document.getElementById('pn-l1').style.opacity=hasL1?'1':'.3';
+  document.getElementById('cn-l2').style.opacity=hasL2?'1':'.2';
+  document.getElementById('pn-l2').style.opacity=hasL2?'1':'.3';
+  document.getElementById('cn-l3').style.opacity=hasL3?'1':'.2';
+  document.getElementById('pn-l3').style.opacity=hasL3?'1':'.3';
+  document.getElementById('cn-fr').style.opacity=hasFr?'1':'.2';
+  document.getElementById('pn-fr').style.opacity=hasFr?'1':'.3';
+  document.getElementById('br-l2').style.opacity=hasL2?'1':'.3';
+  document.getElementById('br-l3').style.opacity=hasL3?'1':'.3';
+  document.getElementById('br-fr').style.opacity=hasFr?'1':'.3';
+  document.getElementById('pn-l1-p').textContent=hasL1?`${Math.round(lv.l1*100)}% of their clients' spread`:'Not available';
+  document.getElementById('pn-l2-p').textContent=hasL2?`${Math.round(lv.l2*100)}% of their clients' spread`:'Not available';
+  document.getElementById('pn-l3-p').textContent=hasL3?`${Math.round(lv.l3*100)}% of their clients' spread`:'VIP Elite only';
+}
+
+function fmtp(n){return '$'+Math.round(n).toLocaleString('en-US')}
+
+function fill(id){
+  const sl=document.getElementById(id);
+  const p=((+sl.value-+sl.min)/(+sl.max-+sl.min)*100).toFixed(1)+'%';
+  sl.style.setProperty('--p',p);
+}
+
+function calc(){
+  const lv=LVL[curLv];
+  const c=+document.getElementById('sl-c').value;
+  const a=+document.getElementById('sl-a').value;
+  const l1=+document.getElementById('sl-l1').value;
+  const l1c=+document.getElementById('sl-l1c').value;
+  const l1a=+document.getElementById('sl-l1a').value;
+  const l2=+document.getElementById('sl-l2').value;
+  const l2c=+document.getElementById('sl-l2c').value;
+  const l3=+document.getElementById('sl-l3').value;
+  const l3c=+document.getElementById('sl-l3c').value;
+  const fr=+document.getElementById('sl-fr').value;
+  const frp=+document.getElementById('sl-frp').value;
+
+  document.getElementById('sv-c').textContent=c;
+  document.getElementById('sv-a').textContent='$'+a.toLocaleString('en-US');
+  document.getElementById('sv-l1').textContent=l1;
+  document.getElementById('sv-l1c').textContent=l1c;
+  document.getElementById('sv-l1a').textContent='$'+l1a.toLocaleString('en-US');
+  document.getElementById('sv-l2').textContent=l2;
+  document.getElementById('sv-l2c').textContent=l2c;
+  document.getElementById('sv-l3').textContent=l3;
+  document.getElementById('sv-l3c').textContent=l3c;
+  document.getElementById('sv-fr').textContent=fr;
+  document.getElementById('sv-frp').textContent='$'+frp.toLocaleString('en-US');
+
+  ['sl-c','sl-a','sl-l1','sl-l1c','sl-l1a','sl-l2','sl-l2c','sl-l3','sl-l3c','sl-fr','sl-frp'].forEach(fill);
+
+  const ownEarn=c*a*SPREAD*lv.own;
+  const l1Earn=lv.l1>0?l1*l1c*l1a*SPREAD*lv.l1:0;
+  const l2p=l1*l2,l2Earn=lv.l2>0?l2p*l2c*l1a*.85*SPREAD*lv.l2:0;
+  const l3p=l2p*l3,l3Earn=lv.l3>0?l3p*l3c*l1a*.7*SPREAD*lv.l3:0;
+  const frEarn=lv.fr>0?fr*frp*lv.fr:0;
+  const total=ownEarn+l1Earn+l2Earn+l3Earn+frEarn;
+
+  document.getElementById('pn-you-d').textContent=`${c} clients · $${a.toLocaleString('en-US')}/mo`;
+  document.getElementById('pn-you-v').textContent=fmtp(ownEarn);
+  document.getElementById('pn-l1-d').textContent=`${l1} partners · ${l1c} clients each`;
+  document.getElementById('pn-l1-v').textContent=lv.l1>0?'+'+fmtp(l1Earn):'—';
+  document.getElementById('pn-l2-d').textContent=`${l2p} partners · ${l2c} clients each`;
+  document.getElementById('pn-l2-v').textContent=lv.l2>0?'+'+fmtp(l2Earn):'—';
+  document.getElementById('pn-l3-d').textContent=`${l3p} partners · ${l3c} clients each`;
+  document.getElementById('pn-l3-v').textContent=lv.l3>0?'+'+fmtp(l3Earn):'—';
+  document.getElementById('pn-fr-d').textContent=`${fr} franchises/mo · $${frp.toLocaleString('en-US')}`;
+  document.getElementById('pn-fr-v').textContent=lv.fr>0?'+'+fmtp(frEarn):'—';
+  document.getElementById('pyt-t').textContent=fmtp(total);
+  document.getElementById('pyt-y').textContent=fmtp(total*12);
+
+  const mx=Math.max(ownEarn,l1Earn,l2Earn,l3Earn,frEarn,1);
+  function setBar(id,vid,val){
+    document.getElementById(id).style.width=Math.max(val/mx*100,val>0?2:0).toFixed(1)+'%';
+    document.getElementById(vid).textContent=val>0?fmtp(val):'';
+  }
+  setBar('b0','bv0',ownEarn);setBar('b1','bv1',l1Earn);setBar('b2','bv2',l2Earn);setBar('b3','bv3',l3Earn);setBar('b4','bv4',frEarn);
+}
+
+const ro=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}});
+},{threshold:.06,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+updateLvUI();calc();
+['sl-c','sl-a','sl-l1','sl-l1c','sl-l1a','sl-l2','sl-l2c','sl-l3','sl-l3c','sl-fr','sl-frp'].forEach(id=>{
+  fill(id);document.getElementById(id).addEventListener('input',()=>fill(id));
+});
+</script>
+</body>
+</html>
