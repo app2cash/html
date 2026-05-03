@@ -825,7 +825,7 @@ for(let i=1;i<=14;i++){
   const div=document.createElement('div');
   div.className='video-item';
   div.innerHTML=`<img src="/en/POS_en/${i}.jpg" alt="视频评价 ${i}" loading="lazy"><div class="play-btn">▶</div>`;
-  div.dataset.src=`/REW_en/${i}.mp4`;
+  div.dataset.src=`/en/REW_en/${i}.mp4`;
   div.onclick=function(){
     if(this.querySelector('video')){
       const v=this.querySelector('video');
