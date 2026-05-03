@@ -39,7 +39,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .nav-links a:hover{color:var(--gold)}
 .nav-links a.nav-fran{color:var(--gold);opacity:.8}
 .nav-links a.nav-fran:hover{opacity:1}
-.nav-ctas{display:flex;gap:10px}
+.nav-ctas{display:flex;gap:10px;align-items:center}
+.nav-lang{display:flex;gap:4px}
+.lang-btn{font-size:12px;padding:4px 8px;border-radius:6px;text-decoration:none;color:rgba(240,234,214,.45);border:1px solid rgba(255,255,255,.065);transition:all .2s}
+.lang-btn:hover{color:var(--gold)}
+.nav-partner-stack{display:flex;flex-direction:column;gap:3px}
+.nav-partner-stack .nb-o{padding:3px 10px;font-size:10px;border-radius:5px;white-space:nowrap}
 .nb-o{background:transparent;color:var(--tx);border:1px solid var(--ln);padding:9px 20px;border-radius:6px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
 .nb-o:hover{border-color:var(--gb)}
 .nb-g{background:var(--gold);color:var(--bg);padding:9px 20px;border-radius:6px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;border:none;transition:background .2s}
@@ -305,8 +310,15 @@ footer a:hover{color:var(--gold)}
     <li><a href="/franchise_cn/" class="nav-fran">🏢 加盟合作</a></li>
   </ul>
   <div class="nav-ctas">
-    <a href="/cabinet" class="nb-o">合作伙伴后台</a>
-    <a href="#" class="nb-g" onclick="openModal();return false">立即申请</a>
+    <div class="nav-lang">
+      <a href="/partner/" class="lang-btn">🇷🇺</a>
+      <a href="/partner_en/" class="lang-btn">🇬🇧</a>
+    </div>
+    <div class="nav-partner-stack">
+      <a href="/cabinet" class="nb-o">合作伙伴后台</a>
+      <a href="/franchise_cn/" class="nb-o">加盟合作</a>
+    </div>
+    <a href="#" class="nb-g" onclick="openModal();return false">立即申请 →</a>
   </div>
 </nav>
 
