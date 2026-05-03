@@ -812,7 +812,7 @@ for(let i=1;i<=14;i++){
   const div=document.createElement('div');
   div.className='video-item';
   div.innerHTML=`<img src="/POS_ru/${i}.jpg" alt="Видеоотзыв ${i}" loading="lazy"><div class="play-btn">▶</div>`;
-  div.dataset.src=`/rev/${i}.mp4`;
+  div.dataset.src=`/REW_ru/${i}.mp4`;
   div.onclick=function(){
     if(this.querySelector('video')){
       const v=this.querySelector('video');
