@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -6,11 +7,21 @@
 <title>Отзывы клиентов – app2.cash</title>
 
 <style>
+:root{
+  --gold:#C9A84C;--gold-l:#E8C96D;--gold-pale:#F5E4A8;
+  --gd:rgba(201,168,76,.10);--gb:rgba(201,168,76,.22);
+  --bg:#0A0A0A;--s1:#111;--s2:#171717;--s3:#1F1F1F;
+  --tx:#F0EAD6;--mu:rgba(240,234,214,.45);--di:rgba(240,234,214,.16);
+  --ln:rgba(255,255,255,.065);
+  --gr:#4CAF7D;--rd:#F05252;
+  --r:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{
-  margin:0;
-  background:#0b0b0f;
-  color:#fff;
-  font-family:'Montserrat', Arial, sans-serif;
+  font-family:'Montserrat',Arial,sans-serif;
+  background:var(--bg);
+  color:var(--tx);
+  padding-bottom:60px;
 }
 
 .container{
@@ -107,8 +118,8 @@ h2{margin-top:30px;border-bottom:1px solid #333;padding-bottom:6px;}
   border-radius:12px;
 }
 
-/* CTA */
-.cta{
+/* CTA кнопка */
+.cta-btn{
   display:block;
   text-align:center;
   background:linear-gradient(90deg,#FFD700,#FFA500);
@@ -118,64 +129,124 @@ h2{margin-top:30px;border-bottom:1px solid #333;padding-bottom:6px;}
   font-weight:bold;
   margin:25px 0;
   text-decoration:none;
-}
-
-/* Taplink кнопка */
-.taplink-fixed{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:#25D366;
-  color:#fff;
-  text-align:center;
-  padding:16px;
-  font-weight:bold;
-  z-index:999;
-  cursor:pointer;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  0%{ box-shadow:0 0 0 0 rgba(37,211,102,0.7); }
-  70%{ box-shadow:0 0 0 12px rgba(37,211,102,0); }
-  100%{ box-shadow:0 0 0 0 rgba(37,211,102,0); }
-}
-
-/* модалка */
-#taplinkModal{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.95);
-  display:none;
-  z-index:1001;
-}
-
-.taplink-content{
-  width:100%;
-  height:100%;
-  position:relative;
-}
-
-.taplink-content iframe{
-  width:100%;
-  height:100%;
   border:none;
+  cursor:pointer;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:15px;
+  width:100%;
+}
+.cta-btn:hover{opacity:.9;}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;
+  bottom:72px;right:24px;
+  font-weight:700;font-size:13px;
+  padding:12px 20px;border-radius:10px;
+  opacity:0;transition:opacity .3s;
+  pointer-events:none;z-index:9999;
+}
+.toast.show{opacity:1;}
+
+/* ── FIXED BOTTOM ── */
+.contact-fixed{
+  position:fixed;bottom:0;left:0;
+  width:100%;display:flex;
+  z-index:100;border-top:1px solid var(--ln);
+}
+.cf-btn{
+  flex:1;text-align:center;
+  padding:14px 6px;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-weight:700;font-size:12px;
+  text-decoration:none;
+  display:flex;align-items:center;justify-content:center;
+  gap:5px;
+  background:#111;color:var(--mu);
+  border-right:1px solid var(--ln);
+  transition:all .2s;cursor:pointer;
+  border-top:none;border-bottom:none;border-left:none;
+}
+.cf-btn:last-child{border-right:none;}
+.cf-btn:hover{background:#1a1a1a;}
+.cf-wa{color:#25D366 !important;}
+.cf-tg{color:#229ED9 !important;}
+.cf-ph{color:#FFD700 !important;}
+.cf-calc{background:var(--gold) !important;color:#000 !important;font-weight:700;}
+.cf-calc:hover{background:var(--gold-l) !important;}
+
+/* ── WIDGET MODAL ── */
+.wg-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.78);
+  backdrop-filter:blur(8px);
+  z-index:300;align-items:center;justify-content:center;padding:20px;
+}
+.wg-overlay.open{display:flex;}
+.wg-inner{
+  background:var(--s1);
+  border:1px solid rgba(201,168,76,.25);
+  border-radius:16px;padding:36px;
+  width:100%;max-width:400px;
+  position:relative;
+  animation:fu .3s ease;
+}
+.wg-inner::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-l),transparent);
+  border-radius:16px 16px 0 0;
+}
+.wg-close{
+  position:absolute;top:14px;right:18px;
+  background:none;border:none;
+  color:var(--mu);font-size:22px;cursor:pointer;
+  transition:color .2s;line-height:1;
+}
+.wg-close:hover{color:var(--tx);}
+.wg-title{
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:18px;font-weight:800;
+  margin-bottom:4px;letter-spacing:-.5px;
+}
+.wg-sub{font-size:13px;color:var(--mu);margin-bottom:20px;line-height:1.5;}
+.ch-row{display:flex;gap:8px;margin-bottom:14px;}
+.ch-btn{
+  flex:1;padding:10px 4px;border-radius:8px;
+  border:1px solid var(--ln);background:var(--s2);
+  color:var(--mu);cursor:pointer;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:12px;font-weight:600;transition:all .2s;
+}
+.ch-btn.on{border-color:var(--gold);color:var(--gold);background:var(--gd);}
+.wg-input{
+  width:100%;background:var(--s2);
+  border:1px solid var(--ln);border-radius:8px;
+  padding:12px 16px;color:var(--tx);
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:14px;outline:none;
+  transition:border-color .2s;
+  margin-bottom:12px;display:block;
+}
+.wg-input:focus{border-color:rgba(201,168,76,.5);}
+.wg-input::placeholder{color:var(--di);}
+.wg-submit{
+  width:100%;padding:14px;
+  background:var(--gold);color:#000;
+  border:none;border-radius:8px;
+  font-family:'Montserrat',Arial,sans-serif;
+  font-size:14px;font-weight:700;cursor:pointer;
+  transition:background .2s;
+}
+.wg-submit:hover{background:var(--gold-l);}
+.wg-ok{
+  display:none;text-align:center;
+  color:var(--gr);font-weight:600;
+  margin-top:14px;font-size:14px;
 }
 
-.close{
-  position:absolute;
-  top:15px;
-  right:20px;
-  font-size:28px;
-  color:white;
-  cursor:pointer;
-  z-index:1002;
-}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 </style>
+
 </head>
 
 <body>
@@ -183,18 +254,16 @@ h2{margin-top:30px;border-bottom:1px solid #333;padding-bottom:6px;}
 <div class="container">
 
 <!-- навигация -->
+
 <div class="lang">
-
   <a href="/" id="homeBtnRu">🏠 Главная</a>
-
   <a href="#" class="active" onclick="switchLang('ru')">🇷🇺 RU</a>
   <a href="#" onclick="switchLang('en')">🇬🇧 EN</a>
-
   <a href="/en/" id="homeBtnEn" style="display:none;">🏠 Home</a>
-
 </div>
 
 <!-- RU -->
+
 <div id="ru">
 
 <h1>Отзывы клиентов</h1>
@@ -217,18 +286,17 @@ h2{margin-top:30px;border-bottom:1px solid #333;padding-bottom:6px;}
 <div class="video-slider" id="videos_ru"></div>
 
 <div class="card">
-✔ Тысячи обменов с 2022 года<br>
-✔ Реальные клиенты<br>
-✔ Подтверждено скриншотами и видео
+  ✔ Тысячи обменов с 2022 года<br>
+  ✔ Реальные клиенты<br>
+  ✔ Подтверждено скриншотами и видео
 </div>
 
-<a href="https://wa.me/255756687444" class="cta">
-Написать в WhatsApp
-</a>
+<button class="cta-btn" onclick="openWidget('WhatsApp')">💬 Написать менеджеру</button>
 
 </div>
 
 <!-- EN -->
+
 <div id="en" style="display:none;">
 
 <h1>Client Reviews</h1>
@@ -251,128 +319,209 @@ h2{margin-top:30px;border-bottom:1px solid #333;padding-bottom:6px;}
 <div class="video-slider" id="videos_en"></div>
 
 <div class="card">
-✔ Thousands of exchanges since 2022<br>
-✔ Real clients<br>
-✔ Verified by screenshots & videos
+  ✔ Thousands of exchanges since 2022<br>
+  ✔ Real clients<br>
+  ✔ Verified by screenshots &amp; videos
 </div>
 
-<a href="https://wa.me/255756687444" class="cta">
-Contact on WhatsApp
-</a>
+<button class="cta-btn" onclick="openWidget('WhatsApp')">💬 Contact Manager</button>
 
 </div>
 
-</div>
+</div><!-- /container -->
 
 <!-- Lightbox -->
-<div id="lightbox"><img src=""></div>
 
-<!-- Taplink -->
-<div id="taplinkModal">
-  <div class="taplink-content">
-    <span class="close" onclick="closeTaplink()">✕</span>
-    <iframe src="https://taplink.cc/app2cash"></iframe>
-  </div>
+<div id="lightbox"><img src="" alt=""></div>
+
+<!-- TOAST -->
+
+<div class="toast" id="toast"></div>
+
+<!-- FIXED BOTTOM -->
+
+<div class="contact-fixed">
+  <button onclick="openWidget('WhatsApp')" class="cf-btn cf-wa">💬 WhatsApp</button>
+  <button onclick="openWidget('Telegram')" class="cf-btn cf-tg">✈️ Telegram</button>
+  <button onclick="openWidget('Phone')" class="cf-btn cf-ph">📞 Звонок</button>
+  <button onclick="openWidget()" class="cf-btn cf-calc">📊 Расчёт курса</button>
 </div>
 
-<div class="taplink-fixed" onclick="openTaplink()">
-  <span id="taplinkText">Менеджер онлайн</span>
+<!-- WIDGET MODAL -->
+
+<div class="wg-overlay" id="wg-modal" onclick="if(event.target===this)closeWidget()">
+  <div class="wg-inner">
+    <button class="wg-close" onclick="closeWidget()">×</button>
+    <div class="wg-title" id="wg-title">Связаться с менеджером</div>
+    <div class="wg-sub" id="wg-sub">Ответим в течение 1 минуты. Выберите удобный способ:</div>
+    <div class="ch-row">
+      <button class="ch-btn on" id="ch-WhatsApp" onclick="selCh('WhatsApp')">💬 WhatsApp</button>
+      <button class="ch-btn" id="ch-Telegram" onclick="selCh('Telegram')">✈️ Telegram</button>
+      <button class="ch-btn" id="ch-Phone" onclick="selCh('Phone')">📞 Телефон</button>
+    </div>
+    <input class="wg-input" id="wg-contact" placeholder="@username или номер телефона">
+    <button class="wg-submit" id="wg-submit" onclick="submitWidget()">Получить расчёт курса →</button>
+    <div class="wg-ok" id="wg-ok">✅ Заявка принята! Менеджер напишет в течение 1 минуты.</div>
+  </div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
+  /* ── LANG SWITCH ── */
   window.switchLang = function(lang){
     document.getElementById('ru').style.display = lang === 'ru' ? 'block' : 'none';
     document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
 
-    document.querySelectorAll('.lang a').forEach(a=>a.classList.remove('active'));
+    document.querySelectorAll('.lang a').forEach(a => a.classList.remove('active'));
 
     if(lang === 'ru'){
       document.querySelectorAll('.lang a')[1].classList.add('active');
-      document.getElementById("taplinkText").innerText = "Менеджер онлайн";
+      // обновить тексты виджета на русский
+      document.getElementById('wg-title').innerText = 'Связаться с менеджером';
+      document.getElementById('wg-sub').innerText = 'Ответим в течение 1 минуты. Выберите удобный способ:';
+      document.getElementById('wg-submit').innerText = 'Получить расчёт курса →';
+      document.getElementById('ch-Phone').innerText = '📞 Телефон';
     } else {
       document.querySelectorAll('.lang a')[2].classList.add('active');
-      document.getElementById("taplinkText").innerText = "Online Manager";
+      document.getElementById('wg-title').innerText = 'Contact Manager';
+      document.getElementById('wg-sub').innerText = 'We reply within 1 minute. Choose your preferred channel:';
+      document.getElementById('wg-submit').innerText = 'Get exchange rate →';
+      document.getElementById('ch-Phone').innerText = '📞 Phone';
     }
 
     document.getElementById('homeBtnRu').style.display = lang === 'ru' ? 'inline-block' : 'none';
     document.getElementById('homeBtnEn').style.display = lang === 'en' ? 'inline-block' : 'none';
-  }
+  };
 
+  /* ── VIDEO RU ── */
   const ru = document.getElementById('videos_ru');
-  for(let i=1;i<=14;i++){
-    const div=document.createElement('div');
-    div.className='video-item';
-    div.innerHTML=`<img src="/POS_ru/${i}.jpg"><div class="play">▶</div>`;
-    div.dataset.src=`/REW_ru/${i}.mp4`;
+  for(let i = 1; i <= 14; i++){
+    const div = document.createElement('div');
+    div.className = 'video-item';
+    div.innerHTML = `<img src="/POS_ru/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src = `/REW_ru/${i}.mp4`;
     ru.appendChild(div);
   }
 
+  /* ── VIDEO EN ── */
   const en = document.getElementById('videos_en');
-  for(let i=1;i<=16;i++){
-    const div=document.createElement('div');
-    div.className='video-item';
-    div.innerHTML=`<img src="/en/POS_en/${i}.jpg"><div class="play">▶</div>`;
-    div.dataset.src=`/en/REW_en/${i}.mp4`;
+  for(let i = 1; i <= 16; i++){
+    const div = document.createElement('div');
+    div.className = 'video-item';
+    div.innerHTML = `<img src="/en/POS_en/${i}.jpg"><div class="play">▶</div>`;
+    div.dataset.src = `/en/REW_en/${i}.mp4`;
     en.appendChild(div);
   }
 
+  /* ── VIDEO CLICK ── */
   document.addEventListener('click', function(e){
     const item = e.target.closest('.video-item');
     if(!item) return;
-
     if(item.querySelector('video')){
-      let v=item.querySelector('video');
-      v.muted=false;
-      v.playbackRate = v.playbackRate === 1 ? 2 : 1;
+      const v = item.querySelector('video');
+      v.paused ? v.play() : v.pause();
       return;
     }
-
-    const v=document.createElement('video');
-    v.src=item.dataset.src;
-    v.controls=true;
-    v.autoplay=true;
-    v.playsInline=true;
-    v.style.width='100%';
-
-    item.innerHTML='';
+    const v = document.createElement('video');
+    v.src = item.dataset.src;
+    v.controls = true;
+    v.autoplay = true;
+    v.playsInline = true;
+    v.style.width = '100%';
+    item.innerHTML = '';
     item.appendChild(v);
   });
 
-  const lightbox=document.getElementById('lightbox');
-  const img=lightbox.querySelector('img');
+  /* ── LIGHTBOX ── */
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = lightbox.querySelector('img');
 
-  document.querySelectorAll('.screens img').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      img.src=el.src;
-      lightbox.style.display='flex';
+  document.querySelectorAll('.screens img').forEach(el => {
+    el.addEventListener('click', () => {
+      lbImg.src = el.src;
+      lightbox.style.display = 'flex';
     });
   });
 
-  lightbox.addEventListener('click', ()=>{
-    lightbox.style.display='none';
+  lightbox.addEventListener('click', () => {
+    lightbox.style.display = 'none';
   });
 
 });
 
-function openTaplink(){
-  document.getElementById("taplinkModal").style.display="block";
+/* ── WIDGET MODAL ── */
+let wgChannel = 'WhatsApp';
 
-  setTimeout(()=>{
-    try{
-      const iframe = document.querySelector("#taplinkModal iframe");
-      if(!iframe.contentWindow || iframe.contentWindow.length === 0){
-        window.open("https://taplink.cc/app2cashv","_blank");
-      }
-    }catch(e){
-      window.open("https://taplink.cc/app2cash","_blank");
-    }
-  },1000);
+function openWidget(ch){
+  if(ch) selCh(ch);
+  document.getElementById('wg-ok').style.display = 'none';
+  document.getElementById('wg-submit').style.display = 'block';
+  document.getElementById('wg-submit').disabled = false;
+  document.getElementById('wg-submit').textContent = 'Получить расчёт курса →';
+  document.getElementById('wg-contact').value = '';
+  document.getElementById('wg-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('wg-contact').focus(), 200);
 }
 
-function closeTaplink(){
-  document.getElementById("taplinkModal").style.display="none";
+function closeWidget(){
+  document.getElementById('wg-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function selCh(ch){
+  wgChannel = ch;
+  ['WhatsApp','Telegram','Phone'].forEach(c => {
+    const btn = document.getElementById('ch-' + c);
+    if(btn) btn.classList.toggle('on', c === ch);
+  });
+  const ph = {
+    'WhatsApp': '@username или номер телефона',
+    'Telegram': '@username в Telegram',
+    'Phone': 'Ваш номер телефона'
+  };
+  document.getElementById('wg-contact').placeholder = ph[ch] || 'Ваш контакт';
+}
+
+async function submitWidget(){
+  const contact = document.getElementById('wg-contact').value.trim();
+  if(!contact){ showToast('Введите контакт', false); return; }
+  const btn = document.getElementById('wg-submit');
+  btn.disabled = true;
+  btn.textContent = 'Отправляем...';
+  try{
+    const res = await fetch('/api/index.js', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        contact,
+        channel: wgChannel,
+        source: location.href,
+        timestamp: new Date().toISOString()
+      })
+    });
+    const data = await res.json();
+    if(data.ok){
+      btn.style.display = 'none';
+      document.getElementById('wg-ok').style.display = 'block';
+      setTimeout(closeWidget, 3500);
+    } else throw new Error();
+  } catch(e){
+    showToast('Ошибка. Напишите напрямую в WhatsApp.', false);
+    btn.disabled = false;
+    btn.textContent = 'Получить расчёт курса →';
+  }
+}
+
+/* ── TOAST ── */
+function showToast(msg, ok = true){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = ok ? '#4CAF7D' : '#F05252';
+  t.style.color = ok ? '#000' : '#fff';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
 }
 </script>
 
