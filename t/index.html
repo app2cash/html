@@ -24,7 +24,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.3/babel.min.js"></script>
 <script type="text/babel" data-presets="react">
 
-import { useState, useEffect, useRef } from "react";
+
 
 const SB_URL = "https://vpeqbsctlysjkuceejxp.supabase.co";
 const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZXFic2N0bHlzamt1Y2VlanhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMzIwNDgsImV4cCI6MjA5MDcwODA0OH0.3Hhszztxhhl_X55rWIBGNoAIfxxu31N16-rv1wrruuc";
@@ -836,7 +836,7 @@ function PartnerCabinet({t,lang}) {
 
 const ICONS = ["🏠","💱","📋","💬","👤"];
 
-export default function App() {
+function App() {
   const [onboarded,setOnboarded] = useState(false);
   const [showPromo,setShowPromo] = useState(false);
   const [lang,setLang]           = useState("ru");
