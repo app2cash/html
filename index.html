@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>app2.cash — Обмен валют</title>
+<meta name="description" content="Обменять, отправить, получить валюту или USDT. Быстро, выгодно, безопасно."/>
+<meta name="theme-color" content="#0D0F14"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="app2.cash"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body,#root{height:100%;background:#0D0F14}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif;color:#F0F4FF;overflow:hidden}
+</style>
+</head>
+<body>
+<div id="root"><div style="height:100vh;display:flex;align-items:center;justify-content:center;color:#F0B429;font-size:24px;font-weight:900;letter-spacing:-1px">app2.cash</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.3/babel.min.js"></script>
+<script type="text/babel" data-presets="react">
+const{useState,useEffect,useRef}=React;
+
+const SB_URL="https://vpeqbsctlysjkuceejxp.supabase.co";
+const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZXFic2N0bHlzamt1Y2VlanhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMzIwNDgsImV4cCI6MjA5MDcwODA0OH0.3Hhszztxhhl_X55rWIBGNoAIfxxu31N16-rv1wrruuc";
+const TG_BOT_TOKEN="8655545816:AAHGxEHcEmYy3YBbtYUGmfMwXKDv4PBcrB4";
+const TG_CHAT_ID="176811698";
+const SPREAD=0.036;
+const PROMO="369";
+const PARTNER={ru:"https://app2.cash/partner/",en:"https://app2.cash/partner_en/",cn:"https://app2.cash/partner_cn/"};
+const FRAN={ru:"https://app2.cash/fran/",en:"https://app2.cash/fran_en/",cn:"https://app2.cash/fran_cn/"};
+const MGR={tg:"https://t.me/app2cas",wa:"https://wa.me/255756687444",wc:"app2cash"};
+
+const C={bg:"#0D0F14",card:"#161B24",card2:"#1C2333",gold:"#F0B429",text:"#F0F4FF",muted:"#7A8499",border:"#242B3D",green:"#2FD78C",red:"#FF5C6A",blue:"#4F9EFF"};
+const BASE={USD:1,EUR:0.92,RUB:91.5,AED:3.67,USDT:1.0,GBP:0.79,CNY:7.24,TZS:2680,ZAR:18.6,KES:129.5};
+const FLAGS={USD:"🇺🇸",EUR:"🇪🇺",RUB:"🇷🇺",AED:"🇦🇪",USDT:"₮",GBP:"🇬🇧",CNY:"🇨🇳",TZS:"🇹🇿",ZAR:"🇿🇦",KES:"🇰🇪",OTHER:"🌐"};
+const CLABEL={USD:"USD",EUR:"EUR",RUB:"RUB",AED:"AED",USDT:"USDT",GBP:"GBP",CNY:"CNY",TZS:"TZS",ZAR:"ZAR",KES:"KES",OTHER:{ru:"Другая",en:"Other",cn:"其他"}};
+const ALL=[...Object.keys(BASE),"OTHER"];
+
+const T={
+ru:{tagline:"ОБМЕНЯТЬ, ОТПРАВИТЬ, ПОЛУЧИТЬ\nВАЛЮТУ или USDT",s2title:"Быстро.\nВыгодно. Безопасно.",s2sub:"Переводы от 5 минут. Прозрачный курс. Тысячи клиентов.",s3title:"Добро пожаловать\nв app2.cash",s3sub:"Нажмите «Начать» — персональный менеджер уже ждёт.",start:"Начать",next:"Далее →",back:"← Назад",chooseLang:"Выберите язык",promoTitle:"🎁 Промокод активирован!",promoCode:"Промокод: 369",promoManager:"Вам назначен персональный менеджер",promoConsult:"Бесплатная консультация включена",promoBtn:"Написать менеджеру →",promoClose:"Закрыть",tabs:["Главная","Обмен","История","Чат","Кабинет"],online:"● Онлайн",rateOk:"● курс обновлён",rateLoad:"⏳ загружаем курсы...",stats:[["10 000+","Обменов"],["50+","Стран"],["5 мин","Скорость"],["0%","Комиссия"]],calc:"Калькулятор курса app2.cash",give:"Отдаёте",get:"Получаете",amount:"Сумма",total:"Итого",rateNote:"включая курс app2.cash",exchBtn:"Обменять →",clarify:"Уточним индивидуально",mgrTitle:"Связаться с менеджером",mgrSub:"Выберите удобный способ",mgrLabels:["Telegram","WhatsApp","WeChat"],mgrWC:"Логин: app2cash",methodsTitle:"Способы получения",methods:[["🏦","Банк"],["💵","Наличные"],["₿","Крипто"]],partner:"Партнёрка",franchise:"Франшиза",pwaTitle:"📱 Установите как приложение",pwaText:"Без App Store и Play Market.\niOS: Поделиться → На экран Домой\nAndroid: ⋮ → Добавить на гл. экран",pwaDismiss:"Понятно",newExch:"Новый обмен",sendC:"Отдаёте",getC:"Получаете",willGet:"Вы получите",methodLabel:"Способ получения",methodTypes:[["bank","🏦 Банк"],["cash","💵 Наличные"],["crypto","₿ Крипто"]],contactLabel:"Как с вами связаться?",contactPH:{tg:"Ваш Telegram (@username)",wa:"Ваш WhatsApp (+7...)",wc:"Ваш WeChat (логин)"},rateRow:"Курс app2.cash",commRow:"Комиссия",timeRow:"Время",timeVal:"до 30 минут",totalRow:"Итого получите",sendBtn:"Отправить заявку →",sending:"Отправляем...",okTitle:"Заявка принята!",okSub:"Менеджер свяжется в течение 5 минут",okNote:"Промокод 369 — консультация бесплатно",newBtn:"Новый обмен",histTitle:"История обменов",fAll:"Все",fDone:"Выполнен",fPend:"В обработке",sDone:"Выполнен",sPend:"В обработке",gave:"Отдали:",noHist:"Нет обменов",chatTitle:"Чат с менеджером",aiOn:"● AI доступен",sugg:["Какой сейчас курс USD/RUB?","Как отправить USDT в ОАЭ?","Минимальная сумма обмена?"],chatPH:"Написать сообщение...",aiGreet:"Привет! Я AI-менеджер app2.cash 👋\n\nВаш промокод 369 активирован — вам полагается персональный менеджер и бесплатная консультация.\n\nЧем могу помочь?",aiSys:"Ты AI-менеджер сервиса обмена валют app2.cash. Отвечай кратко, дружелюбно, на русском. Всегда напоминай про промокод 369 и персонального менеджера. Предлагай оставить заявку или написать в Telegram @app2cas. Спред 3.6%, переводы до 30 мин, 0% комиссия для новых клиентов.",profTitle:"Кабинет",noName:"Имя не указано",noCont:"Контакт не указан",verified:"✓ Клиент app2.cash · Промокод 369",nameLabel:"Имя",emailLabel:"Email",contactMeth:"Способ связи",saveBtn:"Сохранить",savedBtn:"✓ Сохранено",profMenu:[["🔔","Уведомления"],["🔒","Безопасность"],["🌐","Язык"],["❓","Поддержка"]],logout:"Выйти из аккаунта"},
+en:{tagline:"EXCHANGE, SEND, RECEIVE\nCURRENCY or USDT",s2title:"Fast.\nProfitable. Secure.",s2sub:"Transfers from 5 minutes. Transparent rates. Thousands of clients.",s3title:"Welcome to\napp2.cash",s3sub:"Tap «Start» — your personal manager is waiting.",start:"Start",next:"Next →",back:"← Back",chooseLang:"Select language",promoTitle:"🎁 Promo code activated!",promoCode:"Promo code: 369",promoManager:"You have a personal manager",promoConsult:"Free consultation included",promoBtn:"Contact manager →",promoClose:"Close",tabs:["Home","Exchange","History","Chat","Profile"],online:"● Online",rateOk:"● rate updated",rateLoad:"⏳ loading rates...",stats:[["10 000+","Exchanges"],["50+","Countries"],["5 min","Speed"],["0%","Fee"]],calc:"app2.cash Rate Calculator",give:"You send",get:"You get",amount:"Amount",total:"Total",rateNote:"incl. app2.cash rate",exchBtn:"Exchange →",clarify:"Rate on request",mgrTitle:"Contact manager",mgrSub:"Choose a convenient method",mgrLabels:["Telegram","WhatsApp","WeChat"],mgrWC:"Username: app2cash",methodsTitle:"Payment methods",methods:[["🏦","Bank"],["💵","Cash"],["₿","Crypto"]],partner:"Partnership",franchise:"Franchise",pwaTitle:"📱 Install as an app",pwaText:"No App Store or Play Market.\niOS: Share → Add to Home Screen\nAndroid: ⋮ → Add to Home Screen",pwaDismiss:"Got it",newExch:"New Exchange",sendC:"You send",getC:"You get",willGet:"You receive",methodLabel:"Payment method",methodTypes:[["bank","🏦 Bank"],["cash","💵 Cash"],["crypto","₿ Crypto"]],contactLabel:"How to contact you?",contactPH:{tg:"Your Telegram (@username)",wa:"Your WhatsApp (+1...)",wc:"Your WeChat (login)"},rateRow:"app2.cash rate",commRow:"Commission",timeRow:"Time",timeVal:"up to 30 min",totalRow:"You will receive",sendBtn:"Submit request →",sending:"Sending...",okTitle:"Request accepted!",okSub:"Manager will contact you within 5 minutes",okNote:"Promo code 369 — free consultation",newBtn:"New exchange",histTitle:"Exchange history",fAll:"All",fDone:"Completed",fPend:"Pending",sDone:"Completed",sPend:"Pending",gave:"Sent:",noHist:"No exchanges",chatTitle:"Chat with manager",aiOn:"● AI available",sugg:["Current USD/RUB rate?","How to send USDT to UAE?","Minimum exchange amount?"],chatPH:"Write a message...",aiGreet:"Hi! I'm the app2.cash AI manager 👋\n\nYour promo code 369 is active — you get a personal manager and free consultation.\n\nHow can I help?",aiSys:"You are an AI manager for app2.cash currency exchange. Reply briefly in English. Always remind about promo code 369 and personal manager. Suggest leaving a request or writing to Telegram @app2cas. Spread 3.6%, transfers up to 30 min, 0% commission for new clients.",profTitle:"Profile",noName:"Name not set",noCont:"Contact not set",verified:"✓ app2.cash client · Promo 369",nameLabel:"Name",emailLabel:"Email",contactMeth:"Contact method",saveBtn:"Save",savedBtn:"✓ Saved",profMenu:[["🔔","Notifications"],["🔒","Security"],["🌐","Language"],["❓","Support"]],logout:"Sign out"},
+cn:{tagline:"兑换、发送、接收\n货币或 USDT",s2title:"快速。\n优惠。安全。",s2sub:"5分钟内完成转账。透明汇率。全球数千名客户。",s3title:"欢迎来到\napp2.cash",s3sub:"点击「开始」— 专属客服经理正在等您。",start:"开始",next:"下一步 →",back:"← 返回",chooseLang:"选择语言",promoTitle:"🎁 优惠码已激活！",promoCode:"优惠码：369",promoManager:"您已获得专属客服经理",promoConsult:"免费咨询已包含",promoBtn:"联系客服经理 →",promoClose:"关闭",tabs:["首页","兑换","记录","客服","我的"],online:"● 在线",rateOk:"● 汇率已更新",rateLoad:"⏳ 加载中...",stats:[["10 000+","兑换次数"],["50+","国家"],["5分钟","速度"],["0%","手续费"]],calc:"app2.cash 汇率计算器",give:"您发送",get:"您收到",amount:"金额",total:"合计",rateNote:"含 app2.cash 汇率",exchBtn:"立即兑换 →",clarify:"汇率请咨询",mgrTitle:"联系客服经理",mgrSub:"选择联系方式",mgrLabels:["Telegram","WhatsApp","微信"],mgrWC:"微信号：app2cash",methodsTitle:"收款方式",methods:[["🏦","银行"],["💵","现金"],["₿","加密货币"]],partner:"合作伙伴",franchise:"加盟",pwaTitle:"📱 安装为应用",pwaText:"无需 App Store。\niOS：分享 → 添加到主屏幕\nAndroid：⋮ → 添加到主屏幕",pwaDismiss:"知道了",newExch:"新兑换",sendC:"您发送",getC:"您收到",willGet:"您将收到",methodLabel:"收款方式",methodTypes:[["bank","🏦 银行"],["cash","💵 现金"],["crypto","₿ 加密货币"]],contactLabel:"如何联系您？",contactPH:{tg:"您的 Telegram (@用户名)",wa:"您的 WhatsApp (+86...)",wc:"您的微信号"},rateRow:"app2.cash 汇率",commRow:"手续费",timeRow:"时间",timeVal:"最多30分钟",totalRow:"您将收到",sendBtn:"提交申请 →",sending:"发送中...",okTitle:"申请已受理！",okSub:"客服将在5分钟内联系您",okNote:"优惠码369 — 免费咨询",newBtn:"新兑换",histTitle:"兑换记录",fAll:"全部",fDone:"已完成",fPend:"处理中",sDone:"已完成",sPend:"处理中",gave:"发送:",noHist:"暂无记录",chatTitle:"客服聊天",aiOn:"● AI 在线",sugg:["当前 USD/RUB 汇率？","如何向阿联酋发送USDT？","最低兑换金额？"],chatPH:"输入消息...",aiGreet:"您好！我是 app2.cash 的AI客服 👋\n\n您的优惠码 369 已激活 — 您将获得专属客服经理和免费咨询。\n\n有什么可以帮您？",aiSys:"您是app2.cash货币兑换平台的AI客服。用中文简洁友好地回复。始终提醒优惠码369和专属客服经理。建议通过Telegram @app2cas联系。点差3.6%，转账最多30分钟，新客户0%手续费。",profTitle:"我的",noName:"未设置姓名",noCont:"未设置联系方式",verified:"✓ app2.cash 客户 · 优惠码 369",nameLabel:"姓名",emailLabel:"邮箱",contactMeth:"联系方式",saveBtn:"保存",savedBtn:"✓ 已保存",profMenu:[["🔔","通知"],["🔒","安全"],["🌐","语言"],["❓","支持"]],logout:"退出登录"}
+};
+
+const appCss=`
+*{box-sizing:border-box;margin:0;padding:0}
+input,select,textarea{background:#1C2333;border:1px solid #242B3D;color:#F0F4FF;border-radius:12px;padding:11px 14px;font-size:15px;width:100%;outline:none;-webkit-appearance:none}
+input:focus,select:focus{border-color:#F0B429}
+select option{background:#161B24}
+a{text-decoration:none}
+::-webkit-scrollbar{display:none}
+@keyframes pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.ani{animation:fadeIn .3s ease both}
+`;
+
+function lbl(c,lang){return typeof CLABEL[c]==="object"?CLABEL[c][lang]:CLABEL[c];}
+
+async function sendTg(text){
+  if(!TG_BOT_TOKEN||!TG_CHAT_ID)return;
+  await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT_ID,text,parse_mode:"HTML"})}).catch(()=>{});
+}
+
+function useRates(){
+  const[rates,setRates]=useState(BASE);
+  const[updated,setUpdated]=useState(null);
+  const[loading,setLoading]=useState(true);
+  useEffect(()=>{
+    fetch("https://api.exchangerate-api.com/v4/latest/USD").then(r=>r.json()).then(d=>{
+      if(d.rates){setRates({USD:1,EUR:d.rates.EUR,RUB:d.rates.RUB,AED:d.rates.AED,USDT:1,GBP:d.rates.GBP,CNY:d.rates.CNY,TZS:d.rates.TZS,ZAR:d.rates.ZAR,KES:d.rates.KES});setUpdated(new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"}));}
+    }).catch(()=>{}).finally(()=>setLoading(false));
+  },[]);
+  return{rates,updated,loading};
+}
+
+const Card=({children,style})=><div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:16,padding:16,...style}}>{children}</div>;
+const Btn=({children,onClick,disabled,variant="gold",style})=>(
+  <button onClick={onClick} disabled={disabled} style={{background:disabled?C.card2:variant==="gold"?C.gold:"transparent",color:disabled?C.muted:variant==="gold"?"#000":C.gold,border:variant==="outline"?`1px solid ${C.gold}`:"none",borderRadius:14,padding:"14px 20px",fontSize:15,fontWeight:700,cursor:disabled?"default":"pointer",width:"100%",transition:"all .2s",...style}}>{children}</button>
+);
+
+function ContactPicker({method,setMethod,handle,setHandle,t}){
+  return(
+    <div>
+      <div style={{fontSize:11,color:C.muted,marginBottom:8}}>{t.contactLabel}</div>
+      <div style={{display:"flex",gap:8,marginBottom:10}}>
+        {["tg","wa","wc"].map((v,i)=>(
+          <div key={v} onClick={()=>setMethod(v)} style={{flex:1,padding:"10px 4px",borderRadius:12,border:`1px solid ${method===v?C.gold:C.border}`,background:method===v?"#1A1200":C.card2,textAlign:"center",cursor:"pointer",fontSize:12,color:method===v?C.gold:C.muted,transition:"all .2s"}}>
+            <div style={{fontSize:18}}>{"✈️💬💚"[i*2]+("✈️💬💚"[i*2+1]||"")}</div>
+            <div style={{marginTop:3}}>{t.mgrLabels[i]}</div>
+          </div>
+        ))}
+      </div>
+      <input value={handle} onChange={e=>setHandle(e.target.value)} placeholder={t.contactPH[method]}/>
+      {method==="wc"&&<div style={{fontSize:11,color:C.muted,marginTop:6}}>💡 {t.mgrWC}</div>}
+    </div>
+  );
+}
+
+function ManagerBanner({t}){
+  return(
+    <div style={{margin:"0 16px 14px",background:"linear-gradient(135deg,#1A1200,#0D1A2B)",border:`1px solid ${C.gold}55`,borderRadius:16,padding:16}}>
+      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
+        <div style={{width:10,height:10,borderRadius:50,background:C.green,boxShadow:`0 0 6px ${C.green}`}}/>
+        <span style={{fontWeight:700,fontSize:15}}>{t.mgrTitle}</span>
+        <span style={{marginLeft:"auto",fontSize:11,color:C.muted}}>~3 мин</span>
+      </div>
+      <div style={{fontSize:12,color:C.muted,marginBottom:12}}>{t.mgrSub}</div>
+      <div style={{display:"flex",gap:8}}>
+        <a href={MGR.tg} target="_blank" rel="noopener" style={{flex:1}}>
+          <div style={{background:"#0D1A2B",border:`1px solid ${C.blue}66`,borderRadius:12,padding:"10px 6px",textAlign:"center"}}>
+            <div style={{fontSize:22}}>✈️</div>
+            <div style={{fontSize:11,color:C.blue,marginTop:4,fontWeight:600}}>Telegram</div>
+          </div>
+        </a>
+        <a href={MGR.wa} target="_blank" rel="noopener" style={{flex:1}}>
+          <div style={{background:"#0D2B15",border:"1px solid #25D36666",borderRadius:12,padding:"10px 6px",textAlign:"center"}}>
+            <div style={{fontSize:22}}>💬</div>
+            <div style={{fontSize:11,color:"#25D366",marginTop:4,fontWeight:600}}>WhatsApp</div>
+          </div>
+        </a>
+        <div style={{flex:1}} onClick={()=>{try{navigator.clipboard.writeText("app2cash")}catch(e){}alert("WeChat: app2cash");}}>
+          <div style={{background:"#0A2B0D",border:"1px solid #07C16066",borderRadius:12,padding:"10px 6px",textAlign:"center",cursor:"pointer"}}>
+            <div style={{fontSize:22}}>💚</div>
+            <div style={{fontSize:11,color:"#07C160",marginTop:4,fontWeight:600}}>WeChat</div>
+            <div style={{fontSize:9,color:C.muted,marginTop:2}}>app2cash</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PromoModal({onClose,goChat,t}){
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.85)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:100,padding:"0 0 24px"}}>
+      <div style={{background:C.card,border:`1px solid ${C.gold}55`,borderRadius:24,padding:"32px 24px",width:"100%",maxWidth:430,animation:"slideUp .4s ease both",textAlign:"center"}}>
+        <div style={{fontSize:48,marginBottom:12}}>🎁</div>
+        <div style={{fontSize:11,background:"#1A1200",color:C.gold,display:"inline-block",padding:"4px 14px",borderRadius:20,fontWeight:700,marginBottom:12,letterSpacing:1}}>{t.promoCode}</div>
+        <div style={{fontSize:22,fontWeight:800,marginBottom:8}}>{t.promoTitle}</div>
+        <div style={{color:C.green,fontSize:15,marginBottom:4}}>✓ {t.promoManager}</div>
+        <div style={{color:C.green,fontSize:15,marginBottom:24}}>✓ {t.promoConsult}</div>
+        <Btn onClick={()=>{onClose();goChat();}}>{t.promoBtn}</Btn>
+        <div onClick={onClose} style={{marginTop:14,color:C.muted,fontSize:14,cursor:"pointer"}}>{t.promoClose}</div>
+      </div>
+    </div>
+  );
+}
+
+function Onboarding({onDone,setLang,lang}){
+  const[step,setStep]=useState(0);
+  const t=T[lang];
+  if(step===0)return(
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100%",padding:"40px 28px",textAlign:"center"}}>
+      <div style={{fontSize:52,fontWeight:900,color:C.gold,letterSpacing:-2,marginBottom:6}}>app2.cash</div>
+      <div style={{fontSize:14,color:C.muted,whiteSpace:"pre-line",marginBottom:44,lineHeight:1.7}}>{t.tagline}</div>
+      <div style={{fontSize:13,color:C.muted,marginBottom:18}}>{t.chooseLang}</div>
+      <div style={{display:"flex",gap:14,marginBottom:44}}>
+        {[["ru","🇷🇺","Русский"],["en","🇺🇸","English"],["cn","🇨🇳","中文"]].map(([l,f,n])=>(
+          <div key={l} onClick={()=>setLang(l)} style={{display:"flex",flexDirection:"column",alignItems:"center",gap:8,cursor:"pointer",padding:"16px 18px",borderRadius:16,border:`2px solid ${lang===l?C.gold:C.border}`,background:lang===l?"#1A1200":C.card2,transition:"all .2s",minWidth:76}}>
+            <span style={{fontSize:38}}>{f}</span>
+            <span style={{fontSize:12,color:lang===l?C.gold:C.muted,fontWeight:lang===l?700:400}}>{n}</span>
+          </div>
+        ))}
+      </div>
+      <Btn onClick={()=>setStep(1)}>{t.next}</Btn>
+    </div>
+  );
+  const slides=[null,{ic:"⚡",title:t.s2title,sub:t.s2sub},{ic:"💰",title:t.s3title,sub:t.s3sub}];
+  const s=slides[step];
+  return(
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",height:"100%",padding:"40px 28px",textAlign:"center"}}>
+      <div style={{fontSize:70,marginBottom:28}}>{s.ic}</div>
+      <div style={{fontSize:26,fontWeight:700,lineHeight:1.3,marginBottom:14,whiteSpace:"pre-line"}}>{s.title}</div>
+      <div style={{fontSize:15,color:C.muted,lineHeight:1.6,marginBottom:48}}>{s.sub}</div>
+      <div style={{display:"flex",gap:6,marginBottom:40}}>{[0,1,2].map(i=><div key={i} style={{width:i===step?24:8,height:8,borderRadius:4,background:i===step?C.gold:C.border,transition:"all .3s"}}/>)}</div>
+      {step<2?<Btn onClick={()=>setStep(p=>p+1)}>{t.next}</Btn>:<Btn onClick={onDone}>{t.start}</Btn>}
+      <div onClick={()=>setStep(p=>p-1)} style={{marginTop:16,color:C.muted,fontSize:14,cursor:"pointer"}}>{t.back}</div>
+    </div>
+  );
+}
+
+function HomeTab({profile,goExchange,goChat,appRate,t,lang,pwaDismissed,setPwaDismissed}){
+  const[from,setFrom]=useState("USD");
+  const[to,setTo]=useState("RUB");
+  const[amt,setAmt]=useState("500");
+  const rate=appRate(from,to);
+  const result=rate?parseFloat(amt||0)*rate:null;
+  return(
+    <div className="ani" style={{padding:"0 16px 16px"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18}}>
+        <div>
+          {profile.name&&<div style={{color:C.muted,fontSize:13}}>{lang==="cn"?`您好，${profile.name}`:lang==="en"?`Hi, ${profile.name.split(" ")[0]}`:`Привет, ${profile.name.split(" ")[0]}`}</div>}
+          <div style={{fontSize:26,fontWeight:900,color:C.gold,letterSpacing:-1}}>app2.cash</div>
+        </div>
+        <div style={{background:"#0D2B1F",color:C.green,fontSize:11,padding:"5px 12px",borderRadius:20,fontWeight:600}}>{t.online}</div>
+      </div>
+      <div style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:"12px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:12}}>
+        <span style={{fontSize:24}}>🎁</span>
+        <div>
+          <div style={{fontSize:13,fontWeight:700,color:C.gold}}>{t.promoTitle}</div>
+          <div style={{fontSize:12,color:C.muted,marginTop:2}}>{t.promoManager} · {t.promoConsult}</div>
+        </div>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
+        {t.stats.map(([v,l])=>(
+          <div key={l} style={{background:C.card2,borderRadius:14,padding:14,textAlign:"center"}}>
+            <div style={{fontSize:20,fontWeight:700,color:C.gold}}>{v}</div>
+            <div style={{fontSize:12,color:C.muted,marginTop:3}}>{l}</div>
+          </div>
+        ))}
+      </div>
+      <Card style={{marginBottom:14}}>
+        <div style={{color:C.muted,fontSize:12,marginBottom:12}}>{t.calc}</div>
+        <div style={{display:"flex",gap:8,marginBottom:12}}>
+          <div style={{flex:1}}>
+            <div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.give}</div>
+            <select value={from} onChange={e=>setFrom(e.target.value)}>{ALL.map(c=><option key={c} value={c}>{FLAGS[c]} {lbl(c,lang)}</option>)}</select>
+          </div>
+          <div style={{display:"flex",alignItems:"flex-end",paddingBottom:8}}><span style={{fontSize:18,color:C.gold,cursor:"pointer"}} onClick={()=>{const x=from;setFrom(to);setTo(x);}}>⇄</span></div>
+          <div style={{flex:1}}>
+            <div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.get}</div>
+            <select value={to} onChange={e=>setTo(e.target.value)}>{ALL.map(c=><option key={c} value={c}>{FLAGS[c]} {lbl(c,lang)}</option>)}</select>
+          </div>
+        </div>
+        <input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="0.00" style={{marginBottom:10}}/>
+        <div style={{background:C.card2,borderRadius:12,padding:"12px 14px",marginBottom:12}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:5}}>
+            <span style={{color:C.muted,fontSize:13}}>{t.total}</span>
+            <span style={{fontSize:22,fontWeight:700,color:C.gold}}>{result!==null?result.toLocaleString("ru-RU",{maximumFractionDigits:2})+" "+to:"—"}</span>
+          </div>
+          {rate&&<div style={{fontSize:11,color:C.muted}}>1 {from} = {rate.toFixed(4)} {to} · {t.rateNote}</div>}
+        </div>
+        <Btn onClick={goExchange}>{t.exchBtn}</Btn>
+      </Card>
+      <Card style={{marginBottom:14}}>
+        <div style={{fontSize:14,fontWeight:700,marginBottom:4}}>{t.mgrTitle}</div>
+        <div style={{fontSize:12,color:C.muted,marginBottom:14}}>{t.mgrSub}</div>
+        <div style={{display:"flex",gap:10}}>
+          <a href={MGR.tg} target="_blank" rel="noopener" style={{flex:1}}><div style={{background:"#0D1A2B",border:`1px solid ${C.blue}55`,borderRadius:14,padding:"14px 8px",textAlign:"center"}}><div style={{fontSize:26}}>✈️</div><div style={{fontSize:12,color:C.blue,marginTop:6,fontWeight:600}}>Telegram</div></div></a>
+          <a href={MGR.wa} target="_blank" rel="noopener" style={{flex:1}}><div style={{background:"#0D2B15",border:"1px solid #25D36655",borderRadius:14,padding:"14px 8px",textAlign:"center"}}><div style={{fontSize:26}}>💬</div><div style={{fontSize:12,color:"#25D366",marginTop:6,fontWeight:600}}>WhatsApp</div></div></a>
+          <div style={{flex:1}} onClick={()=>{try{navigator.clipboard.writeText("app2cash")}catch(e){}alert("WeChat: app2cash");}}>
+            <div style={{background:"#0A2B0D",border:"1px solid #07C16055",borderRadius:14,padding:"14px 8px",textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26}}>💚</div><div style={{fontSize:12,color:"#07C160",marginTop:6,fontWeight:600}}>{lang==="cn"?"微信":"WeChat"}</div></div>
+          </div>
+        </div>
+      </Card>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+        <a href={PARTNER[lang]} target="_blank" rel="noopener"><div style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:16,textAlign:"center"}}><div style={{fontSize:26,marginBottom:6}}>🤝</div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>{t.partner}</div></div></a>
+        <a href={FRAN[lang]} target="_blank" rel="noopener"><div style={{background:"#0D1A2B",border:`1px solid ${C.blue}44`,borderRadius:14,padding:16,textAlign:"center"}}><div style={{fontSize:26,marginBottom:6}}>🏢</div><div style={{fontSize:14,fontWeight:700,color:C.blue}}>{t.franchise}</div></div></a>
+      </div>
+      {!pwaDismissed&&(
+        <div style={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:14,padding:"14px 16px",marginBottom:14}}>
+          <div style={{fontWeight:700,fontSize:14,marginBottom:6}}>{t.pwaTitle}</div>
+          <div style={{fontSize:12,color:C.muted,lineHeight:1.7,whiteSpace:"pre-line"}}>{t.pwaText}</div>
+          <div onClick={()=>setPwaDismissed(true)} style={{marginTop:10,color:C.gold,fontSize:13,cursor:"pointer",fontWeight:600}}>{t.pwaDismiss} ✓</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ExchangeTab({profile,appRate,t,lang}){
+  const[from,setFrom]=useState("USD");const[to,setTo]=useState("RUB");const[amt,setAmt]=useState("");
+  const[method,setMethod]=useState("bank");const[cMeth,setCMeth]=useState("tg");const[handle,setHandle]=useState("");
+  const[loading,setLoading]=useState(false);const[sent,setSent]=useState(false);const[err,setErr]=useState("");
+  const rate=appRate(from,to);const result=rate?parseFloat(amt||0)*rate:null;
+  async function submit(){
+    if(!amt||parseFloat(amt)<=0)return;setLoading(true);setErr("");
+    const contactStr=`${cMeth==="tg"?"Telegram":cMeth==="wa"?"WhatsApp":"WeChat"}: ${handle}`;
+    try{
+      const res=await fetch(`${SB_URL}/rest/v1/exchanges`,{method:"POST",headers:{"apikey":SB_KEY,"Authorization":`Bearer ${SB_KEY}`,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({client_name:profile.name||null,client_phone:handle||null,amount_send:parseFloat(amt),currency_send:from,amount_receive:result?parseFloat(result.toFixed(2)):null,currency_receive:to,rate:rate?parseFloat(rate.toFixed(6)):null,method,notes:`Промокод: ${PROMO} | ${contactStr}`,traffic_source:"app2.cash",status:"pending"})});
+      if(res.ok){setSent(true);sendTg(`🔔 <b>Новая заявка | app2.cash</b>\n🎁 Промокод: <b>${PROMO}</b>\n💱 ${from} → ${to}\n💰 ${parseFloat(amt).toLocaleString()} ${from}${result?`\n📊 Получит: ${result.toLocaleString("ru-RU",{maximumFractionDigits:2})} ${to}`:""}\n📱 ${contactStr}\n👤 ${profile.name||"—"}\n🌐 ${lang.toUpperCase()}\n🕐 ${new Date().toLocaleString("ru-RU")}`);}
+      else{const e=await res.json();setErr(e.message||"Error");}
+    }catch{setErr("Connection error");}
+    setLoading(false);
+  }
+  if(sent)return(
+    <div className="ani" style={{padding:"50px 24px",textAlign:"center"}}>
+      <div style={{fontSize:64,marginBottom:20}}>✅</div>
+      <div style={{fontSize:22,fontWeight:700,marginBottom:10}}>{t.okTitle}</div>
+      <div style={{color:C.muted,fontSize:15,marginBottom:8}}>{t.okSub}</div>
+      <div style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:12,padding:"12px 16px",marginBottom:28,fontSize:13,color:C.gold}}>🎁 {t.okNote}</div>
+      <Btn onClick={()=>{setSent(false);setAmt("");setHandle("");}}>{t.newBtn}</Btn>
+      <div style={{marginTop:16}}><a href={MGR.tg} target="_blank" rel="noopener" style={{color:C.blue,fontSize:14}}>✈️ {lang==="cn"?"直接联系客服":lang==="en"?"Message manager directly":"Написать менеджеру напрямую"}</a></div>
+    </div>
+  );
+  return(
+    <div className="ani" style={{padding:"0 16px 16px"}}>
+      <div style={{fontWeight:700,fontSize:20,marginBottom:20}}>{t.newExch}</div>
+      <Card style={{marginBottom:14}}>
+        <div style={{display:"flex",gap:8,marginBottom:12}}>
+          <div style={{flex:1}}><div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.sendC}</div><select value={from} onChange={e=>setFrom(e.target.value)}>{ALL.map(c=><option key={c} value={c}>{FLAGS[c]} {lbl(c,lang)}</option>)}</select></div>
+          <div style={{display:"flex",alignItems:"flex-end",paddingBottom:8}}><span style={{fontSize:18,color:C.gold,cursor:"pointer"}} onClick={()=>{const x=from;setFrom(to);setTo(x);}}>⇄</span></div>
+          <div style={{flex:1}}><div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.getC}</div><select value={to} onChange={e=>setTo(e.target.value)}>{ALL.map(c=><option key={c} value={c}>{FLAGS[c]} {lbl(c,lang)}</option>)}</select></div>
+        </div>
+        <div style={{marginBottom:10}}><div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.amount}</div><input type="number" value={amt} onChange={e=>setAmt(e.target.value)} placeholder="0.00"/></div>
+        {amt&&parseFloat(amt)>0&&<div style={{background:"#0F2118",border:`1px solid ${C.green}30`,borderRadius:12,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}><span style={{color:C.muted,fontSize:13}}>{t.willGet}</span><span style={{color:C.green,fontWeight:700,fontSize:16}}>{result!==null?result.toLocaleString("ru-RU",{maximumFractionDigits:2})+" "+to:t.clarify}</span></div>}
+      </Card>
+      <Card style={{marginBottom:14}}>
+        <div style={{fontSize:12,color:C.muted,marginBottom:10}}>{t.methodLabel}</div>
+        <div style={{display:"flex",gap:8,marginBottom:16}}>{t.methodTypes.map(([v,l])=><div key={v} onClick={()=>setMethod(v)} style={{flex:1,padding:"10px 6px",borderRadius:12,border:`1px solid ${method===v?C.gold:C.border}`,background:method===v?"#1A1200":C.card2,textAlign:"center",cursor:"pointer",fontSize:12,color:method===v?C.gold:C.muted}}>{l}</div>)}</div>
+        <ContactPicker method={cMeth} setMethod={setCMeth} handle={handle} setHandle={setHandle} t={t}/>
+      </Card>
+      <div style={{background:C.card2,borderRadius:12,padding:"12px 14px",marginBottom:14,fontSize:13}}>
+        {[[t.rateRow,rate?`1 ${from} = ${rate.toFixed(4)} ${to}`:t.clarify],[t.commRow,"0%"],[t.timeRow,t.timeVal]].map(([k,v])=><div key={k} style={{display:"flex",justifyContent:"space-between",marginBottom:6}}><span style={{color:C.muted}}>{k}</span><span style={{color:k===t.commRow?C.green:C.text}}>{v}</span></div>)}
+        <div style={{display:"flex",justifyContent:"space-between",borderTop:`1px solid ${C.border}`,paddingTop:8,marginTop:4}}><span style={{color:C.muted}}>{t.totalRow}</span><span style={{color:C.gold,fontWeight:700}}>{result!==null?result.toLocaleString("ru-RU",{maximumFractionDigits:2})+" "+to:"—"}</span></div>
+      </div>
+      {err&&<div style={{color:C.red,fontSize:13,marginBottom:10,textAlign:"center"}}>{err}</div>}
+      <Btn onClick={submit} disabled={!amt||parseFloat(amt)<=0||loading}>{loading?t.sending:t.sendBtn}</Btn>
+    </div>
+  );
+}
+
+const HIST=[{id:1,from:"USD",to:"RUB",amount:500,result:35207,status:"done",date:"14 мая"},{id:2,from:"USDT",to:"AED",amount:1000,result:3527,status:"done",date:"12 мая"},{id:3,from:"EUR",to:"USD",amount:200,result:209,status:"pending",date:"11 мая"},{id:4,from:"GBP",to:"USDT",amount:300,result:361,status:"done",date:"9 мая"}];
+
+function HistoryTab({t}){
+  const[filter,setFilter]=useState("all");
+  const list=filter==="all"?HIST:HIST.filter(h=>h.status===filter);
+  return(
+    <div className="ani" style={{padding:"0 16px 16px"}}>
+      <div style={{fontWeight:700,fontSize:20,marginBottom:16}}>{t.histTitle}</div>
+      <div style={{display:"flex",gap:8,marginBottom:18}}>{[["all",t.fAll],["done",t.fDone],["pending",t.fPend]].map(([v,l])=><div key={v} onClick={()=>setFilter(v)} style={{padding:"7px 14px",borderRadius:20,background:filter===v?C.gold:C.card2,color:filter===v?"#000":C.muted,fontSize:12,cursor:"pointer",fontWeight:filter===v?700:400}}>{l}</div>)}</div>
+      <div style={{display:"flex",flexDirection:"column",gap:12}}>
+        {list.map(h=>(
+          <Card key={h.id} style={{padding:"14px 16px"}}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+              <div style={{display:"flex",alignItems:"center",gap:10}}><span style={{fontSize:22}}>{FLAGS[h.from]}</span><div><div style={{fontWeight:600,fontSize:15}}>{h.from} → {h.to}</div><div style={{fontSize:12,color:C.muted,marginTop:2}}>{h.date}</div></div></div>
+              <span style={{background:h.status==="done"?"#0D2B1F":"#1A1500",color:h.status==="done"?C.green:C.gold,fontSize:11,padding:"3px 10px",borderRadius:20,fontWeight:600}}>{h.status==="done"?t.sDone:t.sPend}</span>
+            </div>
+            <div style={{borderTop:`1px solid ${C.border}`,marginTop:12,paddingTop:10,display:"flex",justifyContent:"space-between"}}><span style={{color:C.muted,fontSize:13}}>{t.gave} <b style={{color:C.text}}>{h.amount.toLocaleString()} {h.from}</b></span><span style={{color:C.gold,fontWeight:700}}>+{h.result.toLocaleString()} {h.to}</span></div>
+          </Card>
+        ))}
+        {!list.length&&<div style={{textAlign:"center",color:C.muted,marginTop:40}}>{t.noHist}</div>}
+      </div>
+    </div>
+  );
+}
+
+function ChatTab({t,profile}){
+  const[sessionId]=useState(()=>([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,c=>(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)));
+  const[msgs,setMsgs]=useState([{role:"ai",content:t.aiGreet,id:"init"}]);
+  const[input,setInput]=useState("");const[loading,setLoading]=useState(false);
+  const[sessionCreated,setSessionCreated]=useState(false);
+  const endRef=useRef(null);const lastPoll=useRef(null);
+  useEffect(()=>{endRef.current?.scrollIntoView({behavior:"smooth"});},[msgs]);
+  useEffect(()=>{
+    const iv=setInterval(async()=>{
+      if(!sessionCreated)return;
+      const after=lastPoll.current?`&created_at=gt.${encodeURIComponent(lastPoll.current)}`:"";
+      const res=await fetch(`${SB_URL}/rest/v1/chat_messages?session_id=eq.${sessionId}&role=eq.manager&order=created_at.asc${after}`,{headers:{"apikey":SB_KEY,"Authorization":`Bearer ${SB_KEY}`}});
+      const rows=await res.json().catch(()=>[]);
+      if(rows.length){lastPoll.current=rows[rows.length-1].created_at;setMsgs(m=>[...m,...rows.map(r=>({role:"manager",content:r.content,id:r.id}))]);}
+    },4000);
+    return()=>clearInterval(iv);
+  },[sessionId,sessionCreated]);
+  async function ensureSession(){
+    if(sessionCreated)return;
+    await fetch(`${SB_URL}/rest/v1/chat_sessions`,{method:"POST",headers:{"apikey":SB_KEY,"Authorization":`Bearer ${SB_KEY}`,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({id:sessionId,user_name:profile.name||null,lang:"ru",promo:PROMO})});
+    setSessionCreated(true);
+  }
+  async function saveMsg(role,content){
+    await fetch(`${SB_URL}/rest/v1/chat_messages`,{method:"POST",headers:{"apikey":SB_KEY,"Authorization":`Bearer ${SB_KEY}`,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({session_id:sessionId,role,content})});
+  }
+  async function send(text){
+    const msg=text||input.trim();if(!msg||loading)return;
+    setInput("");await ensureSession();
+    const uid=Math.random().toString(36).slice(2);
+    setMsgs(m=>[...m,{role:"user",content:msg,id:uid}]);
+    await saveMsg("user",msg);
+    sendTg(`💬 <b>Чат | app2.cash</b>\nSESSION_ID: ${sessionId}\n👤 ${profile.name||"Аноним"} · 🎁${PROMO}\n\n<i>${msg}</i>`);
+    setLoading(true);
+    try{
+      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:t.aiSys,messages:msgs.filter(m=>m.role==="user"||m.role==="ai").map(m=>({role:m.role==="ai"?"assistant":"user",content:m.content})).concat([{role:"user",content:msg}])})});
+      const d=await res.json();const reply=d.content?.[0]?.text||"...";
+      const rid=Math.random().toString(36).slice(2);
+      setMsgs(m=>[...m,{role:"ai",content:reply,id:rid}]);
+      await saveMsg("ai",reply);
+    }catch{setMsgs(m=>[...m,{role:"ai",content:"Connection error.",id:Math.random().toString(36).slice(2)}]);}
+    setLoading(false);
+  }
+  return(
+    <div style={{display:"flex",flexDirection:"column",height:"100%"}}>
+      <div style={{padding:"0 16px 12px"}}><div style={{fontWeight:700,fontSize:20,marginBottom:4}}>{t.chatTitle}</div><div style={{fontSize:12,color:C.green}}>{t.aiOn}</div></div>
+      <ManagerBanner t={t}/>
+      <div style={{flex:1,overflowY:"auto",padding:"0 16px",display:"flex",flexDirection:"column",gap:12}}>
+        {msgs.map(m=>(
+          <div key={m.id} style={{display:"flex",justifyContent:m.role==="user"?"flex-end":"flex-start"}}>
+            {m.role!=="user"&&<div style={{width:32,height:32,borderRadius:50,background:m.role==="manager"?C.green:C.gold,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,marginRight:8,flexShrink:0,color:"#000",fontWeight:700}}>{m.role==="manager"?"👤":"A"}</div>}
+            <div style={{maxWidth:"78%",background:m.role==="user"?C.gold:m.role==="manager"?C.green:C.card2,color:m.role==="user"||m.role==="manager"?"#000":C.text,padding:"10px 14px",borderRadius:m.role==="user"?"16px 16px 4px 16px":"16px 16px 16px 4px",fontSize:14,lineHeight:1.55,whiteSpace:"pre-wrap"}}>
+              {m.role==="manager"&&<div style={{fontSize:10,fontWeight:700,marginBottom:4,opacity:.7}}>МЕНЕДЖЕР</div>}
+              {m.content}
+            </div>
+          </div>
+        ))}
+        {loading&&<div style={{display:"flex",alignItems:"center",gap:8}}><div style={{width:32,height:32,borderRadius:50,background:C.gold,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:"#000",fontWeight:700}}>A</div><div style={{background:C.card2,padding:"12px 16px",borderRadius:"16px 16px 16px 4px",display:"flex",gap:5}}>{[0,1,2].map(i=><div key={i} style={{width:6,height:6,borderRadius:50,background:C.muted,animation:"pulse 1.2s infinite",animationDelay:`${i*.2}s`}}/>)}</div></div>}
+        {msgs.length===1&&!loading&&<div style={{display:"flex",flexDirection:"column",gap:8,marginTop:8}}>{t.sugg.map(s=><div key={s} onClick={()=>send(s)} style={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:12,padding:"10px 14px",fontSize:13,color:C.muted,cursor:"pointer"}}>{s}</div>)}</div>}
+        <div ref={endRef}/>
+      </div>
+      <div style={{padding:"12px 16px",borderTop:`1px solid ${C.border}`,display:"flex",gap:8}}>
+        <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder={t.chatPH} style={{flex:1,borderRadius:20,padding:"10px 16px"}}/>
+        <button onClick={()=>send()} disabled={loading} style={{background:C.gold,border:"none",borderRadius:50,width:44,height:44,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:18,flexShrink:0}}>→</button>
+      </div>
+    </div>
+  );
+}
+
+function ProfileTab({profile,setProfile,t,setLang,lang}){
+  const[saved,setSaved]=useState(false);const[cMeth,setCMeth]=useState("tg");const[handle,setHandle]=useState(profile.phone||"");
+  const save=()=>{setProfile(p=>({...p,phone:handle}));setSaved(true);setTimeout(()=>setSaved(false),2000);};
+  const ini=profile.name?profile.name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase():"?";
+  const menuActions=[(()=>alert("Уведомления — скоро")),(()=>alert("Безопасность — скоро")),(()=>{const l=prompt("Язык (ru/en/cn):",lang);if(["ru","en","cn"].includes(l))setLang(l);}),(()=>window.open(MGR.tg,"_blank"))];
+  return(
+    <div className="ani" style={{padding:"0 16px 16px"}}>
+      <div style={{fontWeight:700,fontSize:20,marginBottom:20}}>{t.profTitle}</div>
+      <Card style={{marginBottom:14,textAlign:"center",padding:"24px 16px"}}>
+        <div style={{width:66,height:66,borderRadius:50,background:`${C.gold}22`,border:`2px solid ${C.gold}`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,margin:"0 auto 12px",color:C.gold,fontWeight:700}}>{ini}</div>
+        <div style={{fontSize:18,fontWeight:700}}>{profile.name||t.noName}</div>
+        <div style={{fontSize:13,color:C.muted,marginTop:4}}>{handle||t.noCont}</div>
+        <div style={{marginTop:8,display:"inline-flex",alignItems:"center",gap:6,background:"#1A1200",color:C.gold,fontSize:12,padding:"4px 14px",borderRadius:20,fontWeight:600}}>🎁 {PROMO}</div>
+      </Card>
+      <Card style={{marginBottom:14}}>
+        <div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.nameLabel}</div>
+        <input value={profile.name||""} onChange={e=>setProfile(p=>({...p,name:e.target.value}))} placeholder={t.noName} style={{marginBottom:12}}/>
+        <div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.emailLabel}</div>
+        <input value={profile.email||""} onChange={e=>setProfile(p=>({...p,email:e.target.value}))} placeholder="email@example.com" style={{marginBottom:16}}/>
+        <ContactPicker method={cMeth} setMethod={setCMeth} handle={handle} setHandle={setHandle} t={t}/>
+        <div style={{marginTop:14}}><Btn onClick={save}>{saved?t.savedBtn:t.saveBtn}</Btn></div>
+      </Card>
+      <div style={{display:"flex",flexDirection:"column",gap:10}}>
+        {t.profMenu.map(([ic,label],i)=>(
+          <Card key={label} onClick={menuActions[i]} style={{padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer"}}>
+            <span style={{fontSize:15}}>{ic} {label}</span><span style={{color:C.muted}}>›</span>
+          </Card>
+        ))}
+      </div>
+      <div style={{marginTop:16,textAlign:"center",color:C.red,fontSize:14,cursor:"pointer"}} onClick={()=>{}}>Выйти из аккаунта</div>
+    </div>
+  );
+}
+
+const ICONS=["🏠","💱","📋","💬","👤"];
+
+function App(){
+  const[onboarded,setOnboarded]=useState(false);
+  const[showPromo,setShowPromo]=useState(false);
+  const[lang,setLang]=useState("ru");
+  const[tab,setTab]=useState("home");
+  const[profile,setProfile]=useState({name:"",phone:"",email:""});
+  const[pwaDismissed,setPwaDismissed]=useState(false);
+  const{rates,updated,loading:rateLoad}=useRates();
+  const t=T[lang];
+  function appRate(from,to){if(!rates[from]||!rates[to])return null;return(rates[to]/rates[from])*(1-SPREAD);}
+  function finishOnboarding(){setOnboarded(true);setTimeout(()=>setShowPromo(true),600);}
+  return(
+    <>
+      <style>{appCss}</style>
+      <div style={{display:"flex",flexDirection:"column",height:"100vh",maxWidth:430,margin:"0 auto",background:C.bg}}>
+        {!onboarded?<Onboarding onDone={finishOnboarding} setLang={setLang} lang={lang}/>:(
+          <>
+            {showPromo&&<PromoModal onClose={()=>setShowPromo(false)} goChat={()=>setTab("chat")} t={t}/>}
+            <div style={{background:C.card,padding:"14px 16px 10px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <div style={{fontSize:20,fontWeight:900,color:C.gold,letterSpacing:-1}}>app2.cash</div>
+              <div style={{display:"flex",alignItems:"center",gap:10}}>
+                <div style={{fontSize:11,color:rateLoad?C.muted:C.green}}>{rateLoad?t.rateLoad:updated?`${t.rateOk} ${updated}`:t.rateOk}</div>
+                <div style={{display:"flex",gap:5}}>{[["ru","🇷🇺"],["en","🇺🇸"],["cn","🇨🇳"]].map(([l,f])=><span key={l} onClick={()=>setLang(l)} style={{fontSize:18,cursor:"pointer",opacity:lang===l?1:.4,transition:"opacity .2s"}}>{f}</span>)}</div>
+              </div>
+            </div>
+            <div style={{flex:1,overflowY:"auto",paddingTop:16}}>
+              {tab==="home"&&<HomeTab profile={profile} goExchange={()=>setTab("exchange")} goChat={()=>setTab("chat")} appRate={appRate} t={t} lang={lang} pwaDismissed={pwaDismissed} setPwaDismissed={setPwaDismissed}/>}
+              {tab==="exchange"&&<ExchangeTab profile={profile} appRate={appRate} t={t} lang={lang}/>}
+              {tab==="history"&&<HistoryTab t={t}/>}
+              {tab==="chat"&&<ChatTab t={t} profile={profile}/>}
+              {tab==="profile"&&<ProfileTab profile={profile} setProfile={setProfile} t={t} setLang={setLang} lang={lang}/>}
+            </div>
+            <div style={{background:C.card,borderTop:`1px solid ${C.border}`,display:"flex",padding:"8px 0 4px"}}>
+              {["home","exchange","history","chat","profile"].map((id,i)=>(
+                <div key={id} onClick={()=>setTab(id)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:3,cursor:"pointer",padding:"6px 0",position:"relative"}}>
+                  <span style={{fontSize:20,filter:tab===id?"none":"grayscale(1) opacity(.4)",transition:"filter .2s"}}>{ICONS[i]}</span>
+                  <span style={{fontSize:10,color:tab===id?C.gold:C.muted,fontWeight:tab===id?600:400}}>{t.tabs[i]}</span>
+                  {tab===id&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:28,height:2,background:C.gold,borderRadius:2}}/>}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+</body>
+</html>
