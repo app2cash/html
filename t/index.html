@@ -68,7 +68,7 @@ ru:{
   s3title:"Добро пожаловать\nв app2.cash",s3sub:"Нажмите «Начать» — персональный менеджер уже ждёт.",
   start:"Начать",next:"Далее →",back:"← Назад",chooseLang:"Выберите язык",
   promoTitle:"🎁 Промокод активирован!",promoManager:"Вам назначен персональный менеджер",promoConsult:"Бесплатная консультация включена",promoBtn:"Написать менеджеру →",promoClose:"Закрыть",
-  tabs:["Главная","Обмен","История","Чат","Кабинет"],
+  tabs:["Главная","Обмен","История","Чат","Майнинг","Кабинет"],
   online:"● Онлайн",rateOk:"● курс обновлён",rateLoad:"⏳ загружаем курсы...",
   stats:[["10 000+","Обменов"],["50+","Стран"],["5 мин","Скорость"],["0%","Комиссия"]],
   calc:"Калькулятор курса app2.cash",give:"Отдаёте",get:"Получаете",amount:"Сумма",
@@ -191,7 +191,7 @@ cn:{
   s3title:"欢迎来到\napp2.cash",s3sub:"点击「开始」— 专属客服经理正在等您。",
   start:"开始",next:"下一步 →",back:"← 返回",chooseLang:"选择语言",
   promoTitle:"🎁 优惠码已激活！",promoManager:"您已获得专属客服经理",promoConsult:"免费咨询已包含",promoBtn:"联系客服经理 →",promoClose:"关闭",
-  tabs:["首页","兑换","记录","客服","我的"],
+  tabs:["首页","兑换","记录","客服","挖矿","我的"],
   online:"● 在线",rateOk:"● 汇率已更新",rateLoad:"⏳ 加载中...",
   stats:[["10 000+","兑换次数"],["50+","国家"],["5分钟","速度"],["0%","手续费"]],
   calc:"app2.cash 汇率计算器",give:"您发送",get:"您收到",amount:"金额",
@@ -256,6 +256,7 @@ input:focus,select:focus{border-color:${C.gold}}
 select option{background:${C.card}}
 a{text-decoration:none}
 @keyframes pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-70px)}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 .ani{animation:fadeIn .3s ease both}
@@ -872,7 +873,7 @@ function App() {
               {tab==="profile"  && <PartnerCabinet t={t} lang={lang}/>}
             </div>
             <div style={{background:C.card,borderTop:`1px solid ${C.border}`,display:"flex",padding:"8px 0 4px"}}>
-              {["home","exchange","history","chat","profile"].map((id,i)=>(
+              {["home","exchange","history","chat","miner","profile"].map((id,i)=>(
                 <div key={id} onClick={()=>setTab(id)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:3,cursor:"pointer",padding:"6px 0",position:"relative"}}>
                   <span style={{fontSize:20,filter:tab===id?"none":"grayscale(1) opacity(.4)",transition:"filter .2s"}}>{ICONS[i]}</span>
                   <span style={{fontSize:10,color:tab===id?C.gold:C.muted,fontWeight:tab===id?600:400}}>{t.tabs[i]}</span>
