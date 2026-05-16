@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<title>app2.cash</title>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<title>app2.cash — Обмен валют</title>
+<meta name="description" content="Обменять, отправить, получить валюту или USDT. Быстро, выгодно, безопасно."/>
+<meta name="theme-color" content="#0D0F14"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="app2.cash"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
+<link rel="manifest" href="/manifest.json"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body,#root{height:100%;background:#0D0F14}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif;color:#F0F4FF;overflow:hidden}
+</style>
 </head>
-<body style="margin:0;background:#0D0F14">
-<div id="root"></div>
-<script type="text/babel">
+<body>
+<div id="root"><div style="height:100vh;display:flex;align-items:center;justify-content:center;color:#F0B429;font-size:24px;font-weight:900;letter-spacing:-1px">app2.cash</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.3/babel.min.js"></script>
+<script type="text/babel" data-presets="react">
+
 import { useState, useEffect, useRef } from "react";
 
 const SB_URL = "https://vpeqbsctlysjkuceejxp.supabase.co";
@@ -873,8 +886,8 @@ export default function App() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(React.createElement(App));
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
 </script>
 </body>
 </html>
