@@ -140,7 +140,7 @@ function ManagerBanner({t}){
 
 function PromoModal({onClose,goChat,t}){
   return(
-    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.85)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:100,padding:"0 0 24px"}}>
+    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.85)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:100,padding:"0 0 24px",pointerEvents:"all"}}>
       <div style={{background:C.card,border:`1px solid ${C.gold}55`,borderRadius:24,padding:"32px 24px",width:"100%",maxWidth:430,animation:"slideUp .4s ease both",textAlign:"center"}}>
         <div style={{fontSize:48,marginBottom:12}}>🎁</div>
         <div style={{fontSize:11,background:"#1A1200",color:C.gold,display:"inline-block",padding:"4px 14px",borderRadius:20,fontWeight:700,marginBottom:12,letterSpacing:1}}>{t.promoCode}</div>
@@ -148,7 +148,7 @@ function PromoModal({onClose,goChat,t}){
         <div style={{color:C.green,fontSize:15,marginBottom:4}}>✓ {t.promoManager}</div>
         <div style={{color:C.green,fontSize:15,marginBottom:24}}>✓ {t.promoConsult}</div>
         <Btn onClick={()=>{onClose();goChat();}}>{t.promoBtn}</Btn>
-        <div onClick={onClose} style={{marginTop:14,color:C.muted,fontSize:14,cursor:"pointer"}}>{t.promoClose}</div>
+        <div onClick={()=>{onClose();}} style={{marginTop:14,color:C.muted,fontSize:14,cursor:"pointer"}}>{t.promoClose}</div>
       </div>
     </div>
   );
@@ -377,12 +377,18 @@ function ChatTab({t,profile}){
     sendTg(`💬 <b>Чат | app2.cash</b>\nSESSION_ID: ${sessionId}\n👤 ${profile.name||"Аноним"} · 🎁${PROMO}\n\n<i>${msg}</i>`);
     setLoading(true);
     try{
-      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:t.aiSys,messages:msgs.filter(m=>m.role==="user"||m.role==="ai").map(m=>({role:m.role==="ai"?"assistant":"user",content:m.content})).concat([{role:"user",content:msg}])})});
-      const d=await res.json();const reply=d.content?.[0]?.text||"...";
+      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":"","anthropic-version":"2023-06-01"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:600,system:t.aiSys,messages:msgs.filter(m=>m.role==="user"||m.role==="ai").map(m=>({role:m.role==="ai"?"assistant":"user",content:m.content})).concat([{role:"user",content:msg}])})});
+      const d=await res.json();
+      const reply=d.content?.[0]?.text||"Менеджер скоро ответит ✉️";
       const rid=Math.random().toString(36).slice(2);
       setMsgs(m=>[...m,{role:"ai",content:reply,id:rid}]);
       await saveMsg("ai",reply);
-    }catch{setMsgs(m=>[...m,{role:"ai",content:"Connection error.",id:Math.random().toString(36).slice(2)}]);}
+      sendTg("💬 <b>Чат | app2.cash</b>\nSESSION_ID: "+sessionId+"\n👤 "+(profile.name||"Аноним")+" · 🎁369\n\n<i>"+msg+"</i>\n\n🤖 AI ответил: "+reply.slice(0,200));
+    }catch(err){
+      const reply="Менеджер скоро свяжется с вами! Или напишите напрямую в Telegram @app2cas 💬";
+      setMsgs(m=>[...m,{role:"ai",content:reply,id:Math.random().toString(36).slice(2)}]);
+      sendTg("💬 <b>Чат | app2.cash</b>\n👤 "+(profile.name||"Аноним")+"\n\n<i>"+msg+"</i>\n\n⚠️ AI недоступен");
+    }
     setLoading(false);
   }
   return(
@@ -449,7 +455,7 @@ const ICONS=["🏠","💱","💬","⛏️","👤"];
 
 
 function MinerTab({lang}) {
-  const[bal,setBal]=useState(0);
+  const[bal,setBal]=useState(()=>{try{return parseFloat(sessionStorage.getItem("app2c")||"0");}catch(e){return 0;}});
   const[mining,setMining]=useState(false);
   const[particles,setParticles]=useState([]);
   const MAX=10; const PER=0.000001;
@@ -478,8 +484,7 @@ function MinerTab({lang}) {
   function tap(e){
     if(bal>=MAX)return;
     const nb=Math.min(MAX,parseFloat((bal+PER).toFixed(6)));
-    setBal(nb);
-    playTap();
+    setBal(nb);try{sessionStorage.setItem("app2c",nb.toString());}catch(e){} playTap();
     setMining(true);
     setTimeout(()=>setMining(false),180);
     const rect=e.currentTarget.getBoundingClientRect();
