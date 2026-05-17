@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
 <title>app2.cash — Обмен валют</title>
 <meta name="description" content="Обменять, отправить, получить валюту или USDT. Быстро, выгодно, безопасно."/>
 <meta name="theme-color" content="#0D0F14"/>
@@ -461,10 +461,25 @@ function MinerTab({lang}) {
   };
   const l=lang||"ru"; const tx=TX[l]||TX.ru;
 
+  function playTap(){
+    try{
+      const ctx=new(window.AudioContext||window.webkitAudioContext)();
+      const o=ctx.createOscillator();
+      const g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.setValueAtTime(880,ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(440,ctx.currentTime+0.1);
+      g.gain.setValueAtTime(0.3,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.15);
+      o.start(ctx.currentTime);
+      o.stop(ctx.currentTime+0.15);
+    }catch(e){}
+  }
   function tap(e){
     if(bal>=MAX)return;
     const nb=Math.min(MAX,parseFloat((bal+PER).toFixed(6)));
     setBal(nb);
+    playTap();
     setMining(true);
     setTimeout(()=>setMining(false),180);
     const rect=e.currentTarget.getBoundingClientRect();
@@ -559,7 +574,7 @@ function App(){
               {tab==="miner"&&<MinerTab lang={lang}/>}
               {tab==="profile"&&<ProfileTab profile={profile} setProfile={setProfile} t={t} setLang={setLang} lang={lang}/>}
             </div>
-            <div style={{background:C.card,borderTop:`1px solid ${C.border}`,display:"flex",padding:"8px 0 4px"}}>
+            <div style={{background:C.card,borderTop:`1px solid ${C.border}`,display:"flex",padding:"8px 0",paddingBottom:"calc(8px + env(safe-area-inset-bottom))"}}>
               {["home","exchange","chat","miner","profile"].map((id,i)=>(
                 <div key={id} onClick={()=>setTab(id)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",gap:3,cursor:"pointer",padding:"6px 0",position:"relative"}}>
                   <span style={{fontSize:20,filter:tab===id?"none":"grayscale(1) opacity(.4)",transition:"filter .2s"}}>{ICONS[i]}</span>
