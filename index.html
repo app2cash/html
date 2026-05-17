@@ -250,7 +250,7 @@ function HomeTab({profile,goExchange,goChat,appRate,t,lang,pwaDismissed,setPwaDi
         </div>
       </Card>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
-        <a href={PARTNER[lang]} target="_blank" rel="noopener"><div style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:16,textAlign:"center"}}><div style={{fontSize:26,marginBottom:6}}>🤝</div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>{t.partner}</div></div></a>
+        <a href="#" onClick={(e)=>{e.preventDefault();document.getElementById("pmodal").style.display="block";document.body.style.overflow="hidden";}} ><div style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:16,textAlign:"center"}}><div style={{fontSize:26,marginBottom:6}}>🤝</div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>{t.partner}</div></div></a>
         <a href={FRAN[lang]} target="_blank" rel="noopener"><div style={{background:"#0D1A2B",border:`1px solid ${C.blue}44`,borderRadius:14,padding:16,textAlign:"center"}}><div style={{fontSize:26,marginBottom:6}}>🏢</div><div style={{fontSize:14,fontWeight:700,color:C.blue}}>{t.franchise}</div></div></a>
       </div>
       {!pwaDismissed&&(
@@ -494,6 +494,325 @@ function App(){
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+
+<!-- PARTNER MODAL -->
+<div id="pmodal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;overflow-y:auto;-webkit-overflow-scrolling:touch;" onclick="if(event.target===this)closePModal()">
+<div style="background:#161B24;border:1px solid #F0B42933;border-radius:20px;max-width:420px;margin:20px auto;padding:0 0 24px;position:relative;animation:slideUp .35s ease both;">
+  <div style="height:3px;background:linear-gradient(90deg,#F0B429,#F5E4A8,transparent);border-radius:20px 20px 0 0;"></div>
+  <button onclick="closePModal()" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#7A8499;font-size:22px;cursor:pointer;z-index:1;">×</button>
+
+  <!-- Переключатель языков -->
+  <div style="display:flex;gap:6px;padding:16px 20px 0;">
+    <span onclick="setPLang('ru')" id="pl-ru" style="cursor:pointer;font-size:18px;opacity:1;">🇷🇺</span>
+    <span onclick="setPLang('en')" id="pl-en" style="cursor:pointer;font-size:18px;opacity:.4;">🇺🇸</span>
+    <span onclick="setPLang('cn')" id="pl-cn" style="cursor:pointer;font-size:18px;opacity:.4;">🇨🇳</span>
+  </div>
+
+  <!-- RU -->
+  <div id="plang-ru">
+    <div style="padding:12px 20px 0;">
+      <div style="font-size:10px;letter-spacing:3px;color:#F0B429;font-weight:700;text-transform:uppercase;margin-bottom:8px;">ПАРТНЁРСКАЯ ПРОГРАММА</div>
+      <div style="font-size:20px;font-weight:900;color:#F0F4FF;line-height:1.2;margin-bottom:6px;">Зарабатывай<br>на каждом обмене</div>
+      <div style="font-size:12px;color:#7A8499;margin-bottom:16px;">До <span style="color:#F0B429;font-weight:700;">40% от спреда</span> · 4 уровня · Бессрочно</div>
+
+      <!-- SVG Пирамида -->
+      <svg viewBox="0 0 380 220" style="width:100%;margin-bottom:14px;">
+        <defs>
+          <filter id="pg"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- Линии -->
+        <line x1="190" y1="52" x2="100" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="190" y1="52" x2="190" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="190" y1="52" x2="280" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="100" y1="130" x2="55" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="100" y1="130" x2="100" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="190" y1="130" x2="165" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="190" y1="130" x2="215" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="280" y1="130" x2="280" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="280" y1="130" x2="325" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+
+        <!-- ВЫ -->
+        <g filter="url(#pg)">
+          <circle cx="190" cy="26" r="20" fill="#1A1200" stroke="#F0B429" stroke-width="1.5"/>
+          <circle cx="190" cy="20" r="7" fill="#F0B42933" stroke="#F0B429" stroke-width="1"/>
+          <path d="M174,52 Q174,34 190,31 Q206,34 206,52 Z" fill="#1A1200" stroke="#F0B429" stroke-width="1.2"/>
+          <rect x="148" y="54" width="84" height="24" rx="6" fill="#1A1200" stroke="#F0B429" stroke-width="1.2"/>
+          <text x="190" y="64" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="700" fill="#F0B429">ВЫ · 40%</text>
+          <text x="190" y="74" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#F0B42999">$14 с каждой $1000</text>
+        </g>
+
+        <!-- L1 x3 -->
+        <g>
+          <circle cx="100" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="100" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M90,128 Q90,116 100,114 Q110,116 110,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="100" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1 · +10%</text>
+        </g>
+        <g>
+          <circle cx="190" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="190" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M180,128 Q180,116 190,114 Q200,116 200,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="190" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1 · +10%</text>
+        </g>
+        <g>
+          <circle cx="280" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="280" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M270,128 Q270,116 280,114 Q290,116 290,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="280" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1 · +10%</text>
+        </g>
+
+        <!-- L2 x6 -->
+        <g opacity="0.8">
+          <circle cx="55"  cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="100" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="165" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="215" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="280" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="325" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <text x="190" y="196" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#A78BFA">9 партнёров L2 · +5%</text>
+        </g>
+
+        <!-- Итог -->
+        <rect x="100" y="204" width="180" height="16" rx="5" fill="#F0B42911" stroke="#F0B42944" stroke-width="0.8"/>
+        <text x="190" y="215" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#2FD78C" font-weight="600">Сеть: +$1 526/мес при ×3 ветвлении</text>
+      </svg>
+
+      <!-- 3 источника -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px;">
+        <div style="background:#0D1A2B;border:1px solid #4F9EFF33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">💱</div>
+          <div style="font-size:9px;color:#4F9EFF;font-weight:700;margin-top:4px;">Ваши клиенты</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">20–40%</div>
+          <div style="font-size:8px;color:#7A8499;">от спреда</div>
+        </div>
+        <div style="background:#0D2B15;border:1px solid #A78BFA33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">🌐</div>
+          <div style="font-size:9px;color:#A78BFA;font-weight:700;margin-top:4px;">Ваша сеть</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">3 линии</div>
+          <div style="font-size:8px;color:#7A8499;">до $1526/мес</div>
+        </div>
+        <div style="background:#1A1200;border:1px solid #2FD78C33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">🏢</div>
+          <div style="font-size:9px;color:#2FD78C;font-weight:700;margin-top:4px;">Франшизы</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">+10%</div>
+          <div style="font-size:8px;color:#7A8499;">с каждой</div>
+        </div>
+      </div>
+
+      <!-- Уровни -->
+      <div style="background:#1C2333;border-radius:12px;padding:12px 14px;margin-bottom:14px;">
+        <div style="font-size:10px;color:#7A8499;margin-bottom:8px;font-weight:600;">УРОВНИ — РАЗОВАЯ ОПЛАТА</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#7A8499;">Старт</span><span style="color:#7A8499;font-style:italic;">Бесплатно</span><span style="color:#F0B429;font-weight:700;">20%</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#F0F4FF;">Партнёр</span><span style="color:#7A8499;">$199</span><span style="color:#F0B429;font-weight:700;">25% + L1</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#F0F4FF;">Про</span><span style="color:#7A8499;">$499</span><span style="color:#F0B429;font-weight:700;">30% + L1+L2</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;background:#F0B42911;border-radius:6px;padding:4px 8px;border:1px solid #F0B42933;"><span style="color:#F0B429;font-weight:700;">VIP Elite</span><span style="color:#7A8499;">$1 499</span><span style="color:#F0B429;font-weight:700;">40% + 3 линии</span></div>
+        </div>
+      </div>
+
+      <a href="https://t.me/app2cas?text=Хочу%20стать%20партнёром%20app2.cash" target="_blank" style="display:block;background:linear-gradient(135deg,#F0B429,#F5E4A8);color:#000;font-weight:700;font-size:14px;padding:14px;border-radius:12px;text-align:center;text-decoration:none;margin:0 0 8px;">Стать партнёром →</a>
+      <a href="/partner/" target="_blank" style="display:block;text-align:center;font-size:12px;color:#7A8499;text-decoration:underline;text-decoration-style:dotted;">Подробнее на partner.app2.cash</a>
+    </div>
+  </div>
+
+  <!-- EN -->
+  <div id="plang-en" style="display:none;">
+    <div style="padding:12px 20px 0;">
+      <div style="font-size:10px;letter-spacing:3px;color:#F0B429;font-weight:700;text-transform:uppercase;margin-bottom:8px;">PARTNER PROGRAM</div>
+      <div style="font-size:20px;font-weight:900;color:#F0F4FF;line-height:1.2;margin-bottom:6px;">Earn on every<br>currency exchange</div>
+      <div style="font-size:12px;color:#7A8499;margin-bottom:16px;">Up to <span style="color:#F0B429;font-weight:700;">40% of spread</span> · 4 levels · Lifetime</div>
+
+      <svg viewBox="0 0 380 220" style="width:100%;margin-bottom:14px;">
+        <defs><filter id="pg2"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <line x1="190" y1="52" x2="100" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="190" y1="52" x2="190" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="190" y1="52" x2="280" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="100" y1="130" x2="55" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="100" y1="130" x2="100" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="190" y1="130" x2="165" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="190" y1="130" x2="215" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="280" y1="130" x2="280" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="280" y1="130" x2="325" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <g filter="url(#pg2)">
+          <circle cx="190" cy="26" r="20" fill="#1A1200" stroke="#F0B429" stroke-width="1.5"/>
+          <circle cx="190" cy="20" r="7" fill="#F0B42933" stroke="#F0B429" stroke-width="1"/>
+          <path d="M174,52 Q174,34 190,31 Q206,34 206,52 Z" fill="#1A1200" stroke="#F0B429" stroke-width="1.2"/>
+          <rect x="148" y="54" width="84" height="24" rx="6" fill="#1A1200" stroke="#F0B429" stroke-width="1.2"/>
+          <text x="190" y="64" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="700" fill="#F0B429">YOU · 40%</text>
+          <text x="190" y="74" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#F0B42999">$14 per $1000 exchange</text>
+        </g>
+        <g>
+          <circle cx="100" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="100" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M90,128 Q90,116 100,114 Q110,116 110,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="100" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1 · +10%</text>
+        </g>
+        <g>
+          <circle cx="190" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="190" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M180,128 Q180,116 190,114 Q200,116 200,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="190" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1 · +10%</text>
+        </g>
+        <g>
+          <circle cx="280" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="280" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M270,128 Q270,116 280,114 Q290,116 290,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="280" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1 · +10%</text>
+        </g>
+        <g opacity="0.8">
+          <circle cx="55"  cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="100" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="165" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="215" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="280" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="325" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <text x="190" y="196" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#A78BFA">9 L2 partners · +5%</text>
+        </g>
+        <rect x="100" y="204" width="180" height="16" rx="5" fill="#F0B42911" stroke="#F0B42944" stroke-width="0.8"/>
+        <text x="190" y="215" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#2FD78C" font-weight="600">Network: +$1,526/mo at ×3 branching</text>
+      </svg>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px;">
+        <div style="background:#0D1A2B;border:1px solid #4F9EFF33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">💱</div>
+          <div style="font-size:9px;color:#4F9EFF;font-weight:700;margin-top:4px;">Your Clients</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">20–40%</div>
+          <div style="font-size:8px;color:#7A8499;">of spread</div>
+        </div>
+        <div style="background:#0D2B15;border:1px solid #A78BFA33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">🌐</div>
+          <div style="font-size:9px;color:#A78BFA;font-weight:700;margin-top:4px;">Your Network</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">3 levels</div>
+          <div style="font-size:8px;color:#7A8499;">up to $1526/mo</div>
+        </div>
+        <div style="background:#1A1200;border:1px solid #2FD78C33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">🏢</div>
+          <div style="font-size:9px;color:#2FD78C;font-weight:700;margin-top:4px;">Franchises</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">+10%</div>
+          <div style="font-size:8px;color:#7A8499;">per sale</div>
+        </div>
+      </div>
+
+      <div style="background:#1C2333;border-radius:12px;padding:12px 14px;margin-bottom:14px;">
+        <div style="font-size:10px;color:#7A8499;margin-bottom:8px;font-weight:600;">LEVELS — ONE-TIME PAYMENT</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#7A8499;">Starter</span><span style="color:#7A8499;font-style:italic;">Free</span><span style="color:#F0B429;font-weight:700;">20%</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#F0F4FF;">Partner</span><span style="color:#7A8499;">$199</span><span style="color:#F0B429;font-weight:700;">25% + L1</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#F0F4FF;">Pro</span><span style="color:#7A8499;">$499</span><span style="color:#F0B429;font-weight:700;">30% + L1+L2</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;background:#F0B42911;border-radius:6px;padding:4px 8px;border:1px solid #F0B42933;"><span style="color:#F0B429;font-weight:700;">VIP Elite</span><span style="color:#7A8499;">$1,499</span><span style="color:#F0B429;font-weight:700;">40% + 3 lines</span></div>
+        </div>
+      </div>
+
+      <a href="https://t.me/app2cas?text=I%20want%20to%20become%20an%20app2.cash%20partner" target="_blank" style="display:block;background:linear-gradient(135deg,#F0B429,#F5E4A8);color:#000;font-weight:700;font-size:14px;padding:14px;border-radius:12px;text-align:center;text-decoration:none;margin:0 0 8px;">Become a Partner →</a>
+      <a href="/partner_en/" target="_blank" style="display:block;text-align:center;font-size:12px;color:#7A8499;text-decoration:underline;text-decoration-style:dotted;">Full details at partner.app2.cash</a>
+    </div>
+  </div>
+
+  <!-- CN -->
+  <div id="plang-cn" style="display:none;">
+    <div style="padding:12px 20px 0;">
+      <div style="font-size:10px;letter-spacing:3px;color:#F0B429;font-weight:700;text-transform:uppercase;margin-bottom:8px;">合作伙伴计划</div>
+      <div style="font-size:20px;font-weight:900;color:#F0F4FF;line-height:1.2;margin-bottom:6px;">每笔货币兑换<br>都为您赚钱</div>
+      <div style="font-size:12px;color:#7A8499;margin-bottom:16px;">最高 <span style="color:#F0B429;font-weight:700;">40%点差收益</span> · 4级网络 · 永久有效</div>
+
+      <svg viewBox="0 0 380 220" style="width:100%;margin-bottom:14px;">
+        <defs><filter id="pg3"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <line x1="190" y1="52" x2="100" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="190" y1="52" x2="190" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="190" y1="52" x2="280" y2="110" stroke="#F0B42966" stroke-width="1"/>
+        <line x1="100" y1="130" x2="55" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="100" y1="130" x2="100" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="190" y1="130" x2="165" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="190" y1="130" x2="215" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="280" y1="130" x2="280" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <line x1="280" y1="130" x2="325" y2="175" stroke="#4F9EFF55" stroke-width="0.8"/>
+        <g filter="url(#pg3)">
+          <circle cx="190" cy="26" r="20" fill="#1A1200" stroke="#F0B429" stroke-width="1.5"/>
+          <circle cx="190" cy="20" r="7" fill="#F0B42933" stroke="#F0B429" stroke-width="1"/>
+          <path d="M174,52 Q174,34 190,31 Q206,34 206,52 Z" fill="#1A1200" stroke="#F0B429" stroke-width="1.2"/>
+          <rect x="148" y="54" width="84" height="24" rx="6" fill="#1A1200" stroke="#F0B429" stroke-width="1.2"/>
+          <text x="190" y="64" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="700" fill="#F0B429">您 · 40%</text>
+          <text x="190" y="74" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#F0B42999">$1000兑换赚$14</text>
+        </g>
+        <g>
+          <circle cx="100" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="100" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M90,128 Q90,116 100,114 Q110,116 110,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="100" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1·+10%</text>
+        </g>
+        <g>
+          <circle cx="190" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="190" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M180,128 Q180,116 190,114 Q200,116 200,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="190" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1·+10%</text>
+        </g>
+        <g>
+          <circle cx="280" cy="108" r="14" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="1"/>
+          <circle cx="280" cy="103" r="5" fill="#4F9EFF22" stroke="#4F9EFF" stroke-width="0.8"/>
+          <path d="M270,128 Q270,116 280,114 Q290,116 290,128 Z" fill="#0D1A2B" stroke="#4F9EFF" stroke-width="0.8"/>
+          <text x="280" y="142" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#4F9EFF" font-weight="600">L1·+10%</text>
+        </g>
+        <g opacity="0.8">
+          <circle cx="55"  cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="100" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="165" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="215" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="280" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <circle cx="325" cy="174" r="9" fill="#0F1218" stroke="#A78BFA" stroke-width="0.8"/>
+          <text x="190" y="196" text-anchor="middle" font-family="sans-serif" font-size="7" fill="#A78BFA">9名L2合作伙伴·+5%</text>
+        </g>
+        <rect x="100" y="204" width="180" height="16" rx="5" fill="#F0B42911" stroke="#F0B42944" stroke-width="0.8"/>
+        <text x="190" y="215" text-anchor="middle" font-family="sans-serif" font-size="7.5" fill="#2FD78C" font-weight="600">网络月收入：×3裂变 +$1,526</text>
+      </svg>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:14px;">
+        <div style="background:#0D1A2B;border:1px solid #4F9EFF33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">💱</div>
+          <div style="font-size:9px;color:#4F9EFF;font-weight:700;margin-top:4px;">您的客户</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">20–40%</div>
+          <div style="font-size:8px;color:#7A8499;">点差收益</div>
+        </div>
+        <div style="background:#0D2B15;border:1px solid #A78BFA33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">🌐</div>
+          <div style="font-size:9px;color:#A78BFA;font-weight:700;margin-top:4px;">您的网络</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">3级</div>
+          <div style="font-size:8px;color:#7A8499;">最高$1526/月</div>
+        </div>
+        <div style="background:#1A1200;border:1px solid #2FD78C33;border-radius:10px;padding:10px 8px;text-align:center;">
+          <div style="font-size:16px;">🏢</div>
+          <div style="font-size:9px;color:#2FD78C;font-weight:700;margin-top:4px;">加盟销售</div>
+          <div style="font-size:11px;color:#F0B429;font-weight:900;">+10%</div>
+          <div style="font-size:8px;color:#7A8499;">每单</div>
+        </div>
+      </div>
+
+      <div style="background:#1C2333;border-radius:12px;padding:12px 14px;margin-bottom:14px;">
+        <div style="font-size:10px;color:#7A8499;margin-bottom:8px;font-weight:600;">等级 — 一次性付款</div>
+        <div style="display:flex;flex-direction:column;gap:5px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#7A8499;">入门级</span><span style="color:#7A8499;font-style:italic;">免费</span><span style="color:#F0B429;font-weight:700;">20%</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#F0F4FF;">合伙人</span><span style="color:#7A8499;">$199</span><span style="color:#F0B429;font-weight:700;">25% + L1</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;"><span style="color:#F0F4FF;">专业版</span><span style="color:#7A8499;">$499</span><span style="color:#F0B429;font-weight:700;">30% + L1+L2</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;background:#F0B42911;border-radius:6px;padding:4px 8px;border:1px solid #F0B42933;"><span style="color:#F0B429;font-weight:700;">VIP精英</span><span style="color:#7A8499;">$1,499</span><span style="color:#F0B429;font-weight:700;">40% + 3线</span></div>
+        </div>
+      </div>
+
+      <a href="https://t.me/app2cas?text=我想成为app2.cash合作伙伴" target="_blank" style="display:block;background:linear-gradient(135deg,#F0B429,#F5E4A8);color:#000;font-weight:700;font-size:14px;padding:14px;border-radius:12px;text-align:center;text-decoration:none;margin:0 0 8px;">成为合作伙伴 →</a>
+      <a href="/partner_cn/" target="_blank" style="display:block;text-align:center;font-size:12px;color:#7A8499;text-decoration:underline;text-decoration-style:dotted;">查看完整计划详情</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function openPModal(){document.getElementById('pmodal').style.display='block';document.body.style.overflow='hidden';}
+function closePModal(){document.getElementById('pmodal').style.display='none';document.body.style.overflow='';}
+function setPLang(l){
+  ['ru','en','cn'].forEach(x=>{
+    document.getElementById('plang-'+x).style.display=x===l?'block':'none';
+    document.getElementById('pl-'+x).style.opacity=x===l?'1':'.4';
+  });
+}
 </script>
 </body>
 </html>
