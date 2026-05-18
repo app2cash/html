@@ -535,10 +535,11 @@ function MinerTab({lang}) {
         </div>
       </div>
 
-      <div style={{width:"100%",background:C.card,border:"1px solid "+(done?C.green:C.border),borderRadius:14,padding:16,marginBottom:14,textAlign:"center"}}>
-        <div style={{fontSize:12,color:C.muted,marginBottom:6}}>{tx.disc}</div>
-        <div style={{fontSize:36,fontWeight:900,color:done?C.green:C.gold}}>{disc}%</div>
-        <div style={{fontSize:11,color:C.muted,marginTop:6}}>{done?tx.done:(l==="cn"?"还需"+need+" APP2C":l==="en"?"Need "+need+" more APP2C":"Ещё "+need+" APP2C")}</div>
+      <div style={{width:"100%",background:C.card,border:"1px solid "+(done?C.green:C.border),borderRadius:14,padding:"20px 16px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:11,color:C.muted,marginBottom:8,letterSpacing:2,textTransform:"uppercase"}}>{tx.bal}</div>
+        <div style={{fontSize:56,fontWeight:900,color:done?C.green:C.gold,letterSpacing:-1,lineHeight:1}}>{bal.toFixed(4)}</div>
+        <div style={{fontSize:13,color:C.muted,marginTop:6}}>APP2C</div>
+        <div style={{fontSize:11,color:C.muted,marginTop:8}}>{done?tx.done:(l==="cn"?"还需"+need+" APP2C":l==="en"?"Need "+need+" more APP2C":"Ещё "+need+" APP2C")}</div>
       </div>
 
       <div style={{width:"100%",background:C.card2,borderRadius:12,padding:"12px 14px",fontSize:11,color:C.muted,textAlign:"center",lineHeight:1.8}}>{tx.info}</div>
