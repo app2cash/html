@@ -9,11 +9,19 @@
       }
     },
     {
+      "src": "api/export.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "**/*",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/api/export",
+      "dest": "/api/export.js"
+    },
     {
       "src": "/api/(.*)",
       "dest": "/api/index.js"
