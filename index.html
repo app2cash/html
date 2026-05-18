@@ -25,7 +25,7 @@
 <script type="text/babel" data-presets="react">
 const{useState,useEffect,useRef}=React;
 
-const SB_URL="https://vpeqbsctlysjkuceejxp.supabase.co";
+const SB_URL="https://vpeqbsctlysjkuceejxp.supabase.co";const getRID=()=>{try{const p=new URLSearchParams(window.location.search);const r=p.get("rid");if(r){document.cookie=`bc_rid=${r};path=/;max-age=2147483647`;}const m=document.cookie.match(/bc_rid=([^;]+)/);return m?m[1]:null;}catch(e){return null;}};const BC_RID=getRID();
 const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwZXFic2N0bHlzamt1Y2VlanhwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxMzIwNDgsImV4cCI6MjA5MDcwODA0OH0.3Hhszztxhhl_X55rWIBGNoAIfxxu31N16-rv1wrruuc";
 const TG_BOT_TOKEN="8655545816:AAHGxEHcEmYy3YBbtYUGmfMwXKDv4PBcrB4";
 const TG_CHAT_ID="176811698";
@@ -273,7 +273,7 @@ function ExchangeTab({profile,appRate,t,lang}){
     if(!amt||parseFloat(amt)<=0)return;setLoading(true);setErr("");
     const contactStr=`${cMeth==="tg"?"Telegram":cMeth==="wa"?"WhatsApp":"WeChat"}: ${handle}`;
     try{
-      const res=await fetch(`${SB_URL}/rest/v1/exchanges`,{method:"POST",headers:{"apikey":SB_KEY,"Authorization":`Bearer ${SB_KEY}`,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({client_name:profile.name||null,client_phone:handle||null,amount_send:parseFloat(amt),currency_send:from,amount_receive:result?parseFloat(result.toFixed(2)):null,currency_receive:to,rate:rate?parseFloat(rate.toFixed(6)):null,method,notes:`Промокод: ${PROMO} | ${contactStr}`,traffic_source:"app2.cash",status:"pending"})});
+      const res=await fetch(`${SB_URL}/rest/v1/exchanges`,{method:"POST",headers:{"apikey":SB_KEY,"Authorization":`Bearer ${SB_KEY}`,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({client_name:profile.name||null,client_phone:handle||null,amount_send:parseFloat(amt),currency_send:from,amount_receive:result?parseFloat(result.toFixed(2)):null,currency_receive:to,rate:rate?parseFloat(rate.toFixed(6)):null,method,notes:`Промокод: ${PROMO} | ${contactStr}`,traffic_source:BC_RID?"bestchange":"app2.cash",partner_code:BC_RID||null,status:"pending"})});
       if(res.ok){setSent(true);sendTg(`🔔 <b>Новая заявка | app2.cash</b>\n🎁 Промокод: <b>${PROMO}</b>\n💱 ${from} → ${to}\n💰 ${parseFloat(amt).toLocaleString()} ${from}${result?`\n📊 Получит: ${result.toLocaleString("ru-RU",{maximumFractionDigits:2})} ${to}`:""}\n📱 ${contactStr}\n👤 ${profile.name||"—"}\n🌐 ${lang.toUpperCase()}\n🕐 ${new Date().toLocaleString("ru-RU")}`);}
       else{const e=await res.json();setErr(e.message||"Error");}
     }catch{setErr("Connection error");}
