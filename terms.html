@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Условия обмена · app2.cash</title>
+<link rel="icon" href="/favicon.ico"/>
+<style>
+  :root{
+    --gold:#F0B429;
+    --gold2:#E8C96D;
+    --bg:#0D0F14;
+    --card:#141720;
+    --card2:#1C2030;
+    --border:#242B3D;
+    --text:#F0F4FF;
+    --muted:#7A8499;
+    --green:#2FD78C;
+    --red:#F05252;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--text);font-family:'Georgia',serif;min-height:100%}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(13,15,20,.95);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    padding:14px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{font-size:18px;font-weight:900;color:var(--gold);letter-spacing:-0.5px}
+  .back{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .back:hover{color:var(--gold)}
+
+  .lang-tabs{display:flex;gap:8px;padding:16px 20px 0;overflow-x:auto}
+  .lang-tab{
+    padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;
+    cursor:pointer;border:1px solid var(--border);background:transparent;
+    color:var(--muted);transition:all .2s;white-space:nowrap;
+  }
+  .lang-tab.active{background:var(--gold);color:#000;border-color:var(--gold)}
+
+  .content{max-width:720px;margin:0 auto;padding:24px 20px 80px}
+
+  .page-title{
+    font-size:26px;font-weight:900;letter-spacing:-1px;
+    color:var(--gold);margin-bottom:6px;
+  }
+  .page-sub{font-size:13px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+
+  .section{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:16px;padding:24px;margin-bottom:16px;
+  }
+  .section-num{
+    font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:8px;
+  }
+  .section-title{
+    font-size:17px;font-weight:700;color:var(--text);
+    margin-bottom:14px;line-height:1.4;
+  }
+  .section p{font-size:14px;color:#B0B8CC;line-height:1.8;margin-bottom:10px}
+  .section p:last-child{margin-bottom:0}
+  .section ul{padding-left:18px;margin-bottom:10px}
+  .section ul li{font-size:14px;color:#B0B8CC;line-height:1.8;margin-bottom:4px}
+
+  .highlight{
+    background:var(--card2);border-left:3px solid var(--gold);
+    border-radius:0 10px 10px 0;padding:12px 16px;margin:12px 0;
+    font-size:13px;color:var(--muted);
+  }
+  .tag-red{
+    display:inline-block;background:rgba(240,82,82,.15);color:var(--red);
+    font-size:11px;font-weight:700;letter-spacing:1px;padding:2px 8px;
+    border-radius:4px;margin-bottom:10px;text-transform:uppercase;
+  }
+  .tag-green{
+    display:inline-block;background:rgba(47,215,140,.12);color:var(--green);
+    font-size:11px;font-weight:700;letter-spacing:1px;padding:2px 8px;
+    border-radius:4px;margin-bottom:10px;text-transform:uppercase;
+  }
+
+  .contacts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .contact-item{
+    background:var(--card2);border-radius:12px;padding:14px;
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .contact-icon{font-size:20px;margin-bottom:4px}
+  .contact-label{font-size:11px;color:var(--muted)}
+  .contact-val{font-size:13px;color:var(--gold);font-weight:600}
+
+  .footer{
+    text-align:center;padding:24px 20px;
+    font-size:12px;color:var(--muted);border-top:1px solid var(--border);
+    margin-top:16px;
+  }
+
+  .lang-content{display:none}
+  .lang-content.active{display:block}
+
+  @media(max-width:420px){
+    .contacts-grid{grid-template-columns:1fr}
+    .page-title{font-size:22px}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">app2.cash</div>
+  <a href="/" class="back">← Назад</a>
+</div>
+
+<div class="lang-tabs">
+  <button class="lang-tab active" onclick="setLang('ru',this)">🇷🇺 Русский</button>
+  <button class="lang-tab" onclick="setLang('en',this)">🇺🇸 English</button>
+  <button class="lang-tab" onclick="setLang('cn',this)">🇨🇳 中文</button>
+</div>
+
+<!-- ═══════════════ RUSSIAN ═══════════════ -->
+<div class="lang-content active" id="lang-ru">
+<div class="content">
+  <div class="page-title">Условия обмена</div>
+  <div class="page-sub">Регламент проведения обменных операций · app2.cash<br>Последнее обновление: май 2026</div>
+
+  <div class="section">
+    <div class="section-num">§ 1</div>
+    <div class="section-title">Условия подачи заявок на обмен</div>
+    <p>Для создания заявки клиент выбирает направление обмена, указывает сумму и контактные данные. Регистрация не требуется — сервис работает без KYC.</p>
+    <ul>
+      <li>Минимальная сумма обмена: эквивалент $100</li>
+      <li>Максимальная сумма без верификации: эквивалент $10 000</li>
+      <li>Свыше $10 000 — по предварительному согласованию с менеджером</li>
+      <li>Заявка действительна 30 минут с момента создания</li>
+      <li>Одна заявка — одна операция; повторный обмен создаётся новой заявкой</li>
+    </ul>
+    <div class="highlight">После отправки заявки вы получите уникальный номер для отслеживания статуса операции.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 2</div>
+    <div class="section-title">Условия фиксации курса обмена</div>
+    <p>Курс фиксируется в момент создания заявки и действителен 30 минут. Если клиент не произвёл оплату в течение этого времени, заявка аннулируется и необходимо создать новую.</p>
+    <ul>
+      <li>При резком изменении рынка (свыше 3%) обменник вправе предложить пересчёт курса</li>
+      <li>Клиент вправе отказаться от пересчёта и получить возврат средств</li>
+      <li>Спред app2.cash составляет 3,6% от рыночного курса</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 3</div>
+    <div class="section-title">Условия и сроки оплаты заявки клиентом</div>
+    <p>После создания заявки клиент получает реквизиты для оплаты.</p>
+    <ul>
+      <li>Срок оплаты: 30 минут с момента создания заявки</li>
+      <li>Реквизиты действительны только для данной конкретной заявки</li>
+      <li>Нельзя отправлять средства на реквизиты закрытой или просроченной заявки</li>
+      <li>Сумма перевода должна точно соответствовать сумме в заявке</li>
+    </ul>
+    <div class="highlight">⚠️ Отправка средств на реквизиты истёкшей заявки может привести к задержке возврата до 3 рабочих дней.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 4</div>
+    <div class="section-title">Условия и сроки оплаты заявки обменником</div>
+    <p>После подтверждения получения средств от клиента обменник производит выплату:</p>
+    <ul>
+      <li>USDT TRC20 — до 30 минут</li>
+      <li>Наличные (ОАЭ, Нидерланды, Эсватини и др.) — по договорённости с менеджером, обычно в день заявки</li>
+      <li>Банковский перевод — от 1 до 3 рабочих дней в зависимости от страны</li>
+    </ul>
+    <p>В случае технических задержек со стороны блокчейна или банка срок может быть увеличен. Менеджер уведомит клиента в таком случае.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 5</div>
+    <div class="section-title">Формат получения консультаций</div>
+    <p>После оплаты заявки клиент может обратиться за поддержкой любым удобным способом:</p>
+    <div class="contacts-grid">
+      <div class="contact-item">
+        <div class="contact-icon">✈️</div>
+        <div class="contact-label">Telegram</div>
+        <div class="contact-val"><a href="https://t.me/app2cas">@app2cas</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-val"><a href="https://wa.me/255756687444">+255 756 687 444</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-val"><a href="mailto:support@app2.cash">support@app2.cash</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div class="contact-label">Чат на сайте</div>
+        <div class="contact-val"><a href="/">app2.cash</a></div>
+      </div>
+    </div>
+    <p style="margin-top:12px">Время ответа: до 1 часа в рабочее время (09:00–22:00 UTC+3).</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 6</div>
+    <div class="section-title">Форс-мажор</div>
+
+    <div class="tag-red">Блокировка счёта обменника</div>
+    <p>Если банк заблокировал счёт обменника после получения средств от клиента — клиент будет уведомлён в течение 24 часов. Средства будут возвращены или направлены альтернативным маршрутом по согласованию.</p>
+
+    <div class="tag-red">Блокировка счёта клиента</div>
+    <p>Если банк клиента заблокировал входящий перевод от обменника — клиенту необходимо связаться с менеджером и предоставить подтверждение блокировки. Обменник предоставит документы для банка.</p>
+
+    <div class="tag-red">Ошибочный перевод</div>
+    <p>Если клиент отправил средства на неверные реквизиты или в неверной сумме — необходимо незамедлительно сообщить менеджеру. Возврат производится за вычетом сетевых комиссий в течение 3 рабочих дней.</p>
+
+    <div class="highlight">В любом форс-мажоре: сначала свяжитесь с менеджером через Telegram @app2cas. Не создавайте новые заявки до разрешения ситуации.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 7</div>
+    <div class="section-title">Обработка и хранение персональных данных</div>
+    <p>app2.cash собирает минимально необходимые данные для проведения операции:</p>
+    <ul>
+      <li>Контактные данные (Telegram / WhatsApp / Email)</li>
+      <li>Сумма и направление обмена</li>
+      <li>IP-адрес и технические параметры сессии</li>
+    </ul>
+    <p>Данные не передаются третьим лицам, за исключением случаев, предусмотренных законодательством юрисдикции клиента или запросов правоохранительных органов.</p>
+    <p>Срок хранения данных: 5 лет в соответствии с требованиями AML-законодательства.</p>
+    <div class="highlight">Сервис работает без обязательной идентификации (No KYC) для операций до $10 000. Для крупных сумм может потребоваться подтверждение источника средств.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 8</div>
+    <div class="section-title">Регламент AML / KYC / KYT</div>
+    <div class="tag-green">AML Политика</div>
+    <p>app2.cash соблюдает политику противодействия отмыванию денег (AML) и финансированию терроризма (CFT).</p>
+    <ul>
+      <li>Все USDT-транзакции проверяются через блокчейн-аналитику (KYT)</li>
+      <li>Средства с высоким риском (darknet, санкционные адреса) не принимаются</li>
+      <li>При выявлении подозрительной активности операция приостанавливается</li>
+      <li>Клиент уведомляется в течение 24 часов с указанием причины</li>
+    </ul>
+    <p><b>Когда запрашиваются документы (KYC):</b></p>
+    <ul>
+      <li>Сумма операции свыше $10 000</li>
+      <li>Высокий риск по результатам KYT-проверки</li>
+      <li>Запрос от правоохранительных органов</li>
+      <li>Несоответствие профиля клиента характеру операции</li>
+    </ul>
+    <p><b>Действия при заморозке средств:</b></p>
+    <ul>
+      <li>Клиент получает уведомление с описанием ситуации</li>
+      <li>Предоставляется срок 14 дней для предоставления документов</li>
+      <li>При невозможности верификации — средства возвращаются за вычетом сетевых комиссий</li>
+    </ul>
+    <div class="highlight">app2.cash не проводит операции с лицами и организациями из санкционных списков OFAC, EU, UN.</div>
+  </div>
+
+  <div class="footer">
+    © 2025–2026 app2.cash · <a href="/">На главную</a> · <a href="mailto:support@app2.cash">support@app2.cash</a><br>
+    Версия документа: 1.2 · Май 2026
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════ ENGLISH ═══════════════ -->
+<div class="lang-content" id="lang-en">
+<div class="content">
+  <div class="page-title">Terms of Exchange</div>
+  <div class="page-sub">Exchange Operations Regulations · app2.cash<br>Last updated: May 2026</div>
+
+  <div class="section">
+    <div class="section-num">§ 1</div>
+    <div class="section-title">Exchange Request Conditions</div>
+    <p>To create a request, the client selects the exchange direction, specifies the amount and contact details. No registration required — the service operates without KYC.</p>
+    <ul>
+      <li>Minimum exchange amount: equivalent of $100</li>
+      <li>Maximum without verification: equivalent of $10,000</li>
+      <li>Above $10,000 — by prior arrangement with the manager</li>
+      <li>Request is valid for 30 minutes from creation</li>
+      <li>One request — one operation; repeat exchange requires a new request</li>
+    </ul>
+    <div class="highlight">After submitting a request, you will receive a unique tracking number to monitor the status of your operation.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 2</div>
+    <div class="section-title">Exchange Rate Fixation</div>
+    <p>The rate is fixed at the moment the request is created and is valid for 30 minutes. If the client does not make payment within this time, the request is cancelled and a new one must be created.</p>
+    <ul>
+      <li>In case of sharp market movement (over 3%), the exchanger may offer a rate recalculation</li>
+      <li>The client has the right to refuse recalculation and receive a refund</li>
+      <li>app2.cash spread is 3.6% of the market rate</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 3</div>
+    <div class="section-title">Client Payment Terms</div>
+    <p>After creating a request, the client receives payment details.</p>
+    <ul>
+      <li>Payment deadline: 30 minutes from request creation</li>
+      <li>Details are valid only for this specific request</li>
+      <li>Do not send funds to details of a closed or expired request</li>
+      <li>Transfer amount must exactly match the request amount</li>
+    </ul>
+    <div class="highlight">⚠️ Sending funds to expired request details may result in a return delay of up to 3 business days.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 4</div>
+    <div class="section-title">Exchanger Payment Terms</div>
+    <p>After confirming receipt of client funds, the exchanger makes payment:</p>
+    <ul>
+      <li>USDT TRC20 — within 30 minutes</li>
+      <li>Cash (UAE, Netherlands, Eswatini, etc.) — by arrangement, usually same day</li>
+      <li>Bank transfer — 1 to 3 business days depending on country</li>
+    </ul>
+    <p>In case of technical delays from blockchain or bank, the timeline may be extended. The manager will notify the client.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 5</div>
+    <div class="section-title">Support After Payment</div>
+    <p>After paying, the client can reach support through any convenient channel:</p>
+    <div class="contacts-grid">
+      <div class="contact-item">
+        <div class="contact-icon">✈️</div>
+        <div class="contact-label">Telegram</div>
+        <div class="contact-val"><a href="https://t.me/app2cas">@app2cas</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-val"><a href="https://wa.me/255756687444">+255 756 687 444</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-val"><a href="mailto:support@app2.cash">support@app2.cash</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div class="contact-label">Live Chat</div>
+        <div class="contact-val"><a href="/">app2.cash</a></div>
+      </div>
+    </div>
+    <p style="margin-top:12px">Response time: within 1 hour during business hours (09:00–22:00 UTC+3).</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 6</div>
+    <div class="section-title">Force Majeure</div>
+    <div class="tag-red">Exchanger Account Blocked</div>
+    <p>If the bank blocks the exchanger's account after receiving client funds — the client will be notified within 24 hours. Funds will be returned or rerouted by agreement.</p>
+    <div class="tag-red">Client Account Blocked</div>
+    <p>If the client's bank blocks an incoming transfer — the client must contact the manager and provide confirmation of the block. The exchanger will provide documents for the bank.</p>
+    <div class="tag-red">Wrong Transfer</div>
+    <p>If the client sent funds to wrong details or in wrong amount — contact the manager immediately. Refund is processed within 3 business days minus network fees.</p>
+    <div class="highlight">In any force majeure: contact the manager via Telegram @app2cas first. Do not create new requests until the situation is resolved.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 7</div>
+    <div class="section-title">Personal Data Processing</div>
+    <p>app2.cash collects the minimum data necessary to process the operation:</p>
+    <ul>
+      <li>Contact details (Telegram / WhatsApp / Email)</li>
+      <li>Amount and direction of exchange</li>
+      <li>IP address and technical session parameters</li>
+    </ul>
+    <p>Data is not shared with third parties except as required by applicable law or law enforcement requests. Retention period: 5 years per AML legislation requirements.</p>
+    <div class="highlight">The service operates without mandatory identification (No KYC) for operations up to $10,000. Larger amounts may require source of funds confirmation.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 8</div>
+    <div class="section-title">AML / KYC / KYT Policy</div>
+    <div class="tag-green">AML Policy</div>
+    <p>app2.cash complies with anti-money laundering (AML) and counter-terrorist financing (CFT) policies.</p>
+    <ul>
+      <li>All USDT transactions are checked via blockchain analytics (KYT)</li>
+      <li>High-risk funds (darknet, sanctioned addresses) are not accepted</li>
+      <li>Suspicious activity triggers a hold on the operation</li>
+      <li>Client is notified within 24 hours with reason</li>
+    </ul>
+    <p><b>When KYC documents are required:</b></p>
+    <ul>
+      <li>Transaction amount exceeds $10,000</li>
+      <li>High risk per KYT screening</li>
+      <li>Law enforcement request</li>
+      <li>Client profile inconsistent with transaction nature</li>
+    </ul>
+    <p><b>Actions when funds are frozen:</b></p>
+    <ul>
+      <li>Client receives notification with explanation</li>
+      <li>14 days provided to submit documents</li>
+      <li>If verification fails — funds returned minus network fees</li>
+    </ul>
+    <div class="highlight">app2.cash does not process transactions with persons or entities on OFAC, EU, or UN sanctions lists.</div>
+  </div>
+
+  <div class="footer">
+    © 2025–2026 app2.cash · <a href="/en/">Home</a> · <a href="mailto:support@app2.cash">support@app2.cash</a><br>
+    Document version: 1.2 · May 2026
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════ CHINESE ═══════════════ -->
+<div class="lang-content" id="lang-cn">
+<div class="content">
+  <div class="page-title">兑换条款</div>
+  <div class="page-sub">兑换操作规程 · app2.cash<br>最后更新：2026年5月</div>
+
+  <div class="section">
+    <div class="section-num">§ 1</div>
+    <div class="section-title">兑换申请条件</div>
+    <p>创建申请时，客户选择兑换方向，填写金额和联系方式。无需注册——本服务无KYC要求。</p>
+    <ul>
+      <li>最低兑换金额：相当于100美元</li>
+      <li>无需验证的最高金额：相当于10,000美元</li>
+      <li>超过10,000美元——需提前与客服经理协商</li>
+      <li>申请自创建起30分钟内有效</li>
+      <li>一次申请对应一次操作；再次兑换需创建新申请</li>
+    </ul>
+    <div class="highlight">提交申请后，您将收到唯一追踪编号，用于查询操作状态。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 2</div>
+    <div class="section-title">汇率锁定条件</div>
+    <p>汇率在申请创建时锁定，有效期30分钟。若客户未在此时间内完成支付，申请将自动取消，需重新创建。</p>
+    <ul>
+      <li>市场剧烈波动（超过3%）时，兑换商可提议重新计算汇率</li>
+      <li>客户有权拒绝重新计算并获得退款</li>
+      <li>app2.cash点差为市场汇率的3.6%</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 3</div>
+    <div class="section-title">客户付款条件及期限</div>
+    <p>创建申请后，客户将收到付款详情。</p>
+    <ul>
+      <li>付款截止时间：申请创建后30分钟内</li>
+      <li>收款信息仅对本次申请有效</li>
+      <li>请勿向已关闭或过期申请的账户转账</li>
+      <li>转账金额必须与申请金额完全一致</li>
+    </ul>
+    <div class="highlight">⚠️ 向过期申请账户转账可能导致退款延迟最多3个工作日。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 4</div>
+    <div class="section-title">兑换商付款条件及期限</div>
+    <p>确认收到客户资金后，兑换商将进行付款：</p>
+    <ul>
+      <li>USDT TRC20 — 30分钟内</li>
+      <li>现金（阿联酋、荷兰、斯威士兰等）——按协议，通常当日完成</li>
+      <li>银行转账——根据国家不同，1至3个工作日</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 5</div>
+    <div class="section-title">付款后咨询方式</div>
+    <div class="contacts-grid">
+      <div class="contact-item">
+        <div class="contact-icon">✈️</div>
+        <div class="contact-label">Telegram</div>
+        <div class="contact-val"><a href="https://t.me/app2cas">@app2cas</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div class="contact-label">WhatsApp</div>
+        <div class="contact-val"><a href="https://wa.me/255756687444">+255 756 687 444</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label">电子邮件</div>
+        <div class="contact-val"><a href="mailto:support@app2.cash">support@app2.cash</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div class="contact-label">在线客服</div>
+        <div class="contact-val"><a href="/">app2.cash</a></div>
+      </div>
+    </div>
+    <p style="margin-top:12px">响应时间：工作时间内1小时内（UTC+3 09:00–22:00）。</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 6</div>
+    <div class="section-title">不可抗力</div>
+    <div class="tag-red">兑换商账户被冻结</div>
+    <p>若银行在收到客户资金后冻结兑换商账户——客户将在24小时内收到通知，资金将退还或通过替代路径转出。</p>
+    <div class="tag-red">客户账户被冻结</div>
+    <p>若客户银行冻结来自兑换商的转账——客户需联系客服并提供冻结证明，兑换商将提供银行所需文件。</p>
+    <div class="tag-red">错误转账</div>
+    <p>若客户向错误账户转账或金额有误——请立即联系客服。退款将在3个工作日内处理，扣除网络手续费。</p>
+    <div class="highlight">遇到任何不可抗力：请先通过Telegram @app2cas联系客服，在问题解决前请勿创建新申请。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 7</div>
+    <div class="section-title">个人数据处理与存储</div>
+    <p>app2.cash仅收集处理操作所需的最少数据：联系方式、兑换金额和方向、IP地址及技术会话参数。</p>
+    <p>除法律要求或执法机构请求外，数据不向第三方共享。根据AML法规要求，数据保存期为5年。</p>
+    <div class="highlight">本服务对10,000美元以下的操作无强制身份验证要求（无KYC）。较大金额可能需要提供资金来源证明。</div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">§ 8</div>
+    <div class="section-title">AML / KYC / KYT 政策</div>
+    <div class="tag-green">反洗钱政策</div>
+    <p>app2.cash遵守反洗钱（AML）和反恐融资（CFT）政策。所有USDT交易均通过区块链分析（KYT）进行检查。高风险资金（暗网、受制裁地址）不予接受。</p>
+    <p><b>需要KYC文件的情况：</b>交易金额超过10,000美元；KYT筛查显示高风险；执法机构请求；客户资料与交易性质不符。</p>
+    <div class="highlight">app2.cash不与OFAC、欧盟或联合国制裁名单上的个人或实体进行交易。</div>
+  </div>
+
+  <div class="footer">
+    © 2025–2026 app2.cash · <a href="/cn/">首页</a> · <a href="mailto:support@app2.cash">support@app2.cash</a><br>
+    文件版本：1.2 · 2026年5月
+  </div>
+</div>
+</div>
+
+<script>
+function setLang(lang, btn) {
+  document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.lang-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
