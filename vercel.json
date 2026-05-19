@@ -21,6 +21,10 @@
   ],
   "routes": [
     {
+      "src": "/terms",
+      "dest": "/terms.html"
+    },
+    {
       "src": "/api/export",
       "dest": "/api/export.js"
     },
