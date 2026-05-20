@@ -711,13 +711,7 @@ function App(){
         // Supabase insert
         await fetch(SB_URL+"/rest/v1/partners",{method:"POST",headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({name:regName,email:regEmail||null,telegram:regTg||null,whatsapp:regWa||null,partner_code:code,promo_code:code,ref_link:link,balance:0,level:0,status:"active",notes:"Self-registered via app modal"})});
         // Telegram
-        const tgText="🤝 <b>Новый партнёр!</b>
-👤 "+regName+"
-📧 "+(regEmail||"—")+"
-✈️ "+(regTg||"—")+"
-💬 "+(regWa||"—")+"
-🎁 Промокод: "+code+"
-🔗 "+link;
+        const tgText="🤝 <b>Новый партнёр!</b>\n👤 "+regName+"\n📧 "+(regEmail||"—")+"\n✈️ "+(regTg||"—")+"\n💬 "+(regWa||"—")+"\n🎁 Промокод: "+code+"\n🔗 "+link;
         await fetch("https://api.telegram.org/bot"+TG_BOT_TOKEN+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT_ID,text:tgText,parse_mode:"HTML"})});
         // API email
         await fetch("/api/index",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contact:regTg||regEmail||regName,channel:regTg?"tg":"email",source:"partner_registration",extra:{name:regName,email:regEmail,tg:regTg,wa:regWa,package:"Партнёр · "+code}})});
