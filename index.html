@@ -187,7 +187,7 @@ function Onboarding({onDone,setLang,lang}){
   );
 }
 
-function HomeTab({profile,goExchange,goChat,appRate,t,lang,pwaDismissed,setPwaDismissed}){
+function HomeTab({profile,goExchange,goChat,appRate,t,lang,pwaDismissed,setPwaDismissed,onPartner,onFran}){
   const[from,setFrom]=useState("USD");
   const[to,setTo]=useState("RUB");
   const[amt,setAmt]=useState("500");
@@ -253,8 +253,8 @@ function HomeTab({profile,goExchange,goChat,appRate,t,lang,pwaDismissed,setPwaDi
         </div>
       </Card>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
-        <div onClick={()=>setShowPartner(true)} style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:16,textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26,marginBottom:6}}>🤝</div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>{t.partner}</div></div>
-        <div onClick={()=>setShowFran(true)} style={{background:"#0D1A2B",border:`1px solid ${C.blue}44`,borderRadius:14,padding:16,textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26,marginBottom:6}}>🏢</div><div style={{fontSize:14,fontWeight:700,color:C.blue}}>{t.franchise}</div></div>
+        <div onClick={onPartner} style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:16,textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26,marginBottom:6}}>🤝</div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>{t.partner}</div></div>
+        <div onClick={onFran} style={{background:"#0D1A2B",border:`1px solid ${C.blue}44`,borderRadius:14,padding:16,textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26,marginBottom:6}}>🏢</div><div style={{fontSize:14,fontWeight:700,color:C.blue}}>{t.franchise}</div></div>
       </div>
       {!pwaDismissed&&(
         <div style={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:14,padding:"14px 16px",marginBottom:14}}>
@@ -736,7 +736,7 @@ function App(){
               </div>
             </div>
             <div style={{flex:1,overflowY:"auto",paddingTop:16}}>
-              {tab==="home"&&<HomeTab profile={profile} goExchange={()=>setTab("exchange")} goChat={()=>setTab("chat")} appRate={appRate} t={t} lang={lang} pwaDismissed={pwaDismissed} setPwaDismissed={setPwaDismissed}/>}
+              {tab==="home"&&<HomeTab profile={profile} goExchange={()=>setTab("exchange")} goChat={()=>setTab("chat")} appRate={appRate} t={t} lang={lang} pwaDismissed={pwaDismissed} setPwaDismissed={setPwaDismissed} onPartner={()=>setShowPartner(true)} onFran={()=>setShowFran(true)}/>}
               {tab==="exchange"&&<ExchangeTab profile={profile} appRate={appRate} t={t} lang={lang}/>}
               
               {tab==="chat"&&<ChatTab t={t} profile={profile}/>}
