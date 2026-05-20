@@ -645,7 +645,7 @@ function App(){
     }
   };
 
-  async function (()=>{const v=document.getElementById("fran-contact-input");if(v)setModalHandle(v.value);sendModalLead(type);})(){
+  async function sendModalLead{
     if(!modalHandle.trim()){return;}
     setModalSending(true);
     const tx=MODAL_TG[lang][type];
@@ -752,7 +752,7 @@ function App(){
                 <div>
                   <input id="fran-contact-input" placeholder={tx.ph} style={{width:"100%",background:C.card2,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",color:C.text,fontSize:14,marginBottom:10,outline:"none"}}/>
                   {!modalSent?(
-                    <div onClick={()=>(()=>{const v=document.getElementById("fran-contact-input");if(v)setModalHandle(v.value);sendModalLead(type);})()} style={{background:C.blue,color:"#fff",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{modalSending?"⏳...":tx.cta}</div>
+                    <div onClick={()=>(()=>{const v=document.getElementById("fran-contact-input");if(v){setModalHandle(v.value);setTimeout(()=>sendModalLead(type),50);}else{sendModalLead(type);}})()} style={{background:C.blue,color:"#fff",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{modalSending?"⏳...":tx.cta}</div>
                   ):(
                     <div style={{textAlign:"center",padding:"12px 0",color:C.green,fontWeight:700}}>{tx.sent}</div>
                   )}
