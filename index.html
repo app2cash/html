@@ -645,7 +645,7 @@ function App(){
     }
   };
 
-  async function sendModalLead{
+  async function sendModalLead(type){
     if(!modalHandle.trim()){return;}
     setModalSending(true);
     const tx=MODAL_TG[lang][type];
