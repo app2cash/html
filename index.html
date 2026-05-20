@@ -677,35 +677,140 @@ function App(){
   function ModalOverlay({type,onClose}){
     const tx=MODAL_TG[lang][type];
     const col=type==="partner"?C.gold:C.blue;
+    const[step,setStep]=useState("info"); // info | register | success
+    const[regName,setRegName]=useState("");
+    const[regEmail,setRegEmail]=useState("");
+    const[regTg,setRegTg]=useState("");
+    const[regWa,setRegWa]=useState("");
+    const[regPromo,setRegPromo]=useState("");
+    const[regLink,setRegLink]=useState("");
+    const[regSending,setRegSending]=useState(false);
+
+    function genPromo(name){
+      const PRETTY=[111,222,333,369,444,500,555,666,777,888,999,1000];
+      const num=PRETTY[Math.floor(Math.random()*PRETTY.length)];
+      const initials=(name||"APP").replace(/[^a-zA-Zа-яА-Я]/g,"").substring(0,2).toUpperCase();
+      const lat={А:"A",Б:"B",В:"V",Г:"G",Д:"D",Е:"E",Ж:"ZH",З:"Z",И:"I",К:"K",Л:"L",М:"M",Н:"N",О:"O",П:"P",Р:"R",С:"S",Т:"T",У:"U",Ф:"F",Х:"KH",Ц:"TS",Ч:"CH",Ш:"SH",Э:"E",Ю:"YU",Я:"YA"};
+      const latinized=initials.split("").map(ch=>lat[ch]||ch).join("");
+      return latinized+num;
+    }
+
+    function handleNameChange(v){
+      setRegName(v);
+      if(!regPromo||regPromo===genPromo(regName.slice(0,-1))){
+        setRegPromo(genPromo(v));
+      }
+    }
+
+    async function doRegister(){
+      if(!regName.trim())return;
+      setRegSending(true);
+      const code=regPromo||genPromo(regName);
+      const link="https://app2.cash/?rid="+code;
+      try{
+        // Supabase insert
+        await fetch(SB_URL+"/rest/v1/partners",{method:"POST",headers:{"apikey":SB_KEY,"Authorization":"Bearer "+SB_KEY,"Content-Type":"application/json","Prefer":"return=minimal"},body:JSON.stringify({name:regName,email:regEmail||null,telegram:regTg||null,whatsapp:regWa||null,partner_code:code,promo_code:code,ref_link:link,balance:0,level:0,status:"active",notes:"Self-registered via app modal"})});
+        // Telegram
+        const tgText="🤝 <b>Новый партнёр!</b>
+👤 "+regName+"
+📧 "+(regEmail||"—")+"
+✈️ "+(regTg||"—")+"
+💬 "+(regWa||"—")+"
+🎁 Промокод: "+code+"
+🔗 "+link;
+        await fetch("https://api.telegram.org/bot"+TG_BOT_TOKEN+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT_ID,text:tgText,parse_mode:"HTML"})});
+        // API email
+        await fetch("/api/index",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contact:regTg||regEmail||regName,channel:regTg?"tg":"email",source:"partner_registration",extra:{name:regName,email:regEmail,tg:regTg,wa:regWa,package:"Партнёр · "+code}})});
+        setRegLink(link);
+        setStep("success");
+      }catch(e){console.error(e);}
+      setRegSending(false);
+    }
+
+    function copyLink(){try{navigator.clipboard.writeText(regLink);}catch(e){}}
+
     return(
-      <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.92)",zIndex:200,display:"flex",alignItems:"flex-end",justifyContent:"center",padding:"0 0 0"}} onClick={onClose}>
-        <div onClick={e=>e.stopPropagation()} style={{background:C.card,borderRadius:"24px 24px 0 0",padding:"24px 20px 40px",width:"100%",maxWidth:480,maxHeight:"92vh",overflowY:"auto",animation:"slideUp .3s ease"}}>
+      <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.92)",zIndex:200,display:"flex",alignItems:"flex-end",justifyContent:"center"}} onClick={onClose}>
+        <div onClick={e=>e.stopPropagation()} style={{background:C.card,borderRadius:"24px 24px 0 0",padding:"24px 20px 40px",width:"100%",maxWidth:480,maxHeight:"92vh",overflowY:"auto",animation:"slideUp .3s ease",position:"relative"}}>
+          <div onClick={onClose} style={{position:"absolute",top:16,right:20,fontSize:22,color:C.muted,cursor:"pointer",lineHeight:1}}>✕</div>
           <div style={{width:40,height:4,background:C.border,borderRadius:2,margin:"0 auto 20px"}}/>
-          <div style={{fontSize:20,fontWeight:900,color:col,marginBottom:4}}>{tx.title}</div>
-          <div style={{fontSize:13,color:C.muted,marginBottom:20}}>{tx.sub}</div>
-          {tx.points.map((p,i)=>(
-            <div key={i} style={{fontSize:13,color:C.text,marginBottom:8,display:"flex",alignItems:"flex-start",gap:6}}>{p}</div>
-          ))}
-          <div style={{background:C.card2,borderRadius:12,padding:"12px 14px",margin:"16px 0",fontSize:12,color:C.gold,fontWeight:600}}>📊 {tx.math}</div>
-          <div style={{marginBottom:16}}>
-            <div style={{fontSize:12,color:C.muted,marginBottom:8}}>{tx.ask}:</div>
-            <div style={{display:"flex",flexDirection:"column",gap:8}}>
-              {tx.aiQ.map((q,i)=>(
-                <div key={i} onClick={()=>askModalAI(q,type)} style={{background:C.card2,borderRadius:10,padding:"10px 14px",fontSize:13,color:C.text,cursor:"pointer",border:`1px solid ${C.border}`}}>{q}</div>
-              ))}
-            </div>
-            {modalAiReply&&<div style={{background:"#0D1A0D",border:`1px solid ${C.green}44`,borderRadius:10,padding:"12px 14px",marginTop:10,fontSize:13,color:C.green,lineHeight:1.6}}>{modalAiReply==="..."?"⏳ Думаю...":modalAiReply}</div>}
-          </div>
-          {!modalSent?(
+
+          {step==="info"&&(
             <div>
-              <input value={modalHandle} onChange={e=>setModalHandle(e.target.value)} placeholder={tx.ph} style={{width:"100%",background:C.card2,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",color:C.text,fontSize:14,marginBottom:10,outline:"none"}}/>
-              <div onClick={()=>sendModalLead(type)} style={{background:col,color:type==="partner"?"#000":"#fff",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{modalSending?"⏳...":tx.cta}</div>
+              <div style={{fontSize:20,fontWeight:900,color:col,marginBottom:4}}>{tx.title}</div>
+              <div style={{fontSize:13,color:C.muted,marginBottom:16}}>{tx.sub}</div>
+              {tx.points.map((p,i)=>(
+                <div key={i} style={{fontSize:13,color:C.text,marginBottom:8}}>{p}</div>
+              ))}
+              <div style={{background:C.card2,borderRadius:12,padding:"12px 14px",margin:"16px 0",fontSize:12,color:C.gold,fontWeight:600}}>📊 {tx.math}</div>
+              <div style={{marginBottom:16}}>
+                <div style={{fontSize:12,color:C.muted,marginBottom:8}}>{tx.ask}:</div>
+                <div style={{display:"flex",flexDirection:"column",gap:8}}>
+                  {tx.aiQ.map((q,i)=>(
+                    <div key={i} onClick={()=>askModalAI(q,type)} style={{background:C.card2,borderRadius:10,padding:"10px 14px",fontSize:13,color:C.text,cursor:"pointer",border:`1px solid ${C.border}`}}>{q}</div>
+                  ))}
+                </div>
+                {modalAiReply&&<div style={{background:"#0D1A0D",border:`1px solid ${C.green}44`,borderRadius:10,padding:"12px 14px",marginTop:10,fontSize:13,color:C.green,lineHeight:1.6}}>{modalAiReply==="..."?"⏳...":modalAiReply}</div>}
+              </div>
+              {type==="partner"?(
+                <div onClick={()=>setStep("register")} style={{background:C.gold,color:"#000",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{tx.cta}</div>
+              ):(
+                <div>
+                  <input onChange={e=>setModalHandle(e.target.value)} placeholder={tx.ph} style={{width:"100%",background:C.card2,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",color:C.text,fontSize:14,marginBottom:10,outline:"none"}}/>
+                  {!modalSent?(
+                    <div onClick={()=>sendModalLead(type)} style={{background:C.blue,color:"#fff",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{modalSending?"⏳...":tx.cta}</div>
+                  ):(
+                    <div style={{textAlign:"center",padding:"12px 0",color:C.green,fontWeight:700}}>{tx.sent}</div>
+                  )}
+                </div>
+              )}
               <a href={tx.moreUrl} target="_blank" rel="noopener" style={{display:"block",textAlign:"center",fontSize:12,color:C.muted,textDecoration:"underline"}}>{tx.more} ↗</a>
             </div>
-          ):(
+          )}
+
+          {step==="register"&&(
+            <div>
+              <div style={{fontSize:18,fontWeight:900,color:C.gold,marginBottom:4}}>{lang==="ru"?"Регистрация партнёра":lang==="en"?"Partner Registration":"合作伙伴注册"}</div>
+              <div style={{fontSize:12,color:C.muted,marginBottom:20}}>{lang==="ru"?"Заполните данные — можно пропустить любой шаг":lang==="en"?"Fill in — any step can be skipped":"填写信息——任何步骤均可跳过"}</div>
+
+              {[
+                {label:lang==="ru"?"1. Имя *":lang==="en"?"1. Name *":"1. 姓名 *",val:regName,set:handleNameChange,ph:lang==="ru"?"Ваше имя":lang==="en"?"Your name":"您的姓名",req:true},
+                {label:lang==="ru"?"2. Email":lang==="en"?"2. Email":"2. 电子邮件",val:regEmail,set:setRegEmail,ph:"email@example.com",req:false},
+                {label:lang==="ru"?"3. Telegram":lang==="en"?"3. Telegram":"3. Telegram",val:regTg,set:setRegTg,ph:"@username",req:false},
+                {label:lang==="ru"?"4. WhatsApp":lang==="en"?"4. WhatsApp":"4. WhatsApp",val:regWa,set:setRegWa,ph:"+1234567890",req:false},
+              ].map(({label,val,set,ph,req},i)=>(
+                <div key={i} style={{marginBottom:12}}>
+                  <div style={{fontSize:11,fontWeight:700,color:val?C.gold:C.muted,marginBottom:5,letterSpacing:0.5,transition:"color .2s"}}>{label}</div>
+                  <input value={val} onChange={e=>set(e.target.value)} placeholder={ph} style={{width:"100%",background:val?"#1A1400":C.card2,border:`1px solid ${val?C.gold:C.border}`,borderRadius:12,padding:"12px 14px",color:C.text,fontSize:14,outline:"none",transition:"all .2s",boxSizing:"border-box"}}/>
+                </div>
+              ))}
+
+              <div style={{marginBottom:16}}>
+                <div style={{fontSize:11,fontWeight:700,color:regPromo?C.gold:C.muted,marginBottom:5,letterSpacing:0.5}}>{lang==="ru"?"🎁 Ваш промокод":lang==="en"?"🎁 Your promo code":"🎁 您的促销码"}</div>
+                <input value={regPromo} onChange={e=>setRegPromo(e.target.value.toUpperCase())} placeholder={lang==="ru"?"Сгенерируется автоматически":lang==="en"?"Auto-generated":"自动生成"} style={{width:"100%",background:regPromo?"#1A1400":C.card2,border:`1px solid ${regPromo?C.gold:C.border}`,borderRadius:12,padding:"12px 14px",color:C.gold,fontSize:16,fontWeight:700,outline:"none",letterSpacing:2,boxSizing:"border-box"}}/>
+                <div style={{fontSize:11,color:C.muted,marginTop:4}}>{lang==="ru"?"Можете изменить на свой":lang==="en"?"You can change it":"您可以更改"}</div>
+              </div>
+
+              <div onClick={doRegister} style={{background:regName.trim()?C.gold:"#333",color:regName.trim()?"#000":C.muted,borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:regName.trim()?"pointer":"default",marginBottom:10}}>
+                {regSending?"⏳...":(lang==="ru"?"Зарегистрироваться →":lang==="en"?"Register →":"注册 →")}
+              </div>
+              <div onClick={()=>setStep("info")} style={{textAlign:"center",fontSize:12,color:C.muted,cursor:"pointer"}}>← {lang==="ru"?"Назад":lang==="en"?"Back":"返回"}</div>
+            </div>
+          )}
+
+          {step==="success"&&(
             <div style={{textAlign:"center",padding:"20px 0"}}>
-              <div style={{fontSize:40,marginBottom:12}}>✅</div>
-              <div style={{fontSize:15,color:C.green,fontWeight:700}}>{tx.sent}</div>
+              <div style={{fontSize:52,marginBottom:12}}>🎉</div>
+              <div style={{fontSize:20,fontWeight:900,color:C.gold,marginBottom:8}}>{lang==="ru"?"Вы партнёр app2.cash!":lang==="en"?"You are an app2.cash Partner!":"您已成为app2.cash合作伙伴！"}</div>
+              <div style={{background:C.card2,borderRadius:14,padding:"16px",marginBottom:16}}>
+                <div style={{fontSize:11,color:C.muted,marginBottom:6}}>{lang==="ru"?"Ваш промокод":lang==="en"?"Your promo code":"您的促销码"}</div>
+                <div style={{fontSize:28,fontWeight:900,color:C.gold,letterSpacing:3,marginBottom:12}}>{regPromo}</div>
+                <div style={{fontSize:11,color:C.muted,marginBottom:6}}>{lang==="ru"?"Ваша реферальная ссылка":lang==="en"?"Your referral link":"您的推荐链接"}</div>
+                <div style={{fontSize:12,color:C.blue,wordBreak:"break-all",marginBottom:12}}>{regLink}</div>
+                <div onClick={copyLink} style={{background:C.gold,color:"#000",borderRadius:10,padding:"10px",fontWeight:700,fontSize:13,cursor:"pointer"}}>📋 {lang==="ru"?"Скопировать ссылку":lang==="en"?"Copy link":"复制链接"}</div>
+              </div>
+              <div style={{fontSize:13,color:C.muted,lineHeight:1.6}}>{lang==="ru"?"Менеджер свяжется с вами в течение часа":lang==="en"?"Manager will contact you within an hour":"客服将在一小时内联系您"}</div>
+              <div onClick={onClose} style={{marginTop:16,color:C.muted,fontSize:13,cursor:"pointer"}}>✕ {lang==="ru"?"Закрыть":lang==="en"?"Close":"关闭"}</div>
             </div>
           )}
         </div>
