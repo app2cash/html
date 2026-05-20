@@ -253,8 +253,8 @@ function HomeTab({profile,goExchange,goChat,appRate,t,lang,pwaDismissed,setPwaDi
         </div>
       </Card>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
-        <a href={PARTNER[lang]} target="_blank" rel="noopener"><div style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:16,textAlign:"center"}}><div style={{fontSize:26,marginBottom:6}}>🤝</div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>{t.partner}</div></div></a>
-        <a href={FRAN[lang]} target="_blank" rel="noopener"><div style={{background:"#0D1A2B",border:`1px solid ${C.blue}44`,borderRadius:14,padding:16,textAlign:"center"}}><div style={{fontSize:26,marginBottom:6}}>🏢</div><div style={{fontSize:14,fontWeight:700,color:C.blue}}>{t.franchise}</div></div></a>
+        <div onClick={()=>setShowPartner(true)} style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:16,textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26,marginBottom:6}}>🤝</div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>{t.partner}</div></div>
+        <div onClick={()=>setShowFran(true)} style={{background:"#0D1A2B",border:`1px solid ${C.blue}44`,borderRadius:14,padding:16,textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26,marginBottom:6}}>🏢</div><div style={{fontSize:14,fontWeight:700,color:C.blue}}>{t.franchise}</div></div>
       </div>
       {!pwaDismissed&&(
         <div style={{background:C.card2,border:`1px solid ${C.border}`,borderRadius:14,padding:"14px 16px",marginBottom:14}}>
@@ -550,6 +550,168 @@ function MinerTab({lang}) {
 
 function App(){
   const[onboarded,setOnboarded]=useState(false);
+  const[showPartner,setShowPartner]=useState(false);
+  const[showFran,setShowFran]=useState(false);
+  const[modalContact,setModalContact]=useState("");
+  const[modalHandle,setModalHandle]=useState("");
+  const[modalSent,setModalSent]=useState(false);
+  const[modalSending,setModalSending]=useState(false);
+  const[modalAiReply,setModalAiReply]=useState("");
+
+  const MODAL_TG={
+    ru:{
+      partner:{
+        title:"🤝 Партнёрская программа",
+        sub:"Зарабатывай от 20% до 60% с каждого обмена",
+        points:["💰 Уровни: Start 20% → Elite 60%","👥 3 линии рефералов: +10%, +5%, +3%","🌍 Клиенты из 50+ стран","⚡ Выплаты еженедельно в USDT","📊 Личный кабинет с аналитикой"],
+        math:"Пример: 10 клиентов × $500 × 3.6% × 40% = $72 в день",
+        more:"Подробнее о программе",
+        moreUrl:"https://app2.cash/partner/",
+        ask:"Спросить AI о партнёрке",
+        cta:"Стать партнёром →",
+        ph:"Ваш Telegram или WhatsApp",
+        sent:"✅ Заявка отправлена! Менеджер свяжется в течение часа.",
+        aiQ:["Сколько можно заработать?","Как начать без вложений?","Что такое 3 линии рефералов?"]
+      },
+      fran:{
+        title:"🏢 Франшиза app2.cash",
+        sub:"Запусти свой обменник под брендом app2.cash",
+        points:["🚀 Готовый бизнес за 2 недели","💼 Пакеты от $500 до $5000","🔧 Полная техподдержка и CRM","📈 ROI от 300% за 6 месяцев","🌐 Работа в любой стране мира"],
+        math:"Пример: вложение $1000 → доход $300–500/мес уже с 3-го месяца",
+        more:"Подробнее о франшизе",
+        moreUrl:"https://app2.cash/fran/",
+        ask:"Спросить AI о франшизе",
+        cta:"Получить презентацию →",
+        ph:"Ваш Telegram или WhatsApp",
+        sent:"✅ Заявка отправлена! Пришлём презентацию в течение часа.",
+        aiQ:["Сколько стоит франшиза?","Какой доход с первого месяца?","Нужен ли опыт в финансах?"]
+      }
+    },
+    en:{
+      partner:{
+        title:"🤝 Partner Program",
+        sub:"Earn 20% to 60% from every exchange",
+        points:["💰 Levels: Start 20% → Elite 60%","👥 3 referral lines: +10%, +5%, +3%","🌍 Clients from 50+ countries","⚡ Weekly USDT payouts","📊 Personal dashboard with analytics"],
+        math:"Example: 10 clients × $500 × 3.6% × 40% = $72/day",
+        more:"Full program details",
+        moreUrl:"https://app2.cash/partner_en/",
+        ask:"Ask AI about partnership",
+        cta:"Become a Partner →",
+        ph:"Your Telegram or WhatsApp",
+        sent:"✅ Request sent! Manager will contact you within an hour.",
+        aiQ:["How much can I earn?","How to start with no investment?","What are 3 referral lines?"]
+      },
+      fran:{
+        title:"🏢 app2.cash Franchise",
+        sub:"Launch your own exchanger under app2.cash brand",
+        points:["🚀 Ready business in 2 weeks","💼 Packages from $500 to $5000","🔧 Full tech support and CRM","📈 ROI from 300% in 6 months","🌐 Work from any country"],
+        math:"Example: $1000 investment → $300–500/month from month 3",
+        more:"Full franchise details",
+        moreUrl:"https://app2.cash/fran/",
+        ask:"Ask AI about franchise",
+        cta:"Get Presentation →",
+        ph:"Your Telegram or WhatsApp",
+        sent:"✅ Request sent! We'll send the presentation within an hour.",
+        aiQ:["How much does the franchise cost?","What income from month 1?","Do I need finance experience?"]
+      }
+    },
+    cn:{
+      partner:{
+        title:"🤝 合作伙伴计划",
+        sub:"从每笔兑换中赚取20%至60%",
+        points:["💰 等级：Start 20% → Elite 60%","👥 3级推荐：+10%, +5%, +3%","🌍 来自50+国家的客户","⚡ 每周USDT结算","📊 个人数据分析后台"],
+        math:"示例：10个客户 × $500 × 3.6% × 40% = 每天$72",
+        more:"查看完整计划",
+        moreUrl:"https://app2.cash/partner_cn/",
+        ask:"向AI咨询合作",
+        cta:"成为合作伙伴 →",
+        ph:"您的Telegram或WhatsApp",
+        sent:"✅ 申请已发送！客服将在一小时内联系您。",
+        aiQ:["能赚多少钱？","如何零投入开始？","什么是3级推荐？"]
+      },
+      fran:{
+        title:"🏢 app2.cash 加盟",
+        sub:"在app2.cash品牌下开设您自己的兑换店",
+        points:["🚀 2周内开业","💼 套餐从$500到$5000","🔧 全程技术支持和CRM","📈 6个月ROI超300%","🌐 在任何国家运营"],
+        math:"示例：投资$1000 → 第3个月起月收入$300-500",
+        more:"查看完整加盟信息",
+        moreUrl:"https://app2.cash/fran/",
+        ask:"向AI咨询加盟",
+        cta:"获取演示文稿 →",
+        ph:"您的Telegram或WhatsApp",
+        sent:"✅ 申请已发送！我们将在一小时内发送演示文稿。",
+        aiQ:["加盟费用是多少？","第一个月能赚多少？","需要金融经验吗？"]
+      }
+    }
+  };
+
+  async function sendModalLead(type){
+    if(!modalHandle.trim()){return;}
+    setModalSending(true);
+    const tx=MODAL_TG[lang][type];
+    const text=`📥 <b>Заявка: ${type==="partner"?"Партнёрка":"Франшиза"}</b>
+📞 Контакт: ${modalHandle}
+🌐 Язык: ${lang}`;
+    try{
+      await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT_ID,text,parse_mode:"HTML"})});
+      await fetch("/api/index",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contact:modalHandle,channel:modalContact||"tg",source:type==="partner"?"partner_modal":"fran_modal",extra:{notes:tx.title}})});
+    }catch(e){}
+    setModalSent(true);
+    setModalSending(false);
+  }
+
+  async function askModalAI(q,type){
+    setModalAiReply("...");
+    try{
+      const sys=lang==="ru"?`Ты AI-консультант app2.cash по ${type==="partner"?"партнёрской программе":"франшизе"}. Отвечай кратко (2-3 предложения), на русском, убедительно. Партнёрка: доход 20-60% от спреда, 3 линии рефералов. Франшиза: пакеты $500-$5000, ROI 300% за 6 мес.`:lang==="en"?`You are app2.cash AI consultant for ${type==="partner"?"partner program":"franchise"}. Reply briefly (2-3 sentences) in English, persuasively. Partner: 20-60% of spread, 3 referral lines. Franchise: packages $500-$5000, ROI 300% in 6 months.`:`您是app2.cash的AI顾问，专注于${type==="partner"?"合作伙伴计划":"加盟"}。用中文简洁回答（2-3句话）。合作：收益20-60%，3级推荐。加盟：套餐$500-$5000，6个月ROI 300%。`;
+      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:200,system:sys,messages:[{role:"user",content:q}]})});
+      const d=await res.json();
+      const reply=d.content?.[0]?.text||"Напишите нам напрямую!";
+      setModalAiReply(reply);
+      await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT_ID,text:`💬 <b>AI Modal: ${type}</b>
+❓ ${q}
+🤖 ${reply.slice(0,200)}`,parse_mode:"HTML"})});
+    }catch(e){setModalAiReply("Напишите нам напрямую!");}
+  }
+
+  function ModalOverlay({type,onClose}){
+    const tx=MODAL_TG[lang][type];
+    const col=type==="partner"?C.gold:C.blue;
+    return(
+      <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,.92)",zIndex:200,display:"flex",alignItems:"flex-end",justifyContent:"center",padding:"0 0 0"}} onClick={onClose}>
+        <div onClick={e=>e.stopPropagation()} style={{background:C.card,borderRadius:"24px 24px 0 0",padding:"24px 20px 40px",width:"100%",maxWidth:480,maxHeight:"92vh",overflowY:"auto",animation:"slideUp .3s ease"}}>
+          <div style={{width:40,height:4,background:C.border,borderRadius:2,margin:"0 auto 20px"}}/>
+          <div style={{fontSize:20,fontWeight:900,color:col,marginBottom:4}}>{tx.title}</div>
+          <div style={{fontSize:13,color:C.muted,marginBottom:20}}>{tx.sub}</div>
+          {tx.points.map((p,i)=>(
+            <div key={i} style={{fontSize:13,color:C.text,marginBottom:8,display:"flex",alignItems:"flex-start",gap:6}}>{p}</div>
+          ))}
+          <div style={{background:C.card2,borderRadius:12,padding:"12px 14px",margin:"16px 0",fontSize:12,color:C.gold,fontWeight:600}}>📊 {tx.math}</div>
+          <div style={{marginBottom:16}}>
+            <div style={{fontSize:12,color:C.muted,marginBottom:8}}>{tx.ask}:</div>
+            <div style={{display:"flex",flexDirection:"column",gap:8}}>
+              {tx.aiQ.map((q,i)=>(
+                <div key={i} onClick={()=>askModalAI(q,type)} style={{background:C.card2,borderRadius:10,padding:"10px 14px",fontSize:13,color:C.text,cursor:"pointer",border:`1px solid ${C.border}`}}>{q}</div>
+              ))}
+            </div>
+            {modalAiReply&&<div style={{background:"#0D1A0D",border:`1px solid ${C.green}44`,borderRadius:10,padding:"12px 14px",marginTop:10,fontSize:13,color:C.green,lineHeight:1.6}}>{modalAiReply==="..."?"⏳ Думаю...":modalAiReply}</div>}
+          </div>
+          {!modalSent?(
+            <div>
+              <input value={modalHandle} onChange={e=>setModalHandle(e.target.value)} placeholder={tx.ph} style={{width:"100%",background:C.card2,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",color:C.text,fontSize:14,marginBottom:10,outline:"none"}}/>
+              <div onClick={()=>sendModalLead(type)} style={{background:col,color:type==="partner"?"#000":"#fff",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{modalSending?"⏳...":tx.cta}</div>
+              <a href={tx.moreUrl} target="_blank" rel="noopener" style={{display:"block",textAlign:"center",fontSize:12,color:C.muted,textDecoration:"underline"}}>{tx.more} ↗</a>
+            </div>
+          ):(
+            <div style={{textAlign:"center",padding:"20px 0"}}>
+              <div style={{fontSize:40,marginBottom:12}}>✅</div>
+              <div style={{fontSize:15,color:C.green,fontWeight:700}}>{tx.sent}</div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
   const[showPromo,setShowPromo]=useState(false);
   const[lang,setLang]=useState("ru");
   const[tab,setTab]=useState("home");
