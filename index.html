@@ -728,6 +728,12 @@ function App(){
         {!onboarded?<Onboarding onDone={finishOnboarding} setLang={setLang} lang={lang}/>:(
           <>
             {showPromo&&<PromoModal onClose={()=>setShowPromo(false)} goChat={()=>setTab("chat")} t={t}/>}
+            {showPartner&&<ModalOverlay type="partner" onClose={()=>{setShowPartner(false);setModalSent(false);setModalAiReply("");setModalHandle("");}}/>}
+            {showFran&&<ModalOverlay type="fran" onClose={()=>{setShowFran(false);setModalSent(false);setModalAiReply("");setModalHandle("");}}/>}
+            {showPartner&&<ModalOverlay type="partner" onClose={()=>{setShowPartner(false);setModalSent(false);setModalAiReply("");setModalHandle("");}}/>}
+            {showFran&&<ModalOverlay type="fran" onClose={()=>{setShowFran(false);setModalSent(false);setModalAiReply("");setModalHandle("");}}/>}
+            {showPartner&&<ModalOverlay type="partner" onClose={()=>{setShowPartner(false);setModalSent(false);setModalAiReply("");setModalHandle("");}}/>}
+            {showFran&&<ModalOverlay type="fran" onClose={()=>{setShowFran(false);setModalSent(false);setModalAiReply("");setModalHandle("");}}/>}
             <div style={{background:C.card,padding:"14px 16px 10px",borderBottom:`1px solid ${C.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
               <div style={{fontSize:20,fontWeight:900,color:C.gold,letterSpacing:-1}}>app2.cash</div>
               <div style={{display:"flex",alignItems:"center",gap:10}}>
