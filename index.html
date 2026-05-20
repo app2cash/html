@@ -209,8 +209,8 @@ function HomeTab({profile,goExchange,goChat,appRate,t,lang,pwaDismissed,setPwaDi
           <div style={{fontSize:12,color:C.muted,marginTop:2}}>{t.promoManager} · {t.promoConsult}</div>
         </div>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
 <a href={lang==="ru"?"https://www.bestchange.ru/app2cash-exchanger.html":"https://www.bestchange.com/app2cash-exchanger.html"} target="_blank" rel="noopener" style={{display:"inline-flex",alignItems:"center",gap:5,fontSize:11,color:"#4A7FD4",textDecoration:"none",marginBottom:12,opacity:0.6}}><span>BestChange</span><span style={{fontSize:9}}>↗</span></a>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
 {t.stats.map(([v,l])=>(
           <div key={l} style={{background:C.card2,borderRadius:14,padding:14,textAlign:"center"}}>
             <div style={{fontSize:20,fontWeight:700,color:C.gold}}>{v}</div>
