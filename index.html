@@ -750,7 +750,7 @@ function App(){
                 <div onClick={()=>setStep("register")} style={{background:C.gold,color:"#000",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{tx.cta}</div>
               ):(
                 <div>
-                  <input onChange={e=>setModalHandle(e.target.value)} placeholder={tx.ph} style={{width:"100%",background:C.card2,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",color:C.text,fontSize:14,marginBottom:10,outline:"none"}}/>
+                  <input defaultValue="" onInput={e=>setModalHandle(e.target.value)} placeholder={tx.ph} style={{width:"100%",background:C.card2,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",color:C.text,fontSize:14,marginBottom:10,outline:"none",WebkitUserSelect:"text",userSelect:"text"}}/>
                   {!modalSent?(
                     <div onClick={()=>sendModalLead(type)} style={{background:C.blue,color:"#fff",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{modalSending?"⏳...":tx.cta}</div>
                   ):(
