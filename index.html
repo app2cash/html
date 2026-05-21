@@ -752,7 +752,18 @@ function App(){
                 <div>
                   <input id="fran-contact-input" placeholder={tx.ph} style={{width:"100%",background:C.card2,border:`1px solid ${C.border}`,borderRadius:12,padding:"12px 14px",color:C.text,fontSize:14,marginBottom:10,outline:"none"}}/>
                   {!modalSent?(
-                    <div onClick={()=>(()=>{const v=document.getElementById("fran-contact-input");if(v){setModalHandle(v.value);setTimeout(()=>sendModalLead(type),50);}else{sendModalLead(type);}})()} style={{background:C.blue,color:"#fff",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{modalSending?"⏳...":tx.cta}</div>
+                    <div onClick={async()=>{
+  const v=document.getElementById("fran-contact-input");
+  const contact=v?v.value:"";
+  setModalSending(true);
+  try{
+    const tgMsg="📋 <b>Заявка: Франшиза</b>\n📞 "+contact+"\n🌐 "+lang;
+    await fetch("https://api.telegram.org/bot"+TG_BOT_TOKEN+"/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT_ID,text:tgMsg,parse_mode:"HTML"})});
+    await fetch("/api/index",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contact:contact||"anonymous",channel:"tg",source:"fran_modal",extra:{notes:"Franchise request"}})});
+  }catch(e){}
+  setModalSending(false);
+  setModalSent(true);
+}} style={{background:C.blue,color:"#fff",borderRadius:14,padding:"14px",textAlign:"center",fontWeight:700,fontSize:15,cursor:"pointer",marginBottom:12}}>{modalSending?"⏳...":tx.cta}</div>
                   ):(
                     <div style={{textAlign:"center",padding:"12px 0",color:C.green,fontWeight:700}}>{tx.sent}</div>
                   )}
