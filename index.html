@@ -420,7 +420,7 @@ function ChatTab({t,profile}){
 
 function ProfileTab({profile,setProfile,t,setLang,lang}){
   const[saved,setSaved]=useState(false);const[cMeth,setCMeth]=useState("tg");const[handle,setHandle]=useState(profile.phone||"");
-  const save=()=>{setProfile(p=>({...p,phone:handle}));setSaved(true);setTimeout(()=>setSaved(false),2000);};
+  const save=()=>{const np={...profile,phone:handle,name:profile.name,email:profile.email};setProfile(np);try{localStorage.setItem("app2c_profile",JSON.stringify(np));}catch(e){}setSaved(true);setTimeout(()=>setSaved(false),2000);};
   const ini=profile.name?profile.name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase():"?";
   const menuActions=[(()=>alert("Уведомления — скоро")),(()=>alert("Безопасность — скоро")),(()=>{const l=prompt("Язык (ru/en/cn):",lang);if(["ru","en","cn"].includes(l))setLang(l);}),(()=>window.open(MGR.tg,"_blank"))];
   return(
@@ -434,9 +434,9 @@ function ProfileTab({profile,setProfile,t,setLang,lang}){
       </Card>
       <Card style={{marginBottom:14}}>
         <div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.nameLabel}</div>
-        <input value={profile.name||""} onChange={e=>setProfile(p=>({...p,name:e.target.value}))} placeholder={t.noName} style={{marginBottom:12}}/>
+        <input value={profile.name||""} onChange={e=>{const v=e.target.value;setProfile(p=>{const np={...p,name:v};try{localStorage.setItem("app2c_profile",JSON.stringify(np));}catch(e){}return np;})}} placeholder={t.noName} style={{marginBottom:12}}/>
         <div style={{fontSize:11,color:C.muted,marginBottom:5}}>{t.emailLabel}</div>
-        <input value={profile.email||""} onChange={e=>setProfile(p=>({...p,email:e.target.value}))} placeholder="email@example.com" style={{marginBottom:16}}/>
+        <input value={profile.email||""} onChange={e=>{const v=e.target.value;setProfile(p=>{const np={...p,email:v};try{localStorage.setItem("app2c_profile",JSON.stringify(np));}catch(e){}return np;})}} placeholder="email@example.com" style={{marginBottom:16}}/>
         <ContactPicker method={cMeth} setMethod={setCMeth} handle={handle} setHandle={setHandle} t={t}/>
         <div style={{marginTop:14}}><Btn onClick={save}>{saved?t.savedBtn:t.saveBtn}</Btn></div>
       </Card>
@@ -825,7 +825,7 @@ function App(){
   const[showPromo,setShowPromo]=useState(false);
   const[lang,setLang]=useState("ru");
   const[tab,setTab]=useState("home");
-  const[profile,setProfile]=useState({name:"",phone:"",email:""});
+  const[profile,setProfile]=useState(()=>{try{const s=localStorage.getItem("app2c_profile");return s?JSON.parse(s):{name:"",phone:"",email:""};}catch(e){return{name:"",phone:"",email:""};}});
   const[pwaDismissed,setPwaDismissed]=useState(false);
   const{rates,updated,loading:rateLoad}=useRates();
   const t=T[lang];
