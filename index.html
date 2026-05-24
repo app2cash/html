@@ -418,7 +418,7 @@ function ChatTab({t,profile}){
   );
 }
 
-function ProfileTab({profile,setProfile,t,setLang,lang}){
+function ProfileTab({profile,setProfile,t,setLang,lang,onPartner,onFran}){
   const[saved,setSaved]=useState(false);const[cMeth,setCMeth]=useState("tg");const[handle,setHandle]=useState(profile.phone||"");
   const save=()=>{const np={...profile,phone:handle,name:profile.name,email:profile.email};setProfile(np);try{localStorage.setItem("app2c_profile",JSON.stringify(np));}catch(e){}setSaved(true);setTimeout(()=>setSaved(false),2000);};
   const ini=profile.name?profile.name.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase():"?";
@@ -447,7 +447,7 @@ function ProfileTab({profile,setProfile,t,setLang,lang}){
           </Card>
         ))}
       </div>
-      <div style={{marginTop:16,textAlign:"center",color:C.red,fontSize:14,cursor:"pointer"}} onClick={()=>{}}>Выйти из аккаунта</div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginTop:16}}><div onClick={onPartner} style={{background:"#1A1200",border:`1px solid ${C.gold}44`,borderRadius:14,padding:16,textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26,marginBottom:6}}>🤝</div><div style={{fontSize:14,fontWeight:700,color:C.gold}}>{t.partner}</div></div><div onClick={onFran} style={{background:"#0D1A2B",border:`1px solid ${C.blue}44`,borderRadius:14,padding:16,textAlign:"center",cursor:"pointer"}}><div style={{fontSize:26,marginBottom:6}}>🏢</div><div style={{fontSize:14,fontWeight:700,color:C.blue}}>{t.franchise}</div></div></div>
     </div>
   );
 }
@@ -857,7 +857,7 @@ function App(){
               
               {tab==="chat"&&<ChatTab t={t} profile={profile}/>}
               {tab==="miner"&&<MinerTab lang={lang}/>}
-              {tab==="profile"&&<ProfileTab profile={profile} setProfile={setProfile} t={t} setLang={setLang} lang={lang}/>}
+              {tab==="profile"&&<ProfileTab profile={profile} setProfile={setProfile} t={t} setLang={setLang} lang={lang} onPartner={()=>setShowPartner(true)} onFran={()=>setShowFran(true)}/>}
             </div>
             <div style={{background:C.card,borderTop:`1px solid ${C.border}`,display:"flex",padding:"8px 0",paddingBottom:"calc(8px + env(safe-area-inset-bottom))"}}>
               {["home","exchange","chat","miner","profile"].map((id,i)=>(
