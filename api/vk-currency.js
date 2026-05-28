@@ -2,53 +2,39 @@ const VK_TOKEN = process.env.VK_TOKEN_1;
 const MY_VK_ID = 28441036;
 const VK_V = '5.131';
 
-const QUERIES = [
-  // Базовые
+const GROUPS = [
+  { id: '76231763',  name: 'Подслушано Москва' },
+  { id: '67083068',  name: 'Подслушано СПб' },
+  { id: '129243762', name: 'Подслушано Екатеринбург' },
+  { id: '99484444',  name: 'Подслушано Краснодар' },
+  { id: '43074280',  name: 'Русская эмиграция' },
+  { id: '63877508',  name: 'Турция Алания' },
+  { id: '18617238',  name: 'Русская Турция' },
+  { id: '53463795',  name: 'Русские в Таиланде' },
+  { id: '179733627', name: 'Русские в Дубае' },
+  { id: '176276453', name: 'Russians in Africa' },
+];
+
+const KEYWORDS = [
   'обмен валют',
   'купить доллары',
   'купить евро',
   'купить usdt',
   'продать usdt',
   'обмен usdt',
-  'где обменять валюту',
+  'где обменять',
   'нужен обменник',
-  'обмен криптовалюты',
-  'p2p обмен',
-  // Международные переводы
-  'отправить деньги за границу',
-  'перевод денег за рубеж',
-  'международный перевод',
-  'получить деньги из за рубежа',
-  'swift перевод',
-  'перевод в другую страну',
-  // СНГ
-  'купить тенге',
-  'купить манаты',
-  'купить сум',
-  'купить дирхам',
-  'перевод в казахстан',
-  'перевод в узбекистан',
-  'перевод в азербайджан',
-  'перевод в беларусь',
-  'перевод в армению',
-  'купить армянский драм',
-  // Азия
-  'купить юани',
-  'перевод в китай',
-  'купить дирхам оаэ',
+  'перевод за границу',
+  'отправить деньги',
   'перевод в дубай',
   'перевод в турцию',
-  'купить турецкую лиру',
   'перевод в таиланд',
-  'купить бат',
-  'перевод в индию',
-  // Африка
-  'перевод в африку',
-  'перевод в нигерию',
-  'перевод в кению',
-  'купить рэнд',
-  'перевод в танзанию',
-  'перевод в эфиопию',
+  'перевод в китай',
+  'купить юани',
+  'купить тенге',
+  'купить дирхам',
+  'swift перевод',
+  'международный перевод',
 ];
 
 async function vk(method, params = {}) {
@@ -67,32 +53,33 @@ export default async function handler(req, res) {
     const seen = new Set();
     const links = [];
 
-    for (const q of QUERIES) {
-      try {
-        const result = await vk('newsfeed.search', {
-          q,
-          count: 20,
-          start_time: since,
-          extended: 0,
-        });
-
-        if (result && result.items) {
-          for (const item of result.items) {
-            const key = `${item.owner_id}_${item.id}`;
-            if (!seen.has(key)) {
-              seen.add(key);
-              links.push({
-                url: `https://vk.com/wall${item.owner_id}_${item.id}`,
-                text: (item.text || '').slice(0, 100).replace(/\n/g, ' '),
-                keyword: q,
-              });
+    for (const group of GROUPS) {
+      for (const keyword of KEYWORDS) {
+        try {
+          const result = await vk('wall.search', {
+            owner_id: `-${group.id}`,
+            query: keyword,
+            count: 10,
+          });
+          if (result && result.items) {
+            for (const item of result.items) {
+              if (item.date < since) continue;
+              const key = `${item.owner_id}_${item.id}`;
+              if (!seen.has(key)) {
+                seen.add(key);
+                links.push({
+                  url: `https://vk.com/wall${item.owner_id}_${item.id}`,
+                  text: (item.text || '').slice(0, 100).replace(/\n/g, ' '),
+                  group: group.name,
+                });
+              }
             }
           }
+        } catch (e) {
+          console.error(`Ошибка ${group.name} / "${keyword}":`, e.message);
         }
-      } catch (e) {
-        console.error(`Ошибка "${q}":`, e.message);
+        await sleep(350);
       }
-      await sleep(400);
     }
 
     const today = new Date().toLocaleDateString('ru-RU', {
@@ -104,16 +91,16 @@ export default async function handler(req, res) {
     if (links.length === 0) {
       message = `💱 Мониторинг обмен валют — app2.cash\n${today}\n\nЗа последние 24 часа новых запросов не найдено.`;
     } else {
-      const byKeyword = {};
+      const byGroup = {};
       for (const l of links) {
-        if (!byKeyword[l.keyword]) byKeyword[l.keyword] = [];
-        byKeyword[l.keyword].push(l);
+        if (!byGroup[l.group]) byGroup[l.group] = [];
+        byGroup[l.group].push(l);
       }
-      const sections = Object.entries(byKeyword).map(([kw, items]) => {
+      const sections = Object.entries(byGroup).map(([group, items]) => {
         const lines = items.map((l, i) =>
           `  ${i + 1}. ${l.url}\n     "${l.text || '(без текста)'}"`
         ).join('\n');
-        return `🔍 "${kw}":\n${lines}`;
+        return `📍 ${group}:\n${lines}`;
       });
       message = `💱 Обмен валют / USDT / переводы — app2.cash\n${today} | найдено: ${links.length}\n\n${sections.join('\n\n')}`;
     }
@@ -126,7 +113,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ ok: true, sent: links.length });
   } catch (e) {
-    console.error('VK currency monitor ERROR:', e.message);
+    console.error('VK currency ERROR:', e.message);
     res.status(500).json({ error: e.message });
   }
 }
