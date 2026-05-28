@@ -15,8 +15,18 @@
       "use": "@vercel/node"
     },
     {
+      "src": "api/vk-monitor.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "**/*",
       "use": "@vercel/static"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/vk-monitor",
+      "schedule": "0 5 * * *"
     }
   ],
   "routes": [
@@ -27,6 +37,10 @@
     {
       "src": "/api/export",
       "dest": "/api/export.js"
+    },
+    {
+      "src": "/api/vk-monitor",
+      "dest": "/api/vk-monitor.js"
     },
     {
       "src": "/api/(.*)",
